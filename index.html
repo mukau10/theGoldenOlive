@@ -38,10 +38,10 @@
   <div id="topbar" class="d-flex align-items-center fixed-top">
     <div class="container d-flex justify-content-center justify-content-md-between">
 
-      <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-phone d-flex align-items-center"><span>+32 494 19 43 97</span></i>
+      <div class="contact-info d-flex align-items-center justify-content-center margin-top">
+        <i class="bi bi-phone d-flex align-items-left"><span>+32 494 19 43 97</span></i>
         <i class="bi bi-clock d-flex align-items-center ms-4"><span> Ma-Zo: 17:OO - 23:OO</span></i>
-        <i class="bi bi-geo-alt d-flex align-items-center ms-4"><span> Vlaamsekaai 65, 2000 ANTWERPEN</span></i>
+        <i class="bi bi-geo-alt d-flex align-items-right ms-4"><span> Vlaamsekaai 65, 2000 ANTWERPEN</span></i>
 
       </div>
 
@@ -60,7 +60,7 @@
 
       <h1 class="logo me-auto me-lg-0"><a href="index.html">THE GOLDEN OLIVE</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="the goldenolive antwerpen"> class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
@@ -69,7 +69,6 @@
           <li><a class="nav-link scrollto" href="#menu">Menu</a></li>
           <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
           <li><a class="nav-link scrollto" href="#events">Events</a></li>
-          <li><a class="nav-link scrollto" href="#chefs">Chefs</a></li>
           <li><a class="nav-link scrollto" href="#gallery">Galerij</a></li>
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -92,8 +91,6 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Reserveer een tafel</a>
-
     </div>
   </header><!-- End Header -->
 
@@ -112,7 +109,7 @@
         </div>
         <div class="col-lg-4 d-flex align-items-center justify-content-center position-relative" data-aos="zoom-in"
           data-aos-delay="200">
-          <a href="https://www.youtube.com/watch?v=GlrxcuEDyF8" class="glightbox play-btn"></a>
+          <a href="#" class="glightbox play-btn" autoplay></a>
         </div>
 
       </div>
@@ -128,7 +125,7 @@
         <div class="row">
           <div class="col-lg-6 order-1 order-lg-2" data-aos="zoom-in" data-aos-delay="100">
             <div class="about-img">
-              <img src="assets/img/about.jpg" alt="">
+              <img src="assets/img/golden/IMG_4117.JPEG" alt="the goldenolive antwerpen">
             </div>
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content">
@@ -159,7 +156,8 @@
             <div class="box" data-aos="zoom-in" data-aos-delay="100">
               <span>01</span>
               <h4>Afhalen</h4>
-              <p> Bel ons, en geef je favoriete gerechten door en vertel ons wanneer je het wilt ophalen. Wij zorgen ervoor dat je eten klaar staat op het door jou gekozen tijdstip</p>
+              <p> Bel ons, en geef je favoriete gerechten door en vertel ons wanneer je het wilt ophalen. Wij zorgen
+                ervoor dat je eten klaar staat op het door jou gekozen tijdstip</p>
             </div>
           </div>
 
@@ -167,7 +165,8 @@
             <div class="box" data-aos="zoom-in" data-aos-delay="200">
               <span>02</span>
               <h4>Bestel en geniet thuis</h4>
-              <p>Plaats eenvoudig je bestelling via onze website of telefonisch, en wij brengen je favoriete gerechten rechtstreeks naar je deur. Geniet van heerlijk eten, comfortabel thuis.</p>
+              <p>Plaats eenvoudig je bestelling via onze website of telefonisch, en wij brengen je favoriete gerechten
+                rechtstreeks naar je deur. Geniet van heerlijk eten, comfortabel thuis.</p>
             </div>
           </div>
 
@@ -175,7 +174,8 @@
             <div class="box" data-aos="zoom-in" data-aos-delay="300">
               <span>03</span>
               <h4> Reserveren</h4>
-              <p>Maak nu je reservering en verzeker jezelf van een heerlijke culinaire ervaring bij The Golden Olive.</p><br /><br />
+              <p>Maak nu je reservering en verzeker jezelf van een heerlijke culinaire ervaring bij The Golden Olive.
+              </p><br /><br />
             </div>
           </div>
 
@@ -190,236 +190,692 @@
 
         <div class="section-title">
           <h2>Menu</h2>
-          <p>Check Our Tasty Menu</p>
+          <p>Ons Menu</p>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="menu-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-starters">Starters</li>
-              <li data-filter=".filter-salads">Salads</li>
-              <li data-filter=".filter-specialty">Specialty</li>
+              <!-- <li data-filter="*" class="filter-active">Overzicht</li> -->
+              <li data-filter=".filter-voorgerechten">Voorgerechten</li>
+              <li data-filter=".filter-mixed-grill">Mixed Grill</li>
+              <li data-filter=".filter-kumpir">Kumpir</li>
+              <li data-filter=".filter-spareribs">Spareribs</li>
+              <li data-filter=".filter-burgers">Burgers</li>
+              <li data-filter=".filter-kindermenu">Kindermenu</li>
+              <li data-filter=".filter-supplementen">Supplementen</li>
+              <li data-filter=".filter-desserten">Desserten</li>
+              <li data-filter=".filter-mocktails">Mocktails</li>
+              <li data-filter=".filter-frisdranken">Frisdranken</li>
+              <li data-filter=".filter-warme-dranken">Warme Dranken</li>
             </ul>
           </div>
         </div>
 
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
 
-          <div class="col-lg-6 menu-item filter-starters">
-            <img src="assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
+          <div class="col-lg-6 menu-item filter-voorgerechten">
+            <img src="assets/img/golden/IMG_1801.JPEG" class="menu-img" alt="the goldenolive antwerpen">
             <div class="menu-content">
-              <a href="#">Lobster Bisque</a><span>$5.95</span>
+              <a href="#">Tiger garnalen</a><span>€7.00</span>
             </div>
             <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
+              Met zoetzure saus
+            </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <!-- Voorgerechten -->
+          <div class="col-lg-6 menu-item filter-voorgerechten">
+            <img src="assets/img/golden/IMG_2134.JPEG" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Chicken Wings</a><span>€7.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Met zoetzure saus<br />Keuze uit: Natuur, Zoetzure saus en BBQ Saus
+            </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-specialty">
-            <img src="assets/img/menu/bread-barrel.jpg" class="menu-img" alt="">
+          <div class="col-lg-6 menu-item filter-voorgerechten">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
             <div class="menu-content">
-              <a href="#">Bread Barrel</a><span>$6.95</span>
+              <a href="#">Nachos</a><span>€7.00</span>
             </div>
             <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
+              Keuze uit: Guacamole, salsa en zuurroom </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-starters">
-            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="">
+          <div class="col-lg-6 menu-item filter-voorgerechten">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
             <div class="menu-content">
-              <a href="#">Crab Cake</a><span>$7.95</span>
+              <a href="#">Kaaskroketten</a><span>€7.00</span>
             </div>
-            <div class="menu-ingredients">
-              A delicate crab cake served on a toasted roll with lettuce and tartar sauce
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
-            <img src="assets/img/menu/caesar.jpg" class="menu-img" alt="">
+          <div class="col-lg-6 menu-item filter-voorgerechten">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
             <div class="menu-content">
-              <a href="#">Caesar Selections</a><span>$8.95</span>
+              <a href="#">Uienringen</a><span>€7.00</span>
             </div>
             <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
+              Met zoetzure saus </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-specialty">
-            <img src="assets/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
+          <div class="col-lg-6 menu-item filter-voorgerechten">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
             <div class="menu-content">
-              <a href="#">Tuscan Grilled</a><span>$9.95</span>
+              <a href="#">Mini Loempia</a><span>€7.00</span>
             </div>
             <div class="menu-ingredients">
-              Grilled chicken with provolone, artichoke hearts, and roasted red pesto
+              Met zoetzure saus </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <!-- Mixed Grill -->
+
+          <div class="col-lg-6 menu-item filter-mixed-grill">
+            <img src="assets/img/menu/caesar.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Mixed Grill</a><span>€39,99</span>
+            </div>
+            <div class="menu-ingredients">
+              8 soorten vlees, geserveerd met Champignon saus en salade
+            </div>
+          </div>
+          <!-- Kumpir -->
+
+          <div class="col-lg-6 menu-item filter-kumpir">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Kumpir: Kip</a><span>€18,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met currysaus </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-kumpir">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Kumpir: Kip</a><span>€18,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met champignonsaus </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-kumpir">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Kumpir: Scampi</a><span>€19,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met diabolique saus </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-kumpir">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Kumpir: Scampi</a><span>€19,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met curry saus </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-kumpir">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Kumpir: Veggie</a><span>€15,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met zoetzure saus </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-starters">
-            <img src="assets/img/menu/mozzarella.jpg" class="menu-img" alt="">
+          <!-- Sparribs -->
+          <div class="col-lg-6 menu-item filter-spareribs">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
             <div class="menu-content">
-              <a href="#">Mozzarella Stick</a><span>$4.95</span>
+              <a href="#">Spareribs: Natuur</a><span>€28,99</span>
             </div>
             <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-spareribs">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Spareribs: Barbeque</a><span>€28,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-spareribs">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Spareribs: Gekarameliseerd</a><span>€28,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met honing en coleslaw<br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-spareribs">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Spareribs: Spicy</a><span>€28,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-spareribs">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="the goldenolive antwerpen">
+            <div class="menu-content">
+              <a href="#">Spareribs: Thai - Sweet Chili</a><span>€28,99</span>
+            </div>
+            <div class="menu-ingredients">
+              Met coleslaw <br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
-            <img src="assets/img/menu/greek-salad.jpg" class="menu-img" alt="">
+          <!-- Burgers -->
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img" alt="the golden olive antwerpen texas burger">
             <div class="menu-content">
-              <a href="#">Greek Salad</a><span>$9.95</span>
+              <a href="#">Texas Burger</a><span>€18.00</span>
             </div>
             <div class="menu-ingredients">
-              Fresh spinach, crisp romaine, tomatoes, and Greek olives
+              Bio rundvlees, cheddar, gekarameliseerde uien, olive saus, bieslook, sla kaas <br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
-            <img src="assets/img/menu/spinach-salad.jpg" class="menu-img" alt="">
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3373.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
             <div class="menu-content">
-              <a href="#">Spinach Salad</a><span>$9.95</span>
+              <a href="#">Pesto Chicken</a><span>€17.50</span>
             </div>
             <div class="menu-ingredients">
-              Fresh spinach with mushrooms, hard boiled egg, and warm bacon vinaigrette
+              Bio rundvlees, cheddar, gekarameliseerde uien, olive saus, bieslook, sla kaas <br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3398.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Spicy Chicken</a><span>€17.50</span>
+            </div>
+            <div class="menu-ingredients">
+              Kipfilet, pikant tomaten, mozzarella saus, coleslaw, jalapenos, kaas <br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3427.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Smash 'N Onion </a><span>€18.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Bio rundvlees, uienringen, cheddar, peterselie, olive saus, wortel
+              <br />
+              Keuze uit: Friet, American potatoes en Nachos
+            </div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3447.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Fish</a><span>€16.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Fish steak, truffelsaus, roomkaas, tomaat, uien, dille, rucola, kaas <br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Mexicaanse</a><span>€18.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Bio rundvlees, roomkaas, parmigiano, guacamole, salsa, rucola, uien, tomaat, kaas<br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-burgers">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Veggie</a><span>€14.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Gegrilde paprika, gegrilde courgette, olive sauce, tomaat, uien, sla, kaas<br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-specialty">
-            <img src="assets/img/menu/lobster-roll.jpg" class="menu-img" alt="">
+          <!-- Kindermenu -->
+          <div class="col-lg-6 menu-item filter-kindermenu">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
             <div class="menu-content">
-              <a href="#">Lobster Roll</a><span>$12.95</span>
+              <a href="#">Kip nuggets</a><span>€9.50</span>
             </div>
             <div class="menu-ingredients">
-              Plump lobster meat, mayo and crisp lettuce on a toasted bulky roll
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-kindermenu">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Cripsy kip burger</a><span>€10.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Gegrilde paprika, gegrilde courgette, olive sauce, tomaat, uien, sla, kaas<br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-kindermenu">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Veggie burger</a><span>€14.00</span>
+            </div>
+            <div class="menu-ingredients">
+              Gegrilde paprika, gegrilde courgette, olive sauce, tomaat, uien, sla, kaas<br />
+              Keuze uit: Friet, American potatoes en Nachos</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
-        </div>
+          <!-- Supplementen -->
+          <div class="col-lg-6 menu-item filter-supplementen">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Portie frietjes</a><span>€4.99</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-supplementen">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Portie American patatoes</a><span>€4.99</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-supplementen">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Portie champignonsaus</a><span>€3.50</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-supplementen">
+            <img src="assets/img/golden/IMG_3356.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Portie diabolique saus</a><span>€3.50</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
 
-      </div>
+          <!-- Desserten -->
+
+          <div class="col-lg-6 menu-item filter-desserten">
+            <img src="assets/img/golden/IMG_7297.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Daim chocolate crunchy caramel cake</a><span>€7.00</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-desserten">
+            <img src="assets/img/golden/IMG_7297.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Dame Blanche</a><span>€7.00</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-desserten">
+            <img src="assets/img/golden/IMG_7297.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Moelleux chocolat</a><span>€7.00</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mocktails -->
+          <div class="col-lg-6 menu-item filter-mocktails">
+            <img src="assets/img/golden/IMG_2018.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Classic Mojito</a><span>€9.50</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-mocktails">
+            <img src="assets/img/golden/IMG_2018.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Strawberry Mojito</a><span>€9.50</span>
+            </div>
+            <div class="menu-ingredients">
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-mocktails">
+            <img src="assets/img/golden/IMG_2018.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Mojito Mango Wave</a><span>€9.50</span>
+            </div>
+            <div class="menu-ingredients">
+              Mango, spicy, limoen</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-mocktails">
+            <img src="assets/img/golden/IMG_2018.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Mojito Rosso</a><span>€9.50</span>
+            </div>
+            <div class="menu-ingredients">
+              Limoen, framboos, violet</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-mocktails">
+            <img src="assets/img/golden/IMG_2018.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Mojito Ipanema</a><span>€9.50</span>
+            </div>
+            <div class="menu-ingredients">
+              Passievrucht, limoen, gember</div>
+            <div class="allergens">
+              <span class="allergen" title="Gluten">G</span>
+              <span class="allergen" title="Shellfish">S</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-mocktails">
+            <img src="assets/img/golden/IMG_2018.JPEG" class="menu-img"
+              alt="the golden olive antwerpen pesto chicken burger">
+            <div class="menu-content">
+              <a href="#">Mojito Blue Hawaii</a><span>€9.50</span>
+            </div>
+            <div class="menu-ingredients">
+
+              <div class="allergens">
+                <span class="allergen" title="Gluten">G</span>
+                <span class="allergen" title="Shellfish">S</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frisdranken -->
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/water-05l.jpg" class="menu-img" alt="Water 0.5L">
+            <div class="menu-content">
+              <a href="#">Water 0.5L</a><span>€5.00</span>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/bruiswater-05l.jpg" class="menu-img" alt="Bruiswater 0.5L">
+            <div class="menu-content">
+              <a href="#">Bruiswater 0.5L</a><span>€5.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/coca-cola.jpg" class="menu-img" alt="Coca Cola">
+            <div class="menu-content">
+              <a href="#">Coca Cola</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/cola-zero.jpg" class="menu-img" alt="Cola Zero">
+            <div class="menu-content">
+              <a href="#">Cola Zero</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/fanta.jpg" class="menu-img" alt="Fanta">
+            <div class="menu-content">
+              <a href="#">Fanta</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/fuze-tea-lemon.jpg" class="menu-img" alt="Fuze Tea Lemon">
+            <div class="menu-content">
+              <a href="#">Fuze Tea Lemon</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/fuze-tea-peach.jpg" class="menu-img" alt="Fuze Tea Peach">
+            <div class="menu-content">
+              <a href="#">Fuze Tea Peach</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/minute-maid-apple.jpg" class="menu-img" alt="Minute Maid Apple">
+            <div class="menu-content">
+              <a href="#">Minute Maid Apple</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-frisdranken">
+            <img src="assets/img/menu/sprite.jpg" class="menu-img" alt="Sprite">
+            <div class="menu-content">
+              <a href="#">Sprite</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <!-- Warme Dranken -->
+
+          <!-- Warme Dranken -->
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/lipton-thee.jpg" class="menu-img" alt="Lipton Thee">
+            <div class="menu-content">
+              <a href="#">Lipton Thee</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/koffie.jpg" class="menu-img" alt="Koffie">
+            <div class="menu-content">
+              <a href="#">Koffie</a><span>€3.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/cappuccino.jpg" class="menu-img" alt="Cappuccino">
+            <div class="menu-content">
+              <a href="#">Cappuccino</a><span>€3.50</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/munt-thee.jpg" class="menu-img" alt="Munt Thee">
+            <div class="menu-content">
+              <a href="#">Munt Thee</a><span>€3.50</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/expresso.jpg" class="menu-img" alt="Expresso">
+            <div class="menu-content">
+              <a href="#">Expresso</a><span>€2.50</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/latte-macchiato.jpg" class="menu-img" alt="Latte Macchiato">
+            <div class="menu-content">
+              <a href="#">Latte Macchiato</a><span>€4.00</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/koffie-met-melk.jpg" class="menu-img" alt="Koffie met melk">
+            <div class="menu-content">
+              <a href="#">Koffie met melk</a><span>€3.50</span>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-warme-dranken">
+            <img src="assets/img/warme-dranken/dubbele-expresso.jpg" class="menu-img" alt="Dubbele Expresso">
+            <div class="menu-content">
+              <a href="#">Dubbele Expresso</a><span>€3.00</span>
+            </div>
+          </div>
+
     </section><!-- End Menu Section -->
-
-    <!-- ======= Specials Section ======= -->
-    <section id="specials" class="specials">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Specials</h2>
-          <p>Check Our Specials</p>
-        </div>
-
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-3">
-            <ul class="nav nav-tabs flex-column">
-              <li class="nav-item">
-                <a class="nav-link active show" data-bs-toggle="tab" href="#tab-1">Modi sit est</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tab-2">Unde praesentium sed</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tab-3">Pariatur explicabo vel</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tab-4">Nostrum qui quasi</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#tab-5">Iusto ut expedita aut</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-lg-9 mt-4 mt-lg-0">
-            <div class="tab-content">
-              <div class="tab-pane active show" id="tab-1">
-                <div class="row">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Architecto ut aperiam autem id</h3>
-                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer
-                      a videna mareta paulona marka</p>
-                    <p>Et nobis maiores eius. Voluptatibus ut enim blanditiis atque harum sint. Laborum eos ipsum ipsa
-                      odit magni. Incidunt hic ut molestiae aut qui. Est repellat minima eveniet eius et quis magni
-                      nihil. Consequatur dolorem quaerat quos qui similique accusamus nostrum rem vero</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/specials-1.png" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="tab-2">
-                <div class="row">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Et blanditiis nemo veritatis excepturi</h3>
-                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer
-                      a videna mareta paulona marka</p>
-                    <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt
-                      est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque
-                      beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/specials-2.png" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="tab-3">
-                <div class="row">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
-                    <p class="fst-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus
-                      non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
-                    <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque
-                      necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum
-                      odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/specials-3.png" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="tab-4">
-                <div class="row">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Fuga dolores inventore laboriosam ut est accusamus laboriosam dolore</h3>
-                    <p class="fst-italic">Totam aperiam accusamus. Repellat consequuntur iure voluptas iure porro quis
-                      delectus</p>
-                    <p>Eaque consequuntur consequuntur libero expedita in voluptas. Nostrum ipsam necessitatibus aliquam
-                      fugiat debitis quis velit. Eum ex maxime error in consequatur corporis atque. Eligendi asperiores
-                      sed qui veritatis aperiam quia a laborum inventore</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/specials-4.png" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane" id="tab-5">
-                <div class="row">
-                  <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Est eveniet ipsam sindera pad rone matrelat sando reda</h3>
-                    <p class="fst-italic">Omnis blanditiis saepe eos autem qui sunt debitis porro quia.</p>
-                    <p>Exercitationem nostrum omnis. Ut reiciendis repudiandae minus. Omnis recusandae ut non quam ut
-                      quod eius qui. Ipsum quia odit vero atque qui quibusdam amet. Occaecati sed est sint aut vitae
-                      molestiae voluptate vel</p>
-                  </div>
-                  <div class="col-lg-4 text-center order-1 order-lg-2">
-                    <img src="assets/img/specials-5.png" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- End Specials Section -->
 
     <!-- ======= Events Section ======= -->
     <section id="events" class="events">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Events</h2>
-          <p>Organize Your Events in our Restaurant</p>
+          <h2>Evenementen</h2>
+          <h3>Organiseer Jouw Evenementen bij Ons</h3>
         </div>
 
         <div class="events-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
@@ -428,12 +884,12 @@
             <div class="swiper-slide">
               <div class="row event-item">
                 <div class="col-lg-6">
-                  <img src="assets/img/event-birthday.jpg" class="img-fluid" alt="">
+                  <img src="assets/img/event-birthday.jpg" class="img-fluid" alt="the goldenolive antwerpen">>
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0 content">
                   <h3>Birthday Parties</h3>
                   <div class="price">
-                    <p><span>$189</span></p>
+                    <p><span>€189</span></p>
                   </div>
                   <p class="fst-italic">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -460,12 +916,12 @@
             <div class="swiper-slide">
               <div class="row event-item">
                 <div class="col-lg-6">
-                  <img src="assets/img/event-private.jpg" class="img-fluid" alt="">
+                  <img src="assets/img/event-private.jpg" class="img-fluid" alt="the goldenolive antwerpen">>
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0 content">
                   <h3>Private Parties</h3>
                   <div class="price">
-                    <p><span>$290</span></p>
+                    <p><span>€290</span></p>
                   </div>
                   <p class="fst-italic">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -492,12 +948,12 @@
             <div class="swiper-slide">
               <div class="row event-item">
                 <div class="col-lg-6">
-                  <img src="assets/img/event-custom.jpg" class="img-fluid" alt="">
+                  <img src="assets/img/event-custom.jpg" class="img-fluid" alt="the goldenolive antwerpen">>
                 </div>
                 <div class="col-lg-6 pt-4 pt-lg-0 content">
                   <h3>Custom Parties</h3>
                   <div class="price">
-                    <p><span>$99</span></p>
+                    <p><span>€99</span></p>
                   </div>
                   <p class="fst-italic">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -587,94 +1043,6 @@
       </div>
     </section><!-- End Book A Table Section -->
 
-    <!-- ======= Testimonials Section ======= -->
-    <section id="testimonials" class="testimonials section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Testimonials</h2>
-          <p>What they're saying about us</p>
-        </div>
-
-        <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium
-                  quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Ceo &amp; Founder</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis
-                  quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Designer</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim
-                  tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Store Owner</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit
-                  minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt Brandon</h3>
-                <h4>Freelancer</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                  Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa
-                  labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Entrepreneur</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-    </section><!-- End Testimonials Section -->
 
     <!-- ======= Gallery Section ======= -->
     <section id="gallery" class="gallery">
@@ -693,7 +1061,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-1.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-1.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -701,7 +1069,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-2.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-2.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -709,7 +1077,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-3.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-3.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-3.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -717,7 +1085,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-4.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-4.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-4.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -725,7 +1093,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-5.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-5.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-5.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -733,7 +1101,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-6.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-6.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-6.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -741,7 +1109,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-7.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-7.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-7.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -749,7 +1117,7 @@
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
               <a href="assets/img/gallery/gallery-8.jpg" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
+                <img src="assets/img/gallery/gallery-8.jpg" alt="the goldenolive antwerpen"> class="img-fluid">
               </a>
             </div>
           </div>
@@ -758,76 +1126,6 @@
 
       </div>
     </section><!-- End Gallery Section -->
-
-    <!-- ======= Chefs Section ======= -->
-    <section id="chefs" class="chefs">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Chefs</h2>
-          <p>Our Proffesional Chefs</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6">
-            <div class="member" data-aos="zoom-in" data-aos-delay="100">
-              <img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Walter White</h4>
-                  <span>Master Chef</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="member" data-aos="zoom-in" data-aos-delay="200">
-              <img src="assets/img/chefs/chefs-2.jpg" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Sarah Jhonson</h4>
-                  <span>Patissier</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <div class="member" data-aos="zoom-in" data-aos-delay="300">
-              <img src="assets/img/chefs/chefs-3.jpg" class="img-fluid" alt="">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>William Anderson</h4>
-                  <span>Cook</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Chefs Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
@@ -978,14 +1276,10 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>THE GOLDEN OLIVE</span></strong>. All Rights Reserved
+        &copy;2024 Copyright <strong><span>The Golden Olive</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://theGoldenOlive/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://theGoldenOlive/THE GOLDEN OLIVE-restaurant-template/ -->
-        Designed by <a href="https://theGoldenOlive/">BootstrapMade</a>
+        BTW-nummer <a href="#">BE0738909475</a>
       </div>
     </div>
   </footer><!-- End Footer -->
