@@ -125,6 +125,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 996;
 }
 
+
 #topbar.topbar-scrolled {
   top: -40px;
 }
@@ -1564,6 +1565,9 @@ section {
     transform: rotate(0deg);
   }
   100% {
+
+
+
     transform: rotate(360deg);
   }
 }
@@ -1589,6 +1593,7 @@ section {
   margin-bottom: 30px;
 }
 
+
 #footer .footer-top .footer-info h3 {
   font-size: 24px;
   margin: 0 0 20px 0;
@@ -1607,6 +1612,9 @@ section {
   color: #fff;
 }
 
+.footer-info img{
+  max-width: 100%;
+}
 #footer .footer-top .social-links a {
   font-size: 18px;
   display: inline-block;
@@ -1746,3 +1754,20 @@ section {
   cursor: pointer;
 }
 
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info>div {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+@media (max-width: 576px) {
+  #topbar {
+    display: none !important;
+  }
+}
