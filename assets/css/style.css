@@ -1766,8 +1766,21 @@ section {
   text-align: center;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
+  .logo-mobile {
+    width: 100% !important; /* Logo takes full width on mobile */
+    max-width: 300px; /* Set a max width if needed */
+    height: 800px !important; /* Maintain aspect ratio */
+  }
   #topbar {
     display: none !important;
+  }
+}
+/* Optional: Adjust for larger mobile screens */
+@media (min-width: 768px) and (max-width: 991px) {
+  .logo-mobile {
+    width: 75% !important; /* Logo takes 75% width on tablets */
+    max-width: 250px !important; /* Set a max width if needed */
+    height: auto; /* Maintain aspect ratio */
   }
 }
