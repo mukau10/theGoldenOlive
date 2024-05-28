@@ -13,7 +13,7 @@
 
   <!-- Favicons -->
   <link href="assets/img/favicon11.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/img/favicon11.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link
@@ -77,25 +77,22 @@
   </header>
 
   <section id="hero" class="d-flex align-items-center">
+    <video autoplay muted loop class="video-background">
+      <source src="./assets/img/header_video.mov" type="video/mp4">
+    </video>
     <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">
       <div class="row">
         <div class="col-lg-8">
-          <h1>Welcome bij <span>THE GOLDEN OLIVE</span></h1>
+          <h1>Welcome bij <br /><span>THE GOLDEN OLIVE</span></h1>
           <h2>Good food, is good mood!</h2>
-
           <div class="btns">
             <a href="#menu" class="btn-menu animated fadeInUp scrollto">Ons Menu</a>
-            <a href="#contact" class="btn-book animated fadeInUp scrollto">Reserveren</a>
           </div>
         </div>
-        <div class="col-lg-4 d-flex align-items-center justify-content-center position-relative" data-aos="zoom-in"
-          data-aos-delay="200">
-          <a href="#" class="glightbox play-btn" autoplay></a>
-        </div>
-
       </div>
     </div>
   </section>
+
 
   <main id="main">
 
@@ -152,9 +149,12 @@
           <div class="col-lg-4 mt-4 mt-lg-0">
             <div class="box" data-aos="zoom-in" data-aos-delay="300">
               <span>03</span>
-              <h4> Reserveren</h4>
-              <p>Maak nu je reservering en verzeker jezelf van een heerlijke culinaire ervaring bij The Golden Olive.
-              </p><br /><br />
+              <h4>Reserveren</h4>
+              <p>Reserveren is echter niet noodzakelijk, want wij werken met een 'first come, first serve'-beleid.</p>
+              <br /><br />
+              <div class="btns" style="text-align: center;">
+                <a href="tel:+32494194397" class="btn-book animated fadeInUp scrollto">Bel voor reservering</a>
+              </div>
             </div>
           </div>
 
@@ -188,7 +188,6 @@
             </ul>
           </div>
         </div>
-
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
 
           <div class="col-lg-6 menu-item filter-voorgerechten">
@@ -201,8 +200,11 @@
               Met zoetzure saus
             </div>
             <div class="allergens">
-              <span class="allergen" title="Gluten">G</span>
-              <span class="allergen" title="Shellfish">S</span>
+              <div class="allergens">
+                <span class="allergen" title="Gluten" data-toggle="modal" data-target="#allergenModal">G</span>
+                <span class="allergen" title="Shellfish" data-toggle="modal" data-target="#allergenModal">S</span>
+                <span class="allergen" title="Mustard">M</span>
+              </div>
             </div>
           </div>
           <!-- Voorgerechten -->
@@ -217,7 +219,8 @@
             </div>
             <div class="allergens">
               <span class="allergen" title="Gluten">G</span>
-              <span class="allergen" title="Shellfish">S</span>
+              <span class="allergen" title="Sesame">Se</span>
+              <span class="allergen" title="Soja">S</span>
             </div>
           </div>
 
@@ -254,7 +257,6 @@
               Met zoetzure saus </div>
             <div class="allergens">
               <span class="allergen" title="Gluten">G</span>
-              <span class="allergen" title="Shellfish">S</span>
             </div>
           </div>
 
@@ -267,7 +269,8 @@
               Met zoetzure saus </div>
             <div class="allergens">
               <span class="allergen" title="Gluten">G</span>
-              <span class="allergen" title="Shellfish">S</span>
+              <span class="allergen" title="Milk">M</span>
+              <span class="allergen" title="Eggs">E</span>
             </div>
           </div>
           <!-- Mixed Grill -->
@@ -278,7 +281,8 @@
               <a href="#">Mixed Grill</a><span>€39,99</span>
             </div>
             <div class="menu-ingredients">
-              8 soorten vlees, geserveerd met Champignon saus en salade
+              Verschillende soorten vlees, geserveerd met Champignon saus, salade en friet | american patatoes | nachos
+              <br />
             </div>
           </div>
           <!-- Kumpir -->
@@ -907,16 +911,16 @@
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/golden/IMG_2169.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_2169.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+              <a href="assets/img/golden/mixedGrill.JPEG" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/golden/mixedGrill.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/golden/IMG_1801.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_1801.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+              <a href="assets/img/golden/tigerGarnalen.JPEG" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/golden/tigerGarnalen.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
               </a>
             </div>
           </div>
@@ -939,32 +943,32 @@
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/golden/IMG_4192.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_4192.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+              <a href="assets/img/golden/kumpir1.JPEG" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/golden/kumpir1.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/golden/IMG_2018.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_2018.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+              <a href="assets/img/golden/mocktail3.JPEG" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/golden/mocktail3.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/golden/IMG_4219.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_4219.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+              <a href="assets/img/golden/kumpir.JPEG" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/golden/kumpir.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
             <div class="gallery-item">
-              <a href="assets/img/golden/IMG_7297.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_7297.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+              <a href="assets/img/golden/dessert.JPEG" class="gallery-lightbox" data-gall="gallery-item">
+                <img src="assets/img/golden/dessert.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
               </a>
             </div>
           </div>
