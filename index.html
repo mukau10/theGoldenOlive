@@ -171,23 +171,207 @@
         <div class="section-title">
           <h2>Menu</h2>
           <p>Ons Menu</p>
+          <div class="text-center mt-3">
+            <div class="mt-2">
+              <small class="text-muted">
+                <i class="bi bi-info-circle"></i> 
+                Klik op de allergenen codes bij elk gerecht voor meer informatie
+              </small>
+            </div>
+          </div>
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="menu-flters">
-              <li data-filter=".filter-voorgerechten">Voorgerechten</li>
-              <li data-filter=".filter-mixed-grill">Mixed Grill</li>
-              <li data-filter=".filter-kumpir">Kumpir</li>
-              <li data-filter=".filter-spareribs">Spareribs</li>
-              <li data-filter=".filter-burgers">Burgers</li>
-              <li data-filter=".filter-kindermenu">Kindermenu</li>
-              <li data-filter=".filter-supplementen">Supplementen</li>
-              <li data-filter=".filter-desserten">Desserten</li>
-              <li data-filter=".filter-mocktails">Mocktails</li>
-              <li data-filter=".filter-frisdranken">Frisdranken</li>
-              <li data-filter=".filter-warme-dranken">Warme Dranken</li>
-            </ul>
+          <div class="col-lg-12">
+            <div class="menu-categories-container">
+              <!-- Universal Carousel Layout for All Screens -->
+              <div class="menu-category-carousel">
+                <div class="swiper category-swiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="menu-category-card filter-active" data-filter="*">
+                        <div class="category-icon">
+                          <i class="bi bi-grid-3x3-gap"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Alles</h4>
+                          <p>Complete Menu</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Bekijk Alles</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-voorgerechten">
+                        <div class="category-icon">
+                          <i class="bi bi-egg-fried"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Voorgerechten</h4>
+                          <p>Starters & Appetizers</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-mixed-grill">
+                        <div class="category-icon">
+                          <i class="bi bi-fire"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Mixed Grill</h4>
+                          <p>Vlees & Grill Specials</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-kumpir">
+                        <div class="category-icon">
+                          <i class="bi bi-egg-fill"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Kumpir</h4>
+                          <p>Gevulde Aardappelen</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-spareribs">
+                        <div class="category-icon">
+                          <i class="bi bi-bone"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Spareribs</h4>
+                          <p>BBQ Specialties</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-burgers">
+                        <div class="category-icon">
+                          <i class="bi bi-cup-hot"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Burgers</h4>
+                          <p>Gourmet Burgers</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-kindermenu">
+                        <div class="category-icon">
+                          <i class="bi bi-emoji-smile"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Kindermenu</h4>
+                          <p>Kids Specials</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-supplementen">
+                        <div class="category-icon">
+                          <i class="bi bi-plus-circle"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Supplementen</h4>
+                          <p>Extra Toppings</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-desserten">
+                        <div class="category-icon">
+                          <i class="bi bi-cake2"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Desserten</h4>
+                          <p>Sweet Treats</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-mocktails">
+                        <div class="category-icon">
+                          <i class="bi bi-cup-straw"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Mocktails</h4>
+                          <p>Alcohol-Free Drinks</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-frisdranken">
+                        <div class="category-icon">
+                          <i class="bi bi-droplet"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Frisdranken</h4>
+                          <p>Soft Drinks</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <div class="menu-category-card" data-filter=".filter-warme-dranken">
+                        <div class="category-icon">
+                          <i class="bi bi-cup-hot-fill"></i>
+                        </div>
+                        <div class="category-content">
+                          <h4>Warme Dranken</h4>
+                          <p>Hot Beverages</p>
+                        </div>
+                        <div class="category-hover">
+                          <span>Ontdek</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Pagination dots -->
+                  <div class="swiper-pagination category-pagination">
+            </div>
           </div>
         </div>
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
@@ -202,11 +386,9 @@
               Met zoetzure saus
             </div>
             <div class="allergens">
-              <div class="allergens">
-                <span class="allergen" title="Gluten" data-toggle="modal" data-target="#allergenModal">G</span>
-                <span class="allergen" title="Shellfish" data-toggle="modal" data-target="#allergenModal">S</span>
-                <span class="allergen" title="Mustard">M</span>
-              </div>
+              <span class="allergen" data-allergen="Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)" title="Gluten">G</span>
+              <span class="allergen" data-allergen="Schaaldieren - Garnalen, krabben en kreeften" title="Shellfish">S</span>
+              <span class="allergen" data-allergen="Mosterd - Alle soorten mosterd" title="Mustard">M</span>
             </div>
           </div>
           <!-- Voorgerechten -->
@@ -220,9 +402,10 @@
               Met zoetzure saus<br />Keuze uit: Natuur, Zoetzure saus en BBQ Saus
             </div>
             <div class="allergens">
-              <span class="allergen" title="Gluten">G</span>
-              <span class="allergen" title="Sesame">Se</span>
-              <span class="allergen" title="Soja">S</span>
+              <span class="allergen" data-allergen="Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)" title="Gluten">G</span>
+              <span class="allergen" data-allergen="Sesamzaad - Sesamzaad of sesamzaadolie" title="Sesame">Se</span>
+              <span class="allergen" data-allergen="Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel" title="Soy">So</span>
+              <span class="allergen" data-allergen="Mosterd - Alle soorten mosterd" title="Mustard">M</span>
             </div>
           </div>
 
@@ -273,6 +456,7 @@
               <span class="allergen" title="Gluten">G</span>
               <span class="allergen" title="Milk">M</span>
               <span class="allergen" title="Eggs">E</span>
+              <span class="allergen" title="Soy">So</span>
             </div>
           </div>
           <!-- Mixed Grill -->
@@ -551,7 +735,6 @@
             <div class="menu-ingredients">
               <div class="allergens">
                 <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
               </div>
             </div>
           </div>
@@ -563,7 +746,6 @@
             <div class="menu-ingredients">
               <div class="allergens">
                 <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
               </div>
             </div>
           </div>
@@ -575,7 +757,7 @@
             <div class="menu-ingredients">
               <div class="allergens">
                 <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" title="Milk">M</span>
               </div>
             </div>
           </div>
@@ -587,7 +769,7 @@
             <div class="menu-ingredients">
               <div class="allergens">
                 <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" title="Mustard">M</span>
               </div>
             </div>
           </div>
@@ -601,8 +783,9 @@
             </div>
             <div class="menu-ingredients">
               <div class="allergens">
-                <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" data-allergen="Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)" title="Gluten">G</span>
+                <span class="allergen" data-allergen="Melk - Inclusief lactose, boter, kaas, room en yoghurt" title="Milk">M</span>
+                <span class="allergen" data-allergen="Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen" title="Eggs">E</span>
               </div>
             </div>
           </div>
@@ -614,7 +797,8 @@
             <div class="menu-ingredients">
               <div class="allergens">
                 <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" title="Milk">M</span>
+                <span class="allergen" title="Eggs">E</span>
               </div>
             </div>
           </div>
@@ -626,7 +810,8 @@
             <div class="menu-ingredients">
               <div class="allergens">
                 <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" title="Milk">M</span>
+                <span class="allergen" title="Eggs">E</span>
               </div>
             </div>
           </div>
@@ -640,8 +825,7 @@
             </div>
             <div class="menu-ingredients">
               <div class="allergens">
-                <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" data-allergen="Sulfiet - Zwaveldioxide, gebruikt als conserveermiddel" title="Sulfites">Su</span>
               </div>
             </div>
           </div>
@@ -654,8 +838,7 @@
             </div>
             <div class="menu-ingredients">
               <div class="allergens">
-                <span class="allergen" title="Gluten">G</span>
-                <span class="allergen" title="Shellfish">S</span>
+                <span class="allergen" title="Sulfites">Su</span>
               </div>
             </div>
           </div>
@@ -1056,6 +1239,195 @@
   </footer>
 
 
+  <!-- Allergen Information Modal -->
+  <div class="modal fade" id="allergenModal" tabindex="-1" role="dialog" aria-labelledby="allergenModalLabel" aria-hidden="true" style="z-index: 9999;">
+    <div class="modal-dialog modal-fullscreen-sm-down modal-xl" role="document" style="z-index: 10000;">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="allergenModalLabel">
+            <i class="bi bi-exclamation-triangle"></i> Allergenen Informatie
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeAllergenModal()"></button>
+        </div>
+        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+          <!-- Warning Alert -->
+          <div class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Belangrijk:</strong> Als u allergisch bent voor bepaalde ingrediënten, informeer dan altijd het personeel voordat u bestelt. 
+            Wij doen ons best om allergenen te vermijden, maar kunnen geen garantie geven vanwege gedeelde keukenruimte.
+          </div>
+
+          <!-- Allergen Codes Overview -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <h6 class="text-primary"><i class="bi bi-list-check"></i> Allergenen Overzicht</h6>
+              <div class="row">
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="card border-primary h-100">
+                    <div class="card-header bg-primary text-white">
+                      <strong>Voedselallergenen</strong>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-6">
+                          <p class="mb-2"><span class="allergen badge bg-danger">G</span> <small>Gluten</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">S</span> <small>Schaaldieren</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">E</span> <small>Eieren</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">F</span> <small>Vis</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">P</span> <small>Pinda</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">So</span> <small>Soja</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">M</span> <small>Melk</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">N</span> <small>Noten</small></p>
+                        </div>
+                        <div class="col-6">
+                          <p class="mb-2"><span class="allergen badge bg-danger">Ce</span> <small>Selderij</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">M</span> <small>Mosterd</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">Se</span> <small>Sesamzaad</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">Su</span> <small>Sulfiet</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">L</span> <small>Lupine</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">M</span> <small>Weekdieren</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">C</span> <small>Kokosnoot</small></p>
+                          <p class="mb-2"><span class="allergen badge bg-danger">P</span> <small>Varken</small></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-3">
+                  <div class="card border-success h-100">
+                    <div class="card-header bg-success text-white">
+                      <strong>Speciale Diëten</strong>
+                    </div>
+                    <div class="card-body">
+                      <p class="mb-2"><span class="allergen badge bg-success">V</span> <small>Vegetarisch</small></p>
+                      <p class="mb-2"><span class="allergen badge bg-success">V</span> <small>Veganistisch</small></p>
+                      <p class="mb-2"><span class="allergen badge bg-success">GF</span> <small>Glutenvrij</small></p>
+                      <p class="mb-2"><span class="allergen badge bg-success">LF</span> <small>Lactose-vrij</small></p>
+                      <p class="mb-2"><span class="allergen badge bg-success">H</span> <small>Halal</small></p>
+                      <p class="mb-2"><span class="allergen badge bg-warning">A</span> <small>Beïnvloedt kinderen</small></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-12 mb-3">
+                  <div class="card border-info h-100">
+                    <div class="card-header bg-info text-white">
+                      <strong>Hoe te gebruiken</strong>
+                    </div>
+                    <div class="card-body">
+                      <p class="mb-2"><i class="bi bi-info-circle"></i> <small>Zoek naar de allergenen codes bij elk gerecht</small></p>
+                      <p class="mb-2"><i class="bi bi-exclamation-triangle"></i> <small>Rode badges = Allergenen</small></p>
+                      <p class="mb-2"><i class="bi bi-check-circle"></i> <small>Groene badges = Veilig voor dieet</small></p>
+                      <p class="mb-2"><i class="bi bi-question-circle"></i> <small>Twijfelt u? Vraag het personeel</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detailed Information -->
+          <div class="row">
+            <div class="col-12">
+              <h6 class="text-primary"><i class="bi bi-info-circle"></i> Gedetailleerde Allergenen Informatie</h6>
+              <div class="accordion" id="allergenAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <span class="allergen badge bg-danger me-2">G</span> <span class="d-none d-sm-inline">Gluten</span>
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#allergenAccordion">
+                    <div class="accordion-body" style="color: #000;">
+                      <strong>Glutenbevattende granen:</strong> gluten komt in meerdere graansoorten voor; namelijk tarwe, rogge, gerst, spelt en khorasantarwe (kamut). Haver is in principe glutenvrij maar is vaak verontreinigd met tarwe waardoor haver vaak toch gluten bevat. Gluten zijn bepaalde eiwitten uit deze graansoorten welke structuur geven aan deegproducten en brood. Mensen met coeliakie (glutenintolerantie) mogen geen gluten eten.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <span class="allergen badge bg-danger me-2">S</span> <span class="d-none d-sm-inline">Schaaldieren</span>
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#allergenAccordion">
+                    <div class="accordion-body" style="color: #000;">
+                      <strong>Schaaldieren:</strong> schaaldieren hebben een gesegmenteerd lichaam met een harde schaal of schil. Het gaat om garnalen, krabben en kreeften.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <span class="allergen badge bg-danger me-2">E</span> <span class="d-none d-sm-inline">Eieren</span>
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#allergenAccordion">
+                    <div class="accordion-body" style="color: #000;">
+                      <strong>Eieren:</strong> Een ei bestaat uit eigeel - de dooier - en eiwit. Beiden kunnen allergische reacties geven. Ei wordt o.a. gebruikt als glanslaagje op gebak, voor het luchtig maken van gerechten, binden van pudding, flan of sauzen of als hechting voor het paneren van producten.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      <span class="allergen badge bg-danger me-2">M</span> <span class="d-none d-sm-inline">Melk</span>
+                    </button>
+                  </h2>
+                  <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#allergenAccordion">
+                    <div class="accordion-body" style="color: #000;">
+                      <strong>Melk (inclusief lactose):</strong> Allerlei producten worden gemaakt van melk, zoals boter, kaas, kwark, room en yoghurt, flan, pudding. Er is verschil tussen een allergie en intolerantie voor melk. Bij melkallergie reageert men -vaak heftig- op de eiwitten, bij een lactose-intolerantie worden de melksuikers (lactose) niet verdragen door een stofwisselingsstoornis.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                      <span class="allergen badge bg-danger me-2">So</span> <span class="d-none d-sm-inline">Soja</span>
+                    </button>
+                  </h2>
+                  <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#allergenAccordion">
+                    <div class="accordion-body" style="color: #000;">
+                      <strong>Soja:</strong> soja is een peulvrucht waarbij de boontjes uit de peul verwerkt worden tot olie, lecithine of meel en allerlei afgeleide producten.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                      <span class="allergen badge bg-danger me-2">N</span> <span class="d-none d-sm-inline">Noten</span>
+                    </button>
+                  </h2>
+                  <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#allergenAccordion">
+                    <div class="accordion-body" style="color: #000;">
+                      <strong>Noten:</strong> amandelen, hazelnoten, walnoten, cashewnoten, pecannoten, paranoten, pistachenoten en macadamianoten.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="row mt-4">
+            <div class="col-12">
+              <div class="alert alert-info" role="alert">
+                <i class="bi bi-telephone"></i>
+                <strong>Heeft u vragen over allergenen?</strong> Neem contact op met ons personeel of bel ons op <a href="tel:+32494194397" class="alert-link">+32 494 19 43 97</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bottom spacing for scrolling -->
+          <div class="pb-3"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="closeAllergenModal()">
+            <i class="bi bi-check-circle"></i> Begrepen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
       class="bi bi-arrow-up-short"></i></a>
@@ -1066,6 +1438,151 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <!-- Allergen Modal JavaScript -->
+  <script>
+    function openAllergenModal() {
+      const modal = document.getElementById('allergenModal');
+      if (modal) {
+        const bootstrapModal = new bootstrap.Modal(modal);
+        bootstrapModal.show();
+      }
+    }
+
+    function closeAllergenModal() {
+      const modal = document.getElementById('allergenModal');
+      if (modal) {
+        const modalInstance = bootstrap.Modal.getInstance(modal);
+        if (modalInstance) {
+          modalInstance.hide();
+        } else {
+          // Fallback: manually hide the modal
+          modal.classList.remove('show');
+          modal.style.display = 'none';
+          document.body.classList.remove('modal-open');
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.remove();
+          }
+        }
+      }
+    }
+
+    // Ensure modal appears on top
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('allergenModal');
+      if (modal) {
+        modal.style.zIndex = '9999';
+        const modalDialog = modal.querySelector('.modal-dialog');
+        if (modalDialog) {
+          modalDialog.style.zIndex = '10000';
+        }
+      }
+    });
+
+    // Add event listener for escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeAllergenModal();
+      }
+    });
+
+    // Add event listener for clicking outside the modal
+    document.addEventListener('click', function(event) {
+      const modal = document.getElementById('allergenModal');
+      if (modal && event.target === modal) {
+        closeAllergenModal();
+      }
+    });
+
+    // Allergen interaction functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const allergens = document.querySelectorAll('.allergen');
+      
+      allergens.forEach(allergen => {
+        // Add click event to show detailed info
+        allergen.addEventListener('click', function(e) {
+          e.preventDefault();
+          const allergenInfo = this.getAttribute('data-allergen');
+          if (allergenInfo) {
+            showAllergenInfo(allergenInfo, this);
+          }
+        });
+
+        // Add touch event for mobile
+        allergen.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          const allergenInfo = this.getAttribute('data-allergen');
+          if (allergenInfo) {
+            showAllergenInfo(allergenInfo, this);
+          }
+        });
+      });
+    });
+
+    function showAllergenInfo(info, element) {
+      // Create a temporary info popup
+      const popup = document.createElement('div');
+      popup.className = 'allergen-popup';
+      popup.innerHTML = `
+        <div class="allergen-popup-content">
+          <div class="allergen-popup-header">
+            <h6>Allergenen Informatie</h6>
+            <button class="allergen-popup-close">&times;</button>
+          </div>
+          <div class="allergen-popup-body">
+            <p>${info}</p>
+          </div>
+        </div>
+      `;
+      
+      // Style the popup
+      popup.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border: 2px solid #cda45e;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 10000;
+        max-width: 300px;
+        width: 90%;
+        color: #000;
+      `;
+      
+      document.body.appendChild(popup);
+      
+      // Close button functionality
+      const closeBtn = popup.querySelector('.allergen-popup-close');
+      closeBtn.addEventListener('click', () => {
+        document.body.removeChild(popup);
+      });
+      
+      // Close on outside click
+      popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+          document.body.removeChild(popup);
+        }
+      });
+      
+      // Auto close after 5 seconds
+      setTimeout(() => {
+        if (document.body.contains(popup)) {
+          document.body.removeChild(popup);
+        }
+      }, 5000);
+    }
+  </script>
+
+  <!-- Floating Allergen Button -->
+  <div class="floating-allergen-btn" onclick="openAllergenModal()">
+    <div class="floating-btn-content">
+      <i class="bi bi-exclamation-triangle"></i>
+      <span class="floating-btn-text">Allergenen</span>
+    </div>
+  </div>
 
 </body>
 

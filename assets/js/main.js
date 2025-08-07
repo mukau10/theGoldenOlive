@@ -177,9 +177,9 @@
         layoutMode: 'fitRows'
       });
 
-      let menuFilters = select('#menu-flters li', true);
+      let menuFilters = select('.menu-category-card', true);
 
-      on('click', '#menu-flters li', function(e) {
+      on('click', '.menu-category-card', function(e) {
         e.preventDefault();
         menuFilters.forEach(function(el) {
           el.classList.remove('filter-active');
@@ -247,6 +247,48 @@
       1200: {
         slidesPerView: 3,
         spaceBetween: 20
+      }
+    }
+  });
+
+  /**
+   * Menu Categories Carousel
+   */
+  new Swiper('.category-swiper', {
+    speed: 600,
+    loop: false,
+    slidesPerView: 'auto',
+    spaceBetween: 20,
+    centeredSlides: true,
+    pagination: {
+      el: '.category-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1.2,
+        spaceBetween: 15
+      },
+      480: {
+        slidesPerView: 1.5,
+        spaceBetween: 20
+      },
+      768: {
+        slidesPerView: 2.5,
+        spaceBetween: 25
+      },
+      992: {
+        slidesPerView: 3.5,
+        spaceBetween: 30
+      },
+      1200: {
+        slidesPerView: 4.5,
+        spaceBetween: 35
+      },
+      1400: {
+        slidesPerView: 5.5,
+        spaceBetween: 40
       }
     }
   });

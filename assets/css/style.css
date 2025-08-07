@@ -921,54 +921,352 @@ section {
 /*--------------------------------------------------------------
 # Menu Section
 --------------------------------------------------------------*/
-.menu #menu-flters {
-  padding: 0;
-  margin: 0 auto 0 auto;
-  list-style: none;
+/* Modern Menu Categories */
+.menu-categories-container {
+  margin-bottom: 50px;
+}
+
+.menu-category-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(205, 164, 94, 0.3);
+  border-radius: 16px;
+  padding: 25px;
   text-align: center;
-  border-radius: 50px;
-}
-
-.menu #menu-flters li {
   cursor: pointer;
-  display: inline-block;
-  padding: 8px 12px 10px 12px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1;
-  color: #fff;
-  margin-bottom: 10px;
-  transition: all ease-in-out 0.3s;
-  border-radius: 50px;
-  font-family: "Playfair Display", serif;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.menu #menu-flters li:hover,
-.menu #menu-flters li.filter-active {
+.menu-category-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(205, 164, 94, 0.1) 0%, rgba(205, 164, 94, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 16px;
+}
+
+.menu-category-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(205, 164, 94, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.menu-category-card:hover::before {
+  opacity: 1;
+}
+
+.menu-category-card.filter-active {
+  background: linear-gradient(135deg, rgba(205, 164, 94, 0.2) 0%, rgba(205, 164, 94, 0.1) 100%);
+  border-color: rgba(205, 164, 94, 0.8);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(205, 164, 94, 0.3);
+}
+
+.category-icon {
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.category-icon i {
+  font-size: 2.5rem;
   color: #cda45e;
+  transition: all 0.3s ease;
 }
 
-.menu #menu-flters li:last-child {
-  margin-right: 0;
+.menu-category-card:hover .category-icon i {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+.category-content {
+  position: relative;
+  z-index: 2;
+}
+
+.category-content h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 5px 0;
+  transition: color 0.3s ease;
+}
+
+.category-content p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-style: italic;
+  transition: color 0.3s ease;
+}
+
+.menu-category-card:hover .category-content h4,
+.menu-category-card:hover .category-content p {
+  color: #fff;
+}
+
+.category-hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.category-hover span {
+  background: rgba(205, 164, 94, 0.9);
+  color: #1a1814;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.menu-category-card:hover .category-hover {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Mobile Carousel Styles */
+.menu-category-carousel {
+  margin-bottom: 30px;
+}
+
+.category-swiper {
+  padding: 20px 0 40px 0;
+}
+
+.category-swiper .swiper-slide {
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.category-swiper .menu-category-card {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  min-height: 140px;
+  padding: 20px;
+}
+
+
+
+.category-pagination {
+  bottom: 0;
+}
+
+.category-pagination .swiper-pagination-bullet {
+  background: rgba(205, 164, 94, 0.5);
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.category-pagination .swiper-pagination-bullet-active {
+  background: #cda45e;
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .menu-category-card {
+    padding: 20px;
+    min-height: 160px;
+  }
+  
+  .category-icon i {
+    font-size: 2rem;
+  }
+  
+  .category-content h4 {
+    font-size: 1.1rem;
+  }
+  
+  .category-content p {
+    font-size: 0.8rem;
+  }
+  
+  .category-swiper .menu-category-card {
+    min-height: 120px;
+    padding: 18px;
+  }
+  
+
+}
+
+@media (max-width: 576px) {
+  .menu-category-card {
+    padding: 18px;
+    min-height: 140px;
+  }
+  
+  .category-icon i {
+    font-size: 1.8rem;
+  }
+  
+  .category-content h4 {
+    font-size: 1rem;
+  }
+  
+  .category-content p {
+    font-size: 0.75rem;
+  }
+  
+  .category-swiper .menu-category-card {
+    min-height: 110px;
+    padding: 15px;
+  }
+  
+
+}
+
+/* Floating Allergen Button */
+.floating-allergen-btn {
+  position: fixed;
+  bottom: 15px;
+  right: 70px;
+  z-index: 995;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.floating-allergen-btn:hover {
+  transform: scale(1.1);
+}
+
+.floating-btn-content {
+  background: linear-gradient(135deg, #cda45e 0%, #b8945a 100%);
+  color: #1a1814;
+  padding: 15px 20px;
+  border-radius: 50px;
+  box-shadow: 0 8px 25px rgba(205, 164, 94, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.floating-btn-content:hover {
+  background: linear-gradient(135deg, #b8945a 0%, #a88450 100%);
+  box-shadow: 0 12px 35px rgba(205, 164, 94, 0.6);
+  transform: translateY(-2px);
+}
+
+.floating-btn-content i {
+  font-size: 18px;
+  color: #1a1814;
+}
+
+.floating-btn-text {
+  white-space: nowrap;
+}
+
+/* Mobile responsive for floating button */
+@media (max-width: 768px) {
+  .floating-allergen-btn {
+    bottom: 15px;
+    right: 65px;
+  }
+  
+  .floating-btn-content {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  
+  .floating-btn-content i {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .floating-allergen-btn {
+    bottom: 15px;
+    right: 60px;
+  }
+  
+  .floating-btn-content {
+    padding: 10px 14px;
+    font-size: 12px;
+  }
+  
+  .floating-btn-content i {
+    font-size: 15px;
+  }
+  
+  .floating-btn-text {
+    display: none;
+  }
+  
+  .floating-btn-content {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    padding: 0;
+  }
 }
 
 .menu .menu-item {
-  margin-top: 50px;
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu .menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .menu .menu-img {
-  width: 70px;
-  border-radius: 50%;
-  float: left;
-  border: 5px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu .menu-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .menu .menu-content {
-  margin-left: 85px;
+  margin-left: 0;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 10px;
+  flex-grow: 0;
 }
 
 .menu .menu-content::after {
@@ -1008,11 +1306,13 @@ section {
 }
 
 .menu .menu-ingredients {
-  margin-left: 85px;
+  margin-left: 0;
   font-style: italic;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
   color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 10px;
+  flex-grow: 0;
 }
 
 /*--------------------------------------------------------------
@@ -1791,22 +2091,362 @@ section {
 --------------------------------------------------------------*/
 .allergens {
   display: flex;
-  justify-content: center;
-  margin-top: 5px; /* Adjust as needed */
+  justify-content: flex-start;
+  margin-top: 8px;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px 0;
+  flex-grow: 1;
+  align-self: flex-end;
 }
 
 .allergen {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background-color: #ff7f7f; /* Adjust color as needed */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  background-color: #dc3545;
   color: #fff;
   text-align: center;
-  line-height: 20px;
+  line-height: 1;
   border-radius: 50%;
-  font-size: 12px;
-  margin-right: 5px; /* Adjust spacing between allergens */
+  font-size: 11px;
+  font-weight: bold;
+  margin: 0;
   cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  user-select: none;
+  text-decoration: none;
+}
+
+.allergen:hover {
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.5);
+  border-color: #fff;
+  z-index: 1000;
+}
+
+.allergen:active {
+  transform: scale(0.95);
+}
+
+/* Allergen tooltip styles */
+.allergen[data-allergen]:hover::after {
+  content: attr(data-allergen);
+  position: absolute;
+  background: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1001;
+  margin-top: -45px;
+  margin-left: -50px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  border: 1px solid #cda45e;
+  font-weight: normal;
+  min-width: 120px;
+  text-align: center;
+}
+
+.allergen[data-allergen]:hover::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.95);
+  z-index: 1001;
+}
+
+/* Allergen popup styles */
+.allergen-popup-content {
+  padding: 0;
+}
+
+.allergen-popup-header {
+  background: #cda45e;
+  color: #000;
+  padding: 12px 16px;
+  border-radius: 6px 6px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.allergen-popup-header h6 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.allergen-popup-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #000;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.allergen-popup-close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.allergen-popup-body {
+  padding: 16px;
+  color: #000;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.allergen-popup-body p {
+  margin: 0;
+  color: #000;
+}
+
+/* Allergen badge styles for modal */
+.allergen.badge {
+  font-size: 14px;
+  padding: 8px 12px;
+  margin: 2px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: auto;
+  height: auto;
+  line-height: 1.2;
+}
+
+.allergen.badge.bg-danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.allergen.badge.bg-success {
+  background-color: #198754 !important;
+  color: white !important;
+}
+
+.allergen.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: black !important;
+}
+
+.allergen.badge.bg-info {
+  background-color: #0dcaf0 !important;
+  color: white !important;
+}
+
+/* Allergen tooltip styles */
+.allergen[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-top: -40px;
+  margin-left: -50px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid #cda45e;
+}
+
+/* Modal scrolling improvements */
+.modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: #cda45e #1a1814;
+  color: #000 !important;
+}
+
+/* Modal text color overrides */
+.modal .card-body {
+  color: #000 !important;
+}
+
+.modal .card-body small {
+  color: #000 !important;
+}
+
+.modal .card-body p {
+  color: #000 !important;
+}
+
+.modal .accordion-body {
+  color: #000 !important;
+}
+
+/* Modal z-index fixes */
+.modal {
+  z-index: 9999 !important;
+}
+
+.modal-backdrop {
+  z-index: 9998 !important;
+}
+
+.modal-dialog {
+  z-index: 10000 !important;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: #1a1814;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #cda45e;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #d9ba85;
+}
+
+/* Mobile responsive styles for allergens */
+@media (max-width: 768px) {
+  .modal-body {
+    max-height: 80vh !important;
+  }
+  
+  .menu .menu-img {
+    height: 180px;
+  }
+  
+  .menu .menu-item {
+    padding: 15px;
+    margin-top: 20px;
+    height: 350px;
+  }
+}
+  
+  .allergens {
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+  
+  .allergen {
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    font-size: 11px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+  }
+  
+  .allergen.badge {
+    font-size: 12px;
+    padding: 6px 10px;
+    margin: 1px;
+  }
+  
+  /* Improve modal readability on mobile */
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+  
+  .modal-body {
+    padding: 1rem;
+  }
+  
+  .card-body {
+    padding: 0.75rem;
+  }
+  
+  .card-body p {
+    font-size: 0.875rem;
+    line-height: 1.4;
+  }
+  
+  .accordion-button {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .accordion-body {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Make allergen badges more visible on mobile */
+  .allergen.badge.bg-danger,
+  .allergen.badge.bg-success,
+  .allergen.badge.bg-warning,
+  .allergen.badge.bg-info {
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (max-width: 576px) {
+  .menu .menu-img {
+    height: 160px;
+  }
+  
+  .menu .menu-item {
+    padding: 12px;
+    margin-top: 15px;
+    height: 320px;
+  }
+  
+  .allergen {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+  }
+  
+  .allergen.badge {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  
+  .modal-dialog {
+    margin: 0.25rem;
+  }
+  
+  .modal-body {
+    padding: 0.75rem;
+  }
+  
+  .card-body {
+    padding: 0.5rem;
+  }
+  
+  .card-body p {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .accordion-button {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .accordion-body {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
 }
 
 .info {
@@ -1843,7 +2483,7 @@ section {
   border: 2px solid gold !important; /* Gold border */
   padding: 10px 20px !important; /* Padding to make the button look better */
   text-decoration: none !important; /* Remove underline from the link */
-  color: black !important; /* Text color */
+  color: white !important; /* Text color */
   display: inline-block !important; /* Makes the link behave like a button */
   font-weight: bold !important; /* Makes the text bold */
   transition: background-color 0.3s, color 0.3s, border-color 0.3s !important; /* Smooth transition for hover effects */
