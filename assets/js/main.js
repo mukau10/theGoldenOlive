@@ -223,68 +223,180 @@
   });
 
   /**
-   * Menu Categories Carousel
+   * Enhanced Menu Categories Carousel with modern features
    */
       const categorySwiper = new Swiper('.category-swiper', {
-      speed: 600,
+      speed: 800,
       loop: false,
       slidesPerView: 'auto',
-      spaceBetween: 20,
+      spaceBetween: 24,
       centeredSlides: true,
       allowTouchMove: true,
       preventClicks: false,
       preventClicksPropagation: false,
+      grabCursor: true,
+      watchSlidesProgress: true,
+      parallax: true,
+      effect: 'slide',
+      coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 100,
+        modifier: 2,
+        slideShadows: false,
+      },
       navigation: {
         enabled: false
       },
       pagination: {
         el: '.category-pagination',
         type: 'bullets',
-        clickable: true
+        clickable: true,
+        dynamicBullets: true,
+        dynamicMainBullets: 3,
+        renderBullet: function (index, className) {
+          return '<span class="' + className + ' w-3 h-3 bg-golden-400/30 hover:bg-golden-400/60 rounded-full transition-all duration-300 cursor-pointer"></span>';
+        }
+      },
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: true,
+        pauseOnMouseEnter: true,
+      },
+      freeMode: {
+        enabled: true,
+        sticky: false,
+        momentumRatio: 0.25,
+        momentumVelocityRatio: 0.25,
+      },
+      mousewheel: {
+        enabled: true,
+        forceToAxis: true,
+        sensitivity: 0.5,
       },
     breakpoints: {
       320: {
-        slidesPerView: 1.2,
-        spaceBetween: 15
+        slidesPerView: 1.3,
+        spaceBetween: 16,
+        centeredSlides: true
       },
       480: {
-        slidesPerView: 1.5,
-        spaceBetween: 20
+        slidesPerView: 1.8,
+        spaceBetween: 20,
+        centeredSlides: true
       },
       768: {
-        slidesPerView: 2.5,
-        spaceBetween: 25
+        slidesPerView: 2.8,
+        spaceBetween: 24,
+        centeredSlides: false
       },
       992: {
-        slidesPerView: 3.5,
-        spaceBetween: 30
+        slidesPerView: 3.8,
+        spaceBetween: 28,
+        centeredSlides: false
       },
       1200: {
-        slidesPerView: 4.5,
-        spaceBetween: 35
+        slidesPerView: 4.8,
+        spaceBetween: 32,
+        centeredSlides: false
       },
       1400: {
         slidesPerView: 5.5,
-        spaceBetween: 40
+        spaceBetween: 36,
+        centeredSlides: false
+      }
+    },
+    on: {
+      init: function () {
+        console.log('Category carousel initialized');
+      },
+      slideChange: function () {
+        // Update pagination progress bar
+        const progressBar = document.querySelector('.swiper-pagination-progressbar-fill');
+        if (progressBar) {
+          const progress = (this.activeIndex / (this.slides.length - this.slidesPerViewDynamic())) * 100;
+          progressBar.style.width = Math.min(progress, 100) + '%';
+        }
+        
+        // Update main carousel progress bar
+        const carouselProgressBar = document.querySelector('.carousel-progress-bar');
+        if (carouselProgressBar) {
+          const carouselProgress = (this.activeIndex / (this.slides.length - this.slidesPerViewDynamic())) * 100;
+          carouselProgressBar.style.width = Math.min(carouselProgress, 100) + '%';
+        }
+      },
+      progress: function (swiper, progress) {
+        // Real-time progress update for smoother animation
+        const carouselProgressBar = document.querySelector('.carousel-progress-bar');
+        if (carouselProgressBar) {
+          carouselProgressBar.style.width = (progress * 100) + '%';
+        }
+      },
+      touchStart: function () {
+        // Add touch feedback
+        this.el.style.transform = 'scale(0.98)';
+      },
+      touchEnd: function () {
+        // Remove touch feedback
+        this.el.style.transform = 'scale(1)';
       }
     }
   });
 
-  // Custom navigation for category carousel
+  // Enhanced custom navigation for category carousel
   const nextButton = document.querySelector('.category-swiper-button-next');
   const prevButton = document.querySelector('.category-swiper-button-prev');
   
   if (nextButton) {
-    nextButton.addEventListener('click', () => {
+    nextButton.addEventListener('click', (e) => {
+      e.preventDefault();
       categorySwiper.slideNext();
+      
+      // Add visual feedback
+      nextButton.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        nextButton.style.transform = 'scale(1)';
+      }, 150);
     });
   }
   
   if (prevButton) {
-    prevButton.addEventListener('click', () => {
+    prevButton.addEventListener('click', (e) => {
+      e.preventDefault();
       categorySwiper.slidePrev();
+      
+      // Add visual feedback
+      prevButton.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        prevButton.style.transform = 'scale(1)';
+      }, 150);
     });
   }
+
+  // Add keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && prevButton) {
+      categorySwiper.slidePrev();
+    } else if (e.key === 'ArrowRight' && nextButton) {
+      categorySwiper.slideNext();
+    }
+  });
+
+  // Auto-hide navigation on mobile when not needed
+  function updateNavigationVisibility() {
+    const container = document.querySelector('.menu-category-carousel');
+    if (container && window.innerWidth < 768) {
+      const isScrollable = categorySwiper.slides.length > categorySwiper.slidesPerViewDynamic();
+      if (nextButton) nextButton.style.display = isScrollable ? 'flex' : 'none';
+      if (prevButton) prevButton.style.display = isScrollable ? 'flex' : 'none';
+    } else {
+      if (nextButton) nextButton.style.display = 'flex';
+      if (prevButton) prevButton.style.display = 'flex';
+    }
+  }
+
+  window.addEventListener('resize', updateNavigationVisibility);
+  updateNavigationVisibility();
 
   /**
    * Menu filtering functionality
@@ -358,73 +470,87 @@
 
 })()
 
-// Menu Items Component System
+// Menu Items Component System - DIRECT HTML GENERATION
 function createMenuItemComponent(itemData, category) {
-  const template = document.getElementById('menu-item-template');
-  const clone = template.content.cloneNode(true);
-  
-  // Set basic properties
-  const menuItem = clone.querySelector('.menu-item');
-  menuItem.classList.add(`filter-${category}`);
+  // Create menu item directly with HTML
+  const menuItem = document.createElement('div');
+  menuItem.className = `menu-item filter-${category} bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 rounded-2xl overflow-hidden hover:border-golden-400/50 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-golden-400/20 transition-all duration-500 h-full group`;
   menuItem.setAttribute('data-item-id', itemData.id);
   
-  // Set image
-  const img = menuItem.querySelector('img');
-  img.src = itemData.image;
-  img.alt = itemData.alt;
-  
-  // Set title and price
-  const title = menuItem.querySelector('a');
-  title.textContent = itemData.name;
-  title.href = `#${itemData.id}`;
-  
-  const price = menuItem.querySelector('span');
-  price.textContent = itemData.price;
-  
-  // Set description
-  const description = menuItem.querySelector('.text-white\\/70');
-  description.innerHTML = itemData.description;
-  
-  // Create allergens for the main allergen section
-  const allergensContainer = menuItem.querySelector('.flex.flex-wrap.gap-2');
-  allergensContainer.innerHTML = '';
-  
-  // Create allergen symbols for the breadcrumb section
-  const allergenSymbolsContainer = menuItem.querySelector('.allergen-symbols');
-  allergenSymbolsContainer.innerHTML = '';
-  
+  // Generate allergen HTML for breadcrumb section
+  let breadcrumbAllergensHTML = '';
   itemData.allergens.forEach(allergen => {
-    // Create allergen badge for main section
-    const allergenSpan = document.createElement('span');
-    allergenSpan.className = `allergen bg-${allergen.color}-500/20 text-${allergen.color}-300 border border-${allergen.color}-500/30 px-2 py-1 rounded-full text-xs font-medium hover:bg-${allergen.color}-500/30 transition-colors cursor-pointer`;
-    allergenSpan.textContent = allergen.code;
-    allergenSpan.setAttribute('data-allergen', allergen.description);
-    allergenSpan.setAttribute('title', allergen.type);
-    allergenSpan.setAttribute('role', 'button');
-    allergenSpan.setAttribute('tabindex', '0');
+    const colors = {
+      'red': '#dc3545', 'orange': '#ff7e00', 'yellow': '#ffc107',
+      'green': '#28a745', 'blue': '#007bff', 'purple': '#6f42c1',
+      'cyan': '#17a2b8', 'amber': '#ff9f43'
+    };
+    const bgColor = colors[allergen.color] || '#dc3545';
+    const textColor = allergen.color === 'yellow' ? '#000' : '#fff';
     
-    // Add click event for allergen info
-    allergenSpan.addEventListener('click', function() {
-      showAllergenInfo(allergen.description);
+    breadcrumbAllergensHTML += `
+      <span class="allergen-symbol allergen-${allergen.color} inline-flex items-center justify-center w-7 h-7 rounded-full font-bold text-xs cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg relative z-10" 
+            data-allergen="${allergen.description}"
+            title="${allergen.type}: ${allergen.description}"
+            style="background: ${bgColor} !important; color: ${textColor} !important; border: 2px solid ${bgColor} !important; box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;">
+        ${allergen.code}
+      </span>`;
+  });
+  
+
+  
+  // Set complete HTML content
+  menuItem.innerHTML = `
+    <div class="relative overflow-hidden">
+      <!-- Image with overlay -->
+      <div class="relative">
+        <img class="w-full object-cover transition-transform duration-500 group-hover:scale-110" style="height: 300px;" src="${itemData.image}" alt="${itemData.alt}">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="absolute top-4 right-4 bg-golden-400/90 backdrop-blur-sm text-dark-900 px-3 py-1 rounded-full font-bold text-lg shadow-lg">
+          ${itemData.price}
+        </div>
+      </div>
+      
+      <!-- Content -->
+      <div class="p-6 flex flex-col h-full">
+        <!-- Title -->
+        <div class="mb-4">
+          <a href="#${itemData.id}" class="text-xl font-playfair font-bold text-white hover:text-golden-400 transition-colors duration-300 group-hover:text-golden-300">
+            ${itemData.name}
+          </a>
+        </div>
+        
+        <!-- Description -->
+        <div class="text-white/70 text-sm mb-6 flex-grow min-h-[3rem] leading-relaxed group-hover:text-white/80 transition-colors duration-300">
+          ${itemData.description}
+        </div>
+        
+        <!-- Allergen Section -->
+        <div class="mt-auto bg-dark-700/50 rounded-xl p-4 border border-golden-400/10 group-hover:border-golden-400/20 transition-colors duration-300">
+          <div class="mb-3">
+            <div class="flex items-center gap-2 mb-1">
+              <i class="bi bi-shield-exclamation text-golden-400 text-base"></i>
+              <span class="text-sm text-golden-300 font-semibold">Allergenen</span>
+            </div>
+            <div class="text-xs text-white/60 italic ml-6">Klik voor details</div>
+          </div>
+          <div class="flex flex-wrap gap-2 allergen-symbols">
+            ${breadcrumbAllergensHTML}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Add click events to all allergen elements
+  const allergenElements = menuItem.querySelectorAll('.allergen, .allergen-symbol');
+  allergenElements.forEach(element => {
+    element.addEventListener('click', function() {
+      const description = this.getAttribute('data-allergen');
+      if (description) {
+        showAllergenInfo(description);
+      }
     });
-    
-    allergensContainer.appendChild(allergenSpan);
-    
-    // Create allergen symbol for breadcrumb section
-    const allergenSymbol = document.createElement('span');
-    allergenSymbol.className = `allergen-symbol bg-${allergen.color}-500/30 text-${allergen.color}-300 border border-${allergen.color}-500/50 px-1.5 py-0.5 rounded text-xs font-bold cursor-pointer hover:bg-${allergen.color}-500/50 transition-colors`;
-    allergenSymbol.textContent = allergen.code;
-    allergenSymbol.setAttribute('data-allergen', allergen.description);
-    allergenSymbol.setAttribute('title', `${allergen.type}: ${allergen.description}`);
-    allergenSymbol.setAttribute('role', 'button');
-    allergenSymbol.setAttribute('tabindex', '0');
-    
-    // Add click event for allergen info
-    allergenSymbol.addEventListener('click', function() {
-      showAllergenInfo(allergen.description);
-    });
-    
-    allergenSymbolsContainer.appendChild(allergenSymbol);
   });
   
   return menuItem;
@@ -434,52 +560,103 @@ function generateMenuItems() {
   const menuData = JSON.parse(document.getElementById('menu-items-data').textContent);
   const container = document.getElementById('menu-items-container');
   
+  if (!container) {
+    console.error('❌ Container not found!');
+    return;
+  }
+  
   // Clear existing items
   container.innerHTML = '';
+  
+  console.log('🚀 Starting new HTML generation...');
   
   // Generate items for each category
   Object.keys(menuData).forEach(category => {
     menuData[category].forEach(item => {
+      console.log(`📝 Generating HTML for ${item.name} with ${item.allergens.length} allergens`);
       const menuItem = createMenuItemComponent(item, category);
-      container.appendChild(menuItem);
+      if (menuItem) {
+        container.appendChild(menuItem);
+        console.log(`✅ Added ${item.name} to container`);
+      }
     });
   });
   
-  // Ensure proper grid layout without Isotope interference
+  // Ensure proper grid layout with modern responsive design
   setTimeout(() => {
     container.style.display = 'grid';
-    container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
-    container.style.gap = '1.5rem';
     container.style.width = '100%';
+    container.style.alignItems = 'stretch';
+    container.style.justifyContent = 'center';
+    container.style.margin = '0 auto';
     
-    // Ensure all menu items are properly displayed
+    // Add responsive breakpoint adjustments with proper centering
+    const updateGridLayout = () => {
+      const width = window.innerWidth;
+      if (width >= 1536) { // 2xl
+        container.style.gridTemplateColumns = 'repeat(4, 1fr)';
+        container.style.gap = '2rem';
+        container.style.maxWidth = '1536px';
+      } else if (width >= 1280) { // xl
+        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        container.style.gap = '1.5rem';
+        container.style.maxWidth = '1280px';
+      } else if (width >= 768) { // md
+        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        container.style.gap = '1.5rem';
+        container.style.maxWidth = '768px';
+      } else { // mobile
+        container.style.gridTemplateColumns = '1fr';
+        container.style.gap = '1rem';
+        container.style.maxWidth = '400px';
+        container.style.padding = '0 1rem';
+      }
+    };
+    
+    // Ensure all menu items are properly displayed with enhanced styling
     const menuItems = container.querySelectorAll('.menu-item');
     menuItems.forEach(item => {
-      item.style.display = 'block';
+      item.style.display = 'flex';
+      item.style.flexDirection = 'column';
       item.style.position = 'relative';
       item.style.width = '100%';
       item.style.height = 'auto';
       item.style.margin = '0';
       item.style.opacity = '1';
       item.style.transform = 'none';
+      item.style.minHeight = '600px';
     });
+    
+    updateGridLayout();
+    window.addEventListener('resize', updateGridLayout);
   }, 100);
 }
 
 function showAllergenInfo(description) {
-  // Create a modal for allergen information
+  // Create a modern modal for allergen information
   const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+  modal.className = 'fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fadeIn';
   modal.innerHTML = `
-    <div class="bg-dark-800 border border-golden-400/30 rounded-xl p-6 max-w-md w-full">
-      <div class="flex justify-between items-center mb-4">
-        <h3 class="text-xl font-playfair font-bold text-golden-400">Allergenen Informatie</h3>
-        <button class="text-white hover:text-golden-400 transition-colors text-2xl" onclick="this.closest('.fixed').remove()">&times;</button>
+    <div class="bg-gradient-to-br from-dark-800/95 to-dark-900/95 border-2 border-golden-400/40 rounded-2xl p-8 max-w-lg w-full shadow-2xl shadow-golden-400/20 backdrop-blur-lg transform animate-scaleIn">
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-3">
+          <i class="bi bi-shield-exclamation text-golden-400 text-2xl"></i>
+          <h3 class="text-2xl font-playfair font-bold text-golden-400">Allergenen Informatie</h3>
+        </div>
+        <button class="text-white/70 hover:text-golden-400 transition-all duration-300 text-3xl hover:scale-110 hover:rotate-90 w-10 h-10 flex items-center justify-center rounded-full hover:bg-golden-400/10" onclick="this.closest('.fixed').remove()">&times;</button>
       </div>
-      <p class="text-white/80 leading-relaxed">${description}</p>
-      <div class="mt-6 text-center">
-        <button class="bg-golden-400 text-dark-900 hover:bg-golden-300 px-6 py-2 rounded-full font-medium transition-colors" onclick="this.closest('.fixed').remove()">
-          Sluiten
+      
+      <!-- Content -->
+      <div class="bg-dark-700/50 rounded-xl p-6 border border-golden-400/20 mb-6">
+        <p class="text-white/90 leading-relaxed text-lg">${description}</p>
+      </div>
+      
+      <!-- Footer -->
+      <div class="flex justify-center gap-3">
+        <button class="bg-gradient-to-r from-golden-400 to-golden-500 text-dark-900 hover:from-golden-300 hover:to-golden-400 px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-golden-400/30" onclick="this.closest('.fixed').remove()">
+          <i class="bi bi-check-circle mr-2"></i>
+          Begrepen
         </button>
       </div>
     </div>
@@ -490,13 +667,58 @@ function showAllergenInfo(description) {
   // Close modal when clicking outside
   modal.addEventListener('click', function(e) {
     if (e.target === modal) {
-      modal.remove();
+      modal.classList.add('animate-fadeOut');
+      setTimeout(() => modal.remove(), 300);
     }
   });
+  
+  // Close with Escape key
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+      modal.classList.add('animate-fadeOut');
+      setTimeout(() => modal.remove(), 300);
+      document.removeEventListener('keydown', handleEscape);
+    }
+  };
+  document.addEventListener('keydown', handleEscape);
 }
 
 // Initialize menu items when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   generateMenuItems();
+  
+  // Debug: Check if allergens are actually in the DOM after 2 seconds
+  setTimeout(() => {
+    const allergens = document.querySelectorAll('.allergen');
+    const testAllergens = document.querySelectorAll('.allergen-red, .allergen-orange');
+    const menuItems = document.querySelectorAll('.menu-item');
+    
+    console.log(`🔍 Found ${allergens.length} total allergen elements in DOM`);
+    console.log(`🧪 Found ${testAllergens.length} test allergens`);
+    console.log(`📋 Found ${menuItems.length} menu items`);
+    
+    // Check containers in menu items
+    menuItems.forEach((item, index) => {
+      const breadcrumbContainer = item.querySelector('.allergen-symbols');
+      const mainContainer = item.querySelector('div.flex.flex-wrap.gap-2.mt-auto');
+      console.log(`Menu item ${index + 1}:`, {
+        breadcrumbContainer: !!breadcrumbContainer,
+        mainContainer: !!mainContainer,
+        breadcrumbChildren: breadcrumbContainer ? breadcrumbContainer.children.length : 0,
+        mainChildren: mainContainer ? mainContainer.children.length : 0
+      });
+    });
+    
+    if (allergens.length > 0) {
+      const firstAllergen = allergens[0];
+      console.log('🎯 First allergen:', {
+        element: firstAllergen,
+        classes: firstAllergen.className,
+        text: firstAllergen.textContent,
+        parent: firstAllergen.parentElement,
+        visible: firstAllergen.offsetWidth > 0 && firstAllergen.offsetHeight > 0
+      });
+    }
+  }, 2000);
 });
 

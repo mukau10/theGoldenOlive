@@ -48,7 +48,7 @@
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://the-goldenolive.be/sitemap.xml">
 
   <!-- Preload critical resources -->
-  <link rel="preload" href="assets/css/style.css" as="style">
+  <!-- Custom CSS preload removed -->
   <link rel="preload" href="assets/img/golden/IMG_4117.JPEG" as="image">
   <link rel="preload" href="assets/img/header_video.mov" as="video" type="video/mp4">
 
@@ -170,6 +170,7 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+  <!-- Minimal custom CSS for essential overrides -->
   <link href="assets/css/style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -231,17 +232,17 @@
 <body>
   <div id="topbar" class="fixed top-0 left-0 right-0 z-50 bg-dark-900/80 backdrop-blur-sm border-b border-dark-700">
     <div class="container mx-auto px-4 py-2">
-      <div class="flex items-center justify-center md:justify-between text-sm">
-        <div class="flex items-center space-x-4 text-golden-400">
+      <div class="flex items-center justify-center text-xs sm:text-sm">
+        <div class="flex items-center space-x-2 sm:space-x-4 text-golden-400 overflow-hidden">
           <div class="flex items-center">
-            <i class="bi bi-phone text-golden-500 mr-2"></i>
+            <i class="bi bi-phone text-golden-500 mr-1 sm:mr-2"></i>
             <span><a href="tel:+32494194397" class="text-white hover:text-golden-400 transition-colors">+32 494 19 43 97</a></span>
-      </div>
-          <div class="flex items-center">
+          </div>
+          <div class="hidden sm:flex items-center">
             <i class="bi bi-clock text-golden-500 mr-2"></i>
             <span class="text-white">Ma-Zo: 17:OO - 23:OO</span>
           </div>
-          <div class="flex items-center">
+          <div class="hidden md:flex items-center">
             <i class="bi bi-geo-alt text-golden-500 mr-2"></i>
             <span class="text-white">Vlaamsekaai 65, 2000 ANTWERPEN</span>
           </div>
@@ -255,7 +256,7 @@
       <div class="flex items-center justify-between">
       <!-- Text Logo-->
         <h1 class="logo">
-          <a href="index.html" class="text-2xl md:text-3xl font-playfair font-light tracking-wider text-white hover:text-golden-400 transition-colors" aria-label="The Golden Olive Homepage">
+          <a href="index.html" class="text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-playfair font-light tracking-wider text-white hover:text-golden-400 transition-colors" aria-label="The Golden Olive Homepage">
             THE GOLDEN OLIVE
           </a>
         </h1>
@@ -367,17 +368,17 @@
     <div class="absolute inset-0 bg-dark-900/50"></div>
     
     <!-- Content -->
-    <div class="relative z-10 container mx-auto px-4 text-center lg:text-left" data-aos="zoom-in" data-aos-delay="100">
+    <div class="relative z-10 container mx-auto px-4 text-center" data-aos="zoom-in" data-aos-delay="100">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-playfair font-bold text-white mb-4">
-          Welcome bij <br />
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-playfair font-bold text-white mb-4 leading-tight">
+          <span class="block sm:inline">Welcome bij</span> <br class="hidden sm:block" />
           <span class="text-golden-400">THE GOLDEN OLIVE</span>
         </h1>
-        <h2 class="text-xl md:text-2xl lg:text-3xl font-open-sans text-golden-300 mb-8">
+        <h2 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-open-sans text-golden-300 mb-8">
           Good food, is good mood!
         </h2>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <a href="#menu" class="btn-menu inline-block bg-transparent border-2 border-golden-400 text-golden-400 hover:bg-golden-400 hover:text-dark-900 px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105" aria-label="Bekijk ons menu">
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#menu" class="btn-menu inline-block bg-transparent border-2 border-golden-400 text-golden-400 hover:bg-golden-400 hover:text-dark-900 px-6 sm:px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-sm sm:text-base" aria-label="Bekijk ons menu">
             Ons Menu
           </a>
         </div>
@@ -390,20 +391,20 @@
 
   <main id="main" role="main">
 
-    <section id="about" class="py-20 bg-dark-900" aria-labelledby="about-heading">
+    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-dark-900" aria-labelledby="about-heading">
       <div class="container mx-auto px-4" data-aos="fade-up">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <!-- Image -->
           <div class="order-2 lg:order-1" data-aos="zoom-in" data-aos-delay="100">
             <div class="relative">
-              <img src="assets/img/golden/IMG_4117.JPEG" alt="The Golden Olive Restaurant Antwerpen interieur" loading="lazy" class="w-full h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl">
+              <img src="assets/img/golden/IMG_4117.JPEG" alt="The Golden Olive Restaurant Antwerpen interieur" loading="lazy" class="w-full h-64 sm:h-80 md:h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl">
               <div class="absolute inset-0 bg-gradient-to-t from-dark-900/50 to-transparent rounded-lg"></div>
             </div>
           </div>
           
           <!-- Content -->
           <div class="order-1 lg:order-2 lg:pl-8">
-            <h3 id="about-heading" class="text-3xl md:text-4xl font-playfair font-bold text-golden-400 mb-6">
+            <h3 id="about-heading" class="text-2xl sm:text-3xl md:text-4xl font-playfair font-bold text-golden-400 mb-4 sm:mb-6 text-center lg:text-left">
               Smaakvolle Ontmoetingen bij The Golden Olive
             </h3>
             <p class="text-lg text-white/80 leading-relaxed italic text-center lg:text-left">
@@ -462,349 +463,599 @@
       </div>
     </section>
 
-    <section id="menu" class="py-20 bg-dark-900">
+    <section id="menu" class="py-12 sm:py-16 lg:py-20 bg-dark-900">
       <div class="container mx-auto px-4" data-aos="fade-up">
-        <div class="text-center mb-16">
-          <h2 id="menu-heading" class="text-4xl md:text-5xl font-playfair font-bold text-golden-400 mb-4">Menu</h2>
-          <p class="text-xl text-white/70 mb-8">Ons Menu</p>
-          <div class="flex items-center justify-center text-golden-300 text-sm">
-            <i class="bi bi-info-circle mr-2" aria-hidden="true"></i> 
-            <span>Klik op de allergenen codes bij elk gerecht voor meer informatie</span>
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 id="menu-heading" class="text-3xl sm:text-4xl md:text-5xl font-playfair font-bold text-golden-400 mb-4">Menu</h2>
+          <p class="text-lg sm:text-xl text-white/70 mb-6 sm:mb-8">Ons Menu</p>
+          <div class="flex items-center justify-center text-golden-300 text-xs sm:text-sm px-4">
+            <i class="bi bi-info-circle mr-2 flex-shrink-0" aria-hidden="true"></i> 
+            <span class="text-center">Klik op de allergenen codes bij elk gerecht voor meer informatie</span>
           </div>
         </div>
 
-        <div class="mb-12" data-aos="fade-up" data-aos-delay="100">
-            <div class="menu-categories-container">
-              <!-- Universal Carousel Layout for All Screens -->
-              <div class="menu-category-carousel relative">
-                <div class="swiper category-swiper overflow-hidden">
+        <div class="mb-12 sm:mb-16" data-aos="fade-up" data-aos-delay="100">
+            <div class="menu-categories-container max-w-7xl mx-auto px-2 sm:px-4">
+              <!-- Enhanced Universal Carousel Layout for All Screens -->
+              <div class="menu-category-carousel relative bg-gradient-to-r from-dark-900/50 via-dark-800/30 to-dark-900/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl shadow-black/30 backdrop-blur-lg border border-golden-400/10">
+                <!-- Scroll Progress Bar -->
+                <div class="absolute top-0 left-0 right-0 h-1 bg-golden-400/20 rounded-t-3xl overflow-hidden">
+                  <div class="carousel-progress-bar h-full bg-gradient-to-r from-golden-400 to-golden-600 transition-all duration-300 w-0 shadow-lg shadow-golden-400/50"></div>
+                </div>
+                
+                <div class="swiper category-swiper overflow-hidden rounded-2xl mt-2">
                   <div class="swiper-wrapper flex">
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card filter-active bg-gradient-to-br from-golden-400 to-golden-600 border-2 border-golden-400 shadow-lg shadow-golden-400/25 cursor-pointer transition-all duration-300" data-filter="*">
-                      <div class="category-icon text-white">
-                        <i class="bi bi-grid-3x3-gap text-2xl"></i>
+                      <div class="menu-category-card filter-active relative overflow-hidden bg-gradient-to-br from-golden-400 to-golden-600 border-2 border-golden-400 shadow-2xl shadow-golden-400/40 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-3xl hover:shadow-golden-400/60 active:scale-95" data-filter="*">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-golden-300/20 to-golden-700/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Floating particles effect -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-2 w-2 h-2 bg-white/30 rounded-full animate-ping"></div>
+                          <div class="absolute top-4 right-4 w-1 h-1 bg-white/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-3 left-1/3 w-1.5 h-1.5 bg-white/20 rounded-full animate-bounce"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Alles</h4>
-                        <p class="text-white/90">Complete Menu</p>
+                        
+                        <div class="relative z-10 p-4 sm:p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-white mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-grid-3x3-gap text-2xl sm:text-3xl group-hover:rotate-12 transition-transform duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-base sm:text-lg mb-1 sm:mb-2 group-hover:text-white/95 transition-colors duration-300">Alles</h4>
+                            <p class="text-white/90 text-xs sm:text-sm group-hover:text-white/80 transition-colors duration-300">Complete Menu</p>
+                          </div>
+
                         </div>
-                        <div class="category-hover">
-                        <span class="text-white">Bekijk Alles</span>
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-br from-golden-300 to-golden-700 opacity-0 group-hover:opacity-30 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-voorgerechten">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-egg-fried text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-voorgerechten">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-golden-400/10 to-golden-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Subtle particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-3 right-3 w-1 h-1 bg-golden-400/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-golden-400/20 rounded-full animate-ping"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Voorgerechten</h4>
-                        <p class="text-white/70">Starters & Appetizers</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-egg-fried text-3xl group-hover:rotate-6 transition-transform duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Voorgerechten</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Starters & Appetizers</p>
+                          </div>
+
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-golden-400/20 to-golden-600/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-mixed-grill">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-fire text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-mixed-grill">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Fire particles effect -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-3 w-1 h-1 bg-red-400/60 rounded-full animate-pulse"></div>
+                          <div class="absolute top-4 right-2 w-1.5 h-1.5 bg-orange-400/40 rounded-full animate-ping"></div>
+                          <div class="absolute bottom-3 right-1/3 w-1 h-1 bg-yellow-400/50 rounded-full animate-bounce"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Mixed Grill</h4>
-                        <p class="text-white/70">Vlees & Grill Specials</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-fire text-3xl group-hover:text-red-400 group-hover:rotate-12 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Mixed Grill</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Vlees & Grill Specials</p>
+                          </div>
+
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-red-400/20 to-orange-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-kumpir">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-egg-fill text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-kumpir">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Subtle particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-3 right-3 w-1 h-1 bg-yellow-400/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-orange-400/20 rounded-full animate-ping"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Kumpir</h4>
-                        <p class="text-white/70">Gevulde Aardappelen</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-egg-fill text-3xl group-hover:text-yellow-400 group-hover:rotate-6 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Kumpir</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Gevulde Aardappelen</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-yellow-400/20 to-orange-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-spareribs">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-bone text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-spareribs">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-red-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- BBQ particles effect -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-3 w-1 h-1 bg-amber-400/60 rounded-full animate-pulse"></div>
+                          <div class="absolute top-4 right-2 w-1.5 h-1.5 bg-red-400/40 rounded-full animate-ping"></div>
+                          <div class="absolute bottom-3 right-1/3 w-1 h-1 bg-orange-400/50 rounded-full animate-bounce"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Spareribs</h4>
-                        <p class="text-white/70">BBQ Specialties</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-bone text-3xl group-hover:text-amber-400 group-hover:rotate-12 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Spareribs</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">BBQ Specialties</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-amber-400/20 to-red-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-burgers">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-cup-hot text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-burgers">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-yellow-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Subtle particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-3 right-3 w-1 h-1 bg-green-400/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-yellow-400/20 rounded-full animate-ping"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Burgers</h4>
-                        <p class="text-white/70">Gourmet Burgers</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-cup-hot text-3xl group-hover:text-green-400 group-hover:rotate-6 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Burgers</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Gourmet Burgers</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-green-400/20 to-yellow-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-kindermenu">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-emoji-smile text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-kindermenu">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Fun particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-2 w-1.5 h-1.5 bg-pink-400/60 rounded-full animate-bounce"></div>
+                          <div class="absolute top-4 right-3 w-1 h-1 bg-purple-400/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-3 right-1/4 w-1 h-1 bg-blue-400/50 rounded-full animate-ping"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Kindermenu</h4>
-                        <p class="text-white/70">Kids Specials</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-emoji-smile text-3xl group-hover:text-pink-400 group-hover:rotate-12 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Kindermenu</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Kids Specials</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-pink-400/20 to-purple-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-supplementen">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-plus-circle text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-supplementen">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Subtle particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-3 right-3 w-1 h-1 bg-emerald-400/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-teal-400/20 rounded-full animate-ping"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Supplementen</h4>
-                        <p class="text-white/70">Extra Toppings</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-plus-circle text-3xl group-hover:text-emerald-400 group-hover:rotate-180 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Supplementen</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Extra Toppings</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-emerald-400/20 to-teal-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-desserten">
-                      <div class="category-icon text-golden-400">
-                        <i class="bi bi-cake2 text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-desserten">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Sweet particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-3 w-1.5 h-1.5 bg-rose-400/60 rounded-full animate-pulse"></div>
+                          <div class="absolute top-4 right-2 w-1 h-1 bg-pink-400/40 rounded-full animate-ping"></div>
+                          <div class="absolute bottom-3 right-1/3 w-1 h-1 bg-purple-400/50 rounded-full animate-bounce"></div>
                         </div>
-                        <div class="category-content">
-                        <h4 class="text-white font-bold">Desserten</h4>
-                        <p class="text-white/70">Sweet Treats</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-cake2 text-3xl group-hover:text-rose-400 group-hover:rotate-6 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Desserten</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Sweet Treats</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-rose-400/20 to-pink-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-mocktails">
-                        <div class="category-icon text-golden-400">
-                          <i class="bi bi-cup-straw text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-mocktails">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Refreshing particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-3 w-1 h-1 bg-cyan-400/60 rounded-full animate-pulse"></div>
+                          <div class="absolute top-4 right-2 w-1.5 h-1.5 bg-blue-400/40 rounded-full animate-ping"></div>
+                          <div class="absolute bottom-3 left-1/4 w-1 h-1 bg-teal-400/50 rounded-full animate-bounce"></div>
                         </div>
-                        <div class="category-content">
-                          <h4 class="text-white font-bold">Mocktails</h4>
-                          <p class="text-white/70">Alcohol-Free Drinks</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-cup-straw text-3xl group-hover:text-cyan-400 group-hover:rotate-6 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Mocktails</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Alcohol-Free Drinks</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-cyan-400/20 to-blue-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-frisdranken">
-                        <div class="category-icon text-golden-400">
-                          <i class="bi bi-droplet text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-frisdranken">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-sky-500/10 to-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Fresh particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-3 right-3 w-1 h-1 bg-sky-400/40 rounded-full animate-pulse"></div>
+                          <div class="absolute bottom-4 left-4 w-1.5 h-1.5 bg-indigo-400/20 rounded-full animate-ping"></div>
                         </div>
-                        <div class="category-content">
-                          <h4 class="text-white font-bold">Frisdranken</h4>
-                          <p class="text-white/70">Soft Drinks</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-droplet text-3xl group-hover:text-sky-400 group-hover:rotate-6 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Frisdranken</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Soft Drinks</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-sky-400/20 to-indigo-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
 
                     <div class="swiper-slide flex-shrink-0">
-                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-warme-dranken">
-                        <div class="category-icon text-golden-400">
-                          <i class="bi bi-cup-hot-fill text-2xl"></i>
+                      <div class="menu-category-card relative overflow-hidden bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/30 hover:border-golden-400/70 cursor-pointer transition-all duration-500 rounded-2xl min-h-[200px] group hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/30 active:scale-95" data-filter=".filter-warme-dranken">
+                        <!-- Animated background overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <!-- Warm particles -->
+                        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div class="absolute top-2 left-3 w-1 h-1 bg-orange-400/60 rounded-full animate-pulse"></div>
+                          <div class="absolute top-4 right-2 w-1.5 h-1.5 bg-amber-400/40 rounded-full animate-ping"></div>
+                          <div class="absolute bottom-3 right-1/3 w-1 h-1 bg-yellow-400/50 rounded-full animate-bounce"></div>
                         </div>
-                        <div class="category-content">
-                          <h4 class="text-white font-bold">Warme Dranken</h4>
-                          <p class="text-white/70">Hot Beverages</p>
+                        
+                        <div class="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
+                          <div class="category-icon text-golden-400 mb-4 group-hover:scale-110 transition-transform duration-300">
+                            <i class="bi bi-cup-hot-fill text-3xl group-hover:text-orange-400 group-hover:rotate-6 transition-all duration-500"></i>
+                          </div>
+                          <div class="category-content">
+                            <h4 class="text-white font-bold text-lg mb-2 group-hover:text-golden-300 transition-colors duration-300">Warme Dranken</h4>
+                            <p class="text-white/70 text-sm group-hover:text-white/80 transition-colors duration-300">Hot Beverages</p>
+                          </div>
                         </div>
-                        <div class="category-hover">
-                        </div>
+                        
+                        <!-- Border glow effect -->
+                        <div class="absolute inset-0 rounded-2xl border border-transparent bg-gradient-to-br from-orange-400/20 to-amber-400/20 opacity-0 group-hover:opacity-50 transition-opacity duration-500 -z-10"></div>
                       </div>
                     </div>
                   </div>
                   
-                                      <!-- Navigation arrows -->
-                    <div class="category-swiper-button-next flex">
-                      <i class="bi bi-chevron-right text-golden-400 text-2xl"></i>
-                    </div>
-                    <div class="category-swiper-button-prev flex">
-                      <i class="bi bi-chevron-left text-golden-400 text-2xl"></i>
-                    </div>
+                  <!-- Enhanced Navigation arrows with modern design -->
+                  <div class="category-swiper-button-next absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-6 lg:-right-8 w-14 h-14 bg-gradient-to-br from-golden-400/20 to-golden-600/20 border-2 border-golden-400/50 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 z-30 backdrop-blur-md hover:bg-gradient-to-br hover:from-golden-400/40 hover:to-golden-600/40 hover:border-golden-400/80 hover:scale-110 hover:shadow-2xl hover:shadow-golden-400/40 group active:scale-95">
+                    <i class="bi bi-chevron-right text-golden-400 text-2xl font-bold group-hover:text-white transition-colors duration-300 group-hover:scale-110"></i>
+                    <div class="absolute inset-0 rounded-full bg-golden-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+                  </div>
+                  <div class="category-swiper-button-prev absolute top-1/2 -translate-y-1/2 -left-4 sm:-left-6 lg:-left-8 w-14 h-14 bg-gradient-to-br from-golden-400/20 to-golden-600/20 border-2 border-golden-400/50 rounded-full flex items-center justify-center cursor-pointer transition-all duration-500 z-30 backdrop-blur-md hover:bg-gradient-to-br hover:from-golden-400/40 hover:to-golden-600/40 hover:border-golden-400/80 hover:scale-110 hover:shadow-2xl hover:shadow-golden-400/40 group active:scale-95">
+                    <i class="bi bi-chevron-left text-golden-400 text-2xl font-bold group-hover:text-white transition-colors duration-300 group-hover:scale-110"></i>
+                    <div class="absolute inset-0 rounded-full bg-golden-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+                  </div>
                     
-                    <!-- Pagination dots -->
-                    <div class="swiper-pagination category-pagination">
-            </div>
+                  <!-- Enhanced Modern Pagination dots -->
+                  <div class="swiper-pagination category-pagination mt-8 flex justify-center items-center space-x-3 relative">
+                    <!-- Progress bar background -->
+                    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-golden-400/20 rounded-full overflow-hidden">
+                      <div class="swiper-pagination-progressbar-fill h-full bg-gradient-to-r from-golden-400 to-golden-600 rounded-full transition-all duration-300"></div>
+                    </div>
+                  </div>
+                  
+
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 menu-container items-stretch mb-8" data-aos="fade-up" data-aos-delay="200" id="menu-items-container" style="min-height: 400px; display: grid !important; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;">
-          <!-- Menu items will be dynamically generated here -->
+        <!-- TEST ALLERGEN - Should be visible -->
+        <div style="margin: 20px; padding: 20px;">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="w-full" data-aos="fade-up" data-aos-delay="200" id="menu-items-container" style="min-height: 400px;">
+            <!-- Menu items will be dynamically generated here -->
           </div>
+        </div>
     </section>
 
-    <section id="events" class="events">
-      <div class="container" data-aos="fade-up">
+    <section id="events" class="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 relative overflow-hidden">
+      <!-- Background decoration -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d4af37" fill-opacity="0.03"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
 
-        <div class="section-title">
-          <h2>Evenementen</h2>
-          <h3>Organiseer Jouw Evenementen bij Ons</h3>
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 bg-gradient-to-r from-golden-400 via-golden-300 to-golden-400 bg-clip-text text-transparent">Evenementen</h2>
+          <h3 class="text-lg sm:text-xl md:text-2xl text-golden-200/80 font-light px-4 text-center">Organiseer Jouw Evenementen bij Ons</h3>
+          <div class="w-16 sm:w-24 h-1 bg-gradient-to-r from-golden-400 to-golden-600 mx-auto mt-4 sm:mt-6 rounded-full"></div>
         </div>
 
-        <div class="events-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
+        <div class="events-slider swiper-container bg-gradient-to-r from-dark-900/50 via-dark-800/30 to-dark-900/50 rounded-3xl p-8 shadow-2xl shadow-black/30 backdrop-blur-lg border border-golden-400/10" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
 
             <div class="swiper-slide">
-              <div class="row event-item">
-                <div class="col-lg-5">
-                  <img src="assets/img/event-verjaardagen.jpg " class="img-fluid" alt="the goldenolive antwerpen">
-                </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Verjaardagen</h3>
-                  <p class="fst-italic">Vier jouw verjaardag in stijl met een uniek feest in ons restaurant.<br />
-                    Geniet van
-                    heerlijke gerechten, een feestelijke sfeer en uitstekende service.<br /> Wij zorgen voor een
-                    onvergetelijke verjaardag.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="swiper-slide">
-              <div class="row event-item">
-                <div class="col-lg-5">
-                  <img src="assets/img/event-bedrijfsfeestjes.jpg" class="img-fluid" alt="the goldenolive antwerpen">
-                </div>
-                <div class="col-lg-5 pt-4 pt-lg-0 content">
-                  <h3>Bedrijfsfeestjes</h3>
-                  <p class="fst-italic">
-                    Organiseer een professioneel en succesvol bedrijfsfeest in ons restaurant.<br /> Of het nu gaat om
-                    een
-                    teambuilding, een bedrijfsjubileum of een eindejaarsfeest, wij bieden de perfecte setting en
-                    catering voor jouw evenement.
-                  </p>
+              <div class="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/40 rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-golden-400/20">
+                <div class="grid md:grid-cols-2 gap-0 h-full">
+                  <div class="relative overflow-hidden">
+                    <img src="assets/img/event-verjaardagen.jpg " class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="the goldenolive antwerpen">
+                    <div class="absolute inset-0 bg-gradient-to-r from-golden-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  <div class="p-8 flex flex-col justify-center">
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-golden-300 transition-colors duration-300">Verjaardagen</h3>
+                    <p class="text-gray-300 leading-relaxed italic">Vier jouw verjaardag in stijl met een uniek feest in ons restaurant.<br />
+                      Geniet van heerlijke gerechten, een feestelijke sfeer en uitstekende service.<br /> Wij zorgen voor een
+                      onvergetelijke verjaardag.</p>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
-              <div class="row event-item">
-                <div class="col-lg-5">
-                  <img src="assets/img/event-andereEvenement.jpg" class="img-fluid" alt="the goldenolive antwerpen">
+              <div class="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/40 rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-golden-400/20">
+                <div class="grid md:grid-cols-2 gap-0 h-full">
+                  <div class="relative overflow-hidden">
+                    <img src="assets/img/event-bedrijfsfeestjes.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="the goldenolive antwerpen">
+                    <div class="absolute inset-0 bg-gradient-to-r from-golden-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  <div class="p-8 flex flex-col justify-center">
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-golden-300 transition-colors duration-300">Bedrijfsfeestjes</h3>
+                    <p class="text-gray-300 leading-relaxed italic">
+                      Organiseer een professioneel en succesvol bedrijfsfeest in ons restaurant.<br /> Of het nu gaat om
+                      een teambuilding, een bedrijfsjubileum of een eindejaarsfeest, wij bieden de perfecte setting en
+                      catering voor jouw evenement.
+                    </p>
+                  </div>
                 </div>
-                <div class="col-lg-6 pt-4 pt-lg-0 content">
-                  <h3>Andere Evenementen</h3>
-                  <p class="fst-italic">
-                    Van familiefeesten en jubilea tot speciale bijeenkomsten en meer, ons restaurant biedt een warme en
-                    uitnodigende omgeving voor allerlei soorten evenementen.<br /> Wij helpen je graag bij het plannen
-                    en
-                    uitvoeren van jouw speciale gelegenheid.
-                  </p>
+              </div>
+            </div>
+
+            <div class="swiper-slide">
+              <div class="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/40 rounded-2xl overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-xl hover:shadow-2xl hover:shadow-golden-400/20">
+                <div class="grid md:grid-cols-2 gap-0 h-full">
+                  <div class="relative overflow-hidden">
+                    <img src="assets/img/event-andereEvenement.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="the goldenolive antwerpen">
+                    <div class="absolute inset-0 bg-gradient-to-r from-golden-400/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </div>
+                  <div class="p-8 flex flex-col justify-center">
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-4 group-hover:text-golden-300 transition-colors duration-300">Andere Evenementen</h3>
+                    <p class="text-gray-300 leading-relaxed italic">
+                      Van familiefeesten en jubilea tot speciale bijeenkomsten en meer, ons restaurant biedt een warme en
+                      uitnodigende omgeving voor allerlei soorten evenementen.<br /> Wij helpen je graag bij het plannen
+                      en uitvoeren van jouw speciale gelegenheid.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
           </div>
-          <div class="swiper-pagination"></div>
+          <div class="swiper-pagination !relative !mt-8 flex justify-center space-x-2"></div>
         </div>
 
       </div>
     </section>
-    <section id="gallery" class="gallery">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2>Galerij</h2>
-          <p>Een voorproefje</p>
+    <section id="gallery" class="py-20 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 relative overflow-hidden">
+      <!-- Background decoration -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d4af37" fill-opacity="0.02"%3E%3Cpath d="M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 bg-gradient-to-r from-golden-400 via-golden-300 to-golden-400 bg-clip-text text-transparent">Galerij</h2>
+          <p class="text-xl md:text-2xl text-golden-200/80 font-light">Een voorproefje</p>
+          <div class="w-24 h-1 bg-gradient-to-r from-golden-400 to-golden-600 mx-auto mt-6 rounded-full"></div>
         </div>
       </div>
 
-      <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">
+      <div class="max-w-8xl mx-auto px-4" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row g-0">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/mixedGrill.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/mixedGrill.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/mixedGrill.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/mixedGrill.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/tigerGarnalen.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/tigerGarnalen.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/tigerGarnalen.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/tigerGarnalen.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/IMG_1809.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_1809.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/IMG_1809.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/IMG_1809.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/IMG_3356.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_3356.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/IMG_3356.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/IMG_3356.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/kumpir1.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/kumpir1.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/kumpir1.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/kumpir1.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/mocktail3.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/mocktail3.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/mocktail3.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/mocktail3.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/kumpir.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/kumpir.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/kumpir.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/kumpir.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-4">
-            <div class="gallery-item" style="height: 400px;">
-              <a href="assets/img/golden/dessert.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/dessert.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
+          <div class="group">
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/50 transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20" style="height: 400px;">
+              <a href="assets/img/golden/dessert.JPEG" class="gallery-lightbox block h-full" data-gall="gallery-item">
+                <img src="assets/img/golden/dessert.JPEG" alt="the goldenolive antwerpen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-golden-400/90 backdrop-blur-sm text-dark-900 p-3 rounded-full transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm5 3a2 2 0 11-4 0 2 2 0 014 0zm4.5 8.5l-3-3a1 1 0 00-1.414 0l-3 3A1 1 0 005.5 14.5h9a1 1 0 00.414-1.914l-3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                </div>
               </a>
             </div>
           </div>
@@ -814,48 +1065,64 @@
       </div>
     </section>
 
-    <section id="contact" class="contact" aria-labelledby="contact-heading">
-      <div class="container" data-aos="fade-up">
-        <div class="section-title">
-          <h2 id="contact-heading">Contact</h2>
-          <p>Neem contact op</p>
+    <section id="contact" class="py-20 bg-gradient-to-br from-dark-800 via-dark-900 to-dark-800 relative overflow-hidden" aria-labelledby="contact-heading">
+      <!-- Background decoration -->
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d4af37" fill-opacity="0.04"%3E%3Cpath d="M0 0h40v40H0V0zm40 40h40v40H40V40z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10" data-aos="fade-up">
+        <div class="text-center mb-16">
+          <h2 id="contact-heading" class="text-4xl md:text-5xl font-bold text-white mb-4 bg-gradient-to-r from-golden-400 via-golden-300 to-golden-400 bg-clip-text text-transparent">Contact</h2>
+          <p class="text-xl md:text-2xl text-golden-200/80 font-light">Neem contact op</p>
+          <div class="w-24 h-1 bg-gradient-to-r from-golden-400 to-golden-600 mx-auto mt-6 rounded-full"></div>
         </div>
-        <div class="row justify-content-center">
-          <div class="col-12">
+        <div class="mb-16">
+          <div class="bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 rounded-3xl overflow-hidden shadow-2xl shadow-black/30">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d429.2936968698904!2d4.388302388653184!3d51.20782050181604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3f762c1beb19d%3A0x7ed7ef8cdf7f0d5b!2sThe%20Golden%20Olive!5e0!3m2!1snl!2sbe!4v1716628993936!5m2!1snl!2sbe"
-              width="100%" height="350" allowfullscreen loading="lazy" title="The Golden Olive Restaurant Antwerpen locatie"
-              referrerpolicy="no-referrer-when-downgrade" aria-label="Kaart van The Golden Olive restaurant locatie"></iframe>
+              width="100%" height="450" allowfullscreen loading="lazy" title="The Golden Olive Restaurant Antwerpen locatie"
+              referrerpolicy="no-referrer-when-downgrade" aria-label="Kaart van The Golden Olive restaurant locatie" class="w-full rounded-3xl"></iframe>
           </div>
         </div>
-        <div class="row justify-content-center align-items-center mt-5">
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="info">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="group">
+            <div class="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/40 rounded-2xl p-8 text-center transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20">
               <div class="address" itemscope itemtype="https://schema.org/PostalAddress">
-                <i class="bi bi-geo-alt" aria-hidden="true"></i>
-                <h4>Adres:</h4>
-                <p itemprop="streetAddress">Vlaamsekaai 65</p>
-                <p itemprop="postalCode">2000</p>
-                <p itemprop="addressLocality">ANTWERPEN</p>
-                <p itemprop="addressCountry">België</p>
+                <div class="bg-golden-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-golden-400/30 transition-colors duration-300">
+                  <i class="bi bi-geo-alt text-golden-400 text-2xl" aria-hidden="true"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-golden-300 transition-colors duration-300">Adres:</h4>
+                <div class="text-gray-300 space-y-1">
+                  <p itemprop="streetAddress" class="font-medium">Vlaamsekaai 65</p>
+                  <p><span itemprop="postalCode">2000</span> <span itemprop="addressLocality">ANTWERPEN</span></p>
+                  <p itemprop="addressCountry">België</p>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="info">
+          <div class="group">
+            <div class="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/40 rounded-2xl p-8 text-center transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20">
               <div class="open-hours">
-                <i class="bi bi-clock" aria-hidden="true"></i>
-                <h4>Openingsuren:</h4>
-                <p>Maandag - Zondag:<br />17:00 - 23:00</p><br />
+                <div class="bg-golden-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-golden-400/30 transition-colors duration-300">
+                  <i class="bi bi-clock text-golden-400 text-2xl" aria-hidden="true"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-golden-300 transition-colors duration-300">Openingsuren:</h4>
+                <div class="text-gray-300">
+                  <p class="font-medium">Maandag - Zondag:</p>
+                  <p class="text-lg">17:00 - 23:00</p>
+                </div>
               </div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-            <div class="info">
+          <div class="group">
+            <div class="bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 hover:border-golden-400/40 rounded-2xl p-8 text-center transition-all duration-500 hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-golden-400/20">
               <div class="phone">
-                <i class="bi bi-phone" aria-hidden="true"></i>
-                <h4>Telefoonnummer:</h4>
-                <p><a href="tel:+32494194397" itemprop="telephone">+32 494 19 43 97</a></p><br />
+                <div class="bg-golden-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-golden-400/30 transition-colors duration-300">
+                  <i class="bi bi-phone text-golden-400 text-2xl" aria-hidden="true"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-white mb-4 group-hover:text-golden-300 transition-colors duration-300">Telefoonnummer:</h4>
+                <div class="text-gray-300">
+                  <a href="tel:+32494194397" itemprop="telephone" class="text-lg font-medium hover:text-golden-400 transition-colors duration-300">+32 494 19 43 97</a>
+                </div>
               </div>
             </div>
           </div>
@@ -863,18 +1130,28 @@
       </div>
     </section>
   </main>
-  <footer id="footer" role="contentinfo">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row justify-content-center">
-
-          <div class="col-lg-6 col-md-8 text-center">
-            <div class="footer-info">
-              <img src="./assets/img/logo.png" alt="The Golden Olive Restaurant Logo" class="footer-logo mb-3" loading="lazy">
-              <div class="social-links mt-3" aria-label="Social media links">
-                <a href="https://www.facebook.com/TheGoldenolivee" class="facebook" aria-label="Bezoek onze Facebook pagina"><i class="bx bxl-facebook" aria-hidden="true"></i></a>
-                <a href="https://www.instagram.com/thegoldenolive._" class="instagram" aria-label="Volg ons op Instagram"><i
-                    class="bx bxl-instagram" aria-hidden="true"></i></a>
+  <footer id="footer" role="contentinfo" class="bg-gradient-to-br from-dark-900 via-black to-dark-900 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23d4af37" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40"></div>
+    
+    <div class="relative z-10 py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-center mb-12">
+          <div class="text-center">
+            <div class="bg-gradient-to-br from-dark-800/50 to-dark-900/50 backdrop-blur-lg border border-golden-400/20 rounded-3xl p-8 shadow-2xl shadow-black/30 hover:border-golden-400/40 transition-all duration-500">
+              <img src="./assets/img/logo.png" alt="The Golden Olive Restaurant Logo" class="w-32 h-auto mx-auto mb-6 filter drop-shadow-lg" loading="lazy">
+              
+              <div class="flex justify-center space-x-6" aria-label="Social media links">
+                <a href="https://www.facebook.com/TheGoldenolivee" 
+                   class="group bg-golden-400/20 hover:bg-golden-400/30 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-golden-400/30" 
+                   aria-label="Bezoek onze Facebook pagina">
+                  <i class="bx bxl-facebook text-2xl text-golden-400 group-hover:text-golden-300 transition-colors duration-300" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.instagram.com/thegoldenolive._" 
+                   class="group bg-golden-400/20 hover:bg-golden-400/30 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-golden-400/30" 
+                   aria-label="Volg ons op Instagram">
+                  <i class="bx bxl-instagram text-2xl text-golden-400 group-hover:text-golden-300 transition-colors duration-300" aria-hidden="true"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -882,12 +1159,17 @@
       </div>
     </div>
 
-    <div class="container text-center">
-      <div class="copyright">
-        &copy; 2025 Copyright <strong><span>The Golden Olive</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        BTW-nummer <a href="#" aria-label="BTW nummer">BE0738909475</a>
+    <!-- Copyright Section -->
+    <div class="border-t border-golden-400/10 bg-black/50 backdrop-blur-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="text-center space-y-2">
+          <div class="text-gray-300">
+            &copy; 2025 Copyright <strong><span class="text-golden-400">The Golden Olive</span></strong>. All Rights Reserved
+          </div>
+          <div class="text-gray-400 text-sm">
+            BTW-nummer <a href="#" aria-label="BTW nummer" class="text-golden-400 hover:text-golden-300 transition-colors duration-300">BE0738909475</a>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
@@ -1096,7 +1378,7 @@
   <!-- Menu Item Component Template -->
   <template id="menu-item-template">
     <div class="menu-item bg-dark-800/50 backdrop-blur-sm border border-golden-400/20 rounded-xl overflow-hidden hover:border-golden-400/40 hover:transform hover:scale-105 transition-all duration-300 h-full mb-8">
-      <img class="w-full h-48 object-cover" alt="">
+      <img class="w-full object-cover" style="height: 232px;" alt="">
       <div class="p-6 flex flex-col h-full">
         <div class="flex justify-between items-start mb-4">
           <a href="#" class="text-xl font-playfair font-bold text-white hover:text-golden-400 transition-colors flex-1 mr-4"></a>
@@ -1113,7 +1395,9 @@
           <div class="flex flex-wrap gap-1 allergen-symbols"></div>
         </div>
         
-        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-golden-400/20"></div>
+        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-golden-400/20" id="main-allergens-container">
+          <!-- Main allergens will be added here by JavaScript -->
+        </div>
       </div>
     </div>
   </template>
@@ -1125,7 +1409,7 @@
         {
           "id": "tiger-garnalen",
           "name": "Tiger garnalen",
-          "price": "€9.00",
+          "price": "€8.00",
           "description": "Met zoetzure saus",
           "image": "assets/img/golden/tigerGarnalen.JPEG",
           "alt": "Tiger garnalen voorgerecht The Golden Olive Antwerpen",
@@ -1152,7 +1436,7 @@
         {
           "id": "nachos",
           "name": "Nachos",
-          "price": "€12.00",
+          "price": "€8.50",
           "description": "Guacamole, salsa en zuurroom",
           "image": "assets/img/favicon11.png",
           "alt": "the golden olive antwerpen",
@@ -1190,7 +1474,7 @@
         {
           "id": "mini-loempia",
           "name": "Mini Loempia",
-          "price": "€7.50",
+          "price": "€7.00",
           "description": "Met zoetzure saus",
           "image": "assets/img/favicon11.png",
           "alt": "the golden olive antwerpen",
@@ -1206,7 +1490,7 @@
         {
           "id": "mixed-grill",
           "name": "Mixed Grill",
-          "price": "€39.99",
+          "price": "€39,99",
           "description": "8 soorten vlees<br />Geserveerd met Champignon saus en salade",
           "image": "assets/img/golden/mixedGrill.JPEG",
           "alt": "the goldenolive antwerpen mixedgrill",
@@ -1220,7 +1504,7 @@
         {
           "id": "spareribs-natuur",
           "name": "Spareribs Natuur",
-          "price": "€38.00",
+          "price": "€28.99",
           "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs natuur The Golden Olive Antwerpen",
@@ -1232,7 +1516,7 @@
         {
           "id": "spareribs-bbq",
           "name": "Spareribs Barbeque",
-          "price": "€38.00",
+          "price": "€28.99",
           "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs BBQ The Golden Olive Antwerpen",
@@ -1244,7 +1528,7 @@
         {
           "id": "spareribs-gekarameliseerd",
           "name": "Spareribs Gekarameliseerd",
-          "price": "€38.00",
+          "price": "€28.99",
           "description": "Honing, coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
@@ -1256,7 +1540,7 @@
         {
           "id": "spareribs-spicy",
           "name": "Spareribs Spicy (Pikant)",
-          "price": "€38.00",
+          "price": "€28.99",
           "description": "Coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs spicy The Golden Olive Antwerpen",
@@ -1268,7 +1552,7 @@
         {
           "id": "spareribs-thai",
           "name": "Spareribs Thai Sweet Chili",
-          "price": "€38.00",
+          "price": "€28.99",
           "description": "Coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs Thai The Golden Olive Antwerpen",
@@ -1282,7 +1566,7 @@
         {
           "id": "kumpir-kip-curry",
           "name": "Kumpir Kip Currysaus",
-          "price": "€20.00",
+          "price": "€18.99",
           "description": "Met currysaus",
           "image": "assets/img/golden/kumpir1.JPEG",
           "alt": "Kumpir kip curry The Golden Olive Antwerpen",
@@ -1293,7 +1577,7 @@
         {
           "id": "kumpir-kip-champignon",
           "name": "Kumpir Kip Champignon saus",
-          "price": "€20.00",
+          "price": "€18.99",
           "description": "Met champignonsaus",
           "image": "assets/img/golden/kumpir1.JPEG",
           "alt": "Kumpir kip champignon The Golden Olive Antwerpen",
@@ -1304,7 +1588,7 @@
         {
           "id": "kumpir-scampi-diabolique",
           "name": "Kumpir Scampi Diabolique saus",
-          "price": "€21.00",
+          "price": "€19.99",
           "description": "Met diabolique saus",
           "image": "assets/img/golden/kumpir.JPEG",
           "alt": "Kumpir scampi diabolique The Golden Olive Antwerpen",
@@ -1316,7 +1600,7 @@
         {
           "id": "kumpir-scampi-curry",
           "name": "Kumpir Scampi Currysaus",
-          "price": "€21.00",
+          "price": "€19.99",
           "description": "Met curry saus",
           "image": "assets/img/golden/kumpir.JPEG",
           "alt": "Kumpir scampi curry The Golden Olive Antwerpen",
@@ -1328,7 +1612,7 @@
         {
           "id": "kumpir-veggie",
           "name": "Kumpir Veggie",
-          "price": "€17.00",
+          "price": "€15.99",
           "description": "Tomatenroomsaus",
           "image": "assets/img/golden/kumpir.JPEG",
           "alt": "Kumpir veggie The Golden Olive Antwerpen",
@@ -1342,9 +1626,9 @@
         {
           "id": "fish-burger",
           "name": "Fish",
-          "price": "€17.00",
+          "price": "€16.00",
           "description": "Fish steak, truffelsaus, roomkaas, tomaat, uien, dille, rucola, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3447.JPEG",
+          "image": "assets/img/favicon11.png",  
           "alt": "Fish Burger The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1355,9 +1639,9 @@
         {
           "id": "veggie-burger",
           "name": "Veggie",
-          "price": "€16.00",
+          "price": "€14.00",  
           "description": "Gegrilde paprika, gegrilde courgette, olive sauce, tomaat, uien, sla, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3356.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Veggie Burger The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1367,9 +1651,9 @@
         {
           "id": "spicy-chicken",
           "name": "Spicy Chicken",
-          "price": "€19.00",
+          "price": "€17.50",
           "description": "Kipfilet, pikant tomaten, mozzarella saus, coleslaw, jalapenos, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3398.JPEG",
+          "image": "assets/img/golden/hamburger3.JPEG",
           "alt": "Spicy Chicken The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1379,7 +1663,7 @@
         {
           "id": "texas-burger",
           "name": "Texas",
-          "price": "€20.00",
+          "price": "€18.00",
           "description": "Bio rundvlees, cheddar, gekarameliseerde uien, olive saus, bieslook, sla kaas<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/IMG_3356.JPEG",
           "alt": "Texas Burger The Golden Olive Antwerpen",
@@ -1391,9 +1675,9 @@
         {
           "id": "pesto-chicken",
           "name": "Pesto Chicken",
-          "price": "€19.00",
+          "price": "€17.50",
           "description": "Gepaneerde kip, pesto gegrilde paprika, olive saus, rucola, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3373.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Pesto Chicken The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1403,9 +1687,9 @@
         {
           "id": "smash-n-onion",
           "name": "Smash 'N Onion",
-          "price": "€20.00",
+          "price": "€18.00",
           "description": "Bio rundvlees, uienringen, cheddar, peterselie, olive saus, wortel<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3427.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Smash 'N Onion The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1441,7 +1725,7 @@
         },
         {
           "id": "crispy-kip-burger",
-          "name": "Crispy Kip Burger",
+          "name": "Cripsy kip burger",
           "price": "€10.00",
           "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/favicon11.png",
@@ -1453,7 +1737,7 @@
         },
         {
           "id": "kinder-kip-nuggets",
-          "name": "Kinder Kip Nuggets",
+          "name": "Kip nuggets",
           "price": "€9.50",
           "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/favicon11.png",
@@ -1518,7 +1802,7 @@
           "name": "Daim chocolate crunchy caramel cake",
           "price": "€7.00",
           "description": "Heerlijke Daim chocolade cake",
-          "image": "assets/img/golden/IMG_7297.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Daim chocolate crunchy caramel cake The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1531,7 +1815,7 @@
           "name": "Moelleux chocolat",
           "price": "€7.00",
           "description": "Warme chocolade cake met vloeibare kern",
-          "image": "assets/img/favicon11.png",
+          "image": "assets/img/golden/moelleux.png",
           "alt": "Moelleux chocolat The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1544,7 +1828,7 @@
           "name": "Dame Blanche",
           "price": "€7.00",
           "description": "Klassiek dessert met vanille-ijs en chocoladesaus",
-          "image": "assets/img/golden/IMG_7297.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Dame Blanche The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -1559,7 +1843,7 @@
           "name": "Mojito Blue Hawaii",
           "price": "€9.50",
           "description": "Tropische mojito met blauwe kleur",
-          "image": "assets/img/golden/IMG_2018.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Mojito Blue Hawaii The Golden Olive Antwerpen",
           "allergens": []
         },
@@ -1568,7 +1852,7 @@
           "name": "Strawberry Mojito",
           "price": "€9.50",
           "description": "Mojito met aardbeien",
-          "image": "assets/img/golden/mocktail1.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Strawberry Mojito The Golden Olive Antwerpen",
           "allergens": []
         },
@@ -1586,7 +1870,7 @@
           "name": "Mojito Rosso",
           "price": "€9.50",
           "description": "Limoen, framboos, violet",
-          "image": "assets/img/golden/IMG_2018.JPEG",
+          "image": "assets/img/golden/mocktail3.JPEG",
           "alt": "Mojito Rosso The Golden Olive Antwerpen",
           "allergens": []
         },
@@ -1595,7 +1879,7 @@
           "name": "Mojito Ipanema",
           "price": "€9.50",
           "description": "Passievrucht, limoen, gember",
-          "image": "assets/img/golden/IMG_2018.JPEG",
+          "image": "assets/img/favicon11.png",
           "alt": "Mojito Ipanema The Golden Olive Antwerpen",
           "allergens": []
         },
@@ -1626,6 +1910,24 @@
           "description": "Fuze Tea met citroen",
           "image": "assets/img/favicon11.png",
           "alt": "Fuze Tea Lemon The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "fuze-tea-peach",
+          "name": "Fuze Tea Peach",
+          "price": "€3.00",
+          "description": "Fuze Tea met perzik",
+          "image": "assets/img/favicon11.png",
+          "alt": "Fuze Tea Peach The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "minute-maid-apple",
+          "name": "Minute Maid Apple",
+          "price": "€3.00",
+          "description": "Appelsap van Minute Maid",
+          "image": "assets/img/favicon11.png",
+          "alt": "Minute Maid Apple The Golden Olive Antwerpen",
           "allergens": []
         },
         {
@@ -1912,13 +2214,51 @@
     }
   </script>
 
-  <!-- Floating Allergen Button -->
-  <div class="floating-allergen-btn" onclick="openAllergenModal()">
-    <div class="floating-btn-content">
-      <i class="bi bi-exclamation-triangle"></i>
-      <span class="floating-btn-text">Allergenen</span>
+  <!-- Floating Action Buttons -->
+  <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col space-y-3">
+    
+    <!-- Scroll to Top Button -->
+    <div class="group" id="scrollToTopBtn" onclick="scrollToTop()" style="display: none;">
+      <div class="bg-gradient-to-br from-dark-800 to-dark-900 hover:from-dark-700 hover:to-dark-800 text-golden-400 rounded-xl shadow-xl shadow-black/30 hover:shadow-golden-400/20 cursor-pointer transition-all duration-300 hover:scale-105 hover:-translate-y-1 backdrop-blur-lg border border-golden-400/30">
+        <div class="flex items-center justify-center w-12 h-12">
+          <i class="bi bi-arrow-up text-lg font-bold group-hover:text-golden-300 transition-colors duration-300"></i>
+        </div>
+      </div>
     </div>
+
+    <!-- Allergen Button -->
+    <div class="group" onclick="openAllergenModal()">
+      <div class="bg-gradient-to-br from-golden-400 to-golden-600 hover:from-golden-300 hover:to-golden-500 text-dark-900 rounded-xl shadow-xl shadow-golden-400/30 hover:shadow-golden-400/50 cursor-pointer transition-all duration-300 hover:scale-105 hover:-translate-y-1 backdrop-blur-lg border border-golden-400/20 relative">
+        <div class="flex items-center justify-center w-12 h-12">
+          <i class="bi bi-exclamation-triangle text-lg font-bold"></i>
+        </div>
+        <!-- Pulse animation -->
+        <div class="absolute inset-0 rounded-xl bg-golden-400/30 animate-ping opacity-75"></div>
+      </div>
+    </div>
+    
   </div>
+
+  <!-- Scroll to Top JavaScript -->
+  <script>
+    // Scroll to top functionality
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Show/hide scroll to top button based on scroll position
+    window.addEventListener('scroll', function() {
+      const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.style.display = 'block';
+      } else {
+        scrollToTopBtn.style.display = 'none';
+      }
+    });
+  </script>
 
   <!-- Mobile Menu JavaScript -->
   <script>
