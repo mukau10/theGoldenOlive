@@ -921,6 +921,28 @@ section {
 /*--------------------------------------------------------------
 # Menu Section
 --------------------------------------------------------------*/
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .menu-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 15px 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .menu-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 10px 0;
+  }
+}
 /* Modern Menu Categories */
 .menu-categories-container {
   margin-bottom: 50px;
@@ -1227,46 +1249,57 @@ section {
 }
 
 .menu .menu-item {
-  margin-top: 30px;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 0;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  height: 400px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  min-height: 280px;
+  max-width: 100%;
 }
 
 .menu .menu-item:hover {
   background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  border-color: rgba(205, 164, 94, 0.3);
 }
 
 .menu .menu-img {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  border-radius: 12px 12px 0 0;
+  margin: 0;
   transition: transform 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .menu .menu-img:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 
 .menu .menu-content {
   margin-left: 0;
-  overflow: hidden;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 0;
+  flex-grow: 1;
   position: relative;
-  margin-bottom: 10px;
-  flex-grow: 0;
+  padding: 20px;
+  min-height: 180px;
 }
 
 .menu .menu-content::after {
@@ -1283,13 +1316,20 @@ section {
 }
 
 .menu .menu-content a {
-  padding-right: 10px;
-  background: #1a1814;
+  background: transparent;
   position: relative;
   z-index: 3;
   font-weight: 700;
   color: white;
   transition: 0.3s;
+  padding-right: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  order: 1;
 }
 
 .menu .menu-content a:hover {
@@ -1297,12 +1337,16 @@ section {
 }
 
 .menu .menu-content span {
-  background: #1a1814;
-  position: relative;
+  background: transparent;
+  position: absolute;
+  top: 20px;
+  right: 20px;
   z-index: 3;
-  padding: 0 10px;
+  padding: 0;
   font-weight: 600;
   color: #cda45e;
+  font-size: 18px;
+  white-space: nowrap;
 }
 
 .menu .menu-ingredients {
@@ -1310,9 +1354,63 @@ section {
   font-style: italic;
   font-size: 14px;
   font-family: "Poppins", sans-serif;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
   flex-grow: 0;
+  line-height: 1.4;
+  order: 2;
+}
+
+/* Allergens styling within menu-content */
+.menu .menu-content .allergens {
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: 0;
+  margin-right: 0;
+  flex-grow: 0;
+  order: 3;
+}
+
+.menu .menu-content .allergen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(205, 164, 94, 0.2);
+  color: #cda45e;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(205, 164, 94, 0.3);
+  text-decoration: none;
+  position: relative;
+}
+
+.menu .menu-content .allergen:hover {
+  background: rgba(205, 164, 94, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu .menu-content .allergen:active {
+  transform: scale(0.95);
+}
+
+/* Ensure allergens are visible */
+.menu .menu-content .allergens {
+  position: relative;
+  z-index: 2;
+}
+
+/* Make sure allergens don't get hidden */
+.menu .menu-content .allergen {
+  z-index: 3;
 }
 
 /*--------------------------------------------------------------
@@ -2334,9 +2432,44 @@ section {
   }
   
   .menu .menu-item {
-    padding: 15px;
     margin-top: 20px;
-    height: 350px;
+    min-height: 320px;
+  }
+  
+  .menu .menu-content {
+    padding: 15px;
+    min-height: 140px;
+    justify-content: flex-start;
+  }
+  
+  .menu .menu-content a {
+    font-size: 16px;
+    margin-bottom: 8px;
+    order: 1;
+  }
+  
+  .menu .menu-content span {
+    font-size: 16px;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .menu .menu-ingredients {
+    font-size: 12px;
+    margin-bottom: 10px;
+    order: 2;
+  }
+  
+  .menu .menu-content .allergens {
+    margin-top: 0;
+    gap: 3px;
+    order: 3;
+  }
+  
+  .menu .menu-content .allergen {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
   }
 }
   
@@ -2403,9 +2536,44 @@ section {
   }
   
   .menu .menu-item {
-    padding: 12px;
     margin-top: 15px;
-    height: 320px;
+    min-height: 280px;
+  }
+  
+  .menu .menu-content {
+    padding: 12px;
+    min-height: 120px;
+    justify-content: flex-start;
+  }
+  
+  .menu .menu-content a {
+    font-size: 15px;
+    margin-bottom: 6px;
+    order: 1;
+  }
+  
+  .menu .menu-content span {
+    font-size: 15px;
+    top: 12px;
+    right: 12px;
+  }
+  
+  .menu .menu-ingredients {
+    font-size: 11px;
+    margin-bottom: 8px;
+    order: 2;
+  }
+  
+  .menu .menu-content .allergens {
+    margin-top: 0;
+    gap: 2px;
+    order: 3;
+  }
+  
+  .menu .menu-content .allergen {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
   }
   
   .allergen {

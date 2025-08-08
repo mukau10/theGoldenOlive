@@ -314,3 +314,110 @@
 
 })()
 
+// Menu Items Component System
+function createMenuItemComponent(itemData, category) {
+  const template = document.getElementById('menu-item-template');
+  const clone = template.content.cloneNode(true);
+  
+  // Set basic properties
+  const menuItem = clone.querySelector('.menu-item');
+  menuItem.classList.add(`filter-${category}`);
+  menuItem.setAttribute('data-item-id', itemData.id);
+  
+  // Set image
+  const img = menuItem.querySelector('img');
+  img.src = itemData.image;
+  img.alt = itemData.alt;
+  
+  // Set title and price
+  const title = menuItem.querySelector('a');
+  title.textContent = itemData.name;
+  title.href = `#${itemData.id}`;
+  
+  const price = menuItem.querySelector('span');
+  price.textContent = itemData.price;
+  
+  // Set description
+  const description = menuItem.querySelector('.text-white\\/70');
+  description.innerHTML = itemData.description;
+  
+  // Create allergens
+  const allergensContainer = menuItem.querySelector('.flex.flex-wrap.gap-2');
+  allergensContainer.innerHTML = '';
+  
+  itemData.allergens.forEach(allergen => {
+    const allergenSpan = document.createElement('span');
+    allergenSpan.className = `allergen bg-${allergen.color}-500/20 text-${allergen.color}-300 border border-${allergen.color}-500/30 px-2 py-1 rounded-full text-xs font-medium hover:bg-${allergen.color}-500/30 transition-colors cursor-pointer`;
+    allergenSpan.textContent = allergen.code;
+    allergenSpan.setAttribute('data-allergen', allergen.description);
+    allergenSpan.setAttribute('title', allergen.type);
+    allergenSpan.setAttribute('role', 'button');
+    allergenSpan.setAttribute('tabindex', '0');
+    
+    // Add click event for allergen info
+    allergenSpan.addEventListener('click', function() {
+      showAllergenInfo(allergen.description);
+    });
+    
+    allergensContainer.appendChild(allergenSpan);
+  });
+  
+  return menuItem;
+}
+
+function generateMenuItems() {
+  const menuData = JSON.parse(document.getElementById('menu-items-data').textContent);
+  const container = document.getElementById('menu-items-container');
+  
+  // Clear existing items
+  container.innerHTML = '';
+  
+  // Generate items for each category
+  Object.keys(menuData).forEach(category => {
+    menuData[category].forEach(item => {
+      const menuItem = createMenuItemComponent(item, category);
+      container.appendChild(menuItem);
+    });
+  });
+  
+  // Reinitialize Isotope for filtering
+  if (window.isotope) {
+    window.isotope.reloadItems();
+    window.isotope.layout();
+  }
+}
+
+function showAllergenInfo(description) {
+  // Create a modal for allergen information
+  const modal = document.createElement('div');
+  modal.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+  modal.innerHTML = `
+    <div class="bg-dark-800 border border-golden-400/30 rounded-xl p-6 max-w-md w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-playfair font-bold text-golden-400">Allergenen Informatie</h3>
+        <button class="text-white hover:text-golden-400 transition-colors text-2xl" onclick="this.closest('.fixed').remove()">&times;</button>
+      </div>
+      <p class="text-white/80 leading-relaxed">${description}</p>
+      <div class="mt-6 text-center">
+        <button class="bg-golden-400 text-dark-900 hover:bg-golden-300 px-6 py-2 rounded-full font-medium transition-colors" onclick="this.closest('.fixed').remove()">
+          Sluiten
+        </button>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Close modal when clicking outside
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+// Initialize menu items when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  generateMenuItems();
+});
+
