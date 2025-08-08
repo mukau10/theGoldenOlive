@@ -921,28 +921,8 @@ section {
 /*--------------------------------------------------------------
 # Menu Section
 --------------------------------------------------------------*/
-.menu-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  padding: 20px 0;
-}
+/* Menu styles removed - using Tailwind CSS instead */
 
-@media (max-width: 768px) {
-  .menu-container {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 15px 0;
-  }
-}
-
-@media (max-width: 576px) {
-  .menu-container {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 10px 0;
-  }
-}
 /* Modern Menu Categories */
 .menu-categories-container {
   margin-bottom: 50px;
@@ -1019,18 +999,17 @@ section {
 }
 
 .category-content h4 {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
+  margin-bottom: 8px;
   color: #fff;
-  margin: 0 0 5px 0;
   transition: color 0.3s ease;
 }
 
 .category-content p {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
-  font-style: italic;
   transition: color 0.3s ease;
 }
 
@@ -1041,121 +1020,113 @@ section {
 
 .category-hover {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 3;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(205, 164, 94, 0.9) 0%, rgba(205, 164, 94, 0.7) 100%);
+  padding: 15px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  border-radius: 0 0 16px 16px;
 }
 
 .category-hover span {
-  background: rgba(205, 164, 94, 0.9);
-  color: #1a1814;
-  padding: 8px 16px;
-  border-radius: 25px;
+  color: #fff;
   font-weight: 600;
-  font-size: 0.9rem;
-  white-space: nowrap;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .menu-category-card:hover .category-hover {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translateY(0);
 }
 
-/* Mobile Carousel Styles */
 .menu-category-carousel {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 }
 
 .category-swiper {
-  padding: 20px 0 40px 0;
+  padding: 20px 0;
 }
 
 .category-swiper .swiper-slide {
   height: auto;
   display: flex;
-  justify-content: center;
+  align-items: stretch;
 }
 
 .category-swiper .menu-category-card {
   width: 100%;
-  max-width: 280px;
-  margin: 0 auto;
-  min-height: 140px;
+  height: 100%;
+  margin: 0;
+  min-height: 160px;
   padding: 20px;
 }
 
-
-
 .category-pagination {
-  bottom: 0;
+  margin-top: 20px;
 }
 
 .category-pagination .swiper-pagination-bullet {
-  background: rgba(205, 164, 94, 0.5);
-  opacity: 0.5;
+  width: 10px;
+  height: 10px;
+  background: rgba(205, 164, 94, 0.3);
+  opacity: 1;
   transition: all 0.3s ease;
 }
 
 .category-pagination .swiper-pagination-bullet-active {
   background: #cda45e;
-  opacity: 1;
   transform: scale(1.2);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .menu-category-card {
-    padding: 20px;
-    min-height: 160px;
+    min-height: 140px;
+    padding: 15px;
   }
-  
+
   .category-icon i {
     font-size: 2rem;
   }
-  
+
   .category-content h4 {
-    font-size: 1.1rem;
+    font-size: 1.125rem;
   }
-  
+
   .category-content p {
     font-size: 0.8rem;
   }
-  
+
   .category-swiper .menu-category-card {
     min-height: 120px;
-    padding: 18px;
+    padding: 15px;
   }
-  
-
 }
 
 @media (max-width: 576px) {
   .menu-category-card {
-    padding: 18px;
-    min-height: 140px;
+    min-height: 120px;
+    padding: 12px;
   }
-  
+
   .category-icon i {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
   }
-  
+
   .category-content h4 {
     font-size: 1rem;
   }
-  
+
   .category-content p {
     font-size: 0.75rem;
   }
-  
-  .category-swiper .menu-category-card {
-    min-height: 110px;
-    padding: 15px;
-  }
-  
 
+  .category-swiper .menu-category-card {
+    min-height: 100px;
+    padding: 12px;
+  }
 }
 
 /* Floating Allergen Button */
@@ -1246,119 +1217,6 @@ section {
     justify-content: center;
     padding: 0;
   }
-}
-
-.menu .menu-item {
-  margin-top: 20px;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  min-height: 280px;
-  max-width: 100%;
-}
-
-.menu .menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
-  border-color: rgba(205, 164, 94, 0.3);
-}
-
-.menu .menu-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 12px 12px 0 0;
-  margin: 0;
-  transition: transform 0.3s ease;
-  box-shadow: none;
-  position: relative;
-  display: block;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.menu .menu-img:hover {
-  transform: scale(1.05);
-}
-
-.menu .menu-content {
-  margin-left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-bottom: 0;
-  flex-grow: 1;
-  position: relative;
-  padding: 20px;
-  min-height: 180px;
-}
-
-.menu .menu-content::after {
-  content: "......................................................................"
-    "...................................................................."
-    "....................................................................";
-  position: absolute;
-  left: 20px;
-  right: 0;
-  top: -4px;
-  z-index: 1;
-  color: #bab3a6;
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-}
-
-.menu .menu-content a {
-  background: transparent;
-  position: relative;
-  z-index: 3;
-  font-weight: 700;
-  color: white;
-  transition: 0.3s;
-  padding-right: 0;
-  font-size: 18px;
-  line-height: 1.2;
-  margin-bottom: 8px;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  order: 1;
-}
-
-.menu .menu-content a:hover {
-  color: #cda45e;
-}
-
-.menu .menu-content span {
-  background: transparent;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 3;
-  padding: 0;
-  font-weight: 600;
-  color: #cda45e;
-  font-size: 18px;
-  white-space: nowrap;
-}
-
-.menu .menu-ingredients {
-  margin-left: 0;
-  font-style: italic;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 12px;
-  flex-grow: 0;
-  line-height: 1.4;
-  order: 2;
 }
 
 /* Allergens styling within menu-content */
@@ -1764,14 +1622,110 @@ section {
   overflow: hidden;
   border-right: 3px solid #454035;
   border-bottom: 3px solid #454035;
+  height: 400px;
 }
 
 .gallery .gallery-item img {
   transition: all ease-in-out 0.4s;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .gallery .gallery-item:hover img {
   transform: scale(1.1);
+}
+
+/*--------------------------------------------------------------
+# Menu Items Spacing
+--------------------------------------------------------------*/
+.menu-item {
+  margin-bottom: 2rem !important;
+}
+
+.menu-container {
+  gap: 2rem;
+}
+
+/*--------------------------------------------------------------
+# Allergen Symbols
+--------------------------------------------------------------*/
+.allergen-symbol {
+  font-size: 0.75rem;
+  font-weight: bold;
+  min-width: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.allergen-symbol:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/*--------------------------------------------------------------
+# Carousel Navigation Arrows
+--------------------------------------------------------------*/
+.menu-category-carousel {
+  position: relative;
+}
+
+.category-swiper-button-next,
+.category-swiper-button-prev {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: rgba(205, 164, 94, 0.15);
+  border: 2px solid rgba(205, 164, 94, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 20;
+  backdrop-filter: blur(4px);
+}
+
+.category-swiper-button-next:hover,
+.category-swiper-button-prev:hover {
+  background: rgba(205, 164, 94, 0.3);
+  border-color: rgba(205, 164, 94, 0.6);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(205, 164, 94, 0.3);
+}
+
+.category-swiper-button-next {
+  right: -22px;
+}
+
+.category-swiper-button-prev {
+  left: -22px;
+}
+
+.category-swiper-button-next i,
+.category-swiper-button-prev i {
+  color: #cda45e;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .gallery .gallery-item {
+    height: 300px;
+  }
+  
+  .menu-item {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .menu-container {
+    gap: 1.5rem;
+  }
+  
+
 }
 
 /*--------------------------------------------------------------
@@ -2424,195 +2378,47 @@ section {
 /* Mobile responsive styles for allergens */
 @media (max-width: 768px) {
   .modal-body {
-    max-height: 80vh !important;
+    max-height: 60vh;
   }
-  
-  .menu .menu-img {
-    height: 180px;
-  }
-  
-  .menu .menu-item {
-    margin-top: 20px;
-    min-height: 320px;
-  }
-  
-  .menu .menu-content {
-    padding: 15px;
-    min-height: 140px;
-    justify-content: flex-start;
-  }
-  
-  .menu .menu-content a {
-    font-size: 16px;
-    margin-bottom: 8px;
-    order: 1;
-  }
-  
-  .menu .menu-content span {
-    font-size: 16px;
-    top: 15px;
-    right: 15px;
-  }
-  
-  .menu .menu-ingredients {
-    font-size: 12px;
-    margin-bottom: 10px;
-    order: 2;
-  }
-  
-  .menu .menu-content .allergens {
-    margin-top: 0;
-    gap: 3px;
-    order: 3;
-  }
-  
-  .menu .menu-content .allergen {
-    width: 24px;
-    height: 24px;
-    font-size: 11px;
-  }
-}
-  
-  .allergens {
-    justify-content: flex-start;
-    margin-top: 8px;
-  }
-  
-  .allergen {
-    width: 22px;
-    height: 22px;
-    line-height: 22px;
-    font-size: 11px;
-    margin-right: 3px;
-    margin-bottom: 3px;
-  }
-  
-  .allergen.badge {
-    font-size: 12px;
-    padding: 6px 10px;
-    margin: 1px;
-  }
-  
-  /* Improve modal readability on mobile */
-  .modal-dialog {
-    margin: 0.5rem;
-  }
-  
-  .modal-body {
-    padding: 1rem;
-  }
-  
-  .card-body {
-    padding: 0.75rem;
-  }
-  
-  .card-body p {
-    font-size: 0.875rem;
-    line-height: 1.4;
-  }
-  
-  .accordion-button {
-    padding: 0.75rem;
-    font-size: 0.875rem;
-  }
-  
-  .accordion-body {
-    padding: 0.75rem;
-    font-size: 0.875rem;
-  }
-  
-  /* Make allergen badges more visible on mobile */
-.allergen.badge.bg-danger,
-.allergen.badge.bg-success,
-.allergen.badge.bg-warning,
-.allergen.badge.bg-info {
-  font-weight: bold;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
 
-@media (max-width: 576px) {
-  .menu .menu-img {
-    height: 160px;
+  .allergens {
+    gap: 4px;
   }
-  
-  .menu .menu-item {
-    margin-top: 15px;
-    min-height: 280px;
-  }
-  
-  .menu .menu-content {
-    padding: 12px;
-    min-height: 120px;
-    justify-content: flex-start;
-  }
-  
-  .menu .menu-content a {
-    font-size: 15px;
-    margin-bottom: 6px;
-    order: 1;
-  }
-  
-  .menu .menu-content span {
-    font-size: 15px;
-    top: 12px;
-    right: 12px;
-  }
-  
-  .menu .menu-ingredients {
-    font-size: 11px;
-    margin-bottom: 8px;
-    order: 2;
-  }
-  
-  .menu .menu-content .allergens {
-    margin-top: 0;
-    gap: 2px;
-    order: 3;
-  }
-  
-  .menu .menu-content .allergen {
-    width: 22px;
-    height: 22px;
-    font-size: 10px;
-  }
-  
+
   .allergen {
-    width: 20px;
-    height: 20px;
-    line-height: 20px;
     font-size: 10px;
+    padding: 2px 6px;
   }
-  
+
   .allergen.badge {
-    font-size: 11px;
-    padding: 4px 8px;
+    font-size: 9px;
+    padding: 1px 4px;
   }
-  
+
   .modal-dialog {
-    margin: 0.25rem;
+    margin: 10px;
   }
-  
+
   .modal-body {
-    padding: 0.75rem;
+    padding: 15px;
   }
-  
+
   .card-body {
-    padding: 0.5rem;
+    padding: 15px;
   }
-  
+
   .card-body p {
-    font-size: 0.8rem;
-    margin-bottom: 0.5rem;
+    font-size: 13px;
   }
-  
+
   .accordion-button {
-    padding: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 14px;
+    padding: 10px 15px;
   }
-  
+
   .accordion-body {
-    padding: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 13px;
+    padding: 15px;
   }
 }
 

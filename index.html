@@ -285,7 +285,74 @@
       </nav>
         
         <!-- Mobile Menu Button -->
-        <button class="lg:hidden bi bi-list mobile-nav-toggle text-2xl text-golden-400 hover:text-golden-300 transition-colors p-2 rounded-md hover:bg-golden-400/10" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="navbar"></button>
+        <button class="lg:hidden bi bi-list mobile-nav-toggle text-2xl text-golden-400 hover:text-golden-300 transition-colors p-2 rounded-md hover:bg-golden-400/10" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav"></button>
+      </div>
+    </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav" class="lg:hidden fixed top-0 left-0 w-full h-full bg-black z-50 transform -translate-x-full transition-transform duration-300 ease-in-out" aria-hidden="true">
+      <div class="flex flex-col h-full bg-black">
+        <!-- Mobile Header -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-700 bg-black">
+          <h2 class="text-xl font-playfair font-bold text-golden-400">Menu</h2>
+          <button class="mobile-nav-close text-2xl text-golden-400 hover:text-golden-300 transition-colors p-2" aria-label="Close mobile menu">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+        
+        <!-- Mobile Navigation Links -->
+        <nav class="flex-1 px-4 py-6 bg-black" role="navigation" aria-label="Mobile navigation">
+          <ul class="space-y-4">
+            <li>
+              <a class="mobile-nav-link block text-lg text-white hover:text-golden-400 transition-colors py-3 border-b border-gray-700" href="#hero" aria-label="Go to Home section">
+                <i class="bi bi-house-door mr-3"></i>Home
+              </a>
+            </li>
+            <li>
+              <a class="mobile-nav-link block text-lg text-white hover:text-golden-400 transition-colors py-3 border-b border-gray-700" href="#about" aria-label="Go to About section">
+                <i class="bi bi-info-circle mr-3"></i>Over Ons
+              </a>
+            </li>
+            <li>
+              <a class="mobile-nav-link block text-lg text-white hover:text-golden-400 transition-colors py-3 border-b border-gray-700" href="#menu" aria-label="Go to Menu section">
+                <i class="bi bi-list-ul mr-3"></i>Menu
+              </a>
+            </li>
+            <li>
+              <a class="mobile-nav-link block text-lg text-white hover:text-golden-400 transition-colors py-3 border-b border-gray-700" href="#events" aria-label="Go to Events section">
+                <i class="bi bi-calendar-event mr-3"></i>Events
+              </a>
+            </li>
+            <li>
+              <a class="mobile-nav-link block text-lg text-white hover:text-golden-400 transition-colors py-3 border-b border-gray-700" href="#gallery" aria-label="Go to Gallery section">
+                <i class="bi bi-images mr-3"></i>Galerij
+              </a>
+            </li>
+            <li>
+              <a class="mobile-nav-link block text-lg text-white hover:text-golden-400 transition-colors py-3 border-b border-gray-700" href="#contact" aria-label="Go to Contact section">
+                <i class="bi bi-telephone mr-3"></i>Contact
+              </a>
+            </li>
+          </ul>
+        </nav>
+        
+        <!-- Mobile Contact Info -->
+        <div class="p-4 border-t border-gray-700 bg-black">
+          <div class="space-y-3 text-sm text-white/80">
+            <div class="flex items-center">
+              <i class="bi bi-phone text-golden-400 mr-3"></i>
+              <a href="tel:+32494194397" class="hover:text-golden-400 transition-colors">+32 494 19 43 97</a>
+            </div>
+            <div class="flex items-center">
+              <i class="bi bi-clock text-golden-400 mr-3"></i>
+              <span>Ma-Zo: 17:OO - 23:OO</span>
+            </div>
+            <div class="flex items-center">
+              <i class="bi bi-geo-alt text-golden-400 mr-3"></i>
+              <span>Vlaamsekaai 65, 2000 ANTWERPEN</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -409,11 +476,11 @@
         <div class="mb-12" data-aos="fade-up" data-aos-delay="100">
             <div class="menu-categories-container">
               <!-- Universal Carousel Layout for All Screens -->
-              <div class="menu-category-carousel">
-                <div class="swiper category-swiper">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                    <div class="menu-category-card filter-active bg-gradient-to-br from-golden-400 to-golden-600 border-2 border-golden-400 shadow-lg shadow-golden-400/25" data-filter="*">
+              <div class="menu-category-carousel relative">
+                <div class="swiper category-swiper overflow-hidden">
+                  <div class="swiper-wrapper flex">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card filter-active bg-gradient-to-br from-golden-400 to-golden-600 border-2 border-golden-400 shadow-lg shadow-golden-400/25 cursor-pointer transition-all duration-300" data-filter="*">
                       <div class="category-icon text-white">
                         <i class="bi bi-grid-3x3-gap text-2xl"></i>
                         </div>
@@ -427,8 +494,8 @@
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-voorgerechten">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-voorgerechten">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-egg-fried text-2xl"></i>
                         </div>
@@ -437,13 +504,12 @@
                         <p class="text-white/70">Starters & Appetizers</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-mixed-grill">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-mixed-grill">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-fire text-2xl"></i>
                         </div>
@@ -452,13 +518,12 @@
                         <p class="text-white/70">Vlees & Grill Specials</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-kumpir">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-kumpir">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-egg-fill text-2xl"></i>
                         </div>
@@ -467,13 +532,12 @@
                         <p class="text-white/70">Gevulde Aardappelen</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-spareribs">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-spareribs">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-bone text-2xl"></i>
                         </div>
@@ -482,13 +546,12 @@
                         <p class="text-white/70">BBQ Specialties</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-burgers">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-burgers">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-cup-hot text-2xl"></i>
                         </div>
@@ -497,13 +560,12 @@
                         <p class="text-white/70">Gourmet Burgers</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-kindermenu">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-kindermenu">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-emoji-smile text-2xl"></i>
                         </div>
@@ -512,13 +574,12 @@
                         <p class="text-white/70">Kids Specials</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-supplementen">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-supplementen">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-plus-circle text-2xl"></i>
                         </div>
@@ -527,13 +588,12 @@
                         <p class="text-white/70">Extra Toppings</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-desserten">
+                    <div class="swiper-slide flex-shrink-0">
+                    <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-desserten">
                       <div class="category-icon text-golden-400">
                         <i class="bi bi-cake2 text-2xl"></i>
                         </div>
@@ -542,13 +602,12 @@
                         <p class="text-white/70">Sweet Treats</p>
                         </div>
                         <div class="category-hover">
-                        <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-mocktails">
+                    <div class="swiper-slide flex-shrink-0">
+                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-mocktails">
                         <div class="category-icon text-golden-400">
                           <i class="bi bi-cup-straw text-2xl"></i>
                         </div>
@@ -557,13 +616,12 @@
                           <p class="text-white/70">Alcohol-Free Drinks</p>
                         </div>
                         <div class="category-hover">
-                          <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-frisdranken">
+                    <div class="swiper-slide flex-shrink-0">
+                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-frisdranken">
                         <div class="category-icon text-golden-400">
                           <i class="bi bi-droplet text-2xl"></i>
                         </div>
@@ -572,13 +630,12 @@
                           <p class="text-white/70">Soft Drinks</p>
                         </div>
                         <div class="category-hover">
-                          <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
 
-                    <div class="swiper-slide">
-                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80" data-filter=".filter-warme-dranken">
+                    <div class="swiper-slide flex-shrink-0">
+                      <div class="menu-category-card bg-dark-800/80 backdrop-blur-sm border border-golden-400/30 hover:border-golden-400/60 hover:bg-dark-700/80 cursor-pointer transition-all duration-300" data-filter=".filter-warme-dranken">
                         <div class="category-icon text-golden-400">
                           <i class="bi bi-cup-hot-fill text-2xl"></i>
                         </div>
@@ -587,20 +644,27 @@
                           <p class="text-white/70">Hot Beverages</p>
                         </div>
                         <div class="category-hover">
-                          <span class="text-golden-400">Ontdek</span>
                         </div>
                       </div>
                     </div>
                   </div>
                   
-                  <!-- Pagination dots -->
-                  <div class="swiper-pagination category-pagination">
+                                      <!-- Navigation arrows -->
+                    <div class="category-swiper-button-next flex">
+                      <i class="bi bi-chevron-right text-golden-400 text-2xl"></i>
+                    </div>
+                    <div class="category-swiper-button-prev flex">
+                      <i class="bi bi-chevron-left text-golden-400 text-2xl"></i>
+                    </div>
+                    
+                    <!-- Pagination dots -->
+                    <div class="swiper-pagination category-pagination">
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 menu-container" data-aos="fade-up" data-aos-delay="200" id="menu-items-container">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 menu-container items-stretch mb-8" data-aos="fade-up" data-aos-delay="200" id="menu-items-container" style="min-height: 400px; display: grid !important; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;">
           <!-- Menu items will be dynamically generated here -->
-        </div>
+          </div>
     </section>
 
     <section id="events" class="events">
@@ -682,65 +746,65 @@
         <div class="row g-0">
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/mixedGrill.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/mixedGrill.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/mixedGrill.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/tigerGarnalen.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/tigerGarnalen.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/tigerGarnalen.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/IMG_1809.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_1809.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/IMG_1809.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/IMG_3356.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/IMG_3356.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/IMG_3356.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/kumpir1.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/kumpir1.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/kumpir1.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/mocktail3.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/mocktail3.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/mocktail3.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/kumpir.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/kumpir.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/kumpir.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
 
           <div class="col-lg-3 col-md-4">
-            <div class="gallery-item">
+            <div class="gallery-item" style="height: 400px;">
               <a href="assets/img/golden/dessert.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-                <img src="assets/img/golden/dessert.JPEG" alt="the goldenolive antwerpen" class="img-fluid">
+                <img src="assets/img/golden/dessert.JPEG" alt="the goldenolive antwerpen" class="img-fluid" style="height: 100%; object-fit: cover;">
               </a>
             </div>
           </div>
@@ -1031,15 +1095,25 @@
 
   <!-- Menu Item Component Template -->
   <template id="menu-item-template">
-    <div class="menu-item bg-dark-800/50 backdrop-blur-sm border border-golden-400/20 rounded-xl overflow-hidden hover:border-golden-400/40 hover:transform hover:scale-105 transition-all duration-300">
+    <div class="menu-item bg-dark-800/50 backdrop-blur-sm border border-golden-400/20 rounded-xl overflow-hidden hover:border-golden-400/40 hover:transform hover:scale-105 transition-all duration-300 h-full mb-8">
       <img class="w-full h-48 object-cover" alt="">
       <div class="p-6 flex flex-col h-full">
-        <div class="flex justify-between items-start mb-3">
-          <a href="#" class="text-xl font-playfair font-bold text-white hover:text-golden-400 transition-colors"></a>
-          <span class="text-lg font-bold text-golden-400"></span>
+        <div class="flex justify-between items-start mb-4">
+          <a href="#" class="text-xl font-playfair font-bold text-white hover:text-golden-400 transition-colors flex-1 mr-4"></a>
+          <span class="text-lg font-bold text-golden-400 flex-shrink-0"></span>
         </div>
-        <div class="text-white/70 text-sm mb-4 flex-grow"></div>
-        <div class="flex flex-wrap gap-2"></div>
+        <div class="text-white/70 text-sm mb-6 flex-grow min-h-[3rem] leading-relaxed"></div>
+        
+        <!-- Allergen Symbols Section -->
+        <div class="mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="bi bi-exclamation-triangle text-golden-400 text-sm"></i>
+            <span class="text-xs text-golden-300 font-medium">Allergenen (klik voor info):</span>
+          </div>
+          <div class="flex flex-wrap gap-1 allergen-symbols"></div>
+        </div>
+        
+        <div class="flex flex-wrap gap-2 mt-auto pt-4 border-t border-golden-400/20"></div>
       </div>
     </div>
   </template>
@@ -1051,7 +1125,7 @@
         {
           "id": "tiger-garnalen",
           "name": "Tiger garnalen",
-          "price": "€7.00",
+          "price": "€9.00",
           "description": "Met zoetzure saus",
           "image": "assets/img/golden/tigerGarnalen.JPEG",
           "alt": "Tiger garnalen voorgerecht The Golden Olive Antwerpen",
@@ -1064,8 +1138,8 @@
         {
           "id": "chicken-wings",
           "name": "Chicken Wings",
-          "price": "€7.00",
-          "description": "Met zoetzure saus<br />Keuze uit: Natuur, Zoetzure saus en BBQ Saus",
+          "price": "€8.00",
+          "description": "Kippenvleugels<br />Keuze uit: Natuur, Zoetzure saus en BBQ Saus",
           "image": "assets/img/golden/chickeniwings.JPEG",
           "alt": "the goldenolive antwerpen chicken wings",
           "allergens": [
@@ -1078,8 +1152,8 @@
         {
           "id": "nachos",
           "name": "Nachos",
-          "price": "€7.00",
-          "description": "Keuze uit: Guacamole, salsa en zuurroom",
+          "price": "€12.00",
+          "description": "Guacamole, salsa en zuurroom",
           "image": "assets/img/favicon11.png",
           "alt": "the golden olive antwerpen",
           "allergens": [
@@ -1091,7 +1165,7 @@
         {
           "id": "kaaskroketten",
           "name": "Kaaskroketten",
-          "price": "€7.00",
+          "price": "€8.00",
           "description": "Met kaasvulling en paneermeel",
           "image": "assets/img/favicon11.png",
           "alt": "the golden olive antwerpen",
@@ -1104,7 +1178,7 @@
         {
           "id": "uienringen",
           "name": "Uienringen",
-          "price": "€7.00",
+          "price": "€8.00",
           "description": "Met zoetzure saus",
           "image": "assets/img/golden/onionrings.JPEG",
           "alt": "the goldenolive antwerpen uienringen",
@@ -1116,7 +1190,7 @@
         {
           "id": "mini-loempia",
           "name": "Mini Loempia",
-          "price": "€7.00",
+          "price": "€7.50",
           "description": "Met zoetzure saus",
           "image": "assets/img/favicon11.png",
           "alt": "the golden olive antwerpen",
@@ -1132,8 +1206,8 @@
         {
           "id": "mixed-grill",
           "name": "Mixed Grill",
-          "price": "€39,99",
-          "description": "Verschillende soorten vlees, geserveerd met Champignon saus, salade en friet | american patatoes | nachos",
+          "price": "€39.99",
+          "description": "8 soorten vlees<br />Geserveerd met Champignon saus en salade",
           "image": "assets/img/golden/mixedGrill.JPEG",
           "alt": "the goldenolive antwerpen mixedgrill",
           "allergens": [
@@ -1146,115 +1220,206 @@
         {
           "id": "spareribs-natuur",
           "name": "Spareribs Natuur",
-          "price": "€28,99",
-          "description": "Spareribs met natuurlijke smaak, geserveerd met friet en salade",
+          "price": "€38.00",
+          "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs natuur The Golden Olive Antwerpen",
           "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
           ]
         },
         {
           "id": "spareribs-bbq",
-          "name": "Spareribs BBQ",
-          "price": "€28,99",
-          "description": "Spareribs met BBQ saus, geserveerd met friet en salade",
+          "name": "Spareribs Barbeque",
+          "price": "€38.00",
+          "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs BBQ The Golden Olive Antwerpen",
           "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
           ]
         },
         {
           "id": "spareribs-gekarameliseerd",
           "name": "Spareribs Gekarameliseerd",
-          "price": "€28,99",
-          "description": "Spareribs met karamel saus, geserveerd met friet en salade",
+          "price": "€38.00",
+          "description": "Honing, coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
           "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
           ]
         },
         {
           "id": "spareribs-spicy",
-          "name": "Spareribs Spicy",
-          "price": "€28,99",
-          "description": "Spareribs met spicy saus, geserveerd met friet en salade",
+          "name": "Spareribs Spicy (Pikant)",
+          "price": "€38.00",
+          "description": "Coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs spicy The Golden Olive Antwerpen",
           "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
           ]
         },
         {
           "id": "spareribs-thai",
-          "name": "Spareribs Thai",
-          "price": "€28,99",
-          "description": "Spareribs met Thai saus, geserveerd met friet en salade",
+          "name": "Spareribs Thai Sweet Chili",
+          "price": "€38.00",
+          "description": "Coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs Thai The Golden Olive Antwerpen",
           "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
           ]
         }
       ],
       "kumpir": [
         {
-          "id": "kumpir-kaas",
-          "name": "Kumpir Kaas",
-          "price": "€15,99",
-          "description": "Gevulde aardappel met kaas en verschillende toppings",
-          "image": "assets/img/golden/kumpir.JPEG",
-          "alt": "Kumpir kaas The Golden Olive Antwerpen",
+          "id": "kumpir-kip-curry",
+          "name": "Kumpir Kip Currysaus",
+          "price": "€20.00",
+          "description": "Met currysaus",
+          "image": "assets/img/golden/kumpir1.JPEG",
+          "alt": "Kumpir kip curry The Golden Olive Antwerpen",
           "allergens": [
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
           ]
         },
         {
-          "id": "kumpir-chicken",
-          "name": "Kumpir Chicken",
-          "price": "€15,99",
-          "description": "Gevulde aardappel met kip en verschillende toppings",
+          "id": "kumpir-kip-champignon",
+          "name": "Kumpir Kip Champignon saus",
+          "price": "€20.00",
+          "description": "Met champignonsaus",
           "image": "assets/img/golden/kumpir1.JPEG",
-          "alt": "Kumpir chicken The Golden Olive Antwerpen",
+          "alt": "Kumpir kip champignon The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+          ]
+        },
+        {
+          "id": "kumpir-scampi-diabolique",
+          "name": "Kumpir Scampi Diabolique saus",
+          "price": "€21.00",
+          "description": "Met diabolique saus",
+          "image": "assets/img/golden/kumpir.JPEG",
+          "alt": "Kumpir scampi diabolique The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+          ]
+        },
+        {
+          "id": "kumpir-scampi-curry",
+          "name": "Kumpir Scampi Currysaus",
+          "price": "€21.00",
+          "description": "Met curry saus",
+          "image": "assets/img/golden/kumpir.JPEG",
+          "alt": "Kumpir scampi curry The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+          ]
+        },
+        {
+          "id": "kumpir-veggie",
+          "name": "Kumpir Veggie",
+          "price": "€17.00",
+          "description": "Tomatenroomsaus",
+          "image": "assets/img/golden/kumpir.JPEG",
+          "alt": "Kumpir veggie The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
           ]
         }
       ],
       "burgers": [
         {
-          "id": "hamburger-klassiek",
-          "name": "Hamburger Klassiek",
-          "price": "€18,99",
-          "description": "Klassieke hamburger met sla, tomaat, ui en kaas",
-          "image": "assets/img/golden/hamburger1.JPEG",
-          "alt": "Hamburger klassiek The Golden Olive Antwerpen",
+          "id": "fish-burger",
+          "name": "Fish",
+          "price": "€17.00",
+          "description": "Fish steak, truffelsaus, roomkaas, tomaat, uien, dille, rucola, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3447.JPEG",
+          "alt": "Fish Burger The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "F", "type": "Fish", "color": "cyan", "description": "Vis - Vis wordt meestal in herkenbare vorm geconsumeerd"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "veggie-burger",
+          "name": "Veggie",
+          "price": "€16.00",
+          "description": "Gegrilde paprika, gegrilde courgette, olive sauce, tomaat, uien, sla, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3356.JPEG",
+          "alt": "Veggie Burger The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
           ]
         },
         {
-          "id": "hamburger-speciaal",
-          "name": "Hamburger Speciaal",
-          "price": "€20,99",
-          "description": "Speciale hamburger met bacon, kaas en speciale saus",
-          "image": "assets/img/golden/hamburger2.JPEG",
-          "alt": "Hamburger speciaal The Golden Olive Antwerpen",
+          "id": "spicy-chicken",
+          "name": "Spicy Chicken",
+          "price": "€19.00",
+          "description": "Kipfilet, pikant tomaten, mozzarella saus, coleslaw, jalapenos, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3398.JPEG",
+          "alt": "Spicy Chicken The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
           ]
         },
         {
-          "id": "hamburger-deluxe",
-          "name": "Hamburger Deluxe",
-          "price": "€22,99",
-          "description": "Deluxe hamburger met extra toppings en premium vlees",
-          "image": "assets/img/golden/hamburger3.JPEG",
-          "alt": "Hamburger deluxe The Golden Olive Antwerpen",
+          "id": "texas-burger",
+          "name": "Texas",
+          "price": "€20.00",
+          "description": "Bio rundvlees, cheddar, gekarameliseerde uien, olive saus, bieslook, sla kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3356.JPEG",
+          "alt": "Texas Burger The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "pesto-chicken",
+          "name": "Pesto Chicken",
+          "price": "€19.00",
+          "description": "Gepaneerde kip, pesto gegrilde paprika, olive saus, rucola, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3373.JPEG",
+          "alt": "Pesto Chicken The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "smash-n-onion",
+          "name": "Smash 'N Onion",
+          "price": "€20.00",
+          "description": "Bio rundvlees, uienringen, cheddar, peterselie, olive saus, wortel<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3427.JPEG",
+          "alt": "Smash 'N Onion The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+            {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+          ]
+        },
+        {
+          "id": "mexicaanse-burger",
+          "name": "Mexicaanse",
+          "price": "€18.00",
+          "description": "Bio rundvlees, roomkaas, parmigiano, guacamole, salsa, rucola, uien, tomaat, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/golden/IMG_3356.JPEG",
+          "alt": "Mexicaanse Burger The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
@@ -1263,59 +1428,124 @@
       ],
       "kindermenu": [
         {
-          "id": "kids-burger",
-          "name": "Kids Burger",
-          "price": "€12,99",
-          "description": "Kleine hamburger met friet en drankje",
+          "id": "gehakt-burger",
+          "name": "Gehakt Burger",
+          "price": "€10.00",
+          "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/favicon11.png",
-          "alt": "Kids burger The Golden Olive Antwerpen",
+          "alt": "Gehakt Burger The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
           ]
         },
         {
-          "id": "kids-kumpir",
-          "name": "Kids Kumpir",
-          "price": "€10,99",
-          "description": "Kleine kumpir met toppings naar keuze",
-          "image": "assets/img/golden/kumpir.JPEG",
-          "alt": "Kids kumpir The Golden Olive Antwerpen",
+          "id": "crispy-kip-burger",
+          "name": "Crispy Kip Burger",
+          "price": "€10.00",
+          "description": "Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/favicon11.png",
+          "alt": "Crispy Kip Burger The Golden Olive Antwerpen",
           "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "kinder-kip-nuggets",
+          "name": "Kinder Kip Nuggets",
+          "price": "€9.50",
+          "description": "Keuze uit: Friet, American potatoes en Nachos",
+          "image": "assets/img/favicon11.png",
+          "alt": "Kinder Kip Nuggets The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
           ]
         }
       ],
       "supplementen": [
         {
-          "id": "extra-friet",
-          "name": "Extra Friet",
-          "price": "€3,50",
+          "id": "portie-frietjes",
+          "name": "Portie friet",
+          "price": "€4.99",
           "description": "Extra portie friet",
-          "image": "assets/img/golden/frietjes.JPEG",
-          "alt": "Extra friet The Golden Olive Antwerpen",
+          "image": "assets/img/favicon11.png",
+          "alt": "Portie frietjes The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
           ]
         },
         {
-          "id": "extra-saus",
-          "name": "Extra Saus",
-          "price": "€1,50",
-          "description": "Extra saus naar keuze",
+          "id": "portie-american-patatoes",
+          "name": "Portie American potatoes",
+          "price": "€4.99",
+          "description": "Extra portie American potatoes",
           "image": "assets/img/favicon11.png",
-          "alt": "Extra saus The Golden Olive Antwerpen",
-          "allergens": []
+          "alt": "Portie American patatoes The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+          ]
+        },
+        {
+          "id": "portie-champignonsaus",
+          "name": "Portie champignonsaus",
+          "price": "€3.50",
+          "description": "Extra portie champignonsaus",
+          "image": "assets/img/favicon11.png",
+          "alt": "Portie champignonsaus The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "portie-diabolique-saus",
+          "name": "Portie diaboliquesaus",
+          "price": "€3.50",
+          "description": "Extra portie diabolique saus",
+          "image": "assets/img/favicon11.png",
+          "alt": "Portie diabolique saus The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
         }
       ],
       "desserten": [
         {
-          "id": "dessert-speciaal",
-          "name": "Dessert van de Dag",
-          "price": "€6,99",
-          "description": "Dagelijks wisselend dessert",
-          "image": "assets/img/golden/dessert.JPEG",
-          "alt": "Dessert van de dag The Golden Olive Antwerpen",
+          "id": "daim-chocolate-crunchy",
+          "name": "Daim chocolate crunchy caramel cake",
+          "price": "€7.00",
+          "description": "Heerlijke Daim chocolade cake",
+          "image": "assets/img/golden/IMG_7297.JPEG",
+          "alt": "Daim chocolate crunchy caramel cake The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+            {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+          ]
+        },
+        {
+          "id": "moelleux-chocolat",
+          "name": "Moelleux chocolat",
+          "price": "€7.00",
+          "description": "Warme chocolade cake met vloeibare kern",
+          "image": "assets/img/favicon11.png",
+          "alt": "Moelleux chocolat The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+            {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+          ]
+        },
+        {
+          "id": "dame-blanche",
+          "name": "Dame Blanche",
+          "price": "€7.00",
+          "description": "Klassiek dessert met vanille-ijs en chocoladesaus",
+          "image": "assets/img/golden/IMG_7297.JPEG",
+          "alt": "Dame Blanche The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
@@ -1325,79 +1555,220 @@
       ],
       "mocktails": [
         {
-          "id": "mocktail-1",
-          "name": "Mocktail Special",
-          "price": "€5,99",
-          "description": "Alcoholvrije cocktail met verse ingrediënten",
+          "id": "mojito-blue-hawaii",
+          "name": "Mojito Blue Hawaii",
+          "price": "€9.50",
+          "description": "Tropische mojito met blauwe kleur",
+          "image": "assets/img/golden/IMG_2018.JPEG",
+          "alt": "Mojito Blue Hawaii The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "strawberry-mojito",
+          "name": "Strawberry Mojito",
+          "price": "€9.50",
+          "description": "Mojito met aardbeien",
           "image": "assets/img/golden/mocktail1.JPEG",
-          "alt": "Mocktail special The Golden Olive Antwerpen",
+          "alt": "Strawberry Mojito The Golden Olive Antwerpen",
           "allergens": []
         },
         {
-          "id": "mocktail-2",
-          "name": "Virgin Mojito",
-          "price": "€5,99",
-          "description": "Alcoholvrije mojito met munt en limoen",
+          "id": "classic-mojito",
+          "name": "Classic Mojito",
+          "price": "€9.50",
+          "description": "Klassieke mojito zonder alcohol",
           "image": "assets/img/golden/mocktail2.JPEG",
-          "alt": "Virgin mojito The Golden Olive Antwerpen",
+          "alt": "Classic Mojito The Golden Olive Antwerpen",
           "allergens": []
         },
         {
-          "id": "mocktail-3",
-          "name": "Tropical Breeze",
-          "price": "€5,99",
-          "description": "Tropische mocktail met ananas en kokos",
-          "image": "assets/img/golden/mocktail3.JPEG",
-          "alt": "Tropical breeze The Golden Olive Antwerpen",
+          "id": "rosso-mojito",
+          "name": "Mojito Rosso",
+          "price": "€9.50",
+          "description": "Limoen, framboos, violet",
+          "image": "assets/img/golden/IMG_2018.JPEG",
+          "alt": "Mojito Rosso The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "ipanema-mojito",
+          "name": "Mojito Ipanema",
+          "price": "€9.50",
+          "description": "Passievrucht, limoen, gember",
+          "image": "assets/img/golden/IMG_2018.JPEG",
+          "alt": "Mojito Ipanema The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "mango-wave",
+          "name": "Mojito Mango Wave",
+          "price": "€9.50",
+          "description": "Mango, spicy, limoen",
+          "image": "assets/img/favicon11.png",
+          "alt": "Mojito Mango Wave The Golden Olive Antwerpen",
           "allergens": []
         }
       ],
       "frisdranken": [
         {
-          "id": "cola",
-          "name": "Cola",
-          "price": "€2,50",
-          "description": "Coca Cola of Pepsi",
-          "image": "assets/img/golden/drinks.png",
-          "alt": "Cola The Golden Olive Antwerpen",
+          "id": "sprite",
+          "name": "Sprite",
+          "price": "€3.00",
+          "description": "Sprite Lemon",
+          "image": "assets/img/favicon11.png",
+          "alt": "Sprite The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "fuze-tea-lemon",
+          "name": "FUZE TEA LEMON",
+          "price": "€3.00",
+          "description": "Fuze Tea met citroen",
+          "image": "assets/img/favicon11.png",
+          "alt": "Fuze Tea Lemon The Golden Olive Antwerpen",
           "allergens": []
         },
         {
           "id": "fanta",
           "name": "Fanta",
-          "price": "€2,50",
+          "price": "€3.00",
           "description": "Fanta Orange",
-          "image": "assets/img/golden/drinks.png",
+          "image": "assets/img/favicon11.png",
           "alt": "Fanta The Golden Olive Antwerpen",
           "allergens": []
         },
         {
-          "id": "sprite",
-          "name": "Sprite",
-          "price": "€2,50",
-          "description": "Sprite Lemon",
-          "image": "assets/img/golden/drinks.png",
-          "alt": "Sprite The Golden Olive Antwerpen",
+          "id": "bruiswater-05l",
+          "name": "Bruiswater 0.5L",
+          "price": "€5.00",
+          "description": "Koolzuurhoudend water",
+          "image": "assets/img/favicon11.png",
+          "alt": "Bruiswater 0.5L The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "cola-zero",
+          "name": "Cola Zero",
+          "price": "€3.00",
+          "description": "Coca Cola Zero zonder suiker",
+          "image": "assets/img/favicon11.png",
+          "alt": "Cola Zero The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "minute-maid-apple",
+          "name": "Minute Maid Apple",
+          "price": "€3.00",
+          "description": "Minute Maid appelsap",
+          "image": "assets/img/favicon11.png",
+          "alt": "Minute Maid Apple The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "coca-cola",
+          "name": "Coca Cola",
+          "price": "€3.00",
+          "description": "Klassieke Coca Cola",
+          "image": "assets/img/favicon11.png",
+          "alt": "Coca Cola The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "fuze-tea-peach",
+          "name": "Fuze Tea Peach",
+          "price": "€3.00",
+          "description": "Fuze Tea met perzik",
+          "image": "assets/img/favicon11.png",
+          "alt": "Fuze Tea Peach The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "water-05l",
+          "name": "Water 0.5L",
+          "price": "€5.00",
+          "description": "Stille water",
+          "image": "assets/img/favicon11.png",
+          "alt": "Water 0.5L The Golden Olive Antwerpen",
           "allergens": []
         }
       ],
       "warme-dranken": [
         {
+          "id": "cappuccino",
+          "name": "Cappuccino",
+          "price": "€3.50",
+          "description": "Cappuccino met melkschuim",
+          "image": "assets/img/favicon11.png",
+          "alt": "Cappuccino The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "lipton-thee",
+          "name": "Lipton Thee",
+          "price": "€3.00",
+          "description": "Keuze uit verschillende smaken",
+          "image": "assets/img/favicon11.png",
+          "alt": "Lipton Thee The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "munt-thee",
+          "name": "Munt Thee",
+          "price": "€3.50",
+          "description": "Verfrissende munt thee",
+          "image": "assets/img/favicon11.png",
+          "alt": "Munt Thee The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
+          "id": "latte-macchiato",
+          "name": "Latte Macchiato",
+          "price": "€4.00",
+          "description": "Latte macchiato met melk",
+          "image": "assets/img/favicon11.png",
+          "alt": "Latte Macchiato The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "dubbele-expresso",
+          "name": "Dubbele Espresso",
+          "price": "€3.00",
+          "description": "Dubbele espresso voor extra cafeïne",
+          "image": "assets/img/favicon11.png",
+          "alt": "Dubbele Espresso The Golden Olive Antwerpen",
+          "allergens": []
+        },
+        {
           "id": "koffie",
           "name": "Koffie",
-          "price": "€2,50",
+          "price": "€3.00",
           "description": "Verse koffie",
-          "image": "assets/img/golden/tea.png",
+          "image": "assets/img/favicon11.png",
           "alt": "Koffie The Golden Olive Antwerpen",
           "allergens": []
         },
         {
-          "id": "thee",
-          "name": "Thee",
-          "price": "€2,50",
-          "description": "Verse thee naar keuze",
-          "image": "assets/img/golden/tea.png",
-          "alt": "Thee The Golden Olive Antwerpen",
+          "id": "koffie-met-melk",
+          "name": "Koffie met melk",
+          "price": "€3.50",
+          "description": "Koffie met warme melk",
+          "image": "assets/img/favicon11.png",
+          "alt": "Koffie met melk The Golden Olive Antwerpen",
+          "allergens": [
+            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+          ]
+        },
+        {
+          "id": "expresso",
+          "name": "Espresso",
+          "price": "€2.50",
+          "description": "Sterke espresso",
+          "image": "assets/img/favicon11.png",
+          "alt": "Espresso The Golden Olive Antwerpen",
           "allergens": []
         }
       ]
@@ -1548,6 +1919,137 @@
       <span class="floating-btn-text">Allergenen</span>
     </div>
   </div>
+
+  <!-- Mobile Menu JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const mobileNav = document.getElementById('mobile-nav');
+      const mobileNavClose = document.querySelector('.mobile-nav-close');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+      
+      // Toggle mobile menu
+      if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !isExpanded);
+          
+          if (mobileNav) {
+            if (!isExpanded) {
+              // Open menu
+              mobileNav.classList.remove('-translate-x-full');
+              mobileNav.classList.add('translate-x-0');
+              mobileNav.setAttribute('aria-hidden', 'false');
+              document.body.style.overflow = 'hidden';
+            } else {
+              // Close menu
+              mobileNav.classList.add('-translate-x-full');
+              mobileNav.classList.remove('translate-x-0');
+              mobileNav.setAttribute('aria-hidden', 'true');
+              document.body.style.overflow = '';
+            }
+          }
+        });
+      }
+      
+      // Close mobile menu with close button
+      if (mobileNavClose) {
+        mobileNavClose.addEventListener('click', function() {
+          if (mobileNav) {
+            mobileNav.classList.add('-translate-x-full');
+            mobileNav.classList.remove('translate-x-0');
+            mobileNav.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            
+            // Update toggle button state
+            if (mobileNavToggle) {
+              mobileNavToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }
+      
+      // Close mobile menu when clicking on navigation links
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (mobileNav) {
+            mobileNav.classList.add('-translate-x-full');
+            mobileNav.classList.remove('translate-x-0');
+            mobileNav.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            
+            // Update toggle button state
+            if (mobileNavToggle) {
+              mobileNavToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      });
+      
+      // Close mobile menu when clicking outside
+      if (mobileNav) {
+        mobileNav.addEventListener('click', function(e) {
+          if (e.target === this) {
+            this.classList.add('-translate-x-full');
+            this.classList.remove('translate-x-0');
+            this.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            
+            // Update toggle button state
+            if (mobileNavToggle) {
+              mobileNavToggle.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      }
+      
+      // Close mobile menu on escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileNav && !mobileNav.classList.contains('-translate-x-full')) {
+          mobileNav.classList.add('-translate-x-full');
+          mobileNav.classList.remove('translate-x-0');
+          mobileNav.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+          
+          // Update toggle button state
+          if (mobileNavToggle) {
+            mobileNavToggle.setAttribute('aria-expanded', 'false');
+          }
+        }
+      });
+      
+      // Ensure menu items are properly displayed
+      const menuContainer = document.getElementById('menu-items-container');
+      if (menuContainer) {
+        // Force a layout recalculation and disable Isotope interference
+        setTimeout(() => {
+          menuContainer.style.display = 'grid';
+          menuContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+          menuContainer.style.gap = '1.5rem';
+          menuContainer.style.width = '100%';
+          menuContainer.style.position = 'relative';
+          
+          // Disable any Isotope layout
+          if (window.isotope) {
+            window.isotope.destroy();
+            window.isotope = null;
+          }
+          
+          // Ensure all menu items are visible
+          const menuItems = menuContainer.querySelectorAll('.menu-item');
+          menuItems.forEach(item => {
+            item.style.display = 'block';
+            item.style.position = 'relative';
+            item.style.width = '100%';
+            item.style.height = 'auto';
+            item.style.margin = '0 0 2rem 0';
+            item.style.opacity = '1';
+            item.style.transform = 'none';
+          });
+        }, 100);
+      }
+    });
+  </script>
 
 </body>
 

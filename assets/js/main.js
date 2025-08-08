@@ -166,36 +166,7 @@
     });
   }
 
-  /**
-   * Menu isotope and filter
-   */
-  window.addEventListener('load', () => {
-    let menuContainer = select('.menu-container');
-    if (menuContainer) {
-      let menuIsotope = new Isotope(menuContainer, {
-        itemSelector: '.menu-item',
-        layoutMode: 'fitRows'
-      });
 
-      let menuFilters = select('.menu-category-card', true);
-
-      on('click', '.menu-category-card', function(e) {
-        e.preventDefault();
-        menuFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        menuIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        menuIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
-    }
-
-  });
 
   /**
    * Initiate glightbox 
@@ -254,17 +225,23 @@
   /**
    * Menu Categories Carousel
    */
-  new Swiper('.category-swiper', {
-    speed: 600,
-    loop: false,
-    slidesPerView: 'auto',
-    spaceBetween: 20,
-    centeredSlides: true,
-    pagination: {
-      el: '.category-pagination',
-      type: 'bullets',
-      clickable: true
-    },
+      const categorySwiper = new Swiper('.category-swiper', {
+      speed: 600,
+      loop: false,
+      slidesPerView: 'auto',
+      spaceBetween: 20,
+      centeredSlides: true,
+      allowTouchMove: true,
+      preventClicks: false,
+      preventClicksPropagation: false,
+      navigation: {
+        enabled: false
+      },
+      pagination: {
+        el: '.category-pagination',
+        type: 'bullets',
+        clickable: true
+      },
     breakpoints: {
       320: {
         slidesPerView: 1.2,
@@ -290,6 +267,73 @@
         slidesPerView: 5.5,
         spaceBetween: 40
       }
+    }
+  });
+
+  // Custom navigation for category carousel
+  const nextButton = document.querySelector('.category-swiper-button-next');
+  const prevButton = document.querySelector('.category-swiper-button-prev');
+  
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      categorySwiper.slideNext();
+    });
+  }
+  
+  if (prevButton) {
+    prevButton.addEventListener('click', () => {
+      categorySwiper.slidePrev();
+    });
+  }
+
+  /**
+   * Menu filtering functionality
+   */
+  window.addEventListener('load', () => {
+    let menuContainer = select('#menu-items-container');
+    if (menuContainer) {
+      let menuFilters = select('.menu-category-card', true);
+
+      on('click', '.menu-category-card', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Remove active class from all filters
+        menuFilters.forEach(function(el) {
+          el.classList.remove('filter-active');
+          el.classList.remove('bg-gradient-to-br', 'from-golden-400', 'to-golden-600', 'border-2', 'border-golden-400', 'shadow-lg', 'shadow-golden-400/25');
+          el.classList.add('bg-dark-800/80', 'backdrop-blur-sm', 'border', 'border-golden-400/30');
+        });
+        
+        // Add active class to clicked filter
+        this.classList.add('filter-active');
+        this.classList.remove('bg-dark-800/80', 'backdrop-blur-sm', 'border', 'border-golden-400/30');
+        this.classList.add('bg-gradient-to-br', 'from-golden-400', 'to-golden-600', 'border-2', 'border-golden-400', 'shadow-lg', 'shadow-golden-400/25');
+
+        // Get the filter value
+        const filterValue = this.getAttribute('data-filter');
+        
+        // Get all menu items
+        const menuItems = menuContainer.querySelectorAll('.menu-item');
+        
+        // Show/hide menu items based on filter
+        menuItems.forEach(item => {
+          if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
+            item.style.display = 'block';
+            item.style.opacity = '1';
+            item.style.transform = 'none';
+          } else {
+            item.style.display = 'none';
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.8)';
+          }
+        });
+        
+        // Refresh AOS animations
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      }, true);
     }
   });
 
@@ -341,11 +385,16 @@ function createMenuItemComponent(itemData, category) {
   const description = menuItem.querySelector('.text-white\\/70');
   description.innerHTML = itemData.description;
   
-  // Create allergens
+  // Create allergens for the main allergen section
   const allergensContainer = menuItem.querySelector('.flex.flex-wrap.gap-2');
   allergensContainer.innerHTML = '';
   
+  // Create allergen symbols for the breadcrumb section
+  const allergenSymbolsContainer = menuItem.querySelector('.allergen-symbols');
+  allergenSymbolsContainer.innerHTML = '';
+  
   itemData.allergens.forEach(allergen => {
+    // Create allergen badge for main section
     const allergenSpan = document.createElement('span');
     allergenSpan.className = `allergen bg-${allergen.color}-500/20 text-${allergen.color}-300 border border-${allergen.color}-500/30 px-2 py-1 rounded-full text-xs font-medium hover:bg-${allergen.color}-500/30 transition-colors cursor-pointer`;
     allergenSpan.textContent = allergen.code;
@@ -360,6 +409,22 @@ function createMenuItemComponent(itemData, category) {
     });
     
     allergensContainer.appendChild(allergenSpan);
+    
+    // Create allergen symbol for breadcrumb section
+    const allergenSymbol = document.createElement('span');
+    allergenSymbol.className = `allergen-symbol bg-${allergen.color}-500/30 text-${allergen.color}-300 border border-${allergen.color}-500/50 px-1.5 py-0.5 rounded text-xs font-bold cursor-pointer hover:bg-${allergen.color}-500/50 transition-colors`;
+    allergenSymbol.textContent = allergen.code;
+    allergenSymbol.setAttribute('data-allergen', allergen.description);
+    allergenSymbol.setAttribute('title', `${allergen.type}: ${allergen.description}`);
+    allergenSymbol.setAttribute('role', 'button');
+    allergenSymbol.setAttribute('tabindex', '0');
+    
+    // Add click event for allergen info
+    allergenSymbol.addEventListener('click', function() {
+      showAllergenInfo(allergen.description);
+    });
+    
+    allergenSymbolsContainer.appendChild(allergenSymbol);
   });
   
   return menuItem;
@@ -380,11 +445,25 @@ function generateMenuItems() {
     });
   });
   
-  // Reinitialize Isotope for filtering
-  if (window.isotope) {
-    window.isotope.reloadItems();
-    window.isotope.layout();
-  }
+  // Ensure proper grid layout without Isotope interference
+  setTimeout(() => {
+    container.style.display = 'grid';
+    container.style.gridTemplateColumns = 'repeat(auto-fit, minmax(350px, 1fr))';
+    container.style.gap = '1.5rem';
+    container.style.width = '100%';
+    
+    // Ensure all menu items are properly displayed
+    const menuItems = container.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+      item.style.display = 'block';
+      item.style.position = 'relative';
+      item.style.width = '100%';
+      item.style.height = 'auto';
+      item.style.margin = '0';
+      item.style.opacity = '1';
+      item.style.transform = 'none';
+    });
+  }, 100);
 }
 
 function showAllergenInfo(description) {
