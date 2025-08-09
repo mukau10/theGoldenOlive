@@ -871,54 +871,76 @@ async function generateMenuItems() {
 }
 
 function showAllergenInfo(description) {
-  // Create a modern modal for allergen information
-  const modal = document.createElement('div');
-  modal.className = 'fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fadeIn';
-  modal.innerHTML = `
-    <div class="bg-gradient-to-br from-dark-800/95 to-dark-900/95 border-2 border-golden-400/40 rounded-2xl p-8 max-w-lg w-full shadow-2xl shadow-golden-400/20 backdrop-blur-lg transform animate-scaleIn">
-      <!-- Header -->
-      <div class="flex justify-between items-center mb-6">
-        <div class="flex items-center gap-3">
-          <i class="bi bi-shield-exclamation text-golden-400 text-2xl"></i>
-          <h3 class="text-2xl font-playfair font-bold text-golden-400">Allergenen Informatie</h3>
+  // Create modern allergen popup with consistent styling
+  const popup = document.createElement('div');
+  popup.className = 'allergen-popup';
+  popup.innerHTML = `
+    <div class="allergen-popup-content">
+      <div class="allergen-popup-header">
+        <h6><i class="bi bi-shield-exclamation me-2"></i>Allergenen Informatie</h6>
+        <button class="allergen-popup-close">&times;</button>
+      </div>
+      <div class="allergen-popup-body">
+        <p>${description}</p>
+        <div class="mt-3 text-center">
+          <button class="btn btn-warning btn-sm px-3 py-2 rounded-pill" onclick="this.closest('.allergen-popup').remove()">
+            <i class="bi bi-check-circle me-1"></i>Begrepen
+          </button>
         </div>
-        <button class="text-white/70 hover:text-golden-400 transition-all duration-300 text-3xl hover:scale-110 hover:rotate-90 w-10 h-10 flex items-center justify-center rounded-full hover:bg-golden-400/10" onclick="this.closest('.fixed').remove()">&times;</button>
-      </div>
-      
-      <!-- Content -->
-      <div class="bg-dark-700/50 rounded-xl p-6 border border-golden-400/20 mb-6">
-        <p class="text-white/90 leading-relaxed text-lg">${description}</p>
-      </div>
-      
-      <!-- Footer -->
-      <div class="flex justify-center gap-3">
-        <button class="bg-gradient-to-r from-golden-400 to-golden-500 text-dark-900 hover:from-golden-300 hover:to-golden-400 px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-golden-400/30" onclick="this.closest('.fixed').remove()">
-          <i class="bi bi-check-circle mr-2"></i>
-          Begrepen
-        </button>
       </div>
     </div>
   `;
   
-  document.body.appendChild(modal);
+  document.body.appendChild(popup);
   
-  // Close modal when clicking outside
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      modal.classList.add('animate-fadeOut');
-      setTimeout(() => modal.remove(), 300);
+  // Close button functionality
+  const closeBtn = popup.querySelector('.allergen-popup-close');
+  closeBtn.addEventListener('click', () => {
+    popup.classList.add('animate-fadeOut');
+    setTimeout(() => {
+      if (document.body.contains(popup)) {
+        document.body.removeChild(popup);
+      }
+    }, 300);
+  });
+  
+  // Close on outside click
+  popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+      popup.classList.add('animate-fadeOut');
+      setTimeout(() => {
+        if (document.body.contains(popup)) {
+          document.body.removeChild(popup);
+        }
+      }, 300);
     }
   });
   
   // Close with Escape key
   const handleEscape = (e) => {
     if (e.key === 'Escape') {
-      modal.classList.add('animate-fadeOut');
-      setTimeout(() => modal.remove(), 300);
+      popup.classList.add('animate-fadeOut');
+      setTimeout(() => {
+        if (document.body.contains(popup)) {
+          document.body.removeChild(popup);
+        }
+      }, 300);
       document.removeEventListener('keydown', handleEscape);
     }
   };
   document.addEventListener('keydown', handleEscape);
+  
+  // Auto close after 8 seconds
+  setTimeout(() => {
+    if (document.body.contains(popup)) {
+      popup.classList.add('animate-fadeOut');
+      setTimeout(() => {
+        if (document.body.contains(popup)) {
+          document.body.removeChild(popup);
+        }
+      }, 300);
+    }
+  }, 8000);
 }
 
 // Preload menu data as early as possible

@@ -348,7 +348,7 @@
       <!-- Menu button positioned much lower -->
       <div class="row justify-content-center" style="margin-top: 8rem;">
         <div class="col-12">
-          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <div class="d-flex flex-column flex-sm-row gap-3 justify-conupdatent-center">
             <a href="#menu" class=" text-golden btn btn-outline-warning btn-lg rounded-pill px-4 py-3 fw-medium text-decoration-none" style="border-color: var(--bs-golden); color: var(--bs-golden); transition: all 0.3s;" aria-label="Bekijk ons menu">
             Ons Menu
             </a>
@@ -2113,35 +2113,24 @@
     });
 
     function showAllergenInfo(info, element) {
-      // Create a temporary info popup
+      // Create modern allergen popup
       const popup = document.createElement('div');
       popup.className = 'allergen-popup';
       popup.innerHTML = `
         <div class="allergen-popup-content">
           <div class="allergen-popup-header">
-            <h6>Allergenen Informatie</h6>
+            <h6><i class="bi bi-shield-exclamation me-2"></i>Allergenen Informatie</h6>
             <button class="allergen-popup-close">&times;</button>
           </div>
           <div class="allergen-popup-body">
             <p>${info}</p>
+            <div class="mt-3 text-center">
+              <button class="btn btn-warning btn-sm px-3 py-2 rounded-pill" onclick="this.closest('.allergen-popup').remove()">
+                <i class="bi bi-check-circle me-1"></i>Begrepen
+              </button>
+            </div>
           </div>
         </div>
-      `;
-      
-      // Style the popup
-      popup.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 2px solid #cda45e;
-        border-radius: 8px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        z-index: 10000;
-        max-width: 300px;
-        width: 90%;
-        color: #000;
       `;
       
       document.body.appendChild(popup);
@@ -2149,22 +2138,51 @@
       // Close button functionality
       const closeBtn = popup.querySelector('.allergen-popup-close');
       closeBtn.addEventListener('click', () => {
-        document.body.removeChild(popup);
+        popup.classList.add('animate-fadeOut');
+        setTimeout(() => {
+          if (document.body.contains(popup)) {
+            document.body.removeChild(popup);
+          }
+        }, 300);
       });
       
       // Close on outside click
       popup.addEventListener('click', (e) => {
         if (e.target === popup) {
-          document.body.removeChild(popup);
+          popup.classList.add('animate-fadeOut');
+          setTimeout(() => {
+            if (document.body.contains(popup)) {
+              document.body.removeChild(popup);
+            }
+          }, 300);
         }
       });
       
-      // Auto close after 5 seconds
+      // Close with Escape key
+      const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+          popup.classList.add('animate-fadeOut');
+          setTimeout(() => {
+            if (document.body.contains(popup)) {
+              document.body.removeChild(popup);
+            }
+          }, 300);
+          document.removeEventListener('keydown', handleEscape);
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
+      
+      // Auto close after 8 seconds
       setTimeout(() => {
         if (document.body.contains(popup)) {
-          document.body.removeChild(popup);
+          popup.classList.add('animate-fadeOut');
+          setTimeout(() => {
+            if (document.body.contains(popup)) {
+              document.body.removeChild(popup);
+            }
+          }, 300);
         }
-      }, 5000);
+      }, 8000);
     }
   </script>
 

@@ -661,11 +661,150 @@
   margin: 0.1rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
 .allergen-symbols .badge:hover {
   transform: scale(1.1);
   box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+  border-color: var(--bs-golden);
+}
+
+/* Modern allergen popup styling */
+.allergen-popup {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(8px) !important;
+  z-index: 10000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  animation: fadeIn 0.3s ease-out !important;
+}
+
+.allergen-popup-content {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%) !important;
+  border: 2px solid var(--bs-golden) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 193, 7, 0.2) !important;
+  max-width: 400px !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.allergen-popup-header {
+  background: linear-gradient(135deg, var(--bs-golden), var(--bs-golden-light)) !important;
+  color: #000 !important;
+  padding: 1rem 1.5rem !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.allergen-popup-header h6 {
+  margin: 0 !important;
+  font-family: 'Playfair Display', serif !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+}
+
+.allergen-popup-close {
+  background: none !important;
+  border: none !important;
+  color: #000 !important;
+  font-size: 1.5rem !important;
+  cursor: pointer !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+.allergen-popup-close:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+  transform: scale(1.1) !important;
+}
+
+.allergen-popup-body {
+  padding: 1.5rem !important;
+}
+
+.allergen-popup-body p {
+  color: #fff !important;
+  margin: 0 !important;
+  line-height: 1.6 !important;
+  font-size: 0.95rem !important;
+}
+
+/* Allergen badge color variants */
+.allergen-red {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.allergen-orange {
+  background-color: #fd7e14 !important;
+  color: white !important;
+}
+
+.allergen-yellow {
+  background-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+.allergen-green {
+  background-color: #198754 !important;
+  color: white !important;
+}
+
+.allergen-blue {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+.allergen-purple {
+  background-color: #6f42c1 !important;
+  color: white !important;
+}
+
+/* Allergen hover effects by color */
+.allergen-red:hover {
+  background-color: #c82333 !important;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4) !important;
+}
+
+.allergen-orange:hover {
+  background-color: #e86100 !important;
+  box-shadow: 0 4px 12px rgba(253, 126, 20, 0.4) !important;
+}
+
+.allergen-yellow:hover {
+  background-color: #e0a800 !important;
+  box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4) !important;
+}
+
+.allergen-green:hover {
+  background-color: #157347 !important;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.4) !important;
+}
+
+.allergen-blue:hover {
+  background-color: #0b5ed7 !important;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4) !important;
+}
+
+.allergen-purple:hover {
+  background-color: #59359a !important;
+  box-shadow: 0 4px 12px rgba(111, 66, 193, 0.4) !important;
 }
 
 /* Price badge styling */
