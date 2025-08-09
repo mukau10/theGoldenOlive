@@ -348,7 +348,7 @@
       <!-- Menu button positioned much lower -->
       <div class="row justify-content-center" style="margin-top: 8rem;">
         <div class="col-12">
-          <div class="d-flex flex-column flex-sm-row gap-3 justify-conupdatent-center">
+                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
             <a href="#menu" class=" text-golden btn btn-outline-warning btn-lg rounded-pill px-4 py-3 fw-medium text-decoration-none" style="border-color: var(--bs-golden); color: var(--bs-golden); transition: all 0.3s;" aria-label="Bekijk ons menu">
             Ons Menu
             </a>
@@ -2578,6 +2578,10 @@
     function scrollToCategory(category) {
       console.log(`📖 Attempting to navigate to ${category} category`);
       
+      // Prevent any default scroll behavior
+      event?.preventDefault?.();
+      event?.stopPropagation?.();
+      
       const menuContainer = document.getElementById('menu-items-container');
       if (!menuContainer) {
         console.error('Menu container not found');
@@ -2628,10 +2632,14 @@
         }
         
         // Add category items
-        window.originalMenuData[actualCategory].forEach(item => {
+        window.originalMenuData[actualCategory].forEach((item, index) => {
           const menuItem = createMenuItemComponent(item, actualCategory);
           if (menuItem) {
             fragment.appendChild(menuItem);
+            if (index === 0) {
+              // Mark the first item for scroll targeting
+              menuItem.setAttribute('data-first-item', 'true');
+            }
             visibleItemsCount++;
           }
         });
@@ -2642,7 +2650,13 @@
         // Ensure proper Bootstrap layout
         setTimeout(() => {
           menuContainer.className = 'row g-4';
-        }, 50);
+          
+          // Update firstVisibleItem after DOM is updated
+          firstVisibleItem = menuContainer.querySelector('[data-first-item="true"]');
+          
+          // Force layout recalculation
+          menuContainer.offsetHeight;
+        }, 100);
       }
       
       console.log(`✅ Filter applied for ${category} - ${visibleItemsCount} items visible`);
@@ -2650,49 +2664,69 @@
       // Update the category title
       updateCategoryTitle(category, visibleItemsCount);
       
-      // Wait a moment for DOM updates, then scroll
+      // Wait for DOM updates, then scroll to the category
       setTimeout(() => {
+        console.log(`🔍 DEBUG: Starting scroll for category: ${actualCategory}`);
+        
+        // Try multiple approaches to find the target element
         const headerHeight = document.getElementById('header')?.offsetHeight || 80;
-        
-        // CRITICAL FIX: Always scroll to the menu items container area, not individual items
-        // This ensures we scroll to where the menu items are displayed, not the category filters
-        const menuItemsContainerTop = menuContainer.offsetTop;
-        let targetPosition = menuItemsContainerTop - headerHeight - 20; // Small offset for better view
-        
-        console.log(`🎯 Scrolling to menu items container at position: ${targetPosition}`);
-        console.log(`📊 Container details - offsetTop: ${menuItemsContainerTop}`);
-        
-        // Ensure we don't scroll above the menu section
         const menuSection = document.getElementById('menu');
-        if (menuSection) {
-          const menuSectionTop = menuSection.offsetTop - headerHeight + 50;
-          if (targetPosition < menuSectionTop) {
-            targetPosition = menuSectionTop;
-            console.log(`⚠️ Adjusted scroll position to stay in menu section: ${targetPosition}`);
-          }
+        
+        // Approach 1: Find category header
+        let targetElement = menuContainer.querySelector(`.category-header[data-category="${actualCategory}"]`);
+        console.log(`🔍 Category header found:`, !!targetElement);
+        
+        // Approach 2: Find first menu item if no header
+        if (!targetElement) {
+          targetElement = menuContainer.querySelector('[data-first-item="true"]');
+          console.log(`🔍 First item found:`, !!targetElement);
         }
         
-        // Try to scroll to the category header first, then fallback to first item
-        const categoryHeader = menuContainer.querySelector(`.category-header.filter-${category}`);
-        if (categoryHeader && categoryHeader.style.display !== 'none') {
-          const headerTop = categoryHeader.offsetTop;
-          const headerBasedPosition = headerTop - headerHeight - 20;
+        // Approach 3: Find any item from this category
+        if (!targetElement) {
+          targetElement = menuContainer.querySelector(`.menu-item.filter-${actualCategory}`);
+          console.log(`🔍 Any category item found:`, !!targetElement);
+        }
+        
+        // Approach 4: Use menu container itself
+        if (!targetElement) {
+          targetElement = menuContainer;
+          console.log(`🔍 Using menu container as fallback`);
+        }
+        
+        if (targetElement) {
+          const elementTop = targetElement.offsetTop;
+          const targetPosition = elementTop - headerHeight - 50;
           
-          if (headerBasedPosition >= menuItemsContainerTop - headerHeight - 100) {
-            targetPosition = headerBasedPosition;
-            console.log(`🎯 Using category header position: ${targetPosition}`);
-          }
-        } 
-        // If no category header or not visible, try first visible item
-        else if (firstVisibleItem && visibleItemsCount > 0) {
-          const itemTop = firstVisibleItem.offsetTop;
-          const itemBasedPosition = itemTop - headerHeight - 40;
+          console.log(`🎯 Element offsetTop: ${elementTop}`);
+          console.log(`🎯 Header height: ${headerHeight}`);
+          console.log(`🎯 Target scroll position: ${targetPosition}`);
           
-          // Only use item position if it's reasonable and within the menu items area
-          if (itemBasedPosition >= menuItemsContainerTop - headerHeight - 100) {
-            targetPosition = itemBasedPosition;
-            console.log(`🎯 Using first item position: ${targetPosition}`);
-          }
+          // Simple direct scroll - disable smooth behavior temporarily to ensure it works
+          console.log(`🚀 FORCING SCROLL TO: ${targetPosition}`);
+          
+          // Method 1: Direct scroll without smooth behavior first
+          window.scrollTo(0, targetPosition);
+          
+          // Method 2: Then add smooth scroll for visual effect
+          setTimeout(() => {
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }, 50);
+          
+          // Method 3: Backup with scrollIntoView
+          setTimeout(() => {
+            console.log(`🔄 Backup scroll with scrollIntoView`);
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest'
+            });
+          }, 200);
+        } else {
+          console.error(`❌ No target element found for category: ${actualCategory}`);
         }
         
         // Update active filter indicator
@@ -2705,17 +2739,11 @@
           filterIndicator.style.display = 'block';
         }
         
-        console.log(`📍 Final scroll position: ${targetPosition}`);
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-        
         // Refresh AOS animations if available
         if (typeof AOS !== 'undefined') {
           AOS.refresh();
         }
-      }, 150); // Slightly longer delay to ensure DOM is fully updated
+      }, 500); // Much longer delay to ensure everything is fully rendered and positioned
     }
 
     // Show all categories (reset filter)
