@@ -409,7 +409,7 @@
       "name": "Moelleux chocolat",
       "price": "€7.00",
       "description": "Warme chocolade cake met vloeibare kern",
-      "image": "assets/img/golden/moelleux.png",
+      "image": "assets/img/golden/moeilleux.JPEG",
       "alt": "Moelleux chocolat The Golden Olive Antwerpen",
       "allergens": [
         {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},

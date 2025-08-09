@@ -428,18 +428,102 @@
         // Get all menu items
         const menuItems = menuContainer.querySelectorAll('.menu-item');
         
-        // Show/hide menu items based on filter
-        menuItems.forEach(item => {
-          if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
-            item.style.display = 'block';
-            item.style.opacity = '1';
-            item.style.transform = 'none';
+        // Clear container and rebuild with filtered content
+        menuContainer.innerHTML = '';
+        console.log('🔄 Filtering with value:', filterValue);
+        console.log('📊 Original menu data available:', !!window.originalMenuData);
+        
+        // Get the original menu data from window object (stored during initial load)
+        if (window.originalMenuData) {
+          const fragment = document.createDocumentFragment();
+          
+          if (filterValue === '*') {
+            console.log('🌟 Showing all categories');
+            // Show all categories and items
+            Object.keys(window.originalMenuData).forEach(category => {
+              // Add category header
+              const categoryHeader = createCategoryHeader(category);
+              if (categoryHeader) {
+                fragment.appendChild(categoryHeader);
+              }
+              
+              // Add category items
+              window.originalMenuData[category].forEach(item => {
+                const menuItem = createMenuItemComponent(item, category);
+                if (menuItem) {
+                  fragment.appendChild(menuItem);
+                }
+              });
+            });
           } else {
-            item.style.display = 'none';
-            item.style.opacity = '0';
-            item.style.transform = 'scale(0.8)';
+            // Show only selected category
+            const filterCategory = filterValue.substring(1); // Remove the '.' prefix (e.g., "filter-voorgerechten")
+            const targetCategory = filterCategory.replace('filter-', ''); // Remove "filter-" prefix (e.g., "voorgerechten")
+            console.log('🎯 Filtering for category:', filterCategory, '→', targetCategory);
+            console.log('📋 Category data exists:', !!window.originalMenuData[targetCategory]);
+            
+            if (window.originalMenuData[targetCategory]) {
+              console.log('📝 Items in category:', window.originalMenuData[targetCategory].length);
+              
+              // Add category header
+              const categoryHeader = createCategoryHeader(targetCategory);
+              if (categoryHeader) {
+                fragment.appendChild(categoryHeader);
+                console.log('✅ Category header added');
+              }
+              
+              // Add category items
+              window.originalMenuData[targetCategory].forEach((item, index) => {
+                const menuItem = createMenuItemComponent(item, targetCategory);
+                if (menuItem) {
+                  fragment.appendChild(menuItem);
+                  console.log(`✅ Menu item ${index + 1} added: ${item.name}`);
+                }
+              });
+            } else {
+              console.error('❌ No data found for category:', targetCategory);
+              console.log('📋 Available categories:', Object.keys(window.originalMenuData));
+            }
           }
-        });
+          
+          // Append all filtered content at once
+          menuContainer.appendChild(fragment);
+          console.log('✅ Fragment appended to container');
+          
+          // Ensure proper Bootstrap layout
+          setTimeout(() => {
+            menuContainer.className = 'row g-4';
+            console.log('✅ Bootstrap layout applied');
+          }, 50);
+        } else {
+          console.error('❌ No original menu data available');
+        }
+        
+        // Update active filter indicator
+        const filterIndicator = document.getElementById('active-filter-indicator');
+        const filterText = document.getElementById('active-filter-text');
+        
+        if (filterIndicator && filterText) {
+          if (filterValue === '*') {
+            filterIndicator.style.display = 'none';
+          } else {
+            const categoryName = this.querySelector('h6').textContent;
+            filterText.textContent = categoryName;
+            filterIndicator.style.display = 'block';
+          }
+        }
+        
+        // Scroll to menu items container with smooth animation
+        setTimeout(() => {
+          const menuItemsContainer = document.getElementById('menu-items-container');
+          if (menuItemsContainer) {
+            menuItemsContainer.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest'
+            });
+          }
+        }, 100); // Small delay to ensure filtering is complete
         
         // Refresh AOS animations
         if (typeof AOS !== 'undefined') {
@@ -534,20 +618,20 @@ function createCategoryHeader(category) {
   if (!info) return null;
 
   const headerElement = document.createElement('div');
-  headerElement.className = `category-header filter-${category} col-span-full flex items-center justify-center py-8 mb-6 mt-12 first:mt-0`;
+  headerElement.className = `category-header filter-${category} col-12 d-flex align-items-center justify-content-center py-5 mb-4 mt-5`;
   headerElement.setAttribute('data-category', category);
   
   headerElement.innerHTML = `
-    <div class="text-center max-w-2xl mx-auto">
-      <div class="flex items-center justify-center mb-4">
-        <div class="w-16 h-px bg-gradient-to-r from-transparent via-golden-400/60 to-golden-400/60"></div>
-        <div class="mx-4 w-12 h-12 bg-gradient-to-br from-golden-500/20 to-golden-600/20 rounded-full flex items-center justify-center border border-golden-400/30">
-          <i class="${info.icon} text-golden-400 text-xl"></i>
+    <div class="text-center" style="max-width: 600px;">
+      <div class="d-flex align-items-center justify-content-center mb-4">
+        <div class="bg-warning opacity-50" style="width: 60px; height: 1px;"></div>
+        <div class="mx-3 bg-dark border border-warning rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+          <i class="${info.icon} text-warning fs-4"></i>
         </div>
-        <div class="w-16 h-px bg-gradient-to-l from-transparent via-golden-400/60 to-golden-400/60"></div>
+        <div class="bg-warning opacity-50" style="width: 60px; height: 1px;"></div>
       </div>
-      <h3 class="text-2xl sm:text-3xl font-playfair font-bold text-golden-400 mb-2">${info.title}</h3>
-      <p class="text-white/70 text-sm sm:text-base">${info.description}</p>
+      <h3 class="display-6 fw-bold text-warning mb-2" style="font-family: 'Playfair Display', serif;">${info.title}</h3>
+      <p class="text-white-50 small">${info.description}</p>
     </div>
   `;
   
@@ -558,7 +642,7 @@ function createCategoryHeader(category) {
 function createMenuItemComponent(itemData, category) {
   // Create menu item directly with HTML
   const menuItem = document.createElement('div');
-  menuItem.className = `menu-item filter-${category} bg-gradient-to-br from-dark-800/90 to-dark-900/90 backdrop-blur-lg border border-golden-400/20 rounded-2xl overflow-hidden hover:border-golden-400/50 hover:transform hover:scale-105 hover:shadow-2xl hover:shadow-golden-400/20 transition-all duration-500 h-full group`;
+  menuItem.className = `menu-item filter-${category} col-12 col-md-6 col-lg-4 col-xl-3 mb-4`;
   menuItem.setAttribute('data-item-id', itemData.id);
   
   // Generate allergen HTML for breadcrumb section
@@ -573,10 +657,10 @@ function createMenuItemComponent(itemData, category) {
     const textColor = allergen.color === 'yellow' ? '#000' : '#fff';
     
     breadcrumbAllergensHTML += `
-      <span class="allergen-symbol allergen-${allergen.color} inline-flex items-center justify-center w-7 h-7 rounded-full font-bold text-xs cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg relative z-10" 
+      <span class="allergen-symbol allergen-${allergen.color} badge rounded-circle d-inline-flex align-items-center justify-content-center fw-bold" 
             data-allergen="${allergen.description}"
             title="${allergen.type}: ${allergen.description}"
-            style="background: ${bgColor} !important; color: ${textColor} !important; border: 2px solid ${bgColor} !important; box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;">
+            style="background: ${bgColor} !important; color: ${textColor} !important; border: 2px solid ${bgColor} !important; width: 28px; height: 28px; font-size: 11px; cursor: pointer;">
         ${allergen.code}
       </span>`;
   });
@@ -585,40 +669,38 @@ function createMenuItemComponent(itemData, category) {
   
   // Set complete HTML content
   menuItem.innerHTML = `
-    <div class="relative overflow-hidden">
+    <div class="bg-black border border-warning rounded-3 overflow-hidden h-100 shadow-sm" style="transition: all 0.3s ease;">
       <!-- Image with overlay -->
-      <div class="relative">
-        <img class="w-full object-cover transition-transform duration-500 group-hover:scale-110" style="height: 300px;" src="${itemData.image}" alt="${itemData.alt}">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div class="absolute top-4 right-4 bg-golden-400/90 backdrop-blur-sm text-dark-900 px-3 py-1 rounded-full font-bold text-lg shadow-lg">
-          ${itemData.price}
+      <div class="position-relative">
+        <img class="w-100" style="height: 220px; object-fit: cover;" src="${itemData.image}" alt="${itemData.alt}">
+        <div class="position-absolute top-0 end-0 m-3">
+          <span class="badge bg-warning text-black fs-6 fw-bold px-3 py-2 rounded-pill">
+            ${itemData.price}
+          </span>
         </div>
       </div>
       
       <!-- Content -->
-      <div class="p-6 flex flex-col h-full">
+      <div class="p-4">
         <!-- Title -->
-        <div class="mb-4">
-          <a href="#${itemData.id}" class="text-xl font-playfair font-bold text-white hover:text-golden-400 transition-colors duration-300 group-hover:text-golden-300">
+        <h5 class="text-white fw-bold mb-3 lh-sm" style="font-family: 'Playfair Display', serif; min-height: 2.5rem;">
+          <a href="#${itemData.id}" class="text-white text-decoration-none" style="transition: color 0.3s;">
             ${itemData.name}
           </a>
-        </div>
+        </h5>
         
         <!-- Description -->
-        <div class="text-white/70 text-sm mb-6 flex-grow min-h-[3rem] leading-relaxed group-hover:text-white/80 transition-colors duration-300">
+        <p class="text-white-50 small mb-3 lh-base" style="min-height: 3rem;">
           ${itemData.description}
-        </div>
+        </p>
         
         <!-- Allergen Section -->
-        <div class="mt-auto bg-dark-700/50 rounded-xl p-4 border border-golden-400/10 group-hover:border-golden-400/20 transition-colors duration-300">
-          <div class="mb-3">
-            <div class="flex items-center gap-2 mb-1">
-              <i class="bi bi-shield-exclamation text-golden-400 text-base"></i>
-              <span class="text-sm text-golden-300 font-semibold">Allergenen</span>
-            </div>
-            <div class="text-xs text-white/60 italic ml-6">Klik voor details</div>
+        <div class="border-top border-warning pt-3">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-info-circle text-warning me-2"></i>
+            <span class="small text-warning fw-medium">Allergenen:</span>
           </div>
-          <div class="flex flex-wrap gap-2 allergen-symbols">
+          <div class="d-flex flex-wrap gap-1 allergen-symbols mb-2">
             ${breadcrumbAllergensHTML}
           </div>
         </div>
@@ -640,35 +722,7 @@ function createMenuItemComponent(itemData, category) {
   return menuItem;
 }
 
-// Show loading indicator for menu items
-function showMenuLoadingIndicator(container) {
-  container.innerHTML = `
-    <div class="col-span-full flex flex-col items-center justify-center py-16">
-      <div class="relative">
-        <!-- Spinning loader -->
-        <div class="w-16 h-16 border-4 border-golden-400/20 border-t-golden-400 rounded-full animate-spin"></div>
-        <!-- Pulsing inner circle -->
-        <div class="absolute inset-2 bg-golden-400/10 rounded-full animate-pulse"></div>
-      </div>
-      
-      <div class="mt-6 text-center">
-        <h3 class="text-xl font-playfair font-bold text-golden-400 mb-2">
-          Menu wordt geladen...
-        </h3>
-        <p class="text-white/70 text-sm">
-          Onze heerlijke gerechten komen zo naar je toe
-        </p>
-      </div>
-      
-      <!-- Loading dots animation -->
-      <div class="flex space-x-1 mt-4">
-        <div class="w-2 h-2 bg-golden-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-        <div class="w-2 h-2 bg-golden-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-        <div class="w-2 h-2 bg-golden-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
-      </div>
-    </div>
-  `;
-}
+
 
 async function generateMenuItems() {
   const container = document.getElementById('menu-items-container');
@@ -678,8 +732,8 @@ async function generateMenuItems() {
     return;
   }
   
-  // Show loading indicator immediately
-  showMenuLoadingIndicator(container);
+  // Clear container for menu items
+  container.innerHTML = '';
   
   try {
     let menuData = null;
@@ -711,6 +765,11 @@ async function generateMenuItems() {
     
     console.log('🚀 Starting optimized HTML generation from external JSON...');
     
+    // Store original menu data for filtering
+    window.originalMenuData = menuData;
+    console.log('📊 Stored original menu data:', Object.keys(menuData));
+    console.log('📋 Total categories:', Object.keys(menuData).length);
+    
     // Clear existing items
     container.innerHTML = '';
     
@@ -740,54 +799,24 @@ async function generateMenuItems() {
     container.appendChild(fragment);
     console.log(`✅ Added ${itemCount} menu items to container in one batch`);
     
-    // Ensure proper grid layout with modern responsive design
-  setTimeout(() => {
-    container.style.display = 'grid';
-    container.style.width = '100%';
-    container.style.alignItems = 'stretch';
-    container.style.justifyContent = 'center';
-    container.style.margin = '0 auto';
-    
-    // Add responsive breakpoint adjustments with proper centering
-    const updateGridLayout = () => {
-      const width = window.innerWidth;
-      if (width >= 1536) { // 2xl
-        container.style.gridTemplateColumns = 'repeat(4, 1fr)';
-        container.style.gap = '2rem';
-        container.style.maxWidth = '1536px';
-      } else if (width >= 1280) { // xl
-        container.style.gridTemplateColumns = 'repeat(3, 1fr)';
-        container.style.gap = '1.5rem';
-        container.style.maxWidth = '1280px';
-      } else if (width >= 768) { // md
-        container.style.gridTemplateColumns = 'repeat(2, 1fr)';
-        container.style.gap = '1.5rem';
-        container.style.maxWidth = '768px';
-      } else { // mobile
-        container.style.gridTemplateColumns = '1fr';
-        container.style.gap = '1rem';
-        container.style.maxWidth = '400px';
-        container.style.padding = '0 1rem';
-      }
-    };
-    
-    // Ensure all menu items are properly displayed with enhanced styling
-    const menuItems = container.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-      item.style.display = 'flex';
-      item.style.flexDirection = 'column';
-      item.style.position = 'relative';
-      item.style.width = '100%';
-      item.style.height = 'auto';
-      item.style.margin = '0';
-      item.style.opacity = '1';
-      item.style.transform = 'none';
-      item.style.minHeight = '600px';
-    });
-    
-    updateGridLayout();
-    window.addEventListener('resize', updateGridLayout);
-  }, 100);
+    // Setup Bootstrap row layout
+    setTimeout(() => {
+      container.className = 'row g-4';
+      
+      // Ensure all menu items are properly displayed
+      const menuItems = container.querySelectorAll('.menu-item');
+      menuItems.forEach(item => {
+        // Remove any inline styles that might interfere with Bootstrap
+        item.style.display = '';
+        item.style.flexDirection = '';
+        item.style.position = '';
+        item.style.width = '';
+        item.style.height = '';
+        item.style.margin = '';
+        item.style.opacity = '1';
+        item.style.transform = 'none';
+      });
+    }, 100);
   
   } catch (error) {
     console.error('❌ Error loading menu data:', error);
