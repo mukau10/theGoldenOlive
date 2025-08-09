@@ -470,6 +470,90 @@
 
 })()
 
+// Create category header component
+function createCategoryHeader(category) {
+  const categoryInfo = {
+    'voorgerechten': {
+      title: 'Voorgerechten',
+      description: 'Heerlijke starters om je maaltijd mee te beginnen',
+      icon: 'bi-egg-fried'
+    },
+    'mixed-grill': {
+      title: 'Mixed Grill',
+      description: 'Onze specialiteit: perfect gegrilde vlees combinaties',
+      icon: 'bi-fire'
+    },
+    'kumpir': {
+      title: 'Kumpir',
+      description: 'Turkse gevulde aardappels met heerlijke toppings',
+      icon: 'bi-geo-alt'
+    },
+    'spareribs': {
+      title: 'Spareribs',
+      description: 'Malse spareribs met onze huisgemaakte sauzen',
+      icon: 'bi-grid-3x3-gap'
+    },
+    'burgers': {
+      title: 'Burgers',
+      description: 'Sappige burgers met verse ingrediënten',
+      icon: 'bi-cup-hot'
+    },
+    'kindermenu': {
+      title: 'Kindermenu',
+      description: 'Speciaal samengesteld voor onze jongste gasten',
+      icon: 'bi-emoji-smile'
+    },
+    'supplementen': {
+      title: 'Supplementen',
+      description: 'Extra\'s om je gerecht compleet te maken',
+      icon: 'bi-plus-circle'
+    },
+    'desserten': {
+      title: 'Desserten',
+      description: 'Zoete afsluiting van je perfecte maaltijd',
+      icon: 'bi-heart'
+    },
+    'mocktails': {
+      title: 'Mocktails',
+      description: 'Verfrissende alcoholvrije cocktails',
+      icon: 'bi-cup-straw'
+    },
+    'frisdranken': {
+      title: 'Frisdranken',
+      description: 'Koude en verfrissende drankjes',
+      icon: 'bi-droplet'
+    },
+    'warme-dranken': {
+      title: 'Warme Dranken',
+      description: 'Warme dranken voor gezellige momenten',
+      icon: 'bi-cup'
+    }
+  };
+
+  const info = categoryInfo[category];
+  if (!info) return null;
+
+  const headerElement = document.createElement('div');
+  headerElement.className = `category-header filter-${category} col-span-full flex items-center justify-center py-8 mb-6 mt-12 first:mt-0`;
+  headerElement.setAttribute('data-category', category);
+  
+  headerElement.innerHTML = `
+    <div class="text-center max-w-2xl mx-auto">
+      <div class="flex items-center justify-center mb-4">
+        <div class="w-16 h-px bg-gradient-to-r from-transparent via-golden-400/60 to-golden-400/60"></div>
+        <div class="mx-4 w-12 h-12 bg-gradient-to-br from-golden-500/20 to-golden-600/20 rounded-full flex items-center justify-center border border-golden-400/30">
+          <i class="${info.icon} text-golden-400 text-xl"></i>
+        </div>
+        <div class="w-16 h-px bg-gradient-to-l from-transparent via-golden-400/60 to-golden-400/60"></div>
+      </div>
+      <h3 class="text-2xl sm:text-3xl font-playfair font-bold text-golden-400 mb-2">${info.title}</h3>
+      <p class="text-white/70 text-sm sm:text-base">${info.description}</p>
+    </div>
+  `;
+  
+  return headerElement;
+}
+
 // Menu Items Component System - DIRECT HTML GENERATION
 function createMenuItemComponent(itemData, category) {
   // Create menu item directly with HTML
@@ -556,8 +640,37 @@ function createMenuItemComponent(itemData, category) {
   return menuItem;
 }
 
-function generateMenuItems() {
-  const menuData = JSON.parse(document.getElementById('menu-items-data').textContent);
+// Show loading indicator for menu items
+function showMenuLoadingIndicator(container) {
+  container.innerHTML = `
+    <div class="col-span-full flex flex-col items-center justify-center py-16">
+      <div class="relative">
+        <!-- Spinning loader -->
+        <div class="w-16 h-16 border-4 border-golden-400/20 border-t-golden-400 rounded-full animate-spin"></div>
+        <!-- Pulsing inner circle -->
+        <div class="absolute inset-2 bg-golden-400/10 rounded-full animate-pulse"></div>
+      </div>
+      
+      <div class="mt-6 text-center">
+        <h3 class="text-xl font-playfair font-bold text-golden-400 mb-2">
+          Menu wordt geladen...
+        </h3>
+        <p class="text-white/70 text-sm">
+          Onze heerlijke gerechten komen zo naar je toe
+        </p>
+      </div>
+      
+      <!-- Loading dots animation -->
+      <div class="flex space-x-1 mt-4">
+        <div class="w-2 h-2 bg-golden-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+        <div class="w-2 h-2 bg-golden-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+        <div class="w-2 h-2 bg-golden-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+      </div>
+    </div>
+  `;
+}
+
+async function generateMenuItems() {
   const container = document.getElementById('menu-items-container');
   
   if (!container) {
@@ -565,24 +678,69 @@ function generateMenuItems() {
     return;
   }
   
-  // Clear existing items
-  container.innerHTML = '';
+  // Show loading indicator immediately
+  showMenuLoadingIndicator(container);
   
-  console.log('🚀 Starting new HTML generation...');
-  
-  // Generate items for each category
-  Object.keys(menuData).forEach(category => {
-    menuData[category].forEach(item => {
-      console.log(`📝 Generating HTML for ${item.name} with ${item.allergens.length} allergens`);
-      const menuItem = createMenuItemComponent(item, category);
-      if (menuItem) {
-        container.appendChild(menuItem);
-        console.log(`✅ Added ${item.name} to container`);
+  try {
+    let menuData = null;
+    
+    // Try to use preloaded data first
+    if (menuDataPromise) {
+      console.log('🚀 Using preloaded menu data...');
+      menuData = await menuDataPromise;
+    }
+    
+    // If preloading failed or no preloaded data, fetch directly
+    if (!menuData) {
+      console.log('📡 Fetching menu data directly...');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+      
+      const response = await fetch('assets/data/menu.json', {
+        signal: controller.signal,
+        cache: 'default' // Enable caching for faster subsequent loads
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      menuData = await response.json();
+    }
+    
+    console.log('🚀 Starting optimized HTML generation from external JSON...');
+    
+    // Clear existing items
+    container.innerHTML = '';
+    
+    // Create document fragment for better performance
+    const fragment = document.createDocumentFragment();
+    let itemCount = 0;
+    
+    // Generate items for each category with category headers
+    Object.keys(menuData).forEach((category, categoryIndex) => {
+      // Add category header before each category (except when filtering)
+      const categoryHeader = createCategoryHeader(category);
+      if (categoryHeader) {
+        fragment.appendChild(categoryHeader);
+      }
+      
+      menuData[category].forEach(item => {
+        console.log(`📝 Generating HTML for ${item.name} with ${item.allergens.length} allergens`);
+        const menuItem = createMenuItemComponent(item, category);
+        if (menuItem) {
+          fragment.appendChild(menuItem);
+          itemCount++;
+        }
+      });
     });
-  });
-  
-  // Ensure proper grid layout with modern responsive design
+    
+    // Append all items at once for better performance
+    container.appendChild(fragment);
+    console.log(`✅ Added ${itemCount} menu items to container in one batch`);
+    
+    // Ensure proper grid layout with modern responsive design
   setTimeout(() => {
     container.style.display = 'grid';
     container.style.width = '100%';
@@ -630,6 +788,57 @@ function generateMenuItems() {
     updateGridLayout();
     window.addEventListener('resize', updateGridLayout);
   }, 100);
+  
+  } catch (error) {
+    console.error('❌ Error loading menu data:', error);
+    
+    // Fallback: Try to load from inline script tag if external JSON fails
+    try {
+      const fallbackElement = document.getElementById('menu-items-data');
+      if (fallbackElement && fallbackElement.textContent.trim()) {
+        console.log('🔄 Falling back to inline menu data...');
+        const menuData = JSON.parse(fallbackElement.textContent);
+        const container = document.getElementById('menu-items-container');
+        
+        if (container) {
+          container.innerHTML = '';
+          Object.keys(menuData).forEach(category => {
+            // Add category header
+            const categoryHeader = createCategoryHeader(category);
+            if (categoryHeader) {
+              container.appendChild(categoryHeader);
+            }
+            
+            menuData[category].forEach(item => {
+              const menuItem = createMenuItemComponent(item, category);
+              if (menuItem) {
+                container.appendChild(menuItem);
+              }
+            });
+          });
+        }
+      } else {
+        // Show error message to user
+        const container = document.getElementById('menu-items-container');
+        if (container) {
+          container.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <div class="bg-red-500/10 border border-red-500/30 rounded-xl p-8 max-w-md mx-auto">
+                <i class="bi bi-exclamation-triangle text-red-400 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold text-red-400 mb-2">Menu niet beschikbaar</h3>
+                <p class="text-white/70">Er is een probleem opgetreden bij het laden van het menu. Probeer de pagina te vernieuwen.</p>
+                <button onclick="location.reload()" class="mt-4 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg transition-colors">
+                  Vernieuw pagina
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      }
+    } catch (fallbackError) {
+      console.error('❌ Fallback also failed:', fallbackError);
+    }
+  }
 }
 
 function showAllergenInfo(description) {
@@ -683,9 +892,77 @@ function showAllergenInfo(description) {
   document.addEventListener('keydown', handleEscape);
 }
 
-// Initialize menu items when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  generateMenuItems();
+// Preload menu data as early as possible
+let menuDataPromise = null;
+
+// Start preloading immediately when script loads
+function preloadMenuData() {
+  if (!menuDataPromise) {
+    console.log('🔄 Preloading menu data...');
+    menuDataPromise = fetch('assets/data/menu.json', {
+      cache: 'default'
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    }).catch(error => {
+      console.warn('⚠️ Preload failed, will try again later:', error);
+      menuDataPromise = null; // Reset so we can try again
+      return null;
+    });
+  }
+  return menuDataPromise;
+}
+
+// Start preloading immediately
+preloadMenuData();
+
+// Early menu loading - start as soon as the container is available
+function tryEarlyMenuLoad() {
+  const container = document.getElementById('menu-items-container');
+  if (container && !container.hasAttribute('data-menu-loaded')) {
+    container.setAttribute('data-menu-loaded', 'loading');
+    console.log('🚀 Starting early menu load...');
+    generateMenuItems().then(() => {
+      container.setAttribute('data-menu-loaded', 'complete');
+    }).catch(error => {
+      console.error('Early menu load failed:', error);
+      container.removeAttribute('data-menu-loaded');
+    });
+    return true;
+  }
+  return false;
+}
+
+// Try loading menu as soon as possible
+if (document.readyState === 'loading') {
+  // If document is still loading, check periodically
+  const checkInterval = setInterval(() => {
+    if (tryEarlyMenuLoad()) {
+      clearInterval(checkInterval);
+    }
+  }, 50); // Check every 50ms
+  
+  // Clear interval after 2 seconds to avoid infinite checking
+  setTimeout(() => clearInterval(checkInterval), 2000);
+} else {
+  // Document already loaded, try immediately
+  tryEarlyMenuLoad();
+}
+
+// Initialize menu items when DOM is loaded (fallback)
+document.addEventListener('DOMContentLoaded', async function() {
+  const container = document.getElementById('menu-items-container');
+  
+  // Only load if not already loaded/loading
+  if (!container || !container.hasAttribute('data-menu-loaded')) {
+    console.log('🔄 DOM loaded, starting menu load...');
+    const menuLoadPromise = generateMenuItems();
+    await menuLoadPromise;
+  } else {
+    console.log('✅ Menu already loaded or loading');
+  }
   
   // Debug: Check if allergens are actually in the DOM after 2 seconds
   setTimeout(() => {

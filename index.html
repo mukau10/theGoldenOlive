@@ -16,6 +16,10 @@
   <meta name="revisit-after" content="7 days">
   <meta name="distribution" content="global">
 
+  <!-- Preload critical resources for faster loading -->
+  <link rel="preload" href="assets/data/menu.json" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="assets/js/main.js" as="script">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="restaurant">
   <meta property="og:url" content="https://the-goldenolive.be/">
@@ -834,6 +838,21 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <!-- Category Title Section -->
+          <div class="text-center mb-8" data-aos="fade-up" data-aos-delay="150" id="category-title-container">
+            <h3 id="current-category-title" class="text-2xl sm:text-3xl md:text-4xl font-playfair font-bold text-golden-400 mb-2 transition-all duration-300 ease-in-out">
+              Alle Menu Items
+            </h3>
+            <p id="current-category-description" class="text-lg text-white/70 mb-4 transition-all duration-300 ease-in-out">
+              Ontdek onze volledige menukaart
+            </p>
+            <div class="flex items-center justify-center space-x-2 text-golden-300/60">
+              <div class="w-12 h-px bg-gradient-to-r from-transparent via-golden-400/50 to-transparent"></div>
+              <i class="bi bi-stars text-golden-400/70"></i>
+              <div class="w-12 h-px bg-gradient-to-r from-transparent via-golden-400/50 to-transparent"></div>
+            </div>
+          </div>
+          
           <div class="w-full" data-aos="fade-up" data-aos-delay="200" id="menu-items-container" style="min-height: 400px;">
             <!-- Menu items will be dynamically generated here -->
           </div>
@@ -1410,8 +1429,8 @@
     </div>
   </template>
 
-  <!-- Menu Items Data -->
-  <script type="application/json" id="menu-items-data">
+  <!-- Menu Items Data - Now loaded from external JSON file: assets/data/menu.json -->
+  <script type="application/json" id="menu-items-data" style="display: none;">
     {
       "voorgerechten": [
         {
@@ -2234,6 +2253,19 @@
       </div>
     </div>
 
+    <!-- Menu Button -->
+    <div class="group transition-all duration-500 ease-in-out" onclick="scrollToMenu()" title="Menu Navigatie - Klik voor categorieën" id="menuFloatingBtn" style="opacity: 1; pointer-events: auto; transform: scale(1) translateY(0);">
+      <div class="bg-gradient-to-br from-golden-500 to-golden-700 hover:from-golden-400 hover:to-golden-600 text-dark-900 rounded-xl shadow-xl shadow-golden-500/40 hover:shadow-golden-500/60 cursor-pointer transition-all duration-300 hover:scale-105 hover:-translate-y-1 backdrop-blur-lg border border-golden-500/30 relative overflow-hidden">
+        <div class="flex items-center justify-center w-12 h-12">
+          <i class="bi bi-book text-lg font-bold group-hover:scale-110 group-hover:rotate-12 transition-all duration-300"></i>
+        </div>
+        <!-- Subtle glow effect -->
+        <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-transparent via-golden-300/20 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+        <!-- Floating indicator dots -->
+        <div class="absolute -top-1 -right-1 w-3 h-3 bg-golden-300 rounded-full animate-pulse opacity-75"></div>
+      </div>
+    </div>
+
     <!-- Allergen Button -->
     <div class="group" onclick="openAllergenModal()">
       <div class="bg-gradient-to-br from-golden-400 to-golden-600 hover:from-golden-300 hover:to-golden-500 text-dark-900 rounded-xl shadow-xl shadow-golden-400/30 hover:shadow-golden-400/50 cursor-pointer transition-all duration-300 hover:scale-105 hover:-translate-y-1 backdrop-blur-lg border border-golden-400/20 relative">
@@ -2257,13 +2289,495 @@
       });
     }
 
-    // Show/hide scroll to top button based on scroll position
+    // Enhanced menu functionality
+    function scrollToMenu() {
+      const menuSection = document.getElementById('menu');
+      const currentScroll = window.pageYOffset;
+      
+      if (menuSection) {
+        const menuTop = menuSection.offsetTop - 100;
+        const menuBottom = menuSection.offsetTop + menuSection.offsetHeight + 200;
+        
+        // Check if user is already in menu section
+        if (currentScroll >= menuTop && currentScroll <= menuBottom) {
+          // User is in menu section - show category navigation
+          showMenuCategories();
+        } else {
+          // User is not in menu section - scroll to menu
+          const headerHeight = document.getElementById('header')?.offsetHeight || 80;
+          const targetPosition = menuSection.offsetTop - headerHeight - 20;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Add visual feedback
+          menuSection.style.transition = 'all 0.3s ease';
+          menuSection.style.transform = 'scale(1.01)';
+          setTimeout(() => {
+            menuSection.style.transform = 'scale(1)';
+          }, 300);
+          
+          console.log('📖 Navigating to menu section');
+        }
+      } else {
+        console.error('Menu section not found');
+      }
+    }
+
+    // Show menu categories for quick navigation
+    function showMenuCategories() {
+      // Create category navigation popup
+      const popup = document.createElement('div');
+      popup.className = 'fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4';
+      popup.innerHTML = `
+        <div class="bg-gradient-to-br from-dark-800/95 to-dark-900/95 border-2 border-golden-400/40 rounded-2xl p-6 max-w-md w-full shadow-2xl shadow-golden-400/20 backdrop-blur-lg transform animate-scaleIn">
+          <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-3">
+              <i class="bi bi-book text-golden-400 text-2xl"></i>
+              <h3 class="text-xl font-playfair font-bold text-golden-400">Menu Categorieën</h3>
+            </div>
+            <button class="text-white/70 hover:text-golden-400 transition-colors text-2xl" onclick="this.closest('.fixed').remove()">&times;</button>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto">
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-voorgerechten'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-egg-fried text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Voorgerechten</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-mixed-grill'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-fire text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Mixed Grill</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-kumpir'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-geo-alt text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Kumpir</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-spareribs'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-grid-3x3-gap text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Spareribs</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-burgers'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-cup-hot text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Burgers</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-kindermenu'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-emoji-smile text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Kindermenu</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-supplementen'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-plus-circle text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Supplementen</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-desserten'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-heart text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Desserten</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-mocktails'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-cup-straw text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Mocktails</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-frisdranken'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-droplet text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Frisdranken</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-warme-dranken'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+              <i class="bi bi-cup text-golden-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Warme Dranken</span>
+            </button>
+            
+            <button onclick="event.preventDefault(); event.stopPropagation(); showAllCategories(); this.closest('.fixed').remove();" class="bg-gradient-to-r from-green-500/20 to-green-600/20 hover:from-green-500/30 hover:to-green-600/30 border border-green-400/30 rounded-lg p-3 text-left transition-all hover:scale-105 col-span-2">
+              <i class="bi bi-grid text-green-400 mb-2 block"></i>
+              <span class="text-white font-medium text-sm">Toon Alles</span>
+            </button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(popup);
+      
+      // Close on outside click
+      popup.addEventListener('click', function(e) {
+        if (e.target === popup) {
+          popup.remove();
+        }
+      });
+    }
+
+    // Update category title based on current filter
+    function updateCategoryTitle(category, itemCount = 0) {
+      const titleElement = document.getElementById('current-category-title');
+      const descriptionElement = document.getElementById('current-category-description');
+      
+      if (!titleElement || !descriptionElement) return;
+
+      const categoryInfo = {
+        'filter-voorgerechten': {
+          title: 'Voorgerechten',
+          description: 'Heerlijke starters om je maaltijd mee te beginnen',
+          icon: 'bi-egg-fried'
+        },
+        'filter-mixed-grill': {
+          title: 'Mixed Grill',
+          description: 'Onze specialiteit: perfect gegrilde vlees combinaties',
+          icon: 'bi-fire'
+        },
+        'filter-kumpir': {
+          title: 'Kumpir',
+          description: 'Turkse gevulde aardappels met heerlijke toppings',
+          icon: 'bi-geo-alt'
+        },
+        'filter-spareribs': {
+          title: 'Spareribs',
+          description: 'Malse spareribs met onze huisgemaakte sauzen',
+          icon: 'bi-grid-3x3-gap'
+        },
+        'filter-burgers': {
+          title: 'Burgers',
+          description: 'Sappige burgers met verse ingrediënten',
+          icon: 'bi-cup-hot'
+        },
+        'filter-kindermenu': {
+          title: 'Kindermenu',
+          description: 'Speciaal samengesteld voor onze jongste gasten',
+          icon: 'bi-emoji-smile'
+        },
+        'filter-supplementen': {
+          title: 'Supplementen',
+          description: 'Extra\'s om je gerecht compleet te maken',
+          icon: 'bi-plus-circle'
+        },
+        'filter-desserten': {
+          title: 'Desserten',
+          description: 'Zoete afsluiting van je perfecte maaltijd',
+          icon: 'bi-heart'
+        },
+        'filter-mocktails': {
+          title: 'Mocktails',
+          description: 'Verfrissende alcoholvrije cocktails',
+          icon: 'bi-cup-straw'
+        },
+        'filter-frisdranken': {
+          title: 'Frisdranken',
+          description: 'Koude en verfrissende drankjes',
+          icon: 'bi-droplet'
+        },
+        'filter-warme-dranken': {
+          title: 'Warme Dranken',
+          description: 'Warme dranken voor gezellige momenten',
+          icon: 'bi-cup'
+        },
+        'all': {
+          title: 'Alle Menu Items',
+          description: 'Ontdek onze volledige menukaart',
+          icon: 'bi-grid'
+        }
+      };
+
+      const info = categoryInfo[category] || categoryInfo['all'];
+      
+      // Update title with smooth transition
+      titleElement.style.opacity = '0';
+      descriptionElement.style.opacity = '0';
+      
+      setTimeout(() => {
+        titleElement.textContent = info.title;
+        descriptionElement.textContent = info.description;
+        
+        titleElement.style.opacity = '1';
+        descriptionElement.style.opacity = '1';
+        
+        // Add a subtle scale animation
+        titleElement.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          titleElement.style.transform = 'scale(1)';
+        }, 200);
+      }, 150);
+      
+      console.log(`📝 Updated category title to: ${info.title}`);
+    }
+
+        // Scroll to specific menu category
+    function scrollToCategory(category) {
+      console.log(`📖 Attempting to navigate to ${category} category`);
+      
+      const menuContainer = document.getElementById('menu-items-container');
+      if (!menuContainer) {
+        console.error('Menu container not found');
+        return;
+      }
+      
+      // Get all menu items and filter buttons
+      const menuItems = menuContainer.querySelectorAll('.menu-item');
+      const menuFilters = document.querySelectorAll('.menu-category-card');
+
+      // First, apply the filter directly without clicking buttons
+      console.log(`🔄 Applying filter for ${category}`);
+
+      // Remove active class from all filters
+      menuFilters.forEach(function(el) {
+        el.classList.remove('filter-active');
+        el.classList.remove('bg-gradient-to-br', 'from-golden-400', 'to-golden-600', 'border-2', 'border-golden-400', 'shadow-lg', 'shadow-golden-400/25');
+        el.classList.add('bg-dark-800/80', 'backdrop-blur-sm', 'border', 'border-golden-400/30');
+      });
+
+      // Add active class to the correct filter (but don't click it)
+      const targetFilter = document.querySelector(`[data-filter=".${category}"]`);
+      if (targetFilter) {
+        targetFilter.classList.add('filter-active');
+        targetFilter.classList.remove('bg-dark-800/80', 'backdrop-blur-sm', 'border', 'border-golden-400/30');
+        targetFilter.classList.add('bg-gradient-to-br', 'from-golden-400', 'to-golden-600', 'border-2', 'border-golden-400', 'shadow-lg', 'shadow-golden-400/25');
+      }
+
+      // Apply the filter to menu items and category headers directly
+      const filterValue = `.${category}`;
+      let firstVisibleItem = null;
+      let visibleItemsCount = 0;
+      
+      // Handle category headers
+      const categoryHeaders = menuContainer.querySelectorAll('.category-header');
+      categoryHeaders.forEach(header => {
+        if (filterValue === '*' || header.classList.contains(category)) {
+          header.style.display = 'flex';
+          header.style.opacity = '1';
+          header.style.transform = 'none';
+        } else {
+          header.style.display = 'none';
+          header.style.opacity = '0';
+          header.style.transform = 'scale(0.8)';
+        }
+      });
+      
+      // Handle menu items
+      menuItems.forEach(item => {
+        if (filterValue === '*' || item.classList.contains(category)) {
+          item.style.display = 'block';
+          item.style.opacity = '1';
+          item.style.transform = 'none';
+          visibleItemsCount++;
+          if (!firstVisibleItem) {
+            firstVisibleItem = item;
+            console.log(`🎯 Found first visible item: ${item.getAttribute('data-item-id') || 'unknown'} for category ${category}`);
+          }
+        } else {
+          item.style.display = 'none';
+          item.style.opacity = '0';
+          item.style.transform = 'scale(0.8)';
+        }
+      });
+      
+      console.log(`✅ Filter applied for ${category} - ${visibleItemsCount} items visible`);
+      
+      // Update the category title
+      updateCategoryTitle(category, visibleItemsCount);
+      
+      // Wait a moment for DOM updates, then scroll
+      setTimeout(() => {
+        const headerHeight = document.getElementById('header')?.offsetHeight || 80;
+        
+        // CRITICAL FIX: Always scroll to the menu items container area, not individual items
+        // This ensures we scroll to where the menu items are displayed, not the category filters
+        const menuItemsContainerTop = menuContainer.offsetTop;
+        let targetPosition = menuItemsContainerTop - headerHeight - 20; // Small offset for better view
+        
+        console.log(`🎯 Scrolling to menu items container at position: ${targetPosition}`);
+        console.log(`📊 Container details - offsetTop: ${menuItemsContainerTop}`);
+        
+        // Ensure we don't scroll above the menu section
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+          const menuSectionTop = menuSection.offsetTop - headerHeight + 50;
+          if (targetPosition < menuSectionTop) {
+            targetPosition = menuSectionTop;
+            console.log(`⚠️ Adjusted scroll position to stay in menu section: ${targetPosition}`);
+          }
+        }
+        
+        // Try to scroll to the category header first, then fallback to first item
+        const categoryHeader = menuContainer.querySelector(`.category-header.filter-${category}`);
+        if (categoryHeader && categoryHeader.style.display !== 'none') {
+          const headerTop = categoryHeader.offsetTop;
+          const headerBasedPosition = headerTop - headerHeight - 20;
+          
+          if (headerBasedPosition >= menuItemsContainerTop - headerHeight - 100) {
+            targetPosition = headerBasedPosition;
+            console.log(`🎯 Using category header position: ${targetPosition}`);
+          }
+        } 
+        // If no category header or not visible, try first visible item
+        else if (firstVisibleItem && visibleItemsCount > 0) {
+          const itemTop = firstVisibleItem.offsetTop;
+          const itemBasedPosition = itemTop - headerHeight - 40;
+          
+          // Only use item position if it's reasonable and within the menu items area
+          if (itemBasedPosition >= menuItemsContainerTop - headerHeight - 100) {
+            targetPosition = itemBasedPosition;
+            console.log(`🎯 Using first item position: ${targetPosition}`);
+          }
+        }
+        
+        console.log(`📍 Final scroll position: ${targetPosition}`);
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Refresh AOS animations if available
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      }, 150); // Slightly longer delay to ensure DOM is fully updated
+    }
+
+    // Show all categories (reset filter)
+    function showAllCategories() {
+      console.log('📖 Showing all menu categories');
+      
+      const menuContainer = document.getElementById('menu-items-container');
+      if (!menuContainer) {
+        console.error('Menu container not found');
+        return;
+      }
+      
+      // Get all menu items and filter buttons
+      const menuItems = menuContainer.querySelectorAll('.menu-item');
+      const menuFilters = document.querySelectorAll('.menu-category-card');
+      
+      console.log('🔄 Applying "show all" filter');
+      
+      // Remove active class from all filters
+      menuFilters.forEach(function(el) {
+        el.classList.remove('filter-active');
+        el.classList.remove('bg-gradient-to-br', 'from-golden-400', 'to-golden-600', 'border-2', 'border-golden-400', 'shadow-lg', 'shadow-golden-400/25');
+        el.classList.add('bg-dark-800/80', 'backdrop-blur-sm', 'border', 'border-golden-400/30');
+      });
+      
+      // Add active class to "show all" filter
+      const showAllFilter = document.querySelector('[data-filter="*"]');
+      if (showAllFilter) {
+        showAllFilter.classList.add('filter-active');
+        showAllFilter.classList.remove('bg-dark-800/80', 'backdrop-blur-sm', 'border', 'border-golden-400/30');
+        showAllFilter.classList.add('bg-gradient-to-br', 'from-golden-400', 'to-golden-600', 'border-2', 'border-golden-400', 'shadow-lg', 'shadow-golden-400/25');
+      }
+      
+      // Show all category headers
+      const categoryHeaders = menuContainer.querySelectorAll('.category-header');
+      categoryHeaders.forEach(header => {
+        header.style.display = 'flex';
+        header.style.opacity = '1';
+        header.style.transform = 'none';
+      });
+      
+      // Show all menu items and find first item
+      let firstMenuItem = null;
+      let totalItems = 0;
+      
+      menuItems.forEach(item => {
+        item.style.display = 'block';
+        item.style.opacity = '1';
+        item.style.transform = 'none';
+        totalItems++;
+        if (!firstMenuItem) {
+          firstMenuItem = item;
+        }
+      });
+      
+      console.log(`✅ "Show all" filter applied - ${totalItems} total items visible`);
+      
+      // Update the category title to show all
+      updateCategoryTitle('all', totalItems);
+      
+      // Wait a moment for DOM updates, then scroll to menu items container
+      setTimeout(() => {
+        const headerHeight = document.getElementById('header')?.offsetHeight || 80;
+        
+        // CRITICAL FIX: Always scroll to the menu items container area
+        const menuItemsContainerTop = menuContainer.offsetTop;
+        let targetPosition = menuItemsContainerTop - headerHeight - 20; // Small offset for better view
+        
+        console.log(`🎯 Scrolling to menu items container at position: ${targetPosition}`);
+        console.log(`📊 Container details - offsetTop: ${menuItemsContainerTop}`);
+        
+        // Ensure we don't scroll above the menu section
+        const menuSection = document.getElementById('menu');
+        if (menuSection) {
+          const menuSectionTop = menuSection.offsetTop - headerHeight + 50;
+          if (targetPosition < menuSectionTop) {
+            targetPosition = menuSectionTop;
+            console.log(`⚠️ Adjusted scroll position to stay in menu section: ${targetPosition}`);
+          }
+        }
+        
+        // If we found menu items, try to scroll to the first one for better UX
+        if (firstMenuItem && totalItems > 0) {
+          const itemTop = firstMenuItem.offsetTop;
+          const itemBasedPosition = itemTop - headerHeight - 40;
+          
+          // Only use item position if it's reasonable and within the menu items area
+          if (itemBasedPosition >= menuItemsContainerTop - headerHeight - 100) {
+            targetPosition = itemBasedPosition;
+            console.log(`🎯 Using first item position: ${targetPosition}`);
+          }
+        }
+        
+        console.log(`📍 Final scroll position: ${targetPosition}`);
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Refresh AOS animations if available
+        if (typeof AOS !== 'undefined') {
+          AOS.refresh();
+        }
+      }, 150);
+    }
+
+    // Show/hide buttons based on scroll position
     window.addEventListener('scroll', function() {
       const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+      const menuFloatingBtn = document.getElementById('menuFloatingBtn');
+      const menuSection = document.getElementById('menu');
+      
+      // Scroll to top button logic
       if (window.pageYOffset > 300) {
         scrollToTopBtn.style.display = 'block';
       } else {
         scrollToTopBtn.style.display = 'none';
+      }
+      
+      // Menu button logic - show when in menu section for easy navigation
+      if (menuSection) {
+        const menuTop = menuSection.offsetTop - 100; // Start showing 100px before menu
+        const menuBottom = menuSection.offsetTop + menuSection.offsetHeight + 200; // Keep showing 200px after menu
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll >= menuTop && currentScroll <= menuBottom) {
+          // User is in or near menu section - show the menu button for category navigation
+          menuFloatingBtn.style.opacity = '1';
+          menuFloatingBtn.style.pointerEvents = 'auto';
+          menuFloatingBtn.style.transform = 'scale(1) translateY(0)';
+          // Add extra glow when in menu section
+          menuFloatingBtn.querySelector('div').style.boxShadow = '0 0 30px rgba(205, 164, 94, 0.6)';
+        } else {
+          // User is not in menu section - hide the menu button
+          menuFloatingBtn.style.opacity = '0.7';
+          menuFloatingBtn.style.pointerEvents = 'auto';
+          menuFloatingBtn.style.transform = 'scale(0.9) translateY(5px)';
+          // Normal glow when outside menu section
+          menuFloatingBtn.querySelector('div').style.boxShadow = '';
+        }
       }
     });
   </script>
