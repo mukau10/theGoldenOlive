@@ -1,13 +1,15 @@
+import type { IconType } from 'react-icons';
+
 interface MenuCategoryCardProps {
   filter: string;
-  icon: string;
+  icon: IconType;
   title: string;
   subtitle: string;
   isActive: boolean;
   onClick: () => void;
 }
 
-const MenuCategoryCard = ({ icon, title, subtitle, isActive, onClick }: MenuCategoryCardProps) => {
+const MenuCategoryCard = ({ icon: IconComponent, title, subtitle, isActive, onClick }: MenuCategoryCardProps) => {
   return (
     <div
       className={`menu-category-card-enhanced text-center position-relative overflow-hidden ${
@@ -62,8 +64,8 @@ const MenuCategoryCard = ({ icon, title, subtitle, isActive, onClick }: MenuCate
           <div
             className="position-absolute top-50 start-50 translate-middle rounded-circle"
             style={{
-              width: '70px',
-              height: '70px',
+              width: 'clamp(100px, 25vw, 70px)',
+              height: 'clamp(100px, 25vw, 70px)',
               background: isActive
                 ? 'rgba(0, 0, 0, 0.1)'
                 : 'rgba(255, 193, 7, 0.15)',
@@ -72,10 +74,10 @@ const MenuCategoryCard = ({ icon, title, subtitle, isActive, onClick }: MenuCate
               filter: isActive ? 'none' : 'blur(10px)',
             }}
           />
-          <i
-            className={`${icon} position-relative`}
+          <IconComponent
+            className="position-relative"
             style={{
-              fontSize: '2.5rem',
+              fontSize: 'clamp(4rem, 12vw, 2.5rem)',
               color: isActive ? '#000' : '#ffc107',
               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
               filter: isActive ? 'none' : 'drop-shadow(0 0 8px rgba(255, 193, 7, 0.6))',

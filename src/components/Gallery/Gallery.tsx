@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const galleryImages = [
     '/img/golden/mixedGrill.JPEG',
@@ -39,6 +41,9 @@ const Gallery = () => {
     '/img/golden/IMG_7252.JPEG',
   ];
 
+  // Show only first 4 images
+  const displayedImages = galleryImages.slice(0, 4);
+
   return (
     <>
       <section id="gallery" className="py-5 bg-dark-custom position-relative overflow-hidden">
@@ -54,7 +59,7 @@ const Gallery = () => {
 
         <div className="container-fluid px-3 px-md-4" data-aos="fade-up" data-aos-delay="100">
           <div id="gallery-grid" className="gallery-grid d-flex flex-wrap">
-            {galleryImages.map((image, index) => (
+            {displayedImages.map((image, index) => (
               <div key={index} className="gallery-item">
                 <a
                   href={image}
@@ -71,6 +76,17 @@ const Gallery = () => {
                 </a>
               </div>
             ))}
+          </div>
+          
+          {/* Toon meer button */}
+          <div className="text-center mt-4 mt-md-5" data-aos="fade-up" data-aos-delay="200">
+            <button
+              onClick={() => navigate('/galerij')}
+              className="btn btn-warning btn-lg rounded-pill px-5 py-3 fw-semibold"
+              style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}
+            >
+              Toon meer <i className="bi bi-arrow-right ms-2"></i>
+            </button>
           </div>
         </div>
       </section>

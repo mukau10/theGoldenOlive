@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { MenuCategory } from '../../types/menu';
 import { categoryInfoMap } from '../../utils/categoryInfo';
+import type { IconType } from 'react-icons';
+import { BiGridAlt } from 'react-icons/bi';
 
 interface CategorySelectorModalProps {
   categories: MenuCategory[];
@@ -166,9 +168,17 @@ const CategorySelectorModal = ({
                       ? 'bg-black text-warning'
                       : 'bg-warning text-black'
                   }`}
-                  style={{ width: '48px', height: '48px', minWidth: '48px' }}
+                  style={{ 
+                    width: 'clamp(64px, 16vw, 48px)', 
+                    height: 'clamp(64px, 16vw, 48px)', 
+                    minWidth: 'clamp(64px, 16vw, 48px)' 
+                  }}
                 >
-                  <i className="bi bi-grid-3x3-gap fs-5"></i>
+                  <BiGridAlt 
+                    style={{ 
+                      fontSize: 'clamp(2rem, 10vw, 1.25rem)' 
+                    }} 
+                  />
                 </div>
                 <div className="flex-grow-1">
                   <div className="fw-bold mb-1">Alles</div>
@@ -220,9 +230,22 @@ const CategorySelectorModal = ({
                       className={`rounded-circle d-flex align-items-center justify-content-center me-3 ${
                         isSelected ? 'bg-black text-warning' : 'bg-warning text-black'
                       }`}
-                      style={{ width: '48px', height: '48px', minWidth: '48px' }}
+                      style={{ 
+                        width: 'clamp(64px, 16vw, 48px)', 
+                        height: 'clamp(64px, 16vw, 48px)', 
+                        minWidth: 'clamp(64px, 16vw, 48px)' 
+                      }}
                     >
-                      <i className={`${info.icon} fs-5`}></i>
+                      {(() => {
+                        const IconComponent = info.icon as IconType;
+                        return (
+                          <IconComponent 
+                            style={{ 
+                              fontSize: 'clamp(2rem, 10vw, 1.25rem)' 
+                            }} 
+                          />
+                        );
+                      })()}
                     </div>
                     <div className="flex-grow-1">
                       <div className="fw-bold mb-1">{info.title}</div>

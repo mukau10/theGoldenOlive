@@ -81,8 +81,11 @@ const Mogelijkheden = () => {
               <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)' }}>
                 Bestel en geniet thuis
               </h4>
-              <p className="text-white small lh-base opacity-75" style={{ fontSize: 'clamp(0.85rem, 2vw, 0.9rem)' }}>
-                Plaats eenvoudig je bestelling via onze website of telefonisch, en wij brengen je favoriete gerechten
+              <span className="badge bg-warning text-dark px-3 py-2 mb-2 mb-md-3" style={{ fontSize: 'clamp(0.75rem, 1.8vw, 0.85rem)', fontWeight: 600 }}>
+                Binnenkort beschikbaar
+              </span>
+              <p className="text-white small lh-base opacity-50" style={{ fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',  }}>
+                Plaats telefonisch je bestelling via onze website of telefonisch, en wij brengen je favoriete gerechten
                 rechtstreeks naar je deur.
               </p>
             </div>

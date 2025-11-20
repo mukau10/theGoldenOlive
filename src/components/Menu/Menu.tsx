@@ -7,6 +7,7 @@ import { categoryInfoMap } from '../../utils/categoryInfo';
 import MenuItem from './MenuItem';
 import MenuCategoryCard from './MenuCategoryCard';
 import CategorySelectorModal from './CategorySelectorModal';
+import { BiGridAlt } from 'react-icons/bi';
 
 const Menu = () => {
   const { menuData, loading, error } = useMenu();
@@ -29,37 +30,36 @@ const Menu = () => {
     const menuSection = menuSectionRef.current || document.getElementById('menu');
     if (!menuSection) return;
 
-    // Check initial visibility
-    const checkInitialVisibility = () => {
+    // Check visibility - show button as soon as menu section enters viewport
+    const checkVisibility = () => {
       const rect = menuSection.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      // Show button when menu section top is visible in viewport (even if just a small part)
       const isVisible = rect.top < windowHeight && rect.bottom > 0;
-      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
-      const visibleRatio = visibleHeight / rect.height;
-      setIsMenuSectionVisible(isVisible && visibleRatio > 0.1);
+      setIsMenuSectionVisible(isVisible);
     };
 
-    // Check immediately
-    checkInitialVisibility();
+    // Check immediately on mount
+    checkVisibility();
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Show button when menu section is visible (at least 10% visible)
-          setIsMenuSectionVisible(entry.isIntersecting && entry.intersectionRatio > 0.1);
+          // Show button immediately when menu section enters viewport (any part visible)
+          setIsMenuSectionVisible(entry.isIntersecting);
         });
       },
       {
-        threshold: [0, 0.1, 0.5, 1], // Multiple thresholds for better detection
-        rootMargin: '-50px 0px -50px 0px', // Add some margin to avoid showing when just barely visible
+        threshold: 0, // Trigger as soon as any part of the element is visible
+        rootMargin: '0px', // No margin - trigger immediately when entering viewport
       }
     );
 
     observer.observe(menuSection);
 
-    // Also check on scroll for better responsiveness
+    // Also check on scroll for immediate responsiveness
     const handleScroll = () => {
-      checkInitialVisibility();
+      checkVisibility();
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
@@ -271,7 +271,7 @@ const Menu = () => {
                     <div className="col-6 col-md-4">
                       <MenuCategoryCard
                         filter="*"
-                        icon="bi-grid-3x3-gap"
+                        icon={BiGridAlt}
                         title="Alles"
                         subtitle="Complete Menu"
                         isActive={selectedCategory === '*'}
@@ -619,9 +619,22 @@ const Menu = () => {
                         <div className="bg-warning opacity-50" style={{ width: '60px', height: '1px' }}></div>
                         <div
                           className="mx-3 bg-dark border border-warning rounded-circle d-flex align-items-center justify-content-center"
-                          style={{ width: '48px', height: '48px' }}
+                          style={{ 
+                            width: 'clamp(64px, 16vw, 48px)', 
+                            height: 'clamp(64px, 16vw, 48px)' 
+                          }}
                         >
-                          <i className={`${info.icon} text-warning fs-4`}></i>
+                          {(() => {
+                            const IconComponent = info.icon;
+                            return (
+                              <IconComponent 
+                                className="text-warning" 
+                                style={{ 
+                                  fontSize: 'clamp(2rem, 10vw, 1.5rem)' 
+                                }} 
+                              />
+                            );
+                          })()}
                         </div>
                         <div className="bg-warning opacity-50" style={{ width: '60px', height: '1px' }}></div>
                       </div>

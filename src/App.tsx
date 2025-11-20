@@ -8,6 +8,7 @@ import Mogelijkheden from './components/About/Mogelijkheden';
 import Menu from './components/Menu/Menu';
 import Events from './components/Events/Events';
 import Gallery from './components/Gallery/Gallery';
+import FullGallery from './components/Gallery/FullGallery';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
@@ -71,6 +72,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/galerij" element={<FullGallery />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/allergenen" element={<AllergenInfo />} />
           <Route path="/allergie" element={<AllergenInfo />} />

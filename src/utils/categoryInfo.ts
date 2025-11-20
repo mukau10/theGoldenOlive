@@ -1,76 +1,79 @@
 import type { MenuCategory } from '../types/menu';
+import type { IconType } from 'react-icons';
+import { GiHamburger, GiMeat, GiRiceCooker, GiFriedEggs, GiFireBowl, GiBasket, GiCupcake, GiStarMedal, GiFrenchFries } from 'react-icons/gi';
+import { BiCake, BiDroplet, BiCoffee } from 'react-icons/bi';
 
 export interface CategoryInfo {
   title: string;
   description: string;
-  icon: string;
+  icon: IconType;
 }
 
 export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   voorgerechten: {
     title: 'Voorgerechten',
     description: 'Heerlijke starters om je maaltijd mee te beginnen',
-    icon: 'bi-egg-fried',
+    icon: GiFriedEggs,
   },
   'mixed-bbq': {
     title: 'Mix BBQ',
     description: 'Een combinatie van verschillende soorten vlees.',
-    icon: 'bi-fire',
+    icon: GiFireBowl,
   },
   spareribs: {
     title: 'Spareribs',
     description: 'Malse spareribs met onze huisgemaakte sauzen',
-    icon: 'bi-meat',
+    icon: GiMeat,
   },
   'loaded-scoops': {
     title: 'Loaded Scoops',
     description: 'Gevulde scoops met frietjes of nacho\'s, mac & cheese en toppings',
-    icon: 'bi-basket',
+    icon: GiBasket,
   },
   'rijst-pannetjes': {
     title: 'Rijst Pannetjes',
     description: 'Gevulde rijst pannetjes met verschillende toppings',
-    icon: 'bi-bowl-rice',
+    icon: GiRiceCooker,
   },
   'gevulde-aardappel-pannetje': {
     title: 'Gevulde Aardappel Pannetje',
     description: 'Gevulde aardappel pannetjes met verschillende toppings',
-    icon: 'bi-egg-fried',
+    icon: GiFriedEggs,
   },
   burgers: {
     title: 'Burgers',
     description: 'Sappige burgers met verse ingrediënten',
-    icon: 'bi-hamburger',
+    icon: GiHamburger,
   },
   kindermenu: {
     title: 'Kindermenu',
     description: 'Speciaal samengesteld voor onze jongste gasten',
-    icon: 'bi-star',
+    icon: GiStarMedal,
   },
   supplementen: {
     title: 'Supplementen',
     description: "Extra's om je gerecht compleet te maken",
-    icon: 'bi-plus-circle',
+    icon: GiFrenchFries,
   },
   desserten: {
     title: 'Desserten',
     description: 'Zoete afsluiting van je perfecte maaltijd',
-    icon: 'bi-cake',
+    icon: BiCake,
   },
   mocktails: {
     title: 'Mocktails',
     description: 'Verfrissende alcoholvrije cocktails',
-    icon: 'bi-cup-straw',
+    icon: GiCupcake,
   },
   frisdranken: {
     title: 'Frisdranken',
     description: 'Koude en verfrissende drankjes',
-    icon: 'bi-droplet',
+    icon: BiDroplet,
   },
   'warme-dranken': {
     title: 'Warme Dranken',
     description: 'Warme dranken voor gezellige momenten',
-    icon: 'bi-cup-hot',
+    icon: BiCoffee,
   },
 };
 
