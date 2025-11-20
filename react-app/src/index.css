@@ -1,0 +1,51 @@
+/* Import Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import 'aos/dist/aos.css';
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+/* Import custom styles */
+@import './styles/custom.css';
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: #fff;
+  background-color: #000;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Apply color variables */
+  :root {
+  --bs-golden: #ffc107;
+  --bs-golden-light: #ffcd39;
+  --bs-golden-dark: #e6ac00;
+  --bs-dark-custom: #000000;
+  --bs-dark-light: #212529;
+  --glass-bg: rgba(0, 0, 0, 0.4);
+  --glass-border: rgba(255, 193, 7, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --shadow-golden: 0 8px 32px rgba(255, 193, 7, 0.3);
+  --shadow-golden-lg: 0 16px 48px rgba(255, 193, 7, 0.4);
+}

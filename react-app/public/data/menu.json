@@ -1,0 +1,740 @@
+{
+  "voorgerechten": [
+    {
+      "id": "tiger-garnalen",
+      "name": "Tiger Garnalen",
+      "price": "€8,99",
+      "description": "Licht gekruide gebakken garnalen.",
+      "image": "assets/img/golden/tigerGarnalen.JPEG",
+      "alt": "Tiger garnalen voorgerecht The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"},
+        {"code": "M", "type": "Mustard", "color": "yellow", "description": "Mosterd - Alle soorten mosterd"}
+      ]
+    },
+    {
+      "id": "chicken-wings",
+      "name": "Chicken Wings",
+      "price": "€8,99",
+      "description": "Keuze uit BBQ of zoetzure saus.",
+      "image": "assets/img/golden/chickeniwings.JPEG",
+      "alt": "the goldenolive antwerpen chicken wings",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "Se", "type": "Sesame", "color": "purple", "description": "Sesamzaad - Sesamzaad of sesamzaadolie"},
+        {"code": "So", "type": "Soy", "color": "green", "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"},
+        {"code": "M", "type": "Mustard", "color": "yellow", "description": "Mosterd - Alle soorten mosterd"}
+      ]
+    },
+    {
+      "id": "mini-loempia",
+      "name": "Mini Loempia's",
+      "price": "€7,99",
+      "description": "Krokant geserveerd met zoetzure saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "the golden olive antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"},
+        {"code": "So", "type": "Soy", "color": "green", "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"}
+      ]
+    }
+  ],
+  "mixed-bbq": [
+    {
+      "id": "mixed-bbq",
+      "name": "Mix BBQ",
+      "price": "€39,99",
+      "description": "8 soorten vlees<br />Geserveerd met Champignon saus en salade",
+      "image": "assets/img/golden/mixedGrill.JPEG",
+      "alt": "the goldenolive antwerpen mixedgrill",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    }
+  ],
+  "spareribs": [
+    {
+      "id": "spareribs-natuur",
+      "name": "Spareribs Natuur",
+      "price": "€29,99",
+      "description": "Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/spareribs.JPEG",
+      "alt": "Spareribs natuur The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    },
+    {
+      "id": "spareribs-bbq",
+      "name": "Spareribs Barbeque",
+      "price": "€29,99",
+      "description": "Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/spareribs.JPEG",
+      "alt": "Spareribs BBQ The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    },
+    {
+      "id": "spareribs-gekarameliseerd",
+      "name": "Spareribs Gekarameliseerd",
+      "price": "€29,99",
+      "description": "Honing, coleslaw<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/spareribs.JPEG",
+      "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    },
+    {
+      "id": "spareribs-spicy",
+      "name": "Spareribs Spicy (Pikant)",
+      "price": "€29,99",
+      "description": "Coleslaw<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/spareribs.JPEG",
+      "alt": "Spareribs spicy The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    },
+    {
+      "id": "spareribs-thai",
+      "name": "Spareribs Thai Sweet Chili",
+      "price": "€29,99",
+      "description": "Coleslaw<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/spareribs.JPEG",
+      "alt": "Spareribs Thai The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    }
+  ],
+  "loaded-scoops": [
+    {
+      "id": "shredded-chicken-loaded-scoop",
+      "name": "Shredded Chicken Loaded Scoop",
+      "price": "€24,99",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Shredded Chicken Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "spicy-minced-meat-loaded-scoop",
+      "name": "Spicy Minced Meat Loaded Scoop",
+      "price": "€24,99",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Spicy Minced Meat Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "juicy-bbq-meat-loaded-scoop",
+      "name": "Juicy BBQ Meat Loaded Scoop",
+      "price": "€24,99",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Juicy BBQ Meat Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "merguez-loaded-scoop",
+      "name": "Merguez Loaded Scoop",
+      "price": "€24,99",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Merguez Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "scampi-loaded-scoop",
+      "name": "Scampi Loaded Scoop",
+      "price": "€24,99",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Scampi Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    }
+  ],
+  "rijst-pannetjes": [
+    {
+      "id": "rijst-pannetje-shredded-chicken",
+      "name": "Rijst Pannetje Shredded Chicken",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Rijst Pannetje Shredded Chicken The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "rijst-pannetje-gehakt",
+      "name": "Rijst Pannetje Gehakt",
+      "price": "€22,99",
+      "description": "Gehakt in pittige bolognesesaus<br />Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Rijst Pannetje Gehakt The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "rijst-pannetje-juicy-meat",
+      "name": "Rijst Pannetje Juicy Meat",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Rijst Pannetje Juicy Meat The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "rijst-pannetje-merguez",
+      "name": "Rijst Pannetje Merguez",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Rijst Pannetje Merguez The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "rijst-pannetje-scampi",
+      "name": "Rijst Pannetje Scampi",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Rijst Pannetje Scampi The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    }
+  ],
+  "gevulde-aardappel-pannetje": [
+    {
+      "id": "gevulde-aardappel-pannetje-shredded-chicken",
+      "name": "Gevulde Aardappel Pannetje Shredded Chicken",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gevulde Aardappel Pannetje Shredded Chicken The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "gevulde-aardappel-pannetje-gehakt",
+      "name": "Gevulde Aardappel Pannetje Gehakt",
+      "price": "€22,99",
+      "description": "Gehakt in pittige bolognesesaus<br />Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gevulde Aardappel Pannetje Gehakt The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "gevulde-aardappel-pannetje-juicy-meat",
+      "name": "Gevulde Aardappel Pannetje Juicy Meat",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gevulde Aardappel Pannetje Juicy Meat The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "gevulde-aardappel-pannetje-merguez",
+      "name": "Gevulde Aardappel Pannetje Merguez",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gevulde Aardappel Pannetje Merguez The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "gevulde-aardappel-pannetje-scampi",
+      "name": "Gevulde Aardappel Pannetje Scampi",
+      "price": "€22,99",
+      "description": "Geserveerd met diabolique saus en romige champignonsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gevulde Aardappel Pannetje Scampi The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+      ]
+    }
+  ],
+  "burgers": [
+    {
+      "id": "spicy-gabriel-burger",
+      "name": "Spicy Gabriel Burger",
+      "price": "€19.99",
+      "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/hamburger3.JPEG",
+      "alt": "Spicy Gabriel Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "the-golden-olive-burger",
+      "name": "The Golden Olive Burger",
+      "price": "€22.99",
+      "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/IMG_3356.JPEG",
+      "alt": "The Golden Olive Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "ouezzane-chicken-burger",
+      "name": "Ouezzane Chicken Burger",
+      "price": "€19.99",
+      "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/hamburger1.JPEG",
+      "alt": "Ouezzane Chicken Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "classic-house-burger",
+      "name": "Classic House Burger",
+      "price": "€19.99",
+      "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/IMG_3356.JPEG",
+      "alt": "Classic House Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+      ]
+    },
+    {
+      "id": "flame-house-burger",
+      "name": "Flame House Burger",
+      "price": "€19.99",
+      "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/golden/hamburger2.JPEG",
+      "alt": "Flame House Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "crunchy-fish-burger",
+      "name": "Crunchy Fish Burger",
+      "price": "€17.99",
+      "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/favicon11.png",
+      "alt": "Crunchy Fish Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "F", "type": "Fish", "color": "cyan", "description": "Vis - Vis wordt meestal in herkenbare vorm geconsumeerd"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "veggie-delight-burger",
+      "name": "Veggie Delight Burger",
+      "price": "€17.99",
+      "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Keuze uit: Friet en Nachos",
+      "image": "assets/img/favicon11.png",
+      "alt": "Veggie Delight Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    }
+  ],
+  "kindermenu": [
+    {
+      "id": "gehaktburger",
+      "name": "Gehaktburger",
+      "price": "€9,99",
+      "description": "Kindvriendelijke versie van onze klassieke burger.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gehaktburger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "crispy-kipburger",
+      "name": "Crispy Kipburger",
+      "price": "€9,99",
+      "description": "Lichte en krokante kipburger.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Crispy Kipburger The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    }
+  ],
+  "supplementen": [
+    {
+      "id": "friet",
+      "name": "Friet",
+      "price": "€3,99",
+      "description": "",
+      "image": "assets/img/favicon11.png",
+      "alt": "Friet The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+      ]
+    },
+    {
+      "id": "rijst",
+      "name": "Rijst",
+      "price": "€3,99",
+      "description": "",
+      "image": "assets/img/favicon11.png",
+      "alt": "Rijst The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "nachos",
+      "name": "Nacho's",
+      "price": "€3,99",
+      "description": "",
+      "image": "assets/img/favicon11.png",
+      "alt": "Nacho's The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+      ]
+    },
+    {
+      "id": "mac-cheese",
+      "name": "Mac & cheese",
+      "price": "€3,99",
+      "description": "",
+      "image": "assets/img/favicon11.png",
+      "alt": "Mac & cheese The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "champignonsaus",
+      "name": "Champignonsaus",
+      "price": "€2,99",
+      "description": "",
+      "image": "assets/img/favicon11.png",
+      "alt": "Champignonsaus The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "diabolique-saus",
+      "name": "Diabolique saus",
+      "price": "€2,99",
+      "description": "",
+      "image": "assets/img/favicon11.png",
+      "alt": "Diabolique saus The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    }
+  ],
+  "desserten": [
+    {
+      "id": "cheesecake-chocoladesaus",
+      "name": "Cheesecake in Chocoladesaus",
+      "price": "€6,99",
+      "description": "Romige cheesecake omhuld in warme chocoladesaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Cheesecake in Chocoladesaus The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "cheesecake-pistachesaus",
+      "name": "Cheesecake in Pistachesaus",
+      "price": "€6,99",
+      "description": "Heerlijke cheesecake overgoten met luxe pistachesaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Cheesecake in Pistachesaus The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "moelleux-chocolade",
+      "name": "Moelleux Chocolade",
+      "price": "€7,99",
+      "description": "Warme chocoladecake met ijs en slagroom.",
+      "image": "assets/img/golden/moeilleux.JPEG",
+      "alt": "Moelleux Chocolade The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
+        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+      ]
+    },
+    {
+      "id": "dame-blanche",
+      "name": "Dame Blanche",
+      "price": "€6,99",
+      "description": "Vanille-ijs met warme chocoladesaus en slagroom.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Dame Blanche The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    }
+  ],
+  "mocktails": [
+    {
+      "id": "mojito-blue-hawaii",
+      "name": "Mojito Blue Hawaii",
+      "price": "€9.50",
+      "description": "Tropische mojito met blauwe kleur",
+      "image": "assets/img/favicon11.png",
+      "alt": "Mojito Blue Hawaii The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "strawberry-mojito",
+      "name": "Strawberry Mojito",
+      "price": "€9.50",
+      "description": "Mojito met aardbeien",
+      "image": "assets/img/favicon11.png",
+      "alt": "Strawberry Mojito The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "classic-mojito",
+      "name": "Classic Mojito",
+      "price": "€9.50",
+      "description": "Klassieke mojito zonder alcohol",
+      "image": "assets/img/golden/mocktail2.JPEG",
+      "alt": "Classic Mojito The Golden Olive Antwerpen",
+      "allergens": []
+    }
+  ],
+  "frisdranken": [
+    {
+      "id": "sprite",
+      "name": "Sprite",
+      "price": "€3.00",
+      "description": "Sprite Lemon",
+      "image": "assets/img/favicon11.png",
+      "alt": "Sprite The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "fuze-tea-lemon",
+      "name": "FUZE TEA LEMON",
+      "price": "€3.00",
+      "description": "Fuze Tea met citroen",
+      "image": "assets/img/favicon11.png",
+      "alt": "Fuze Tea Lemon The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "fuze-tea-peach",
+      "name": "Fuze Tea Peach",
+      "price": "€3.00",
+      "description": "Fuze Tea met perzik",
+      "image": "assets/img/favicon11.png",
+      "alt": "Fuze Tea Peach The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "minute-maid-apple",
+      "name": "Minute Maid Apple",
+      "price": "€3.00",
+      "description": "Appelsap van Minute Maid",
+      "image": "assets/img/favicon11.png",
+      "alt": "Minute Maid Apple The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "fanta",
+      "name": "Fanta",
+      "price": "€3.00",
+      "description": "Fanta Orange",
+      "image": "assets/img/favicon11.png",
+      "alt": "Fanta The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "bruiswater-05l",
+      "name": "Bruiswater 0.5L",
+      "price": "€5.00",
+      "description": "Koolzuurhoudend water",
+      "image": "assets/img/favicon11.png",
+      "alt": "Bruiswater 0.5L The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "cola-zero",
+      "name": "Cola Zero",
+      "price": "€3.00",
+      "description": "Coca Cola Zero zonder suiker",
+      "image": "assets/img/favicon11.png",
+      "alt": "Cola Zero The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "coca-cola",
+      "name": "Coca Cola",
+      "price": "€3.00",
+      "description": "Klassieke Coca Cola",
+      "image": "assets/img/favicon11.png",
+      "alt": "Coca Cola The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "water-05l",
+      "name": "Water 0.5L",
+      "price": "€5.00",
+      "description": "Stille water",
+      "image": "assets/img/favicon11.png",
+      "alt": "Water 0.5L The Golden Olive Antwerpen",
+      "allergens": []
+    }
+  ],
+  "warme-dranken": [
+    {
+      "id": "cappuccino",
+      "name": "Cappuccino",
+      "price": "€3.50",
+      "description": "Cappuccino met melkschuim",
+      "image": "assets/img/favicon11.png",
+      "alt": "Cappuccino The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "lipton-thee",
+      "name": "Lipton Thee",
+      "price": "€3.00",
+      "description": "Keuze uit verschillende smaken",
+      "image": "assets/img/favicon11.png",
+      "alt": "Lipton Thee The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "munt-thee",
+      "name": "Munt Thee",
+      "price": "€3.50",
+      "description": "Verfrissende munt thee",
+      "image": "assets/img/favicon11.png",
+      "alt": "Munt Thee The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "latte-macchiato",
+      "name": "Latte Macchiato",
+      "price": "€4.00",
+      "description": "Latte macchiato met melk",
+      "image": "assets/img/favicon11.png",
+      "alt": "Latte Macchiato The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "dubbele-expresso",
+      "name": "Dubbele Espresso",
+      "price": "€3.00",
+      "description": "Dubbele espresso voor extra cafeïne",
+      "image": "assets/img/favicon11.png",
+      "alt": "Dubbele Espresso The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "koffie",
+      "name": "Koffie",
+      "price": "€3.00",
+      "description": "Verse koffie",
+      "image": "assets/img/favicon11.png",
+      "alt": "Koffie The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "koffie-met-melk",
+      "name": "Koffie met melk",
+      "price": "€3.50",
+      "description": "Koffie met warme melk",
+      "image": "assets/img/favicon11.png",
+      "alt": "Koffie met melk The Golden Olive Antwerpen",
+      "allergens": [
+        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+      ]
+    },
+    {
+      "id": "expresso",
+      "name": "Espresso",
+      "price": "€2.50",
+      "description": "Sterke espresso",
+      "image": "assets/img/favicon11.png",
+      "alt": "Espresso The Golden Olive Antwerpen",
+      "allergens": []
+    }
+  ]
+}

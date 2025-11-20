@@ -1,0 +1,10 @@
+/* App specific styles */
+.App {
+  min-height: 100vh;
+  background-color: #000;
+  }
+
+/* Ensure proper spacing for fixed header */
+#main {
+  padding-top: 0;
+}
