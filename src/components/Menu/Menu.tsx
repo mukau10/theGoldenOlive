@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { useMenu } from '../../hooks/useMenu';
@@ -14,6 +14,8 @@ const Menu = () => {
   const [showAllergenPopup, setShowAllergenPopup] = useState(false);
   const [allergenDescription, setAllergenDescription] = useState('');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [isMenuSectionVisible, setIsMenuSectionVisible] = useState(false);
+  const menuSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const menuSection = document.getElementById('menu');
@@ -21,6 +23,51 @@ const Menu = () => {
       menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [selectedCategory]);
+
+  // Track menu section visibility for floating button
+  useEffect(() => {
+    const menuSection = menuSectionRef.current || document.getElementById('menu');
+    if (!menuSection) return;
+
+    // Check initial visibility
+    const checkInitialVisibility = () => {
+      const rect = menuSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      const isVisible = rect.top < windowHeight && rect.bottom > 0;
+      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+      const visibleRatio = visibleHeight / rect.height;
+      setIsMenuSectionVisible(isVisible && visibleRatio > 0.1);
+    };
+
+    // Check immediately
+    checkInitialVisibility();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Show button when menu section is visible (at least 10% visible)
+          setIsMenuSectionVisible(entry.isIntersecting && entry.intersectionRatio > 0.1);
+        });
+      },
+      {
+        threshold: [0, 0.1, 0.5, 1], // Multiple thresholds for better detection
+        rootMargin: '-50px 0px -50px 0px', // Add some margin to avoid showing when just barely visible
+      }
+    );
+
+    observer.observe(menuSection);
+
+    // Also check on scroll for better responsiveness
+    const handleScroll = () => {
+      checkInitialVisibility();
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const handleAllergenClick = (description: string) => {
     setAllergenDescription(description);
@@ -111,7 +158,7 @@ const Menu = () => {
   }
 
   return (
-    <section id="menu" className="py-5 bg-dark-custom">
+    <section id="menu" ref={menuSectionRef} className="py-5 bg-dark-custom">
       <div className="container-fluid px-4" data-aos="fade-up">
         <div className="text-center mb-4 mb-md-5">
           <h2 id="menu-heading" className="display-4 display-md-3 fw-bold text-warning mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
@@ -642,15 +689,17 @@ const Menu = () => {
         </div>
       )}
 
-      {/* Mobile Category Selector - Floating Button */}
-      <div
-        className="d-md-none position-fixed"
-        style={{
-          bottom: '20px',
-          right: '20px',
-          zIndex: 9997,
-        }}
-      >
+      {/* Mobile Category Selector - Floating Button - Only show when menu section is visible */}
+      {isMenuSectionVisible && (
+        <div
+          className="d-md-none position-fixed"
+          style={{
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9997,
+            animation: 'fadeIn 0.3s ease-in-out',
+          }}
+        >
         {/* Pulse Animation Ring */}
         <div
           className="position-absolute rounded-circle"
@@ -674,6 +723,16 @@ const Menu = () => {
             100% {
               transform: translate(-50%, -50%) scale(1.5);
               opacity: 0;
+            }
+          }
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+              transform: scale(0.8);
+            }
+            to {
+              opacity: 1;
+              transform: scale(1);
             }
           }
         `}</style>
@@ -705,6 +764,7 @@ const Menu = () => {
           <i className="bi bi-grid-3x3-gap text-black fs-3"></i>
         </button>
       </div>
+      )}
 
       {/* Category Selector Modal */}
       <CategorySelectorModal
