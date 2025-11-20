@@ -562,15 +562,10 @@ function createCategoryHeader(category) {
       description: 'Heerlijke starters om je maaltijd mee te beginnen',
       icon: 'bi-egg-fried'
     },
-    'mixed-grill': {
-      title: 'Mixed Grill',
-      description: 'Onze specialiteit: perfect gegrilde vlees combinaties',
+    'mix-bbq': {
+      title: 'Mix BBQ',
+      description: 'Een combinatie van verschillende soorten vlees.',
       icon: 'bi-fire'
-    },
-    'kumpir': {
-      title: 'Kumpir',
-      description: 'Turkse gevulde aardappels met heerlijke toppings',
-      icon: 'bi-geo-alt'
     },
     'spareribs': {
       title: 'Spareribs',

@@ -6,10 +6,10 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <!-- Primary Meta Tags -->
-  <title>The Golden Olive - Restaurant Antwerpen | Spareribs, Mixed Grill & Events</title>
-  <meta name="title" content="The Golden Olive - Restaurant Antwerpen | Spareribs, Mixed Grill & Events">
-  <meta name="description" content="Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mixed grill, hamburgers, kumpir. Perfect voor verjaardagen, bedrijfsfeesten en evenementen. Reserveer nu!">
-  <meta name="keywords" content="The Golden Olive, restaurant Antwerpen, spareribs, mixed grill, hamburgers, kumpir, verjaardagsfeest, bedrijfsfeest, evenementen, reserveren, eten, drinken, Vlaamsekaai, Antwerpen restaurant">
+  <title>The Golden Olive - Restaurant Antwerpen | Spareribs, Mix BBQ & Events</title>
+  <meta name="title" content="The Golden Olive - Restaurant Antwerpen | Spareribs, Mix BBQ & Events">
+  <meta name="description" content="Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen. Reserveer nu!">
+  <meta name="keywords" content="The Golden Olive, restaurant Antwerpen, spareribs, mix BBQ, hamburgers, verjaardagsfeest, bedrijfsfeest, evenementen, reserveren, eten, drinken, Vlaamsekaai, Antwerpen restaurant">
   <meta name="author" content="The Golden Olive">
   <meta name="robots" content="index, follow">
   <meta name="language" content="Dutch">
@@ -23,8 +23,8 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="restaurant">
   <meta property="og:url" content="https://the-goldenolive.be/">
-  <meta property="og:title" content="The Golden Olive - Restaurant Antwerpen | Spareribs, Mixed Grill & Events">
-  <meta property="og:description" content="Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mixed grill, hamburgers, kumpir. Perfect voor verjaardagen, bedrijfsfeesten en evenementen.">
+  <meta property="og:title" content="The Golden Olive - Restaurant Antwerpen | Spareribs, Mix BBQ & Events">
+  <meta property="og:description" content="Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen.">
   <meta property="og:image" content="https://thegoldenolive.be/assets/img/golden/IMG_4117.JPEG">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -35,7 +35,7 @@
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://the-goldenolive.be/">
   <meta property="twitter:title" content="The Golden Olive - Restaurant Antwerpen">
-  <meta property="twitter:description" content="Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mixed grill, hamburgers, kumpir.">
+  <meta property="twitter:description" content="Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers.">
   <meta property="twitter:image" content="https://thegoldenolive.be/assets/img/golden/IMG_4117.JPEG">
 
   <!-- Additional SEO Meta Tags -->
@@ -71,7 +71,7 @@
     "@context": "https://schema.org",
     "@type": "Restaurant",
     "name": "The Golden Olive",
-    "description": "Authentiek restaurant in Antwerpen gespecialiseerd in spareribs, mixed grill, hamburgers en kumpir. Perfect voor verjaardagen, bedrijfsfeesten en evenementen.",
+    "description": "Authentiek restaurant in Antwerpen gespecialiseerd in spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen.",
     "url": "https://the-goldenolive.be",
     "telephone": "+32494194397",
     "address": {
@@ -152,12 +152,12 @@
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "The Golden Olive Menu",
-    "description": "Uitgebreide menukaart van The Golden Olive met spareribs, mixed grill, hamburgers, kumpir en meer",
+    "description": "Uitgebreide menukaart van The Golden Olive met spareribs, mix BBQ, hamburgers en meer",
     "url": "https://the-goldenolive.be/#menu",
     "itemListElement": [
       {
         "@type": "MenuItem",
-        "name": "Mixed Grill",
+        "name": "Mix BBQ",
         "description": "Verschillende soorten vlees, geserveerd met Champignon saus, salade en friet",
         "offers": {
           "@type": "Offer",
@@ -175,16 +175,6 @@
           "priceCurrency": "EUR"
         }
       },
-      {
-        "@type": "MenuItem",
-        "name": "Kumpir",
-        "description": "Gevulde aardappelen met verschillende toppings en sauzen",
-        "offers": {
-          "@type": "Offer",
-          "price": "15.99",
-          "priceCurrency": "EUR"
-        }
-      }
     ]
   }
   </script>
@@ -216,7 +206,7 @@
     </div>
   </div>
 
-  <header id="header" class="position-fixed start-0 end-0 bg-dark-custom backdrop-blur border-bottom border-dark-light" style="top: 42px; z-index: 1040; background-color: rgba(12, 11, 9, 0.6); transition: all 0.3s;" role="banner">
+  <header id="header" class="position-fixed start-0 end-0 backdrop-blur" style="top: 42px; z-index: 1040;" role="banner">
     <div class="container-fluid px-4 py-4">
       <div class="d-flex align-items-center justify-content-between">
       <!-- Logo with Icon and Text -->
@@ -325,15 +315,15 @@
   </header>
 
   <section id="hero" class="position-relative d-flex align-items-center justify-content-center overflow-hidden" style="min-height: 100vh; background: url('./assets/img/golden/IMG_4117.JPEG') center/cover no-repeat;" role="banner" aria-label="Hero section">
-    <video autoplay muted loop playsinline class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index: 1; display: block !important; visibility: visible !important; opacity: 1 !important; width: 100% !important; height: 100% !important;" aria-label="Restaurant ambiance video" preload="auto">
+    <video id="hero-video" autoplay muted loop playsinline webkit-playsinline class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index: 1; display: block !important; visibility: visible !important; opacity: 1 !important; width: 100% !important; height: 100% !important; background: transparent !important;" aria-label="Restaurant ambiance video" preload="auto">
+      <source src="./assets/img/header_video.mp4" type="video/mp4">
       <source src="./assets/img/header_video.mov" type="video/quicktime">
-      <source src="./assets/img/header_video.mov" type="video/mp4">
       <!-- Fallback for browsers that don't support video -->
       <img src="./assets/img/golden/IMG_4117.JPEG" alt="Restaurant ambiance" class="position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover;">
     </video>
     
-    <!-- Overlay - Temporarily disabled for video debugging -->
-    <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-30" style="z-index: 2;"></div> -->
+    <!-- Modern gradient overlay for better text readability -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="z-index: 2; background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2)); pointer-events: none;"></div>
     
     <!-- Content -->
     <div class="position-relative container-fluid px-4 text-center" style="z-index: 10;" data-aos="zoom-in" data-aos-delay="100">
@@ -349,8 +339,8 @@
       <div class="row justify-content-center" style="margin-top: 8rem;">
         <div class="col-12">
                      <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-            <a href="#menu" class=" text-golden btn btn-outline-warning btn-lg rounded-pill px-4 py-3 fw-medium text-decoration-none" style="border-color: var(--bs-golden); color: var(--bs-golden); transition: all 0.3s;" aria-label="Bekijk ons menu">
-            Ons Menu
+            <a href="#menu" class="btn btn-outline-warning btn-lg rounded-pill px-5 py-3 fw-semibold text-decoration-none" aria-label="Bekijk ons menu">
+              <i class="bi bi-arrow-right me-2"></i>Ons Menu
             </a>
           </div>
         </div>
@@ -507,25 +497,14 @@
                         </div>
                           </div>
 
-                      <!-- Mixed Grill Card -->
+                      <!-- Mix BBQ Card -->
                       <div class="col-6 col-md-4">
-                        <div class="menu-category-card bg-black text-white border border-warning rounded p-3 text-center cursor-pointer" data-filter=".filter-mixed-grill" style="min-height: 140px; transition: all 0.3s;">
+                        <div class="menu-category-card bg-black text-white border border-warning rounded p-3 text-center cursor-pointer" data-filter=".filter-mix-bbq" style="min-height: 140px; transition: all 0.3s;">
                           <div class="mb-2">
                             <i class="bi bi-fire fs-2 text-warning"></i>
                           </div>
-                          <h6 class="fw-bold mb-1">Mixed Grill</h6>
+                          <h6 class="fw-bold mb-1">Mix BBQ</h6>
                           <small class="text-warning">Grill Specialties</small>
-                        </div>
-                        </div>
-                        
-                      <!-- Kumpir Card -->
-                      <div class="col-6 col-md-4">
-                        <div class="menu-category-card bg-black text-white border border-warning rounded p-3 text-center cursor-pointer" data-filter=".filter-kumpir" style="min-height: 140px; transition: all 0.3s;">
-                          <div class="mb-2">
-                            <i class="bi bi-egg-fill fs-2 text-warning"></i>
-                          </div>
-                          <h6 class="fw-bold mb-1">Kumpir</h6>
-                          <small class="text-warning">Gevulde Aardappels</small>
                         </div>
                       </div>
                       </div>
@@ -800,7 +779,7 @@
 
           <div class="gallery-item">
             <a href="assets/img/golden/mixedGrill.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-              <img src="assets/img/golden/mixedGrill.JPEG" alt="Mixed Grill - The Golden Olive Antwerpen" loading="lazy">
+              <img src="assets/img/golden/mixedGrill.JPEG" alt="Mix BBQ - The Golden Olive Antwerpen" loading="lazy">
               <div class="gallery-overlay">
                 <i class="bi bi-zoom-in text-warning fs-1"></i>
               </div>
@@ -835,26 +814,8 @@
           </div>
 
           <div class="gallery-item">
-            <a href="assets/img/golden/kumpir1.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-              <img src="assets/img/golden/kumpir1.JPEG" alt="Kumpir - The Golden Olive Antwerpen" loading="lazy">
-              <div class="gallery-overlay">
-                <i class="bi bi-zoom-in text-warning fs-1"></i>
-              </div>
-            </a>
-          </div>
-
-          <div class="gallery-item">
             <a href="assets/img/golden/mocktail3.JPEG" class="gallery-lightbox" data-gall="gallery-item">
               <img src="assets/img/golden/mocktail3.JPEG" alt="Mocktail - The Golden Olive Antwerpen" loading="lazy">
-              <div class="gallery-overlay">
-                <i class="bi bi-zoom-in text-warning fs-1"></i>
-              </div>
-            </a>
-          </div>
-
-          <div class="gallery-item">
-            <a href="assets/img/golden/kumpir.JPEG" class="gallery-lightbox" data-gall="gallery-item">
-              <img src="assets/img/golden/kumpir.JPEG" alt="Kumpir Special - The Golden Olive Antwerpen" loading="lazy">
               <div class="gallery-overlay">
                 <i class="bi bi-zoom-in text-warning fs-1"></i>
               </div>
@@ -1043,15 +1004,6 @@
               <i class="bi bi-fire text-warning fs-2 mb-2"></i>
               <h6 class="text-white mb-1 fw-bold">Spareribs</h6>
               <small class="text-white-50">BBQ Ribs</small>
-            </div>
-          </div>
-          
-          <!-- Kumpir -->
-          <div class="col-6 col-md-4">
-            <div class="menu-category-quick-card bg-black border border-warning rounded-3 p-3 text-center h-100" data-category="kumpir" style="cursor: pointer; transition: all 0.3s;">
-              <i class="bi bi-circle-fill text-warning fs-2 mb-2"></i>
-              <h6 class="text-white mb-1 fw-bold">Kumpir</h6>
-              <small class="text-white-50">Gevulde Aardappel</small>
             </div>
           </div>
           
@@ -1440,14 +1392,14 @@
           ]
         }
       ],
-      "mixed-grill": [
+      "mix-bbq": [
         {
-          "id": "mixed-grill",
-          "name": "Mixed Grill",
+          "id": "mix-bbq",
+          "name": "Mix BBQ",
           "price": "€39,99",
-          "description": "8 soorten vlees<br />Geserveerd met Champignon saus en salade",
+          "description": "Een combinatie van verschillende soorten vlees.",
           "image": "assets/img/golden/mixedGrill.JPEG",
-          "alt": "the goldenolive antwerpen mixedgrill",
+          "alt": "the goldenolive antwerpen mix bbq",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
@@ -1458,7 +1410,7 @@
         {
           "id": "spareribs-natuur",
           "name": "Spareribs Natuur",
-          "price": "€28.99",
+          "price": "€29,99",
           "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs natuur The Golden Olive Antwerpen",
@@ -1470,7 +1422,7 @@
         {
           "id": "spareribs-bbq",
           "name": "Spareribs Barbeque",
-          "price": "€28.99",
+          "price": "€29,99",
           "description": "Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs BBQ The Golden Olive Antwerpen",
@@ -1482,7 +1434,7 @@
         {
           "id": "spareribs-gekarameliseerd",
           "name": "Spareribs Gekarameliseerd",
-          "price": "€28.99",
+          "price": "€29,99",
           "description": "Honing, coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
@@ -1494,7 +1446,7 @@
         {
           "id": "spareribs-spicy",
           "name": "Spareribs Spicy (Pikant)",
-          "price": "€28.99",
+          "price": "€29,99",
           "description": "Coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs spicy The Golden Olive Antwerpen",
@@ -1506,7 +1458,7 @@
         {
           "id": "spareribs-thai",
           "name": "Spareribs Thai Sweet Chili",
-          "price": "€28.99",
+          "price": "€29,99",
           "description": "Coleslaw<br />Keuze uit: Friet, American potatoes en Nachos",
           "image": "assets/img/golden/spareribs.JPEG",
           "alt": "Spareribs Thai The Golden Olive Antwerpen",
@@ -1516,152 +1468,15 @@
           ]
         }
       ],
-      "kumpir": [
-        {
-          "id": "kumpir-kip-curry",
-          "name": "Kumpir Kip Currysaus",
-          "price": "€18.99",
-          "description": "Met currysaus",
-          "image": "assets/img/golden/kumpir1.JPEG",
-          "alt": "Kumpir kip curry The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
-          ]
-        },
-        {
-          "id": "kumpir-kip-champignon",
-          "name": "Kumpir Kip Champignon saus",
-          "price": "€18.99",
-          "description": "Met champignonsaus",
-          "image": "assets/img/golden/kumpir1.JPEG",
-          "alt": "Kumpir kip champignon The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
-          ]
-        },
-        {
-          "id": "kumpir-scampi-diabolique",
-          "name": "Kumpir Scampi Diabolique saus",
-          "price": "€19.99",
-          "description": "Met diabolique saus",
-          "image": "assets/img/golden/kumpir.JPEG",
-          "alt": "Kumpir scampi diabolique The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
-          ]
-        },
-        {
-          "id": "kumpir-scampi-curry",
-          "name": "Kumpir Scampi Currysaus",
-          "price": "€19.99",
-          "description": "Met curry saus",
-          "image": "assets/img/golden/kumpir.JPEG",
-          "alt": "Kumpir scampi curry The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
-          ]
-        },
-        {
-          "id": "kumpir-veggie",
-          "name": "Kumpir Veggie",
-          "price": "€15.99",
-          "description": "Tomatenroomsaus",
-          "image": "assets/img/golden/kumpir.JPEG",
-          "alt": "Kumpir veggie The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        }
-      ],
       "burgers": [
         {
-          "id": "fish-burger",
-          "name": "Fish",
-          "price": "€16.00",
-          "description": "Fish steak, truffelsaus, roomkaas, tomaat, uien, dille, rucola, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/favicon11.png",  
-          "alt": "Fish Burger The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "F", "type": "Fish", "color": "cyan", "description": "Vis - Vis wordt meestal in herkenbare vorm geconsumeerd"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        },
-        {
-          "id": "veggie-burger",
-          "name": "Veggie",
-          "price": "€14.00",  
-          "description": "Gegrilde paprika, gegrilde courgette, olive sauce, tomaat, uien, sla, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
+          "id": "burgers-placeholder",
+          "name": "Nieuwe burgerselectie wordt hier toegevoegd.",
+          "price": "",
+          "description": "",
           "image": "assets/img/favicon11.png",
-          "alt": "Veggie Burger The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        },
-        {
-          "id": "spicy-chicken",
-          "name": "Spicy Chicken",
-          "price": "€17.50",
-          "description": "Kipfilet, pikant tomaten, mozzarella saus, coleslaw, jalapenos, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/hamburger3.JPEG",
-          "alt": "Spicy Chicken The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        },
-        {
-          "id": "texas-burger",
-          "name": "Texas",
-          "price": "€18.00",
-          "description": "Bio rundvlees, cheddar, gekarameliseerde uien, olive saus, bieslook, sla kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3356.JPEG",
-          "alt": "Texas Burger The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        },
-        {
-          "id": "pesto-chicken",
-          "name": "Pesto Chicken",
-          "price": "€17.50",
-          "description": "Gepaneerde kip, pesto gegrilde paprika, olive saus, rucola, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/favicon11.png",
-          "alt": "Pesto Chicken The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        },
-        {
-          "id": "smash-n-onion",
-          "name": "Smash 'N Onion",
-          "price": "€18.00",
-          "description": "Bio rundvlees, uienringen, cheddar, peterselie, olive saus, wortel<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/favicon11.png",
-          "alt": "Smash 'N Onion The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-            {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
-          ]
-        },
-        {
-          "id": "mexicaanse-burger",
-          "name": "Mexicaanse",
-          "price": "€18.00",
-          "description": "Bio rundvlees, roomkaas, parmigiano, guacamole, salsa, rucola, uien, tomaat, kaas<br />Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/golden/IMG_3356.JPEG",
-          "alt": "Mexicaanse Burger The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
+          "alt": "Burgers The Golden Olive Antwerpen",
+          "allergens": []
         }
       ],
       "kindermenu": [
@@ -1689,18 +1504,6 @@
             {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
           ]
         },
-        {
-          "id": "kinder-kip-nuggets",
-          "name": "Kip nuggets",
-          "price": "€9.50",
-          "description": "Keuze uit: Friet, American potatoes en Nachos",
-          "image": "assets/img/favicon11.png",
-          "alt": "Kinder Kip Nuggets The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-          ]
-        }
       ],
       "supplementen": [
         {
@@ -1710,17 +1513,6 @@
           "description": "Extra portie friet",
           "image": "assets/img/favicon11.png",
           "alt": "Portie frietjes The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
-          ]
-        },
-        {
-          "id": "portie-american-patatoes",
-          "name": "Portie American potatoes",
-          "price": "€4.99",
-          "description": "Extra portie American potatoes",
-          "image": "assets/img/favicon11.png",
-          "alt": "Portie American patatoes The Golden Olive Antwerpen",
           "allergens": [
             {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
           ]
@@ -1751,19 +1543,6 @@
         }
       ],
       "desserten": [
-        {
-          "id": "daim-chocolate-crunchy",
-          "name": "Daim chocolate crunchy caramel cake",
-          "price": "€7.00",
-          "description": "Heerlijke Daim chocolade cake",
-          "image": "assets/img/favicon11.png",
-          "alt": "Daim chocolate crunchy caramel cake The Golden Olive Antwerpen",
-          "allergens": [
-            {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-            {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-            {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
-          ]
-        },
         {
           "id": "moelleux-chocolat",
           "name": "Moelleux chocolat",
@@ -1819,33 +1598,6 @@
           "alt": "Classic Mojito The Golden Olive Antwerpen",
           "allergens": []
         },
-        {
-          "id": "rosso-mojito",
-          "name": "Mojito Rosso",
-          "price": "€9.50",
-          "description": "Limoen, framboos, violet",
-          "image": "assets/img/golden/mocktail3.JPEG",
-          "alt": "Mojito Rosso The Golden Olive Antwerpen",
-          "allergens": []
-        },
-        {
-          "id": "ipanema-mojito",
-          "name": "Mojito Ipanema",
-          "price": "€9.50",
-          "description": "Passievrucht, limoen, gember",
-          "image": "assets/img/favicon11.png",
-          "alt": "Mojito Ipanema The Golden Olive Antwerpen",
-          "allergens": []
-        },
-        {
-          "id": "mango-wave",
-          "name": "Mojito Mango Wave",
-          "price": "€9.50",
-          "description": "Mango, spicy, limoen",
-          "image": "assets/img/favicon11.png",
-          "alt": "Mojito Mango Wave The Golden Olive Antwerpen",
-          "allergens": []
-        }
       ],
       "frisdranken": [
         {
@@ -2212,73 +1964,112 @@
     
   </div>
 
-  <!-- Video Debug & Scroll to Top JavaScript -->
+  <!-- Video Autoplay & Scroll to Top JavaScript -->
   <script>
-    // Video debugging and setup
-    document.addEventListener('DOMContentLoaded', function() {
-      const heroVideo = document.querySelector('#hero video');
+    // Video autoplay setup with mobile support
+    function setupVideoAutoplay() {
+      const heroVideo = document.querySelector('#hero video') || document.querySelector('#hero-video');
       const heroSection = document.querySelector('#hero');
       
-      if (heroVideo) {
-        console.log('Hero video found:', heroVideo);
-        console.log('Video dimensions:', heroVideo.offsetWidth, 'x', heroVideo.offsetHeight);
-        console.log('Video position:', heroVideo.offsetTop, heroVideo.offsetLeft);
-        console.log('Video computed style:', window.getComputedStyle(heroVideo));
-        
-        // Force video to be visible with extreme measures
-        heroVideo.style.display = 'block !important';
-        heroVideo.style.visibility = 'visible !important';
-        heroVideo.style.opacity = '1 !important';
-        heroVideo.style.zIndex = '999 !important';
-        heroVideo.style.background = 'red'; // Temporary red background to see if video area is visible
-        
-        // Check if video is actually visible
-        const rect = heroVideo.getBoundingClientRect();
-        console.log('Video bounding rect:', rect);
-        console.log('Video is in viewport:', rect.width > 0 && rect.height > 0);
-        
-        // Try to play the video
-        heroVideo.play().then(() => {
-          console.log('Video is playing successfully');
-          console.log('Video current time:', heroVideo.currentTime);
-          console.log('Video duration:', heroVideo.duration);
-        }).catch((error) => {
-          console.error('Video failed to play:', error);
-          // If video fails, ensure fallback image is visible
-          const fallbackImg = heroVideo.querySelector('img');
-          if (fallbackImg) {
-            fallbackImg.style.display = 'block';
-            fallbackImg.style.zIndex = '998';
-          }
-        });
-        
-        // Listen for video events
-        heroVideo.addEventListener('loadstart', () => console.log('Video load started'));
-        heroVideo.addEventListener('loadeddata', () => console.log('Video data loaded'));
-        heroVideo.addEventListener('canplay', () => console.log('Video can start playing'));
-        heroVideo.addEventListener('playing', () => {
-          console.log('Video is playing');
-          // Remove red background once playing
-          heroVideo.style.background = 'transparent';
-        });
-        heroVideo.addEventListener('error', (e) => console.error('Video error:', e));
-        
-        // Additional debug: check every second if video is still playing
-        setInterval(() => {
-          if (heroVideo.currentTime > 0) {
-            console.log('Video playing at time:', heroVideo.currentTime);
-          }
-        }, 5000);
-        
-      } else {
-        console.error('Hero video not found');
+      if (!heroVideo) {
+        return;
       }
       
-      if (heroSection) {
-        console.log('Hero section found:', heroSection);
-        console.log('Hero section dimensions:', heroSection.offsetWidth, 'x', heroSection.offsetHeight);
+      // Ensure no red background
+      heroVideo.style.background = 'transparent';
+      heroVideo.style.backgroundColor = 'transparent';
+      
+      // Set video attributes for mobile autoplay
+      heroVideo.setAttribute('autoplay', 'autoplay');
+      heroVideo.setAttribute('muted', 'muted');
+      heroVideo.setAttribute('playsinline', 'playsinline');
+      heroVideo.setAttribute('webkit-playsinline', 'webkit-playsinline');
+      heroVideo.muted = true;
+      heroVideo.playsInline = true;
+      
+      // Function to attempt video play
+      const attemptPlay = () => {
+        const playPromise = heroVideo.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video is playing successfully');
+              heroVideo.style.background = 'transparent';
+              heroVideo.style.backgroundColor = 'transparent';
+            })
+            .catch((error) => {
+              console.warn('Video autoplay prevented:', error);
+              // On mobile, autoplay might be blocked - try again after user interaction
+              // Don't show fallback immediately, wait for user interaction
+            });
+        }
+      };
+      
+      // Try to play immediately
+      attemptPlay();
+      
+      // Listen for video events to ensure it plays
+      heroVideo.addEventListener('loadeddata', () => {
+        attemptPlay();
+      });
+      
+      heroVideo.addEventListener('canplay', () => {
+        attemptPlay();
+      });
+      
+      heroVideo.addEventListener('playing', () => {
+        heroVideo.style.background = 'transparent';
+        heroVideo.style.backgroundColor = 'transparent';
+      });
+      
+      // On mobile, autoplay might be blocked - enable play on first user interaction
+      const enableVideoOnInteraction = () => {
+        attemptPlay();
+        // Remove listeners after first interaction
+        document.removeEventListener('touchstart', enableVideoOnInteraction);
+        document.removeEventListener('click', enableVideoOnInteraction);
+        document.removeEventListener('scroll', enableVideoOnInteraction);
+      };
+      
+      // Add listeners for user interaction (mobile workaround)
+      document.addEventListener('touchstart', enableVideoOnInteraction, { once: true });
+      document.addEventListener('click', enableVideoOnInteraction, { once: true });
+      document.addEventListener('scroll', enableVideoOnInteraction, { once: true });
+      
+      // Handle video errors
+      heroVideo.addEventListener('error', (e) => {
+        console.error('Video error:', e);
+        const fallbackImg = heroVideo.querySelector('img');
+        if (fallbackImg) {
+          fallbackImg.style.display = 'block';
+          fallbackImg.style.zIndex = '998';
+        }
+      });
+      
+      // Ensure video plays when it becomes visible (Intersection Observer)
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              attemptPlay();
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        observer.observe(heroVideo);
       }
-    });
+    }
+    
+    // Initialize video when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupVideoAutoplay);
+    } else {
+      setupVideoAutoplay();
+    }
+    
+    // Also try on window load
+    window.addEventListener('load', setupVideoAutoplay);
 
     // Scroll to top functionality
     function scrollToTop() {
@@ -2413,14 +2204,9 @@
               <span class="text-white font-medium text-sm">Voorgerechten</span>
             </button>
             
-            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-mixed-grill'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
+            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-mix-bbq'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
               <i class="bi bi-fire text-golden-400 mb-2 block"></i>
-              <span class="text-white font-medium text-sm">Mixed Grill</span>
-            </button>
-            
-            <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-kumpir'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
-              <i class="bi bi-geo-alt text-golden-400 mb-2 block"></i>
-              <span class="text-white font-medium text-sm">Kumpir</span>
+              <span class="text-white font-medium text-sm">Mix BBQ</span>
             </button>
             
             <button onclick="event.preventDefault(); event.stopPropagation(); scrollToCategory('filter-spareribs'); this.closest('.fixed').remove();" class="bg-gradient-to-r from-golden-500/20 to-golden-600/20 hover:from-golden-500/30 hover:to-golden-600/30 border border-golden-400/30 rounded-lg p-3 text-left transition-all hover:scale-105">
@@ -2494,15 +2280,10 @@
           description: 'Heerlijke starters om je maaltijd mee te beginnen',
           icon: 'bi-egg-fried'
         },
-        'filter-mixed-grill': {
-          title: 'Mixed Grill',
-          description: 'Onze specialiteit: perfect gegrilde vlees combinaties',
+        'filter-mix-bbq': {
+          title: 'Mix BBQ',
+          description: 'Een combinatie van verschillende soorten vlees.',
           icon: 'bi-fire'
-        },
-        'filter-kumpir': {
-          title: 'Kumpir',
-          description: 'Turkse gevulde aardappels met heerlijke toppings',
-          icon: 'bi-geo-alt'
         },
         'filter-spareribs': {
           title: 'Spareribs',
