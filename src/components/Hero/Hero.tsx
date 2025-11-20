@@ -7,36 +7,59 @@ const Hero = () => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Set video attributes for mobile autoplay
+    // Set video attributes for mobile autoplay - critical for iOS and Android
     video.setAttribute('autoplay', 'autoplay');
     video.setAttribute('muted', 'muted');
     video.setAttribute('playsinline', 'playsinline');
     video.setAttribute('webkit-playsinline', 'webkit-playsinline');
+    video.setAttribute('x5-playsinline', 'true'); // For Android/WeChat browsers
+    video.setAttribute('x5-video-player-type', 'h5');
+    video.setAttribute('x5-video-player-fullscreen', 'true');
+    video.setAttribute('x5-video-orientation', 'portrait');
     video.muted = true;
     video.playsInline = true;
+    video.volume = 0; // Ensure volume is 0 for mobile autoplay
 
-    // Function to attempt video play
-    const attemptPlay = () => {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('Video is playing successfully');
-            video.style.background = 'transparent';
-            video.style.backgroundColor = 'transparent';
-          })
-          .catch((error) => {
-            console.warn('Video autoplay prevented:', error);
-          });
+    // Function to attempt video play with retry logic
+    const attemptPlay = async () => {
+      try {
+        // Ensure video is muted before attempting to play
+        video.muted = true;
+        video.volume = 0;
+        
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          console.log('Video is playing successfully');
+          video.style.background = 'transparent';
+          video.style.backgroundColor = 'transparent';
+        }
+      } catch (error) {
+        console.warn('Video autoplay prevented:', error);
+        // Retry after a short delay
+        setTimeout(() => {
+          if (video.paused) {
+            video.muted = true;
+            video.volume = 0;
+            video.play().catch(() => {
+              // Silently fail if still blocked
+            });
+          }
+        }, 500);
       }
     };
 
-    // Try to play immediately
-    attemptPlay();
+    // Try to play immediately when video is ready
+    if (video.readyState >= 3) {
+      // Video is already loaded enough
+      attemptPlay();
+    }
 
-    // Listen for video events
-    video.addEventListener('loadeddata', attemptPlay);
-    video.addEventListener('canplay', attemptPlay);
+    // Listen for video events - multiple events for better mobile support
+    video.addEventListener('loadedmetadata', attemptPlay, { once: true });
+    video.addEventListener('loadeddata', attemptPlay, { once: true });
+    video.addEventListener('canplay', attemptPlay, { once: true });
+    video.addEventListener('canplaythrough', attemptPlay, { once: true });
     video.addEventListener('playing', () => {
       video.style.background = 'transparent';
       video.style.backgroundColor = 'transparent';
@@ -44,22 +67,24 @@ const Hero = () => {
 
     // On mobile, autoplay might be blocked - enable play on first user interaction
     const enableVideoOnInteraction = () => {
+      video.muted = true;
+      video.volume = 0;
       attemptPlay();
-      document.removeEventListener('touchstart', enableVideoOnInteraction);
-      document.removeEventListener('click', enableVideoOnInteraction);
-      document.removeEventListener('scroll', enableVideoOnInteraction);
     };
 
-    document.addEventListener('touchstart', enableVideoOnInteraction, { once: true });
-    document.addEventListener('click', enableVideoOnInteraction, { once: true });
-    document.addEventListener('scroll', enableVideoOnInteraction, { once: true });
+    // Multiple interaction events for better mobile support
+    const interactionOptions = { once: true, passive: true };
+    document.addEventListener('touchstart', enableVideoOnInteraction, interactionOptions);
+    document.addEventListener('touchend', enableVideoOnInteraction, interactionOptions);
+    document.addEventListener('click', enableVideoOnInteraction, interactionOptions);
+    document.addEventListener('scroll', enableVideoOnInteraction, interactionOptions);
 
-    // Intersection Observer
+    // Intersection Observer - retry when video comes into view
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && video.paused) {
               attemptPlay();
             }
           });
@@ -67,7 +92,19 @@ const Hero = () => {
         { threshold: 0.1 }
       );
       observer.observe(video);
+      
+      return () => {
+        observer.disconnect();
+      };
     }
+
+    // Cleanup function
+    return () => {
+      document.removeEventListener('touchstart', enableVideoOnInteraction);
+      document.removeEventListener('touchend', enableVideoOnInteraction);
+      document.removeEventListener('click', enableVideoOnInteraction);
+      document.removeEventListener('scroll', enableVideoOnInteraction);
+    };
   }, []);
 
   const scrollToMenu = () => {
