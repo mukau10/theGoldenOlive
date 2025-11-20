@@ -1,0 +1,147 @@
+{
+  "allergens": [
+    {
+      "code": "G",
+      "type": "Gluten",
+      "color": "red",
+      "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)",
+      "icon": "bi-wheat"
+    },
+    {
+      "code": "S",
+      "type": "Shellfish",
+      "color": "orange",
+      "description": "Schaaldieren - Garnalen, krabben en kreeften",
+      "icon": "bi-shrimp"
+    },
+    {
+      "code": "E",
+      "type": "Eggs",
+      "color": "amber",
+      "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen",
+      "icon": "bi-egg"
+    },
+    {
+      "code": "F",
+      "type": "Fish",
+      "color": "blue",
+      "description": "Vis - Alle soorten vis",
+      "icon": "bi-fish"
+    },
+    {
+      "code": "P",
+      "type": "Peanuts",
+      "color": "red",
+      "description": "Pinda - Pinda's en pindaolie",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "So",
+      "type": "Soy",
+      "color": "green",
+      "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "M",
+      "type": "Milk",
+      "color": "blue",
+      "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt",
+      "icon": "bi-droplet"
+    },
+    {
+      "code": "N",
+      "type": "Nuts",
+      "color": "red",
+      "description": "Noten - Amandelen, hazelnoten, walnoten, cashewnoten, pecannoten, paranoten, pistachenoten en macadamianoten",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "Ce",
+      "type": "Celery",
+      "color": "green",
+      "description": "Selderij - Selderij en selderijproducten",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "Mu",
+      "type": "Mustard",
+      "color": "yellow",
+      "description": "Mosterd - Alle soorten mosterd",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "Se",
+      "type": "Sesame",
+      "color": "purple",
+      "description": "Sesamzaad - Sesamzaad of sesamzaadolie",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "Su",
+      "type": "Sulfites",
+      "color": "orange",
+      "description": "Sulfiet - Zwaveldioxide en sulfieten",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "L",
+      "type": "Lupin",
+      "color": "purple",
+      "description": "Lupine - Lupine en lupineproducten",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "Mo",
+      "type": "Molluscs",
+      "color": "orange",
+      "description": "Weekdieren - Mosselen, oesters, inktvis, etc.",
+      "icon": "bi-circle"
+    },
+    {
+      "code": "C",
+      "type": "Coconut",
+      "color": "brown",
+      "description": "Kokosnoot - Kokosnoot en kokosproducten",
+      "icon": "bi-circle"
+    }
+  ],
+  "dietary": [
+    {
+      "code": "V",
+      "type": "Vegetarian",
+      "color": "green",
+      "description": "Vegetarisch - Bevat geen vlees of vis",
+      "icon": "bi-flower"
+    },
+    {
+      "code": "Ve",
+      "type": "Vegan",
+      "color": "green",
+      "description": "Veganistisch - Bevat geen dierlijke producten",
+      "icon": "bi-flower"
+    },
+    {
+      "code": "GF",
+      "type": "Gluten Free",
+      "color": "green",
+      "description": "Glutenvrij - Bevat geen gluten",
+      "icon": "bi-check-circle"
+    },
+    {
+      "code": "LF",
+      "type": "Lactose Free",
+      "color": "green",
+      "description": "Lactose-vrij - Bevat geen lactose",
+      "icon": "bi-check-circle"
+    },
+    {
+      "code": "H",
+      "type": "Halal",
+      "color": "green",
+      "description": "Halal - Bereid volgens halal richtlijnen",
+      "icon": "bi-check-circle"
+    }
+  ]
+}
+
