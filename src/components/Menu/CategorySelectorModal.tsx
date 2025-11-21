@@ -32,11 +32,46 @@ const CategorySelectorModal = ({
   const handleCategorySelect = (category: MenuCategory | '*') => {
     onSelectCategory(category);
     handleClose();
-    // Scroll to menu section after a short delay
+    // Scroll to menu items after a short delay
     setTimeout(() => {
-      const menuSection = document.getElementById('menu');
-      if (menuSection) {
-        menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Try to find the first menu item card
+      const firstMenuItem = document.querySelector('#menu-items-container .menu-item-modern');
+      if (firstMenuItem) {
+        // Calculate position with offset to show the card fully from the beginning
+        const cardRect = firstMenuItem.getBoundingClientRect();
+        const scrollOffset = 120; // Offset to account for fixed headers/spacing and show card fully
+        const targetPosition = window.scrollY + cardRect.top - scrollOffset;
+        
+        window.scrollTo({
+          top: Math.max(0, targetPosition), // Ensure we don't scroll to negative position
+          behavior: 'smooth'
+        });
+      } else {
+        // Fallback to menu items container
+        const menuItemsContainer = document.getElementById('menu-items-container');
+        if (menuItemsContainer) {
+          const containerRect = menuItemsContainer.getBoundingClientRect();
+          const scrollOffset = 120;
+          const targetPosition = window.scrollY + containerRect.top - scrollOffset;
+          
+          window.scrollTo({
+            top: Math.max(0, targetPosition),
+            behavior: 'smooth'
+          });
+        } else {
+          // Final fallback to menu section
+          const menuSection = document.getElementById('menu');
+          if (menuSection) {
+            const sectionRect = menuSection.getBoundingClientRect();
+            const scrollOffset = 120;
+            const targetPosition = window.scrollY + sectionRect.top - scrollOffset;
+            
+            window.scrollTo({
+              top: Math.max(0, targetPosition),
+              behavior: 'smooth'
+            });
+          }
+        }
       }
     }, 300);
   };

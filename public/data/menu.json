@@ -124,7 +124,7 @@
       "name": "Shredded Chicken Loaded Scoop",
       "price": "€24,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
-      "image": "assets/img/favicon11.png",
+      "image": "public/img/chicken-scoop.jpg",
       "alt": "Shredded Chicken Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
         {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
@@ -161,7 +161,7 @@
       "name": "Merguez Loaded Scoop",
       "price": "€24,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions.",
-      "image": "assets/img/favicon11.png",
+      "image": "public/img/merguez-scoop.jpg",
       "alt": "Merguez Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
         {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},

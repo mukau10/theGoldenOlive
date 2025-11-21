@@ -19,9 +19,49 @@ const Menu = () => {
   const menuSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const menuSection = document.getElementById('menu');
-    if (menuSection && selectedCategory !== '*') {
-      menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (selectedCategory !== '*') {
+      // Small delay to ensure menu items are rendered
+      setTimeout(() => {
+        // Try to find the first menu item card
+        const firstMenuItem = document.querySelector('#menu-items-container .menu-item-modern');
+        if (firstMenuItem) {
+          // Calculate position with offset to show the card fully from the beginning
+          const cardRect = firstMenuItem.getBoundingClientRect();
+          const scrollOffset = 120; // Offset to account for fixed headers/spacing and show card fully
+          const targetPosition = window.scrollY + cardRect.top - scrollOffset;
+          
+          window.scrollTo({
+            top: Math.max(0, targetPosition), // Ensure we don't scroll to negative position
+            behavior: 'smooth'
+          });
+        } else {
+          // Fallback to menu items container
+          const menuItemsContainer = document.getElementById('menu-items-container');
+          if (menuItemsContainer) {
+            const containerRect = menuItemsContainer.getBoundingClientRect();
+            const scrollOffset = 120;
+            const targetPosition = window.scrollY + containerRect.top - scrollOffset;
+            
+            window.scrollTo({
+              top: Math.max(0, targetPosition),
+              behavior: 'smooth'
+            });
+          } else {
+            // Final fallback to menu section
+            const menuSection = document.getElementById('menu');
+            if (menuSection) {
+              const sectionRect = menuSection.getBoundingClientRect();
+              const scrollOffset = 120;
+              const targetPosition = window.scrollY + sectionRect.top - scrollOffset;
+              
+              window.scrollTo({
+                top: Math.max(0, targetPosition),
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      }, 100);
     }
   }, [selectedCategory]);
 
@@ -650,12 +690,17 @@ const Menu = () => {
                 </div>
               );
             }
+            // Calculate item index (excluding headers) for staggered animation
+            const itemIndex = filteredItems()
+              .slice(0, index)
+              .filter(({ isHeader }) => !isHeader).length;
             return (
               <MenuItem
                 key={`${category}-${item.id}-${index}`}
                 item={item}
                 category={category}
                 onAllergenClick={handleAllergenClick}
+                index={itemIndex}
               />
             );
           })}
