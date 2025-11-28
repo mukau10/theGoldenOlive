@@ -92,8 +92,15 @@ const CategorySelectorModal = ({
           zIndex: 9998,
           transition: 'opacity 0.3s ease',
           opacity: isClosing ? 0 : 1,
+          pointerEvents: 'auto',
         }}
         onClick={handleClose}
+        onTouchEnd={(e) => {
+          // Only close if clicking directly on backdrop, not if event bubbled from modal
+          if (e.target === e.currentTarget) {
+            handleClose();
+          }
+        }}
       />
 
       {/* Modal */}
@@ -108,8 +115,11 @@ const CategorySelectorModal = ({
           zIndex: 9999,
           transform: isClosing ? 'translateY(100%)' : 'translateY(0)',
           transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          touchAction: 'pan-y',
+          WebkitOverflowScrolling: 'touch',
         }}
         onClick={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
       >
         <div
           className="bg-dark border-top border-warning rounded-top-4"
@@ -117,12 +127,13 @@ const CategorySelectorModal = ({
             borderWidth: '2px',
             maxHeight: '85vh',
             boxShadow: '0 -8px 32px rgba(0, 0, 0, 0.5)',
+            touchAction: 'pan-y',
           }}
         >
           {/* Header */}
           <div
             className="d-flex align-items-center justify-content-between p-4 border-bottom border-warning"
-            style={{ borderWidth: '1px' }}
+            style={{ borderWidth: '1px', touchAction: 'manipulation' }}
           >
             <div className="d-flex align-items-center">
               <div
@@ -142,7 +153,7 @@ const CategorySelectorModal = ({
               onClick={handleClose}
               className="btn-close btn-close-white"
               aria-label="Sluiten"
-              style={{ fontSize: '1.2rem' }}
+              style={{ fontSize: '1.2rem', touchAction: 'manipulation' }}
             ></button>
           </div>
 
@@ -152,8 +163,12 @@ const CategorySelectorModal = ({
             style={{
               maxHeight: 'calc(85vh - 100px)',
               overflowY: 'auto',
+              overflowX: 'hidden',
               scrollbarWidth: 'thin',
               scrollbarColor: 'rgba(255, 193, 7, 0.5) transparent',
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y',
+              overscrollBehavior: 'contain',
             }}
           >
             <style>{`
@@ -173,7 +188,11 @@ const CategorySelectorModal = ({
             `}</style>
             {/* All Categories Option */}
             <button
-              onClick={() => handleCategorySelect('*')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleCategorySelect('*');
+              }}
               className={`w-100 text-start p-3 mb-2 rounded-3 border-0 ${
                 selectedCategory === '*'
                   ? 'bg-warning text-black'
@@ -182,6 +201,11 @@ const CategorySelectorModal = ({
               style={{
                 transition: 'all 0.3s ease',
                 fontSize: '1rem',
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent',
+                cursor: 'pointer',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
               }}
               onMouseEnter={(e) => {
                 if (selectedCategory !== '*') {
@@ -237,7 +261,11 @@ const CategorySelectorModal = ({
               return (
                 <button
                   key={category}
-                  onClick={() => handleCategorySelect(category)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleCategorySelect(category);
+                  }}
                   className={`w-100 text-start p-3 mb-2 rounded-3 border-0 ${
                     isSelected
                       ? 'bg-warning text-black'
@@ -246,6 +274,11 @@ const CategorySelectorModal = ({
                   style={{
                     transition: 'all 0.3s ease',
                     fontSize: '1rem',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
                   }}
                   onMouseEnter={(e) => {
                     if (!isSelected) {
