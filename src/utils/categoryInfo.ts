@@ -1,6 +1,6 @@
 import type { MenuCategory } from '../types/menu';
 import type { IconType } from 'react-icons';
-import { GiHamburger, GiMeat, GiRiceCooker, GiFriedEggs, GiFireBowl, GiBasket, GiCupcake, GiStarMedal, GiFrenchFries } from 'react-icons/gi';
+import { GiHamburger, GiMeat, GiFriedEggs, GiFireBowl, GiBasket, GiCupcake, GiStarMedal, GiFrenchFries } from 'react-icons/gi';
 import { BiCake, BiDroplet, BiCoffee } from 'react-icons/bi';
 
 export interface CategoryInfo {
@@ -29,16 +29,6 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
     title: 'Loaded Scoops',
     description: 'Gevulde scoops met frietjes of nacho\'s, mac & cheese en toppings',
     icon: GiBasket,
-  },
-  'rijst-pannetjes': {
-    title: 'Rijst Pannetjes',
-    description: 'Gevulde rijst pannetjes met verschillende toppings',
-    icon: GiRiceCooker,
-  },
-  'gevulde-aardappel-pannetje': {
-    title: 'Gevulde Aardappel Pannetje',
-    description: 'Gevulde aardappel pannetjes met verschillende toppings',
-    icon: GiFriedEggs,
   },
   burgers: {
     title: 'Burgers',

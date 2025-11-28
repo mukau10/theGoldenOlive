@@ -20,8 +20,6 @@ export interface MenuData {
   'mixed-bbq': MenuItem[];
   spareribs: MenuItem[];
   'loaded-scoops': MenuItem[];
-  'rijst-pannetjes': MenuItem[];
-  'gevulde-aardappel-pannetje': MenuItem[];
   burgers: MenuItem[];
   kindermenu: MenuItem[];
   supplementen: MenuItem[];

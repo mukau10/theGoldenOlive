@@ -16,6 +16,7 @@ const Menu = () => {
   const [allergenDescription, setAllergenDescription] = useState('');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [isMenuSectionVisible, setIsMenuSectionVisible] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const menuSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -120,8 +121,6 @@ const Menu = () => {
     'mixed-bbq',
     'spareribs',
     'loaded-scoops',
-    'rijst-pannetjes',
-    'gevulde-aardappel-pannetje',
     'burgers',
     'kindermenu',
     'supplementen',
@@ -219,8 +218,8 @@ const Menu = () => {
           </div>
         </div>
 
-        {/* Category Cards Carousel */}
-        <div className="mb-5" data-aos="fade-up" data-aos-delay="100">
+        {/* Category Cards Carousel - Hidden */}
+        <div className="mb-5" data-aos="fade-up" data-aos-delay="100" style={{ display: 'none' }}>
           <div className="menu-categories-container">
             <div
               className="menu-category-carousel-container position-relative rounded-4 p-4 p-md-5"
@@ -376,39 +375,6 @@ const Menu = () => {
                           subtitle="Loaded Scoops"
                           isActive={selectedCategory === 'loaded-scoops'}
                           onClick={() => setSelectedCategory('loaded-scoops')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Rijst Pannetjes Card */}
-                    {categories.includes('rijst-pannetjes') && categoryInfoMap['rijst-pannetjes'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-rijst-pannetjes"
-                          icon={categoryInfoMap['rijst-pannetjes'].icon}
-                          title={categoryInfoMap['rijst-pannetjes'].title}
-                          subtitle="Rijst Pannetjes"
-                          isActive={selectedCategory === 'rijst-pannetjes'}
-                          onClick={() => setSelectedCategory('rijst-pannetjes')}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-
-                {/* Slide 3: Pannetjes & Burgers */}
-                <SwiperSlide>
-                  <div className="row g-3">
-                    {/* Gevulde Aardappel Pannetje Card */}
-                    {categories.includes('gevulde-aardappel-pannetje') && categoryInfoMap['gevulde-aardappel-pannetje'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-gevulde-aardappel-pannetje"
-                          icon={categoryInfoMap['gevulde-aardappel-pannetje'].icon}
-                          title={categoryInfoMap['gevulde-aardappel-pannetje'].title}
-                          subtitle="Aardappel Pannetjes"
-                          isActive={selectedCategory === 'gevulde-aardappel-pannetje'}
-                          onClick={() => setSelectedCategory('gevulde-aardappel-pannetje')}
                         />
                       </div>
                     )}
@@ -747,10 +713,10 @@ const Menu = () => {
         </div>
       )}
 
-      {/* Mobile Category Selector - Floating Button - Only show when menu section is visible */}
+      {/* Category Selector - Floating Button - Only show when menu section is visible */}
       {isMenuSectionVisible && (
         <div
-          className="d-md-none position-fixed"
+          className="position-fixed"
           style={{
             bottom: '20px',
             right: '20px',
@@ -793,34 +759,87 @@ const Menu = () => {
               transform: scale(1);
             }
           }
+          .menu-button-tooltip {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            color: #ffc107;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 193, 7, 0.3);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+          }
+          @media (max-width: 767.98px) {
+            .menu-button-tooltip {
+              opacity: 1 !important;
+            }
+          }
+          .menu-button-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            border: 6px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.95);
+          }
+          .menu-button-tooltip::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 19px;
+            border: 7px solid transparent;
+            border-top-color: rgba(255, 193, 7, 0.3);
+            z-index: -1;
+          }
+          .menu-button-wrapper:hover .menu-button-tooltip {
+            opacity: 1;
+          }
         `}</style>
-        <button
-          onClick={() => setShowCategoryModal(true)}
-          className="btn btn-warning rounded-circle shadow-lg border-0 d-flex align-items-center justify-content-center position-relative"
-          style={{
-            width: '64px',
-            height: '64px',
-            boxShadow: '0 4px 20px rgba(255, 193, 7, 0.4), 0 0 0 4px rgba(255, 193, 7, 0.1)',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
-          onTouchStart={(e) => {
-            e.currentTarget.style.transform = 'scale(0.95)';
-          }}
-          onTouchEnd={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.boxShadow = '0 6px 30px rgba(255, 193, 7, 0.6), 0 0 0 6px rgba(255, 193, 7, 0.2)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 20px rgba(255, 193, 7, 0.4), 0 0 0 4px rgba(255, 193, 7, 0.1)';
-          }}
-          aria-label="Open categorieën menu"
-        >
-          <i className="bi bi-grid-3x3-gap text-black fs-3"></i>
-        </button>
+        <div className="menu-button-wrapper position-relative">
+          <div 
+            className="menu-button-tooltip"
+            style={{ opacity: showTooltip ? 1 : undefined }}
+          >
+            Toon categorieën
+          </div>
+          <button
+            onClick={() => setShowCategoryModal(true)}
+            className="btn btn-warning rounded-circle shadow-lg border-0 d-flex align-items-center justify-content-center position-relative"
+            style={{
+              width: '64px',
+              height: '64px',
+              boxShadow: '0 4px 20px rgba(255, 193, 7, 0.4), 0 0 0 4px rgba(255, 193, 7, 0.1)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+            onTouchStart={(e) => {
+              e.currentTarget.style.transform = 'scale(0.95)';
+              setShowTooltip(true);
+            }}
+            onTouchEnd={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)';
+              e.currentTarget.style.boxShadow = '0 6px 30px rgba(255, 193, 7, 0.6), 0 0 0 6px rgba(255, 193, 7, 0.2)';
+              setShowTooltip(true);
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(255, 193, 7, 0.4), 0 0 0 4px rgba(255, 193, 7, 0.1)';
+              setShowTooltip(false);
+            }}
+            aria-label="Toon categorieën"
+          >
+            <i className="bi bi-grid-3x3-gap text-black fs-3"></i>
+          </button>
+        </div>
       </div>
       )}
 
