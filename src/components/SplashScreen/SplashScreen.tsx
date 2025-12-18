@@ -10,29 +10,19 @@ const SplashScreen = () => {
   const [languageSelected, setLanguageSelected] = useState(false);
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 
-  // Check if language was already selected before
+  // Always show language selector - user must always choose a language
   useEffect(() => {
     const savedLanguage = getLanguagePreference();
     if (savedLanguage) {
-      // Set the language if it was previously saved
+      // Set the language temporarily for display, but user must still confirm
       i18n.changeLanguage(savedLanguage);
-      // If language is already saved, skip splash screen quickly
-      setLanguageSelected(true);
-      setShowLanguageSelector(false);
-      // Hide splash screen faster since language is already known
-      setTimeout(() => {
-        setIsVisible(false);
-        setTimeout(() => {
-          setShouldRender(false);
-        }, 300);
-      }, 500);
-    } else {
-      // Only show language selector if no language is saved
-      const timer = setTimeout(() => {
-        setShowLanguageSelector(true);
-      }, 1500);
-      return () => clearTimeout(timer);
     }
+    // Always show language selector after logo animation
+    // User must always select a language (even if one was previously saved)
+    const timer = setTimeout(() => {
+      setShowLanguageSelector(true);
+    }, 1500);
+    return () => clearTimeout(timer);
   }, [i18n]);
 
   const handleLanguageSelect = (lang: string) => {
