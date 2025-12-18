@@ -275,7 +275,7 @@
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
-        "description": "Scoops garnis avec frites ou nachos, mac & cheese et garnitures"
+        "description": "Scoops garnis avec frites, mac & cheese et garnitures"
       },
       "burgers": {
         "title": "Burgers",
@@ -325,71 +325,71 @@
       },
       "spareribs-natuur": {
         "name": "Spareribs Nature",
-        "description": "Choix de : Frites et Nachos"
-      },
+          "description": "Servi avec frites et 2 sauces"
+        },
       "spareribs-bbq": {
         "name": "Spareribs Barbecue",
-        "description": "Choix de : Frites et Nachos"
+        "description": "Servi avec frites et 2 sauces"
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Caramélisées",
-        "description": "Miel, coleslaw<br />Choix de : Frites et Nachos"
+        "description": "Miel, coleslaw<br />Servi avec frites et 2 sauces"
       },
       "spareribs-spicy": {
         "name": "Spareribs Épicées",
-        "description": "Coleslaw<br />Choix de : Frites et Nachos"
+        "description": "Coleslaw<br />Servi avec frites et 2 sauces"
       },
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili",
-        "description": "Coleslaw<br />Choix de : Frites et Nachos"
+        "description": "Coleslaw<br />Servi avec frites et 2 sauces"
       },
       "shredded-chicken-loaded-scoop": {
         "name": "Loaded Scoop au Poulet Effiloché",
-        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Poulet effiloché avec olives, salsa et oignons croustillants."
+        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Poulet effiloché avec olives, salsa et oignons croustillants."
       },
       "spicy-minced-meat-loaded-scoop": {
         "name": "Loaded Scoop à la Viande Hachée Épicée",
-        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande hachée dans une sauce bolognaise épicée, sauce spéciale, jalapeños et oignons croustillants."
+        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande hachée dans une sauce bolognaise épicée, sauce spéciale, jalapeños et oignons croustillants."
       },
       "juicy-bbq-meat-loaded-scoop": {
         "name": "Loaded Scoop à la Viande BBQ Juteuse",
-        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande effilochée avec sauce BBQ, sauce spéciale et oignons croustillants."
+        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande effilochée avec sauce BBQ, sauce spéciale et oignons croustillants."
       },
       "merguez-loaded-scoop": {
         "name": "Loaded Scoop Merguez",
-        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Merguez épicée avec sauce spéciale, salsa et oignons croustillants."
+        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Merguez épicée avec sauce spéciale, salsa et oignons croustillants."
       },
       "scampi-loaded-scoop": {
         "name": "Loaded Scoop aux Scampis",
-        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Scampis frits avec sauce spéciale, salsa et oignons croustillants."
+        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Scampis frits avec sauce spéciale, salsa et oignons croustillants."
       },
       "spicy-gabriel-burger": {
         "name": "Burger Gabriel Épicé",
-        "description": "Filet de poulet grillé avec fromage crémeux, oignons caramélisés, laitue fraîche, piments jalapeño et notre Sauce Signature Épicée maison<br />Choix de : Frites et Nachos"
+        "description": "Filet de poulet grillé avec fromage crémeux, oignons caramélisés, laitue fraîche, piments jalapeño et notre Sauce Signature Épicée maison<br />Servi avec frites et 2 sauces"
       },
       "the-golden-olive-burger": {
         "name": "Le Burger Golden Olive",
-        "description": "Burger de bœuf juteux combiné avec du bœuf effiloché tendre, fromage, laitue croustillante, sauce BBQ et notre Sauce Signature Originale<br />Choix de : Frites et Nachos"
+        "description": "Burger de bœuf juteux combiné avec du bœuf effiloché tendre, fromage, laitue croustillante, sauce BBQ et notre Sauce Signature Originale<br />Servi avec frites et 2 sauces"
       },
       "ouezzane-chicken-burger": {
         "name": "Burger Poulet Ouezzane",
-        "description": "Poulet effiloché avec oignons croustillants, fromage, coleslaw frais, olives et notre Sauce Signature Originale<br />Choix de : Frites et Nachos"
+        "description": "Poulet effiloché avec oignons croustillants, fromage, coleslaw frais, olives et notre Sauce Signature Originale<br />Servi avec frites et 2 sauces"
       },
       "classic-house-burger": {
         "name": "Burger Maison Classique",
-        "description": "Burger de bœuf artisanal avec oignons caramélisés, cornichon, laitue et notre Sauce Signature Originale<br />Choix de : Frites et Nachos"
+        "description": "Burger de bœuf artisanal avec oignons caramélisés, cornichon, laitue et notre Sauce Signature Originale<br />Servi avec frites et 2 sauces"
       },
       "flame-house-burger": {
         "name": "Burger Maison Flambé",
-        "description": "Burger de bœuf avec sauce bolognaise épicée, oignons croustillants et notre Sauce Signature Épicée<br />Choix de : Frites et Nachos"
+        "description": "Burger de bœuf avec sauce bolognaise épicée, oignons croustillants et notre Sauce Signature Épicée<br />Servi avec frites et 2 sauces"
       },
       "crunchy-fish-burger": {
         "name": "Burger Poisson Croustillant",
-        "description": "Filet de poisson croustillant avec fromage, laitue, oignons croustillants, cornichon et sauce tartare<br />Choix de : Frites et Nachos"
+        "description": "Filet de poisson croustillant avec fromage, laitue, oignons croustillants, cornichon et sauce tartare<br />Servi avec frites et 2 sauces"
       },
       "veggie-delight-burger": {
         "name": "Burger Délice Végétarien",
-        "description": "Burger végétarien avec cornichon, salsa, fromage et laitue<br />Choix de : Frites et Nachos"
+        "description": "Burger végétarien avec cornichon, salsa, fromage et laitue<br />Servi avec frites et 2 sauces"
       },
       "gehaktburger": {
         "name": "Burger à la Viande Hachée",
@@ -405,10 +405,6 @@
       },
       "rijst": {
         "name": "Riz",
-        "description": ""
-      },
-      "nachos": {
-        "name": "Nachos",
         "description": ""
       },
       "mac-cheese": {

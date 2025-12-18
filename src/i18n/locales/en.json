@@ -275,7 +275,7 @@
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
-        "description": "Loaded scoops with fries or nachos, mac & cheese and toppings"
+        "description": "Loaded scoops with fries, mac & cheese and toppings"
       },
       "burgers": {
         "title": "Burgers",
@@ -325,71 +325,71 @@
       },
       "spareribs-natuur": {
         "name": "Spareribs Natural",
-        "description": "Choice of: Fries and Nachos"
+        "description": "Served with fries and 2 sauces"
       },
       "spareribs-bbq": {
         "name": "Spareribs Barbecue",
-        "description": "Choice of: Fries and Nachos"
+        "description": "Served with fries and 2 sauces"
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Caramelized",
-        "description": "Honey, coleslaw<br />Choice of: Fries and Nachos"
+        "description": "Honey, coleslaw<br />Served with fries and 2 sauces"
       },
       "spareribs-spicy": {
         "name": "Spareribs Spicy",
-        "description": "Coleslaw<br />Choice of: Fries and Nachos"
+        "description": "Coleslaw<br />Served with fries and 2 sauces"
       },
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili",
-        "description": "Coleslaw<br />Choice of: Fries and Nachos"
+        "description": "Coleslaw<br />Served with fries and 2 sauces"
       },
       "shredded-chicken-loaded-scoop": {
         "name": "Shredded Chicken Loaded Scoop",
-        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled chicken with olives, salsa and crispy onions."
+        "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled chicken with olives, salsa and crispy onions."
       },
       "spicy-minced-meat-loaded-scoop": {
         "name": "Spicy Minced Meat Loaded Scoop",
-        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Minced meat in spicy bolognese sauce, special sauce, jalapeños and crispy onions."
+        "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Minced meat in spicy bolognese sauce, special sauce, jalapeños and crispy onions."
       },
       "juicy-bbq-meat-loaded-scoop": {
         "name": "Juicy BBQ Meat Loaded Scoop",
-        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled meat with BBQ sauce, special sauce and crispy onions."
+        "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled meat with BBQ sauce, special sauce and crispy onions."
       },
       "merguez-loaded-scoop": {
         "name": "Merguez Loaded Scoop",
-        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Spicy merguez with special sauce, salsa and crispy onions."
+        "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Spicy merguez with special sauce, salsa and crispy onions."
       },
       "scampi-loaded-scoop": {
         "name": "Scampi Loaded Scoop",
-        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Fried scampi with special sauce, salsa and crispy onions."
+        "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Fried scampi with special sauce, salsa and crispy onions."
       },
       "spicy-gabriel-burger": {
         "name": "Spicy Gabriel Burger",
-        "description": "Grilled chicken fillet with creamy cheese, caramelized onions, fresh lettuce, jalapeño peppers and our homemade Spicy Signature Sauce<br />Choice of: Fries and Nachos"
+        "description": "Grilled chicken fillet with creamy cheese, caramelized onions, fresh lettuce, jalapeño peppers and our homemade Spicy Signature Sauce<br />Served with fries and 2 sauces"
       },
       "the-golden-olive-burger": {
         "name": "The Golden Olive Burger",
-        "description": "Juicy beef burger combined with tender pulled beef, cheese, crispy lettuce, BBQ sauce and our Original Signature Sauce<br />Choice of: Fries and Nachos"
+        "description": "Juicy beef burger combined with tender pulled beef, cheese, crispy lettuce, BBQ sauce and our Original Signature Sauce<br />Served with fries and 2 sauces"
       },
       "ouezzane-chicken-burger": {
         "name": "Ouezzane Chicken Burger",
-        "description": "Shredded chicken with crispy onions, cheese, fresh coleslaw, olives and our Original Signature Sauce<br />Choice of: Fries and Nachos"
+        "description": "Shredded chicken with crispy onions, cheese, fresh coleslaw, olives and our Original Signature Sauce<br />Served with fries and 2 sauces"
       },
       "classic-house-burger": {
         "name": "Classic House Burger",
-        "description": "Artisanal beef burger with caramelized onions, pickle, lettuce and our Original Signature Sauce<br />Choice of: Fries and Nachos"
+        "description": "Artisanal beef burger with caramelized onions, pickle, lettuce and our Original Signature Sauce<br />Served with fries and 2 sauces"
       },
       "flame-house-burger": {
         "name": "Flame House Burger",
-        "description": "Beef burger with spicy bolognese sauce, crispy onions and our Spicy Signature Sauce<br />Choice of: Fries and Nachos"
+        "description": "Beef burger with spicy bolognese sauce, crispy onions and our Spicy Signature Sauce<br />Served with fries and 2 sauces"
       },
       "crunchy-fish-burger": {
         "name": "Crunchy Fish Burger",
-        "description": "Crispy fish fillet with cheese, lettuce, crispy onions, pickle and tartar sauce<br />Choice of: Fries and Nachos"
+        "description": "Crispy fish fillet with cheese, lettuce, crispy onions, pickle and tartar sauce<br />Served with fries and 2 sauces"
       },
       "veggie-delight-burger": {
         "name": "Veggie Delight Burger",
-        "description": "Vegetarian burger with pickle, salsa, cheese and lettuce<br />Choice of: Fries and Nachos"
+        "description": "Vegetarian burger with pickle, salsa, cheese and lettuce<br />Served with fries and 2 sauces"
       },
       "gehaktburger": {
         "name": "Minced Meat Burger",
@@ -405,10 +405,6 @@
       },
       "rijst": {
         "name": "Rice",
-        "description": ""
-      },
-      "nachos": {
-        "name": "Nachos",
         "description": ""
       },
       "mac-cheese": {

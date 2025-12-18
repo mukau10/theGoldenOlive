@@ -27,7 +27,7 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   'loaded-scoops': {
     title: 'Loaded Scoops',
-    description: 'Gevulde scoops met frietjes of nacho\'s, mac & cheese en toppings',
+    description: 'Gevulde scoops met frietjes, mac & cheese en toppings',
     icon: GiBasket,
   },
   burgers: {

@@ -275,7 +275,7 @@
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
-        "description": "Gevulde scoops met frietjes of nacho's, mac & cheese en toppings"
+        "description": "Gevulde scoops met frietjes, mac & cheese en toppings"
       },
       "burgers": {
         "title": "Burgers",
@@ -325,71 +325,71 @@
       },
       "spareribs-natuur": {
         "name": "Spareribs Natuur",
-        "description": "Keuze uit: Friet en Nachos"
+        "description": "Geserveerd met frietjes en 2 sauzen"
       },
       "spareribs-bbq": {
         "name": "Spareribs Barbeque",
-        "description": "Keuze uit: Friet en Nachos"
+        "description": "Geserveerd met frietjes en 2 sauzen"
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Gekarameliseerd",
-        "description": "Honing, coleslaw<br />Keuze uit: Friet en Nachos"
+        "description": "Honing, coleslaw<br />Geserveerd met frietjes en 2 sauzen"
       },
       "spareribs-spicy": {
         "name": "Spareribs Spicy (Pikant)",
-        "description": "Coleslaw<br />Keuze uit: Friet en Nachos"
+        "description": "Coleslaw<br />Geserveerd met frietjes en 2 sauzen"
       },
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili",
-        "description": "Coleslaw<br />Keuze uit: Friet en Nachos"
+        "description": "Coleslaw<br />Geserveerd met frietjes en 2 sauzen"
       },
       "shredded-chicken-loaded-scoop": {
         "name": "Shredded Chicken Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions."
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions."
       },
       "spicy-minced-meat-loaded-scoop": {
         "name": "Spicy Minced Meat Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions."
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions."
       },
       "juicy-bbq-meat-loaded-scoop": {
         "name": "Juicy BBQ Meat Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions."
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions."
       },
       "merguez-loaded-scoop": {
         "name": "Merguez Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions."
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions."
       },
       "scampi-loaded-scoop": {
         "name": "Scampi Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions."
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions."
       },
       "spicy-gabriel-burger": {
         "name": "Spicy Gabriel Burger",
-        "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Keuze uit: Friet en Nachos"
+        "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
       },
       "the-golden-olive-burger": {
         "name": "The Golden Olive Burger",
-        "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos"
+        "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
       },
       "ouezzane-chicken-burger": {
         "name": "Ouezzane Chicken Burger",
-        "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos"
+        "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
       },
       "classic-house-burger": {
         "name": "Classic House Burger",
-        "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos"
+        "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
       },
       "flame-house-burger": {
         "name": "Flame House Burger",
-        "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Keuze uit: Friet en Nachos"
+        "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
       },
       "crunchy-fish-burger": {
         "name": "Crunchy Fish Burger",
-        "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Keuze uit: Friet en Nachos"
+        "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Geserveerd met frietjes en 2 sauzen"
       },
       "veggie-delight-burger": {
         "name": "Veggie Delight Burger",
-        "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Keuze uit: Friet en Nachos"
+        "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Geserveerd met frietjes en 2 sauzen"
       },
       "gehaktburger": {
         "name": "Gehaktburger",
@@ -405,10 +405,6 @@
       },
       "rijst": {
         "name": "Rijst",
-        "description": ""
-      },
-      "nachos": {
-        "name": "Nacho's",
         "description": ""
       },
       "mac-cheese": {
