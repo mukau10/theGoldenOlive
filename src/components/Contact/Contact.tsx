@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import ContactForm from './ContactForm';
 
 const Contact = () => {
+  const { t } = useTranslation();
+  
   return (
     <section id="contact" className="py-5 bg-dark-light position-relative overflow-hidden" itemScope itemType="https://schema.org/ContactPage" aria-labelledby="contact-heading">
       {/* Background decoration */}
@@ -8,8 +11,8 @@ const Contact = () => {
 
       <div className="container-fluid px-3 px-md-4 position-relative" data-aos="fade-up">
         <div className="text-center mb-4 mb-md-5">
-          <h2 id="contact-heading" className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>Contact</h2>
-          <p className="fs-5 fs-md-4 text-white fw-light opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>Neem contact op</p>
+          <h2 id="contact-heading" className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>{t('contact.title')}</h2>
+          <p className="fs-5 fs-md-4 text-white fw-light opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>{t('contact.subtitle')}</p>
           <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '96px', height: '4px' }}></div>
         </div>
 
@@ -48,14 +51,14 @@ const Contact = () => {
                   <i className="bi bi-geo-alt text-white" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }} aria-hidden="true"></i>
                 </div>
                 <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3 contact-title-hover" style={{ transition: 'color 0.3s', fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
-                  Adres:
+                  {t('contact.address.title')}
                 </h4>
                 <div className="text-white" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                  <p itemProp="streetAddress" className="fw-medium mb-1">Vlaamsekaai 65</p>
+                  <p itemProp="streetAddress" className="fw-medium mb-1">{t('contact.address.street')}</p>
                   <p className="mb-1">
-                    <span itemProp="postalCode">2000</span> <span itemProp="addressLocality">ANTWERPEN</span>
+                    <span itemProp="postalCode">2000</span> <span itemProp="addressLocality">{t('contact.address.city')}</span>
                   </p>
-                  <p itemProp="addressCountry" className="mb-0">België</p>
+                  <p itemProp="addressCountry" className="mb-0">{t('contact.address.country')}</p>
                 </div>
               </div>
             </div>
@@ -75,11 +78,11 @@ const Contact = () => {
                   <i className="bi bi-clock text-white" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }} aria-hidden="true"></i>
                 </div>
                 <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3 contact-title-hover" style={{ transition: 'color 0.3s', fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
-                  Openingsuren:
+                  {t('contact.hours.title')}
                 </h4>
                 <div className="text-white" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                  <p className="fw-medium mb-1">Maandag - Zondag:</p>
-                  <p className="fs-5 fs-md-4 mb-0" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)' }}>17:00 - 23:00</p>
+                  <p className="fw-medium mb-1">{t('contact.hours.days')}</p>
+                  <p className="fs-5 fs-md-4 mb-0" style={{ fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)' }}>{t('contact.hours.time')}</p>
                 </div>
               </div>
             </div>
@@ -101,7 +104,7 @@ const Contact = () => {
                   <i className="bi bi-phone text-white" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }} aria-hidden="true"></i>
                 </div>
                 <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3 contact-title-hover" style={{ transition: 'color 0.3s', fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)' }}>
-                  Telefoonnummer:
+                  {t('contact.phone.title')}
                 </h4>
                 <div className="text-white">
                   <a

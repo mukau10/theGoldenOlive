@@ -1,0 +1,524 @@
+{
+  "splash": {
+    "welcome": "Bienvenue chez The Golden Olive",
+    "welcomeLine1": "Préparez-vous",
+    "welcomeLine2": "pour une expérience délicieuse !",
+    "selectLanguage": "Choisissez votre langue",
+    "continue": "Continuer"
+  },
+  "common": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "menu": "Menu",
+    "events": "Événements",
+    "gallery": "Galerie",
+    "contact": "Contact",
+    "ourMenu": "Notre Menu",
+    "viewMenu": "Voir notre menu",
+    "backToTop": "Retour en haut",
+    "backToHome": "Retour à l'Accueil",
+    "close": "Fermer"
+  },
+  "header": {
+    "navigation": "Navigation principale",
+    "mobileNavigation": "Navigation mobile",
+    "goToHome": "Aller à la section d'accueil",
+    "hours": "Lun-Dim: 17h00 - 23h00",
+    "address": "Vlaamsekaai 65, 2000 ANVERS",
+    "contactInfo": "Informations de contact",
+    "toggleMobileMenu": "Basculer le menu mobile",
+    "closeMobileMenu": "Fermer le menu mobile"
+  },
+  "hero": {
+    "viewMenu": "Voir notre menu",
+    "sectionLabel": "Section héro",
+    "videoLabel": "Vidéo d'ambiance du restaurant"
+  },
+  "about": {
+    "title": "Rencontres Savoureuses chez The Golden Olive",
+    "description": "Pas envie de cuisiner aujourd'hui ? Venez déguster de délicieux plats en famille ou entre amis. Chez The Golden Olive, nous vous régalons avec une soul food à couper le souffle, préparée avec les meilleurs ingrédients et une passion pour la saveur. Consultez notre menu en ligne. Les réservations ne sont pas nécessaires, alors n'hésitez pas à passer et découvrez l'hospitalité chaleureuse de notre bistro-restaurant."
+  },
+  "possibilities": {
+    "title": "Possibilités",
+    "subtitle": "Pourquoi Choisir Notre Restaurant",
+    "takeaway": {
+      "title": "À Emporter",
+      "description": "Appelez-nous, indiquez-nous vos plats préférés et quand vous souhaitez les récupérer. Nous nous assurons que votre nourriture est prête."
+    },
+    "delivery": {
+      "title": "Commandez et Savourez à la Maison",
+      "badge": "Bientôt Disponible",
+      "description": "Passez votre commande via notre site web ou par téléphone, et nous apporterons vos plats préférés directement à votre porte."
+    },
+    "reservation": {
+      "title": "Réservation",
+      "description": "Les réservations ne sont pas nécessaires, car nous fonctionnons selon une politique 'premier arrivé, premier servi'.",
+      "callNow": "Appeler Maintenant"
+    }
+  },
+  "events": {
+    "title": "Événements",
+    "subtitle": "Organisez Vos Événements Chez Nous",
+    "birthdays": {
+      "title": "Anniversaires",
+      "description": "Célébrez votre anniversaire avec style lors d'une fête unique dans notre restaurant.<br />Profitez de délicieux plats, d'une atmosphère festive et d'un excellent service.<br /> Nous garantissons un anniversaire inoubliable."
+    },
+    "corporate": {
+      "title": "Événements d'Entreprise",
+      "description": "Organisez un événement d'entreprise professionnel et réussi dans notre restaurant. Qu'il s'agisse d'un team building, d'un jubilé d'entreprise ou d'une fête de fin d'année, nous offrons le cadre et la restauration parfaits pour votre événement."
+    },
+    "other": {
+      "title": "Autres Événements",
+      "description": "Des célébrations familiales et anniversaires aux rassemblements spéciaux et plus encore, notre restaurant offre un environnement chaleureux et accueillant pour toutes sortes d'événements. Nous sommes heureux de vous aider à planifier et organiser votre occasion spéciale."
+    },
+    "planEvent": "Planifiez Votre Événement"
+  },
+  "gallery": {
+    "title": "Galerie",
+    "subtitle": "Un Aperçu",
+    "fullSubtitle": "Découvrez nos créations culinaires",
+    "showMore": "Voir Plus",
+    "backToHome": "Retour à l'accueil"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Contactez-Nous",
+    "address": {
+      "title": "Adresse :",
+      "street": "Vlaamsekaai 65",
+      "city": "2000 ANVERS",
+      "country": "Belgique"
+    },
+    "hours": {
+      "title": "Heures d'Ouverture :",
+      "days": "Lundi - Dimanche :",
+      "time": "17h00 - 23h00"
+    },
+    "phone": {
+      "title": "Numéro de Téléphone :"
+    }
+  },
+  "contactForm": {
+    "title": "Envoyez-Nous un Message",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "subject": "Sujet",
+    "selectSubject": "Sélectionner un sujet",
+    "message": "Message",
+    "namePlaceholder": "Votre nom",
+    "emailPlaceholder": "votre.email@exemple.fr",
+    "phonePlaceholder": "+32 XXX XX XX XX",
+    "messagePlaceholder": "Votre message...",
+    "send": "Envoyer le Message",
+    "sending": "Envoi en cours...",
+    "success": "Votre message a été envoyé avec succès ! Nous vous contacterons dans les plus brefs délais.",
+    "error": "Une erreur s'est produite. Veuillez réessayer.",
+    "connectionError": "Impossible de se connecter au serveur. Vérifiez votre connexion Internet ou appelez-nous au +32 494 19 43 97."
+  },
+  "footer": {
+    "visitFacebook": "Visitez notre page Facebook",
+    "followInstagram": "Suivez-nous sur Instagram",
+    "copyright": "Tous Droits Réservés",
+    "vatNumber": "Numéro de TVA",
+    "privacyPolicy": "Politique de Confidentialité",
+    "allergenInfo": "Infos Allergènes"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "Changer de langue"
+  },
+  "privacyPolicy": {
+    "title": "Politique de Confidentialité",
+    "lastUpdated": "Dernière mise à jour",
+    "lastUpdatedDate": "1er janvier 2025"
+  },
+  "seo": {
+    "title": "The Golden Olive - Restaurant Anvers | Spareribs, Mix BBQ & Événements",
+    "description": "Dégustez des plats authentiques chez The Golden Olive à Anvers. Spécialités : spareribs, mix BBQ, hamburgers. Parfait pour les anniversaires, événements d'entreprise et célébrations. Réservez maintenant !",
+    "keywords": "The Golden Olive, restaurant Anvers, spareribs, mix BBQ, hamburgers, fête d'anniversaire, événement d'entreprise, événements, réservation, nourriture, boissons, Vlaamsekaai, restaurant Anvers"
+  },
+  "contact": {
+    "title": "Contact",
+    "subject": "Sujet",
+    "selectSubject": "Sélectionner un sujet",
+    "reservation": "Réservation",
+    "event": "Événement",
+    "generalQuestion": "Question générale",
+    "complaint": "Plainte",
+    "compliment": "Compliment",
+    "other": "Autre",
+    "message": "Message",
+    "messagePlaceholder": "Votre message...",
+    "send": "Envoyer"
+  },
+  "allergens": {
+    "title": "Informations sur les Allergènes",
+    "subtitle": "Informations complètes sur les allergènes et les indicateurs diététiques",
+    "important": "Important",
+    "warning": "Si vous êtes allergique à certains ingrédients, informez toujours le personnel avant de commander. Nous faisons de notre mieux pour éviter les allergènes, mais ne pouvons pas garantir en raison de l'espace de cuisine partagé.",
+    "loading": "Chargement...",
+    "foodAllergens": "Allergènes Alimentaires",
+    "dietaryIndicators": "Indicateurs Diététiques",
+    "haveQuestions": "Des questions sur les allergènes ?",
+    "contactStaff": "Contactez notre personnel ou appelez-nous au",
+    "items": {
+      "G": {
+        "type": "Gluten",
+        "description": "Gluten - Contient des céréales contenant du gluten (blé, seigle, orge, épeautre)"
+      },
+      "S": {
+        "type": "Crustacés",
+        "description": "Crustacés - Crevettes, crabes et homards"
+      },
+      "E": {
+        "type": "Œufs",
+        "description": "Œufs - Jaune d'œuf et blanc d'œuf, utilisés pour la pâtisserie et les sauces"
+      },
+      "F": {
+        "type": "Poisson",
+        "description": "Poisson - Tous types de poissons"
+      },
+      "P": {
+        "type": "Arachides",
+        "description": "Arachides - Arachides et huile d'arachide"
+      },
+      "So": {
+        "type": "Soja",
+        "description": "Soja - Le soja est une légumineuse, transformée en huile, lécithine ou farine"
+      },
+      "M": {
+        "type": "Lait",
+        "description": "Lait - Y compris le lactose, le beurre, le fromage, la crème et le yaourt"
+      },
+      "N": {
+        "type": "Fruits à Coque",
+        "description": "Fruits à coque - Amandes, noisettes, noix, noix de cajou, noix de pécan, noix du Brésil, pistaches et noix de macadamia"
+      },
+      "Ce": {
+        "type": "Céleri",
+        "description": "Céleri - Céleri et produits à base de céleri"
+      },
+      "Mu": {
+        "type": "Moutarde",
+        "description": "Moutarde - Tous types de moutarde"
+      },
+      "Se": {
+        "type": "Graines de Sésame",
+        "description": "Graines de sésame - Graines de sésame ou huile de sésame"
+      },
+      "Su": {
+        "type": "Sulfites",
+        "description": "Sulfites - Dioxyde de soufre et sulfites"
+      },
+      "L": {
+        "type": "Lupin",
+        "description": "Lupin - Lupin et produits à base de lupin"
+      },
+      "Mo": {
+        "type": "Mollusques",
+        "description": "Mollusques - Moules, huîtres, calmar, etc."
+      },
+      "C": {
+        "type": "Noix de Coco",
+        "description": "Noix de coco - Noix de coco et produits à base de noix de coco"
+      },
+      "V": {
+        "type": "Végétarien",
+        "description": "Végétarien - Ne contient pas de viande ni de poisson"
+      },
+      "Ve": {
+        "type": "Végétalien",
+        "description": "Végétalien - Ne contient pas de produits d'origine animale"
+      },
+      "GF": {
+        "type": "Sans Gluten",
+        "description": "Sans Gluten - Ne contient pas de gluten"
+      },
+      "LF": {
+        "type": "Sans Lactose",
+        "description": "Sans Lactose - Ne contient pas de lactose"
+      },
+      "H": {
+        "type": "Halal",
+        "description": "Halal - Préparé selon les directives halal"
+      }
+    }
+  },
+  "menu": {
+    "title": "Menu",
+    "subtitle": "Découvrez nos spécialités culinaires",
+    "clickAllergens": "Cliquez sur les allergènes pour plus d'informations",
+    "extendedAllergenInfo": "Informations détaillées sur les allergènes",
+    "loading": "Chargement...",
+    "error": "Erreur lors du chargement du menu. Veuillez actualiser la page.",
+    "showCategories": "Afficher les catégories",
+    "chooseCategory": "Choisissez une catégorie",
+    "selectCategory": "Sélectionnez une catégorie de menu",
+    "swipeNavigate": "Glissez ou utilisez les flèches pour naviguer",
+    "allCategories": "Tout",
+    "completeMenu": "Menu Complet",
+    "allergens": "Allergènes :",
+    "understood": "Compris",
+    "allergenInfo": "Informations sur les Allergènes",
+    "categories": {
+      "voorgerechten": {
+        "title": "Entrées",
+        "description": "Délicieuses entrées pour commencer votre repas"
+      },
+      "mixed-bbq": {
+        "title": "Mix BBQ",
+        "description": "Une combinaison de différents types de viande."
+      },
+      "spareribs": {
+        "title": "Spareribs",
+        "description": "Spareribs tendres avec nos sauces maison"
+      },
+      "loaded-scoops": {
+        "title": "Loaded Scoops",
+        "description": "Scoops garnis avec frites ou nachos, mac & cheese et garnitures"
+      },
+      "burgers": {
+        "title": "Burgers",
+        "description": "Burgers juteux avec des ingrédients frais"
+      },
+      "kindermenu": {
+        "title": "Menu Enfants",
+        "description": "Spécialement conçu pour nos plus jeunes invités"
+      },
+      "supplementen": {
+        "title": "Suppléments",
+        "description": "Extras pour compléter votre plat"
+      },
+      "desserten": {
+        "title": "Desserts",
+        "description": "Finition sucrée de votre repas parfait"
+      },
+      "mocktails": {
+        "title": "Mocktails",
+        "description": "Cocktails sans alcool rafraîchissants"
+      },
+      "frisdranken": {
+        "title": "Boissons Fraîches",
+        "description": "Boissons froides et rafraîchissantes"
+      },
+      "warme-dranken": {
+        "title": "Boissons Chaudes",
+        "description": "Boissons chaudes pour des moments conviviaux"
+      }
+    },
+    "items": {
+      "tiger-garnalen": {
+        "name": "Crevettes Tigrées",
+        "description": "Crevettes frites légèrement épicées."
+      },
+      "chicken-wings": {
+        "name": "Ailes de Poulet",
+        "description": "Choix de sauce BBQ ou aigre-douce."
+      },
+      "mini-loempia": {
+        "name": "Nems Miniatures",
+        "description": "Servis croustillants avec sauce aigre-douce."
+      },
+      "mixed-bbq": {
+        "name": "Mix BBQ",
+        "description": "Différents types de viande<br />Servi avec sauce aux champignons et salade"
+      },
+      "spareribs-natuur": {
+        "name": "Spareribs Nature",
+        "description": "Choix de : Frites et Nachos"
+      },
+      "spareribs-bbq": {
+        "name": "Spareribs Barbecue",
+        "description": "Choix de : Frites et Nachos"
+      },
+      "spareribs-gekarameliseerd": {
+        "name": "Spareribs Caramélisées",
+        "description": "Miel, coleslaw<br />Choix de : Frites et Nachos"
+      },
+      "spareribs-spicy": {
+        "name": "Spareribs Épicées",
+        "description": "Coleslaw<br />Choix de : Frites et Nachos"
+      },
+      "spareribs-thai": {
+        "name": "Spareribs Thai Sweet Chili",
+        "description": "Coleslaw<br />Choix de : Frites et Nachos"
+      },
+      "shredded-chicken-loaded-scoop": {
+        "name": "Loaded Scoop au Poulet Effiloché",
+        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Poulet effiloché avec olives, salsa et oignons croustillants."
+      },
+      "spicy-minced-meat-loaded-scoop": {
+        "name": "Loaded Scoop à la Viande Hachée Épicée",
+        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande hachée dans une sauce bolognaise épicée, sauce spéciale, jalapeños et oignons croustillants."
+      },
+      "juicy-bbq-meat-loaded-scoop": {
+        "name": "Loaded Scoop à la Viande BBQ Juteuse",
+        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande effilochée avec sauce BBQ, sauce spéciale et oignons croustillants."
+      },
+      "merguez-loaded-scoop": {
+        "name": "Loaded Scoop Merguez",
+        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Merguez épicée avec sauce spéciale, salsa et oignons croustillants."
+      },
+      "scampi-loaded-scoop": {
+        "name": "Loaded Scoop aux Scampis",
+        "description": "Chaque Loaded Scoop est rempli de frites ou nachos, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Scampis frits avec sauce spéciale, salsa et oignons croustillants."
+      },
+      "spicy-gabriel-burger": {
+        "name": "Burger Gabriel Épicé",
+        "description": "Filet de poulet grillé avec fromage crémeux, oignons caramélisés, laitue fraîche, piments jalapeño et notre Sauce Signature Épicée maison<br />Choix de : Frites et Nachos"
+      },
+      "the-golden-olive-burger": {
+        "name": "Le Burger Golden Olive",
+        "description": "Burger de bœuf juteux combiné avec du bœuf effiloché tendre, fromage, laitue croustillante, sauce BBQ et notre Sauce Signature Originale<br />Choix de : Frites et Nachos"
+      },
+      "ouezzane-chicken-burger": {
+        "name": "Burger Poulet Ouezzane",
+        "description": "Poulet effiloché avec oignons croustillants, fromage, coleslaw frais, olives et notre Sauce Signature Originale<br />Choix de : Frites et Nachos"
+      },
+      "classic-house-burger": {
+        "name": "Burger Maison Classique",
+        "description": "Burger de bœuf artisanal avec oignons caramélisés, cornichon, laitue et notre Sauce Signature Originale<br />Choix de : Frites et Nachos"
+      },
+      "flame-house-burger": {
+        "name": "Burger Maison Flambé",
+        "description": "Burger de bœuf avec sauce bolognaise épicée, oignons croustillants et notre Sauce Signature Épicée<br />Choix de : Frites et Nachos"
+      },
+      "crunchy-fish-burger": {
+        "name": "Burger Poisson Croustillant",
+        "description": "Filet de poisson croustillant avec fromage, laitue, oignons croustillants, cornichon et sauce tartare<br />Choix de : Frites et Nachos"
+      },
+      "veggie-delight-burger": {
+        "name": "Burger Délice Végétarien",
+        "description": "Burger végétarien avec cornichon, salsa, fromage et laitue<br />Choix de : Frites et Nachos"
+      },
+      "gehaktburger": {
+        "name": "Burger à la Viande Hachée",
+        "description": "Version adaptée aux enfants de notre burger classique."
+      },
+      "crispy-kipburger": {
+        "name": "Burger Poulet Croustillant",
+        "description": "Burger poulet léger et croustillant."
+      },
+      "friet": {
+        "name": "Frites",
+        "description": ""
+      },
+      "rijst": {
+        "name": "Riz",
+        "description": ""
+      },
+      "nachos": {
+        "name": "Nachos",
+        "description": ""
+      },
+      "mac-cheese": {
+        "name": "Mac & Cheese",
+        "description": ""
+      },
+      "champignonsaus": {
+        "name": "Sauce aux Champignons",
+        "description": ""
+      },
+      "diabolique-saus": {
+        "name": "Sauce Diabolique",
+        "description": ""
+      },
+      "cheesecake-chocoladesaus": {
+        "name": "Cheesecake à la Sauce Chocolat",
+        "description": "Cheesecake crémeux enrobé de sauce chocolat chaude."
+      },
+      "cheesecake-pistachesaus": {
+        "name": "Cheesecake à la Sauce Pistache",
+        "description": "Délicieux cheesecake nappé de sauce pistache de luxe."
+      },
+      "moelleux-chocolade": {
+        "name": "Moelleux au Chocolat",
+        "description": "Gâteau au chocolat chaud avec glace et crème chantilly."
+      },
+      "dame-blanche": {
+        "name": "Dame Blanche",
+        "description": "Glace à la vanille avec sauce chocolat chaude et crème chantilly."
+      },
+      "mojito-blue-hawaii": {
+        "name": "Mojito Blue Hawaii",
+        "description": "Mojito tropical avec couleur bleue"
+      },
+      "strawberry-mojito": {
+        "name": "Mojito Fraise",
+        "description": "Mojito aux fraises"
+      },
+      "classic-mojito": {
+        "name": "Mojito Classique",
+        "description": "Mojito classique sans alcool"
+      },
+      "sprite": {
+        "name": "Sprite",
+        "description": "Sprite Citron"
+      },
+      "fuze-tea-lemon": {
+        "name": "FUZE TEA CITRON",
+        "description": "Fuze Tea au citron"
+      },
+      "fuze-tea-peach": {
+        "name": "Fuze Tea Pêche",
+        "description": "Fuze Tea à la pêche"
+      },
+      "minute-maid-apple": {
+        "name": "Minute Maid Pomme",
+        "description": "Jus de pomme Minute Maid"
+      },
+      "fanta": {
+        "name": "Fanta",
+        "description": "Fanta Orange"
+      },
+      "bruiswater-05l": {
+        "name": "Eau Pétillante 0.5L",
+        "description": "Eau gazeuse"
+      },
+      "cola-zero": {
+        "name": "Coca Zero",
+        "description": "Coca Cola Zero sans sucre"
+      },
+      "coca-cola": {
+        "name": "Coca Cola",
+        "description": "Coca Cola Classique"
+      },
+      "water-05l": {
+        "name": "Eau 0.5L",
+        "description": "Eau plate"
+      },
+      "cappuccino": {
+        "name": "Cappuccino",
+        "description": "Cappuccino avec mousse de lait"
+      },
+      "lipton-thee": {
+        "name": "Thé Lipton",
+        "description": "Choix de différentes saveurs"
+      },
+      "munt-thee": {
+        "name": "Thé à la Menthe",
+        "description": "Thé à la menthe rafraîchissant"
+      },
+      "latte-macchiato": {
+        "name": "Latte Macchiato",
+        "description": "Latte macchiato avec lait"
+      },
+      "dubbele-expresso": {
+        "name": "Double Expresso",
+        "description": "Double expresso pour plus de caféine"
+      },
+      "koffie": {
+        "name": "Café",
+        "description": "Café frais"
+      },
+      "koffie-met-melk": {
+        "name": "Café au Lait",
+        "description": "Café avec lait chaud"
+      },
+      "expresso": {
+        "name": "Expresso",
+        "description": "Expresso fort"
+      }
+    }
+  }
+}

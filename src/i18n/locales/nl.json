@@ -1,0 +1,524 @@
+{
+  "splash": {
+    "welcome": "Welkom bij The Golden Olive",
+    "welcomeLine1": "Maak je klaar",
+    "welcomeLine2": "voor een heerlijke ervaring!",
+    "selectLanguage": "Kies uw taal",
+    "continue": "Doorgaan"
+  },
+  "common": {
+    "home": "Home",
+    "about": "Over Ons",
+    "menu": "Menu",
+    "events": "Events",
+    "gallery": "Galerij",
+    "contact": "Contact",
+    "ourMenu": "Ons Menu",
+    "viewMenu": "Bekijk ons menu",
+    "backToTop": "Terug naar boven",
+    "backToHome": "Terug naar Home",
+    "close": "Sluiten"
+  },
+  "header": {
+    "navigation": "Hoofdnavigatie",
+    "mobileNavigation": "Mobiele navigatie",
+    "goToHome": "Ga naar home sectie",
+    "hours": "Ma-Zo: 17:OO - 23:OO",
+    "address": "Vlaamsekaai 65, 2000 ANTWERPEN",
+    "contactInfo": "Contact informatie",
+    "toggleMobileMenu": "Toggle mobiel menu",
+    "closeMobileMenu": "Sluit mobiel menu"
+  },
+  "hero": {
+    "viewMenu": "Bekijk ons menu",
+    "sectionLabel": "Hero sectie",
+    "videoLabel": "Restaurant ambiance video"
+  },
+  "about": {
+    "title": "Smaakvolle Ontmoetingen bij The Golden Olive",
+    "description": "Geen zin om te koken vandaag? Kom langs en geniet van heerlijke gerechten samen met familie en vrienden. Bij The Golden Olive verwennen we u met adembenemende soulfood, bereid met de beste ingrediënten en een passie voor smaak. Bekijk alvast onze menukaart online. Reserveren is niet nodig, dus loop gerust binnen en ervaar de warme gastvrijheid van ons bistro-restaurant."
+  },
+  "contact": {
+    "title": "Contact",
+    "subject": "Onderwerp",
+    "selectSubject": "Selecteer onderwerp",
+    "reservation": "Reservering",
+    "event": "Evenement",
+    "generalQuestion": "Algemene vraag",
+    "complaint": "Klacht",
+    "compliment": "Compliment",
+    "other": "Anders",
+    "message": "Bericht",
+    "messagePlaceholder": "Uw bericht...",
+    "send": "Verzenden"
+  },
+  "allergens": {
+    "title": "Allergenen Informatie",
+    "subtitle": "Uitgebreide informatie over allergenen en dieetindicatoren",
+    "important": "Belangrijk",
+    "warning": "Als u allergisch bent voor bepaalde ingrediënten, informeer dan altijd het personeel voordat u bestelt. Wij doen ons best om allergenen te vermijden, maar kunnen geen garantie geven vanwege gedeelde keukenruimte.",
+    "loading": "Laden...",
+    "foodAllergens": "Voedselallergenen",
+    "dietaryIndicators": "Dieetindicatoren",
+    "haveQuestions": "Heeft u vragen over allergenen?",
+    "contactStaff": "Neem contact op met ons personeel of bel ons op",
+    "items": {
+      "G": {
+        "type": "Gluten",
+        "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+      },
+      "S": {
+        "type": "Schaaldieren",
+        "description": "Schaaldieren - Garnalen, krabben en kreeften"
+      },
+      "E": {
+        "type": "Eieren",
+        "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+      },
+      "F": {
+        "type": "Vis",
+        "description": "Vis - Alle soorten vis"
+      },
+      "P": {
+        "type": "Pinda",
+        "description": "Pinda - Pinda's en pindaolie"
+      },
+      "So": {
+        "type": "Soja",
+        "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"
+      },
+      "M": {
+        "type": "Melk",
+        "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+      },
+      "N": {
+        "type": "Noten",
+        "description": "Noten - Amandelen, hazelnoten, walnoten, cashewnoten, pecannoten, paranoten, pistachenoten en macadamianoten"
+      },
+      "Ce": {
+        "type": "Selderij",
+        "description": "Selderij - Selderij en selderijproducten"
+      },
+      "Mu": {
+        "type": "Mosterd",
+        "description": "Mosterd - Alle soorten mosterd"
+      },
+      "Se": {
+        "type": "Sesamzaad",
+        "description": "Sesamzaad - Sesamzaad of sesamzaadolie"
+      },
+      "Su": {
+        "type": "Sulfiet",
+        "description": "Sulfiet - Zwaveldioxide en sulfieten"
+      },
+      "L": {
+        "type": "Lupine",
+        "description": "Lupine - Lupine en lupineproducten"
+      },
+      "Mo": {
+        "type": "Weekdieren",
+        "description": "Weekdieren - Mosselen, oesters, inktvis, etc."
+      },
+      "C": {
+        "type": "Kokosnoot",
+        "description": "Kokosnoot - Kokosnoot en kokosproducten"
+      },
+      "V": {
+        "type": "Vegetarisch",
+        "description": "Vegetarisch - Bevat geen vlees of vis"
+      },
+      "Ve": {
+        "type": "Veganistisch",
+        "description": "Veganistisch - Bevat geen dierlijke producten"
+      },
+      "GF": {
+        "type": "Glutenvrij",
+        "description": "Glutenvrij - Bevat geen gluten"
+      },
+      "LF": {
+        "type": "Lactose-vrij",
+        "description": "Lactose-vrij - Bevat geen lactose"
+      },
+      "H": {
+        "type": "Halal",
+        "description": "Halal - Bereid volgens halal richtlijnen"
+      }
+    }
+  },
+  "possibilities": {
+    "title": "Mogelijkheden",
+    "subtitle": "Waarom voor Ons Restaurant Kiezen",
+    "takeaway": {
+      "title": "Afhalen",
+      "description": "Bel ons, geef je favoriete gerechten door en vertel ons wanneer je het wilt ophalen. Wij zorgen ervoor dat je eten klaar staat."
+    },
+    "delivery": {
+      "title": "Bestel en geniet thuis",
+      "badge": "Binnenkort beschikbaar",
+      "description": "Plaats telefonisch je bestelling via onze website of telefonisch, en wij brengen je favoriete gerechten rechtstreeks naar je deur."
+    },
+    "reservation": {
+      "title": "Reserveren",
+      "description": "Reserveren is niet noodzakelijk, want wij werken met een 'first come, first serve'-beleid.",
+      "callNow": "Bel nu"
+    }
+  },
+  "events": {
+    "title": "Evenementen",
+    "subtitle": "Organiseer Jouw Evenementen bij Ons",
+    "birthdays": {
+      "title": "Verjaardagen",
+      "description": "Vier jouw verjaardag in stijl met een uniek feest in ons restaurant.<br />Geniet van heerlijke gerechten, een feestelijke sfeer en uitstekende service.<br /> Wij zorgen voor een onvergetelijke verjaardag."
+    },
+    "corporate": {
+      "title": "Bedrijfsfeestjes",
+      "description": "Organiseer een professioneel en succesvol bedrijfsfeest in ons restaurant. Of het nu gaat om een teambuilding, een bedrijfsjubileum of een eindejaarsfeest, wij bieden de perfecte setting en catering voor jouw evenement."
+    },
+    "other": {
+      "title": "Andere Evenementen",
+      "description": "Van familiefeesten en jubilea tot speciale bijeenkomsten en meer, ons restaurant biedt een warme en uitnodigende omgeving voor allerlei soorten evenementen. Wij helpen je graag bij het plannen en uitvoeren van jouw speciale gelegenheid."
+    },
+    "planEvent": "Plan Je Evenement"
+  },
+  "gallery": {
+    "title": "Galerij",
+    "subtitle": "Een voorproefje",
+    "fullSubtitle": "Ontdek onze culinaire creaties",
+    "showMore": "Toon meer",
+    "backToHome": "Terug naar home"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Neem contact op",
+    "address": {
+      "title": "Adres:",
+      "street": "Vlaamsekaai 65",
+      "city": "2000 ANTWERPEN",
+      "country": "België"
+    },
+    "hours": {
+      "title": "Openingsuren:",
+      "days": "Maandag - Zondag:",
+      "time": "17:00 - 23:00"
+    },
+    "phone": {
+      "title": "Telefoonnummer:"
+    }
+  },
+  "contactForm": {
+    "title": "Stuur ons een bericht",
+    "name": "Naam",
+    "email": "Email",
+    "phone": "Telefoon",
+    "subject": "Onderwerp",
+    "selectSubject": "Selecteer onderwerp",
+    "message": "Bericht",
+    "namePlaceholder": "Uw naam",
+    "emailPlaceholder": "uw.email@voorbeeld.be",
+    "phonePlaceholder": "+32 XXX XX XX XX",
+    "messagePlaceholder": "Uw bericht...",
+    "send": "Verzend Bericht",
+    "sending": "Verzenden...",
+    "success": "Uw bericht is succesvol verzonden! We nemen zo spoedig mogelijk contact met u op.",
+    "error": "Er is een fout opgetreden. Probeer het opnieuw.",
+    "connectionError": "Kon geen verbinding maken met de server. Controleer uw internetverbinding of bel ons op +32 494 19 43 97."
+  },
+  "footer": {
+    "visitFacebook": "Bezoek onze Facebook pagina",
+    "followInstagram": "Volg ons op Instagram",
+    "copyright": "All Rights Reserved",
+    "vatNumber": "BTW-nummer",
+    "privacyPolicy": "Privacy Policy",
+    "allergenInfo": "Allergenen Info"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "Verander taal"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Laatst bijgewerkt",
+    "lastUpdatedDate": "1 januari 2025"
+  },
+  "seo": {
+    "title": "The Golden Olive - Restaurant Antwerpen | Spareribs, Mix BBQ & Events",
+    "description": "Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen. Reserveer nu!",
+    "keywords": "The Golden Olive, restaurant Antwerpen, spareribs, mix BBQ, hamburgers, verjaardagsfeest, bedrijfsfeest, evenementen, reserveren, eten, drinken, Vlaamsekaai, Antwerpen restaurant"
+  },
+  "menu": {
+    "title": "Menu",
+    "subtitle": "Ontdek onze culinaire specialiteiten",
+    "clickAllergens": "Klik op allergenen voor meer informatie",
+    "extendedAllergenInfo": "Uitgebreide allergenen info",
+    "loading": "Laden...",
+    "error": "Fout bij het laden van het menu. Ververs de pagina.",
+    "showCategories": "Toon categorieën",
+    "chooseCategory": "Kies een categorie",
+    "selectCategory": "Selecteer een menu categorie",
+    "swipeNavigate": "Swipe of gebruik de pijlen om te navigeren",
+    "allCategories": "Alles",
+    "completeMenu": "Complete Menu",
+    "allergens": "Allergenen:",
+    "understood": "Begrepen",
+    "allergenInfo": "Allergenen Informatie",
+    "categories": {
+      "voorgerechten": {
+        "title": "Voorgerechten",
+        "description": "Heerlijke starters om je maaltijd mee te beginnen"
+      },
+      "mixed-bbq": {
+        "title": "Mix BBQ",
+        "description": "Een combinatie van verschillende soorten vlees."
+      },
+      "spareribs": {
+        "title": "Spareribs",
+        "description": "Malse spareribs met onze huisgemaakte sauzen"
+      },
+      "loaded-scoops": {
+        "title": "Loaded Scoops",
+        "description": "Gevulde scoops met frietjes of nacho's, mac & cheese en toppings"
+      },
+      "burgers": {
+        "title": "Burgers",
+        "description": "Sappige burgers met verse ingrediënten"
+      },
+      "kindermenu": {
+        "title": "Kindermenu",
+        "description": "Speciaal samengesteld voor onze jongste gasten"
+      },
+      "supplementen": {
+        "title": "Supplementen",
+        "description": "Extra's om je gerecht compleet te maken"
+      },
+      "desserten": {
+        "title": "Desserten",
+        "description": "Zoete afsluiting van je perfecte maaltijd"
+      },
+      "mocktails": {
+        "title": "Mocktails",
+        "description": "Verfrissende alcoholvrije cocktails"
+      },
+      "frisdranken": {
+        "title": "Frisdranken",
+        "description": "Koude en verfrissende drankjes"
+      },
+      "warme-dranken": {
+        "title": "Warme Dranken",
+        "description": "Warme dranken voor gezellige momenten"
+      }
+    },
+    "items": {
+      "tiger-garnalen": {
+        "name": "Tiger Garnalen",
+        "description": "Licht gekruide gebakken garnalen."
+      },
+      "chicken-wings": {
+        "name": "Chicken Wings",
+        "description": "Keuze uit BBQ of zoetzure saus."
+      },
+      "mini-loempia": {
+        "name": "Mini Loempia's",
+        "description": "Krokant geserveerd met zoetzure saus."
+      },
+      "mixed-bbq": {
+        "name": "Mix BBQ",
+        "description": "Verschillende soorten vlees<br />Geserveerd met Champignon saus en salade"
+      },
+      "spareribs-natuur": {
+        "name": "Spareribs Natuur",
+        "description": "Keuze uit: Friet en Nachos"
+      },
+      "spareribs-bbq": {
+        "name": "Spareribs Barbeque",
+        "description": "Keuze uit: Friet en Nachos"
+      },
+      "spareribs-gekarameliseerd": {
+        "name": "Spareribs Gekarameliseerd",
+        "description": "Honing, coleslaw<br />Keuze uit: Friet en Nachos"
+      },
+      "spareribs-spicy": {
+        "name": "Spareribs Spicy (Pikant)",
+        "description": "Coleslaw<br />Keuze uit: Friet en Nachos"
+      },
+      "spareribs-thai": {
+        "name": "Spareribs Thai Sweet Chili",
+        "description": "Coleslaw<br />Keuze uit: Friet en Nachos"
+      },
+      "shredded-chicken-loaded-scoop": {
+        "name": "Shredded Chicken Loaded Scoop",
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions."
+      },
+      "spicy-minced-meat-loaded-scoop": {
+        "name": "Spicy Minced Meat Loaded Scoop",
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions."
+      },
+      "juicy-bbq-meat-loaded-scoop": {
+        "name": "Juicy BBQ Meat Loaded Scoop",
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions."
+      },
+      "merguez-loaded-scoop": {
+        "name": "Merguez Loaded Scoop",
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions."
+      },
+      "scampi-loaded-scoop": {
+        "name": "Scampi Loaded Scoop",
+        "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions."
+      },
+      "spicy-gabriel-burger": {
+        "name": "Spicy Gabriel Burger",
+        "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Keuze uit: Friet en Nachos"
+      },
+      "the-golden-olive-burger": {
+        "name": "The Golden Olive Burger",
+        "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos"
+      },
+      "ouezzane-chicken-burger": {
+        "name": "Ouezzane Chicken Burger",
+        "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos"
+      },
+      "classic-house-burger": {
+        "name": "Classic House Burger",
+        "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos"
+      },
+      "flame-house-burger": {
+        "name": "Flame House Burger",
+        "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Keuze uit: Friet en Nachos"
+      },
+      "crunchy-fish-burger": {
+        "name": "Crunchy Fish Burger",
+        "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Keuze uit: Friet en Nachos"
+      },
+      "veggie-delight-burger": {
+        "name": "Veggie Delight Burger",
+        "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Keuze uit: Friet en Nachos"
+      },
+      "gehaktburger": {
+        "name": "Gehaktburger",
+        "description": "Kindvriendelijke versie van onze klassieke burger."
+      },
+      "crispy-kipburger": {
+        "name": "Crispy Kipburger",
+        "description": "Lichte en krokante kipburger."
+      },
+      "friet": {
+        "name": "Friet",
+        "description": ""
+      },
+      "rijst": {
+        "name": "Rijst",
+        "description": ""
+      },
+      "nachos": {
+        "name": "Nacho's",
+        "description": ""
+      },
+      "mac-cheese": {
+        "name": "Mac & cheese",
+        "description": ""
+      },
+      "champignonsaus": {
+        "name": "Champignonsaus",
+        "description": ""
+      },
+      "diabolique-saus": {
+        "name": "Diabolique saus",
+        "description": ""
+      },
+      "cheesecake-chocoladesaus": {
+        "name": "Cheesecake in Chocoladesaus",
+        "description": "Romige cheesecake omhuld in warme chocoladesaus."
+      },
+      "cheesecake-pistachesaus": {
+        "name": "Cheesecake in Pistachesaus",
+        "description": "Heerlijke cheesecake overgoten met luxe pistachesaus."
+      },
+      "moelleux-chocolade": {
+        "name": "Moelleux Chocolade",
+        "description": "Warme chocoladecake met ijs en slagroom."
+      },
+      "dame-blanche": {
+        "name": "Dame Blanche",
+        "description": "Vanille-ijs met warme chocoladesaus en slagroom."
+      },
+      "mojito-blue-hawaii": {
+        "name": "Mojito Blue Hawaii",
+        "description": "Tropische mojito met blauwe kleur"
+      },
+      "strawberry-mojito": {
+        "name": "Strawberry Mojito",
+        "description": "Mojito met aardbeien"
+      },
+      "classic-mojito": {
+        "name": "Classic Mojito",
+        "description": "Klassieke mojito zonder alcohol"
+      },
+      "sprite": {
+        "name": "Sprite",
+        "description": "Sprite Lemon"
+      },
+      "fuze-tea-lemon": {
+        "name": "FUZE TEA LEMON",
+        "description": "Fuze Tea met citroen"
+      },
+      "fuze-tea-peach": {
+        "name": "Fuze Tea Peach",
+        "description": "Fuze Tea met perzik"
+      },
+      "minute-maid-apple": {
+        "name": "Minute Maid Apple",
+        "description": "Appelsap van Minute Maid"
+      },
+      "fanta": {
+        "name": "Fanta",
+        "description": "Fanta Orange"
+      },
+      "bruiswater-05l": {
+        "name": "Bruiswater 0.5L",
+        "description": "Koolzuurhoudend water"
+      },
+      "cola-zero": {
+        "name": "Cola Zero",
+        "description": "Coca Cola Zero zonder suiker"
+      },
+      "coca-cola": {
+        "name": "Coca Cola",
+        "description": "Klassieke Coca Cola"
+      },
+      "water-05l": {
+        "name": "Water 0.5L",
+        "description": "Stille water"
+      },
+      "cappuccino": {
+        "name": "Cappuccino",
+        "description": "Cappuccino met melkschuim"
+      },
+      "lipton-thee": {
+        "name": "Lipton Thee",
+        "description": "Keuze uit verschillende smaken"
+      },
+      "munt-thee": {
+        "name": "Munt Thee",
+        "description": "Verfrissende munt thee"
+      },
+      "latte-macchiato": {
+        "name": "Latte Macchiato",
+        "description": "Latte macchiato met melk"
+      },
+      "dubbele-expresso": {
+        "name": "Dubbele Espresso",
+        "description": "Dubbele espresso voor extra cafeïne"
+      },
+      "koffie": {
+        "name": "Koffie",
+        "description": "Verse koffie"
+      },
+      "koffie-met-melk": {
+        "name": "Koffie met melk",
+        "description": "Koffie met warme melk"
+      },
+      "expresso": {
+        "name": "Espresso",
+        "description": "Sterke espresso"
+      }
+    }
+  }
+}

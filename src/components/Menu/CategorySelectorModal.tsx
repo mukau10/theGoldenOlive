@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { MenuCategory } from '../../types/menu';
 import { categoryInfoMap } from '../../utils/categoryInfo';
 import type { IconType } from 'react-icons';
 import { BiGridAlt } from 'react-icons/bi';
+import { translateCategory, translateCategoryDescription } from '../../utils/menuTranslations';
 
 interface CategorySelectorModalProps {
   categories: MenuCategory[];
@@ -19,6 +21,7 @@ const CategorySelectorModal = ({
   isOpen,
   onClose,
 }: CategorySelectorModalProps) => {
+  const { t } = useTranslation();
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = () => {
@@ -144,15 +147,15 @@ const CategorySelectorModal = ({
               </div>
               <div>
                 <h4 className="text-warning fw-bold mb-0" style={{ fontSize: '1.25rem' }}>
-                  Kies Categorie
+                  {t('menu.chooseCategory')}
                 </h4>
-                <small className="text-white-50">Selecteer een menu categorie</small>
+                <small className="text-white-50">{t('menu.selectCategory')}</small>
               </div>
             </div>
             <button
               onClick={handleClose}
               className="btn-close btn-close-white"
-              aria-label="Sluiten"
+              aria-label={t('common.close')}
               style={{ fontSize: '1.2rem', touchAction: 'manipulation' }}
             ></button>
           </div>
@@ -240,9 +243,9 @@ const CategorySelectorModal = ({
                   />
                 </div>
                 <div className="flex-grow-1">
-                  <div className="fw-bold mb-1">Alles</div>
+                  <div className="fw-bold mb-1">{t('menu.allCategories')}</div>
                   <small className={selectedCategory === '*' ? 'text-black-50' : 'text-white-50'}>
-                    Complete Menu
+                    {t('menu.completeMenu')}
                   </small>
                 </div>
                 {selectedCategory === '*' && (
@@ -316,9 +319,9 @@ const CategorySelectorModal = ({
                       })()}
                     </div>
                     <div className="flex-grow-1">
-                      <div className="fw-bold mb-1">{info.title}</div>
+                      <div className="fw-bold mb-1">{translateCategory(category, t)}</div>
                       <small className={isSelected ? 'text-black-50' : 'text-white-50'}>
-                        {info.description}
+                        {translateCategoryDescription(category, t)}
                       </small>
                     </div>
                     {isSelected && <i className="bi bi-check-circle-fill fs-4"></i>}

@@ -15,6 +15,7 @@ import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import AllergenInfo from './components/AllergenInfo/AllergenInfo';
 import StructuredData from './components/SEO/StructuredData';
 import SEOHead from './components/SEO/SEOHead';
+import SplashScreen from './components/SplashScreen/SplashScreen';
 import { preloadMenu } from './hooks/useMenu';
 import { preloadAllergens } from './hooks/useAllergens';
 import './App.css';
@@ -69,6 +70,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <SplashScreen />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />

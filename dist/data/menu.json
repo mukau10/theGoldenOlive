@@ -61,7 +61,7 @@
       "id": "spareribs-natuur",
       "name": "Spareribs Natuur",
       "price": "€29,99",
-      "description": "Keuze uit: Friet en Nachos",
+      "description": "Komt met friet en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs natuur The Golden Olive Antwerpen",
       "allergens": [
@@ -73,7 +73,7 @@
       "id": "spareribs-bbq",
       "name": "Spareribs Barbeque",
       "price": "€29,99",
-      "description": "Keuze uit: Friet en Nachos",
+      "description": "Komt met friet en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs BBQ The Golden Olive Antwerpen",
       "allergens": [
@@ -85,7 +85,7 @@
       "id": "spareribs-gekarameliseerd",
       "name": "Spareribs Gekarameliseerd",
       "price": "€29,99",
-      "description": "Honing, coleslaw<br />Keuze uit: Friet en Nachos",
+      "description": "Honing, coleslaw<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
       "allergens": [
@@ -97,7 +97,7 @@
       "id": "spareribs-spicy",
       "name": "Spareribs Spicy (Pikant)",
       "price": "€29,99",
-      "description": "Coleslaw<br />Keuze uit: Friet en Nachos",
+      "description": "Coleslaw<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs spicy The Golden Olive Antwerpen",
       "allergens": [
@@ -109,7 +109,7 @@
       "id": "spareribs-thai",
       "name": "Spareribs Thai Sweet Chili",
       "price": "€29,99",
-      "description": "Coleslaw<br />Keuze uit: Friet en Nachos",
+      "description": "Coleslaw<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs Thai The Golden Olive Antwerpen",
       "allergens": [
@@ -123,7 +123,7 @@
       "id": "shredded-chicken-loaded-scoop",
       "name": "Shredded Chicken Loaded Scoop",
       "price": "€24,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes, met daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
       "image": "public/img/chicken-scoop.jpg",
       "alt": "Shredded Chicken Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
@@ -135,7 +135,7 @@
       "id": "spicy-minced-meat-loaded-scoop",
       "name": "Spicy Minced Meat Loaded Scoop",
       "price": "€24,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions.",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes, met daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Spicy Minced Meat Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
@@ -148,7 +148,7 @@
       "id": "juicy-bbq-meat-loaded-scoop",
       "name": "Juicy BBQ Meat Loaded Scoop",
       "price": "€24,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions.",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes, met daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Juicy BBQ Meat Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
@@ -160,7 +160,7 @@
       "id": "merguez-loaded-scoop",
       "name": "Merguez Loaded Scoop",
       "price": "€24,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions.",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes, met daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions.",
       "image": "public/img/merguez-scoop.jpg",
       "alt": "Merguez Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
@@ -172,7 +172,7 @@
       "id": "scampi-loaded-scoop",
       "name": "Scampi Loaded Scoop",
       "price": "€24,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes of nacho's, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes, met daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Scampi Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
@@ -187,7 +187,7 @@
       "id": "spicy-gabriel-burger",
       "name": "Spicy Gabriel Burger",
       "price": "€19.99",
-      "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/hamburger3.JPEG",
       "alt": "Spicy Gabriel Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -199,7 +199,7 @@
       "id": "the-golden-olive-burger",
       "name": "The Golden Olive Burger",
       "price": "€22.99",
-      "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "The Golden Olive Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -211,7 +211,7 @@
       "id": "ouezzane-chicken-burger",
       "name": "Ouezzane Chicken Burger",
       "price": "€19.99",
-      "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/hamburger1.JPEG",
       "alt": "Ouezzane Chicken Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -224,7 +224,7 @@
       "id": "classic-house-burger",
       "name": "Classic House Burger",
       "price": "€19.99",
-      "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "Classic House Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -235,7 +235,7 @@
       "id": "flame-house-burger",
       "name": "Flame House Burger",
       "price": "€19.99",
-      "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Keuze uit: Friet en Nachos",
+      "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Komt met friet en 2 sauzen",
       "image": "assets/img/golden/hamburger2.JPEG",
       "alt": "Flame House Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -247,7 +247,7 @@
       "id": "crunchy-fish-burger",
       "name": "Crunchy Fish Burger",
       "price": "€17.99",
-      "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Keuze uit: Friet en Nachos",
+      "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Komt met friet en 2 sauzen",
       "image": "assets/img/favicon11.png",
       "alt": "Crunchy Fish Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -261,7 +261,7 @@
       "id": "veggie-delight-burger",
       "name": "Veggie Delight Burger",
       "price": "€17.99",
-      "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Keuze uit: Friet en Nachos",
+        "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Komt met friet en 2 sauzen",
       "image": "assets/img/favicon11.png",
       "alt": "Veggie Delight Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -275,7 +275,7 @@
       "id": "gehaktburger",
       "name": "Gehaktburger",
       "price": "€9,99",
-      "description": "Kindvriendelijke versie van onze klassieke burger.",
+      "description": "Kindvriendelijke versie van onze klassieke burger.<br />Komt met friet en 2 sauzen",
       "image": "assets/img/favicon11.png",
       "alt": "Gehaktburger The Golden Olive Antwerpen",
       "allergens": [
@@ -284,12 +284,12 @@
       ]
     },
     {
-      "id": "crispy-kipburger",
-      "name": "Crispy Kipburger",
+      "id": "Kids Kipburger",
+      "name": "Kids Kipburger",
       "price": "€9,99",
-      "description": "Lichte en krokante kipburger.",
+      "description": "Kids kipburger met friet en 2 sauzen.<br />Komt met friet en 2 sauzen ",
       "image": "assets/img/favicon11.png",
-      "alt": "Crispy Kipburger The Golden Olive Antwerpen",
+      "alt": "Kids Kipburger The Golden Olive Antwerpen",
       "allergens": [
         {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
         {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
@@ -318,17 +318,6 @@
       "allergens": []
     },
     {
-      "id": "nachos",
-      "name": "Nacho's",
-      "price": "€3,99",
-      "description": "",
-      "image": "assets/img/favicon11.png",
-      "alt": "Nacho's The Golden Olive Antwerpen",
-      "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
-      ]
-    },
-    {
       "id": "mac-cheese",
       "name": "Mac & cheese",
       "price": "€3,99",
@@ -347,18 +336,6 @@
       "description": "",
       "image": "assets/img/favicon11.png",
       "alt": "Champignonsaus The Golden Olive Antwerpen",
-      "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
-      ]
-    },
-    {
-      "id": "diabolique-saus",
-      "name": "Diabolique saus",
-      "price": "€2,99",
-      "description": "",
-      "image": "assets/img/favicon11.png",
-      "alt": "Diabolique saus The Golden Olive Antwerpen",
       "allergens": [
         {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
         {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}

@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next';
 import { useAllergens } from '../../hooks/useAllergens';
+import { useAllergenTranslation } from '../../utils/allergenTranslations';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 const AllergenInfo = () => {
+  const { t } = useTranslation();
+  const { translateAllergen } = useAllergenTranslation();
   const { allergensData, loading } = useAllergens();
 
   const allergenColors: Record<string, string> = {
@@ -28,7 +32,7 @@ const AllergenInfo = () => {
         <main className="pt-24 pb-16 bg-dark-custom">
           <div className="container-fluid px-4 text-center">
             <div className="spinner-border text-warning" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t('allergens.loading')}</span>
             </div>
           </div>
         </main>
@@ -49,10 +53,10 @@ const AllergenInfo = () => {
                 className="display-4 fw-bold text-golden mb-4"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Allergenen Informatie
+                {t('allergens.title')}
               </h1>
               <p className="fs-5 text-white-50">
-                Uitgebreide informatie over allergenen en dieetindicatoren
+                {t('allergens.subtitle')}
               </p>
               <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '96px', height: '4px' }}></div>
             </div>
@@ -65,9 +69,7 @@ const AllergenInfo = () => {
               data-aos-delay="100"
             >
               <i className="bi bi-exclamation-triangle me-2"></i>
-              <strong>Belangrijk:</strong> Als u allergisch bent voor bepaalde ingrediënten, informeer dan altijd het
-              personeel voordat u bestelt. Wij doen ons best om allergenen te vermijden, maar kunnen geen garantie geven
-              vanwege gedeelde keukenruimte.
+              <strong>{t('allergens.important')}:</strong> {t('allergens.warning')}
             </div>
 
             {/* Allergens Section */}
@@ -75,11 +77,12 @@ const AllergenInfo = () => {
               <>
                 <div className="mb-5" data-aos="fade-up" data-aos-delay="150">
                   <h2 className="h3 fw-bold text-golden mb-4">
-                    <i className="bi bi-list-check me-2"></i>Voedselallergenen
+                    <i className="bi bi-list-check me-2"></i>{t('allergens.foodAllergens')}
                   </h2>
                   <div className="bg-black border border-warning rounded-3 p-4">
                     <div className="row g-3">
                       {allergensData.allergens.map((allergen, index) => {
+                        const translated = translateAllergen(allergen);
                         const bgColor = allergenColors[allergen.color] || '#dc3545';
                         const textColor = allergen.color === 'yellow' || allergen.color === 'amber' ? '#000' : '#fff';
                         return (
@@ -98,8 +101,8 @@ const AllergenInfo = () => {
                                 {allergen.code}
                               </span>
                               <div className="text-white-50">
-                                <strong className="text-white d-block mb-1">{allergen.type}</strong>
-                                <small>{allergen.description}</small>
+                                <strong className="text-white d-block mb-1">{translated.type}</strong>
+                                <small>{translated.description}</small>
                               </div>
                             </div>
                           </div>
@@ -112,11 +115,12 @@ const AllergenInfo = () => {
                 {/* Dietary Section */}
                 <div className="mb-5" data-aos="fade-up" data-aos-delay="200">
                   <h2 className="h3 fw-bold text-golden mb-4">
-                    <i className="bi bi-check-circle me-2"></i>Dieetindicatoren
+                    <i className="bi bi-check-circle me-2"></i>{t('allergens.dietaryIndicators')}
                   </h2>
                   <div className="bg-black border border-warning rounded-3 p-4">
                     <div className="row g-3">
                       {allergensData.dietary.map((dietary, index) => {
+                        const translated = translateAllergen(dietary);
                         const bgColor = allergenColors[dietary.color] || '#28a745';
                         return (
                           <div key={index} className="col-12 col-md-6">
@@ -134,8 +138,8 @@ const AllergenInfo = () => {
                                 {dietary.code}
                               </span>
                               <div className="text-white-50">
-                                <strong className="text-white d-block mb-1">{dietary.type}</strong>
-                                <small>{dietary.description}</small>
+                                <strong className="text-white d-block mb-1">{translated.type}</strong>
+                                <small>{translated.description}</small>
                               </div>
                             </div>
                           </div>
@@ -155,7 +159,7 @@ const AllergenInfo = () => {
               data-aos-delay="250"
             >
               <i className="bi bi-telephone me-2"></i>
-              <strong>Heeft u vragen over allergenen?</strong> Neem contact op met ons personeel of bel ons op{' '}
+              <strong>{t('allergens.haveQuestions')}</strong> {t('allergens.contactStaff')}{' '}
               <a href="tel:+32494194397" className="alert-link text-decoration-none">
                 +32 494 19 43 97
               </a>
@@ -166,9 +170,9 @@ const AllergenInfo = () => {
               <button
                 onClick={scrollToTop}
                 className="btn btn-outline-warning me-3 rounded-pill px-4"
-                aria-label="Terug naar boven"
+                aria-label={t('common.backToTop')}
               >
-                <i className="bi bi-arrow-up me-2"></i>Terug naar boven
+                <i className="bi bi-arrow-up me-2"></i>{t('common.backToTop')}
               </button>
               <a
                 href="#hero"
@@ -178,7 +182,7 @@ const AllergenInfo = () => {
                 }}
                 className="btn btn-warning rounded-pill px-4"
               >
-                <i className="bi bi-house-door me-2"></i>Terug naar Home
+                <i className="bi bi-house-door me-2"></i>{t('common.backToHome')}
               </a>
             </div>
           </div>

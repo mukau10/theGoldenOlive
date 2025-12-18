@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
 import { useMenu } from '../../hooks/useMenu';
 import type { MenuCategory } from '../../types/menu';
 import { categoryInfoMap } from '../../utils/categoryInfo';
@@ -8,8 +9,10 @@ import MenuItem from './MenuItem';
 import MenuCategoryCard from './MenuCategoryCard';
 import CategorySelectorModal from './CategorySelectorModal';
 import { BiGridAlt } from 'react-icons/bi';
+import { translateCategory, translateCategoryDescription } from '../../utils/menuTranslations';
 
 const Menu = () => {
+  const { t } = useTranslation();
   const { menuData, loading, error } = useMenu();
   const [selectedCategory, setSelectedCategory] = useState<MenuCategory | '*'>('*');
   const [showAllergenPopup, setShowAllergenPopup] = useState(false);
@@ -176,7 +179,7 @@ const Menu = () => {
         <div className="container-fluid px-4">
           <div className="text-center">
             <div className="spinner-border text-warning" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden">{t('menu.loading')}</span>
             </div>
           </div>
         </div>
@@ -189,7 +192,7 @@ const Menu = () => {
       <section id="menu" className="py-5 bg-dark-custom">
         <div className="container-fluid px-4">
           <div className="text-center">
-            <p className="text-white">Error loading menu. Please refresh the page.</p>
+            <p className="text-white">{t('menu.error')}</p>
           </div>
         </div>
       </section>
@@ -201,17 +204,17 @@ const Menu = () => {
       <div className="container-fluid px-4" data-aos="fade-up">
         <div className="text-center mb-4 mb-md-5">
           <h2 id="menu-heading" className="display-4 display-md-3 fw-bold text-warning mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
-            <i className="bi bi-journal-bookmark text-warning me-2 me-md-3" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}></i>Menu
+            <i className="bi bi-journal-bookmark text-warning me-2 me-md-3" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}></i>{t('menu.title')}
           </h2>
-          <p className="fs-6 fs-md-5 text-white mb-3 mb-md-4 opacity-75" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>Ontdek onze culinaire specialiteiten</p>
+          <p className="fs-6 fs-md-5 text-white mb-3 mb-md-4 opacity-75" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>{t('menu.subtitle')}</p>
           <div className="row justify-content-center">
             <div className="col-12 col-md-8">
               <div className="bg-black border border-warning rounded-pill p-2 p-md-3 d-flex align-items-center justify-content-center flex-wrap gap-2">
                 <i className="bi bi-info-circle text-warning" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}></i>
-                <span className="text-warning small fw-medium" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>Klik op allergenen voor meer informatie</span>
+                <span className="text-warning small fw-medium" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>{t('menu.clickAllergens')}</span>
                 <span className="text-white-50 small d-none d-sm-inline" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>|</span>
                 <a href="/allergenen" className="text-warning small text-decoration-none" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
-                  <i className="bi bi-shield-exclamation me-1"></i>Uitgebreide allergenen info
+                  <i className="bi bi-shield-exclamation me-1"></i>{t('menu.extendedAllergenInfo')}
                 </a>
               </div>
             </div>
@@ -268,7 +271,7 @@ const Menu = () => {
                     textShadow: '0 2px 10px rgba(255, 193, 7, 0.3)',
                   }}
                 >
-                  Kies een categorie
+                  {t('menu.chooseCategory')}
                 </h4>
                 <small
                   className="text-white-50 d-block"
@@ -278,7 +281,7 @@ const Menu = () => {
                   }}
                 >
                   <i className="bi bi-arrow-left-right me-2"></i>
-                  Swipe of gebruik de pijlen om te navigeren
+                  {t('menu.swipeNavigate')}
                 </small>
               </div>
 
@@ -311,8 +314,8 @@ const Menu = () => {
                       <MenuCategoryCard
                         filter="*"
                         icon={BiGridAlt}
-                        title="Alles"
-                        subtitle="Complete Menu"
+                        title={t('menu.allCategories')}
+                        subtitle={t('menu.completeMenu')}
                         isActive={selectedCategory === '*'}
                         onClick={() => setSelectedCategory('*')}
                       />
@@ -648,9 +651,9 @@ const Menu = () => {
                         className="display-6 fw-bold text-warning mb-2"
                         style={{ fontFamily: "'Playfair Display', serif" }}
                       >
-                        {info.title}
+                        {translateCategory(category, t)}
                       </h3>
-                      <p className="text-white-50 small">{info.description}</p>
+                      <p className="text-white-50 small">{translateCategoryDescription(category, t)}</p>
                     </div>
                   </div>
                 </div>
@@ -692,7 +695,7 @@ const Menu = () => {
           >
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h6 className="text-warning mb-0">
-                <i className="bi bi-shield-exclamation me-2"></i>Allergenen Informatie
+                <i className="bi bi-shield-exclamation me-2"></i>{t('menu.allergenInfo')}
               </h6>
               <button
                 className="btn-close btn-close-white"
@@ -706,7 +709,7 @@ const Menu = () => {
                 className="btn btn-warning btn-sm px-3 py-2 rounded-pill"
                 onClick={() => setShowAllergenPopup(false)}
               >
-                <i className="bi bi-check-circle me-1"></i>Begrepen
+                <i className="bi bi-check-circle me-1"></i>{t('menu.understood')}
               </button>
             </div>
           </div>
@@ -807,7 +810,7 @@ const Menu = () => {
             className="menu-button-tooltip"
             style={{ opacity: showTooltip ? 1 : undefined }}
           >
-            Toon categorieën
+            {t('menu.showCategories')}
           </div>
           <button
             onClick={() => setShowCategoryModal(true)}
@@ -835,7 +838,7 @@ const Menu = () => {
               e.currentTarget.style.boxShadow = '0 4px 20px rgba(255, 193, 7, 0.4), 0 0 0 4px rgba(255, 193, 7, 0.1)';
               setShowTooltip(false);
             }}
-            aria-label="Toon categorieën"
+            aria-label={t('menu.showCategories')}
           >
             <i className="bi bi-grid-3x3-gap text-black fs-3"></i>
           </button>

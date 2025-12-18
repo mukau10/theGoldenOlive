@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface SEOHeadProps {
   title?: string;
@@ -14,16 +15,22 @@ interface SEOHeadProps {
  * Updates document head with SEO metadata
  */
 const SEOHead = ({
-  title = 'The Golden Olive - Restaurant Antwerpen | Spareribs, Mix BBQ & Events',
-  description = 'Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen. Reserveer nu!',
-  keywords = 'The Golden Olive, restaurant Antwerpen, spareribs, mix BBQ, hamburgers, verjaardagsfeest, bedrijfsfeest, evenementen, reserveren, eten, drinken, Vlaamsekaai, Antwerpen restaurant',
+  title,
+  description,
+  keywords,
   image = 'https://thegoldenolive.be/assets/img/golden/IMG_4117.JPEG',
   url = 'https://the-goldenolive.be/',
   type = 'restaurant',
 }: SEOHeadProps) => {
+  const { t, i18n } = useTranslation();
+  
+  // Use provided title/description or get from translations based on language
+  const seoTitle = title || t('seo.title');
+  const seoDescription = description || t('seo.description');
+  const seoKeywords = keywords || t('seo.keywords');
   useEffect(() => {
     // Update title
-    document.title = title;
+    document.title = seoTitle;
 
     // Update or create meta tags
     const updateMetaTag = (name: string, content: string, isProperty = false) => {
@@ -38,20 +45,21 @@ const SEOHead = ({
     };
 
     // Primary meta tags
-    updateMetaTag('title', title);
-    updateMetaTag('description', description);
-    updateMetaTag('keywords', keywords);
+    updateMetaTag('title', seoTitle);
+    updateMetaTag('description', seoDescription);
+    updateMetaTag('keywords', seoKeywords);
 
     // Open Graph tags
-    updateMetaTag('og:title', title, true);
-    updateMetaTag('og:description', description, true);
+    updateMetaTag('og:title', seoTitle, true);
+    updateMetaTag('og:description', seoDescription, true);
     updateMetaTag('og:image', image, true);
     updateMetaTag('og:url', url, true);
     updateMetaTag('og:type', type, true);
+    updateMetaTag('og:locale', i18n.language === 'nl' ? 'nl_BE' : i18n.language === 'fr' ? 'fr_BE' : 'en_US', true);
 
     // Twitter Card tags
-    updateMetaTag('twitter:title', title);
-    updateMetaTag('twitter:description', description);
+    updateMetaTag('twitter:title', seoTitle);
+    updateMetaTag('twitter:description', seoDescription);
     updateMetaTag('twitter:image', image);
     updateMetaTag('twitter:url', url);
 
@@ -63,7 +71,7 @@ const SEOHead = ({
       document.head.appendChild(canonical);
     }
     canonical.href = url;
-  }, [title, description, keywords, image, url, type]);
+  }, [seoTitle, seoDescription, seoKeywords, image, url, type, i18n.language]);
 
   return null; // This component doesn't render anything
 };

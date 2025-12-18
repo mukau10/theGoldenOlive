@@ -1,7 +1,9 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { useTranslation } from 'react-i18next';
 
 const Events = () => {
+  const { t } = useTranslation();
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact');
     if (contactSection) {
@@ -16,8 +18,8 @@ const Events = () => {
 
       <div className="container-fluid px-3 px-md-4 position-relative" data-aos="fade-up">
         <div className="text-center mb-4 mb-md-5">
-          <h2 className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>Evenementen</h2>
-          <h3 className="fs-5 fs-md-4 text-white fw-light px-2 px-md-4 text-center opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>Organiseer Jouw Evenementen bij Ons</h3>
+          <h2 className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>{t('events.title')}</h2>
+          <h3 className="fs-5 fs-md-4 text-white fw-light px-2 px-md-4 text-center opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>{t('events.subtitle')}</h3>
           <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '80px', height: '4px' }}></div>
         </div>
 
@@ -59,13 +61,9 @@ const Events = () => {
                   </div>
                   <div className="col-12 col-md-6 p-3 p-md-4 d-flex flex-column justify-content-center">
                     <h3 className="fs-4 fs-md-3 fw-bold text-white mb-2 mb-md-3 events-title-hover" style={{ transition: 'color 0.3s', fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
-                      Verjaardagen
+                      {t('events.birthdays.title')}
                     </h3>
-                    <p className="text-light lh-lg fst-italic opacity-75" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                      Vier jouw verjaardag in stijl met een uniek feest in ons restaurant.<br className="d-none d-md-block" />
-                      Geniet van heerlijke gerechten, een feestelijke sfeer en uitstekende service.<br className="d-none d-md-block" /> Wij zorgen voor een
-                      onvergetelijke verjaardag.
-                    </p>
+                    <p className="text-light lh-lg fst-italic opacity-75" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }} dangerouslySetInnerHTML={{ __html: t('events.birthdays.description') }}></p>
                   </div>
                 </div>
               </div>
@@ -89,12 +87,10 @@ const Events = () => {
                   </div>
                   <div className="col-12 col-md-6 p-3 p-md-4 d-flex flex-column justify-content-center">
                     <h3 className="fs-4 fs-md-3 fw-bold text-white mb-2 mb-md-3 events-title-hover" style={{ transition: 'color 0.3s', fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
-                      Bedrijfsfeestjes
+                      {t('events.corporate.title')}
                     </h3>
                     <p className="text-light lh-lg fst-italic opacity-75" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                      Organiseer een professioneel en succesvol bedrijfsfeest in ons restaurant. Of het nu gaat om een
-                      teambuilding, een bedrijfsjubileum of een eindejaarsfeest, wij bieden de perfecte setting en
-                      catering voor jouw evenement.
+                      {t('events.corporate.description')}
                     </p>
                   </div>
                 </div>
@@ -119,12 +115,10 @@ const Events = () => {
                   </div>
                   <div className="col-12 col-md-6 p-3 p-md-4 d-flex flex-column justify-content-center">
                     <h3 className="fs-4 fs-md-3 fw-bold text-white mb-2 mb-md-3 events-title-hover" style={{ transition: 'color 0.3s', fontSize: 'clamp(1.25rem, 3vw, 1.75rem)' }}>
-                      Andere Evenementen
+                      {t('events.other.title')}
                     </h3>
                     <p className="text-light lh-lg fst-italic opacity-75" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                      Van familiefeesten en jubilea tot speciale bijeenkomsten en meer, ons restaurant biedt een warme
-                      en uitnodigende omgeving voor allerlei soorten evenementen. Wij helpen je graag bij het plannen
-                      en uitvoeren van jouw speciale gelegenheid.
+                      {t('events.other.description')}
                     </p>
                   </div>
                 </div>
@@ -157,7 +151,7 @@ const Events = () => {
             style={{ transition: 'all 0.3s', fontSize: 'clamp(0.9rem, 2vw, 1.1rem)' }}
           >
             <i className="bi bi-calendar-event me-2"></i>
-            Plan Je Evenement
+            {t('events.planEvent')}
           </a>
         </div>
       </div>

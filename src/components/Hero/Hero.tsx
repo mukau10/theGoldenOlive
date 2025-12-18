@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Hero = () => {
+  const { t } = useTranslation();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -123,7 +125,7 @@ const Hero = () => {
         background: "url('/img/golden/IMG_4117.JPEG') center/cover no-repeat",
       }}
       role="banner"
-      aria-label="Hero sectie"
+      aria-label={t('hero.sectionLabel')}
     >
       <video
         ref={videoRef}
@@ -144,7 +146,7 @@ const Hero = () => {
           background: 'transparent',
         }}
         preload="auto"
-        aria-label="Restaurant ambiance video"
+        aria-label={t('hero.videoLabel')}
       >
         <source src="/img/header_video.mp4" type="video/mp4" />
         <source src="/img/header_video.mov" type="video/quicktime" />
@@ -196,9 +198,9 @@ const Hero = () => {
                 onClick={scrollToMenu}
                 className="btn btn-outline-golden rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-decoration-none"
                 style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)' }}
-                aria-label="Bekijk ons menu"
+                aria-label={t('hero.viewMenu')}
               >
-                <i className="bi bi-arrow-right me-2"></i>Ons Menu
+                <i className="bi bi-arrow-right me-2"></i>{t('common.ourMenu')}
               </button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ContactFormData {
   name: string;
@@ -10,6 +11,7 @@ interface ContactFormData {
 }
 
 const ContactForm = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -59,10 +61,10 @@ const ContactForm = () => {
         // Hide success message after 5 seconds
         setTimeout(() => setSuccess(false), 5000);
       } else {
-        setError(data.message || 'Er is een fout opgetreden. Probeer het opnieuw.');
+        setError(data.message || t('contactForm.error'));
       }
     } catch (err) {
-      setError('Kon geen verbinding maken met de server. Controleer uw internetverbinding of bel ons op +32 494 19 43 97.');
+      setError(t('contactForm.connectionError'));
       console.error('Contact form error:', err);
     } finally {
       setLoading(false);
@@ -73,7 +75,7 @@ const ContactForm = () => {
     <div className="col-12 col-lg-8 mx-auto">
       <div className="bg-black border border-warning rounded-3 p-4 p-lg-5">
         <h3 className="text-warning mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-          <i className="bi bi-envelope me-2"></i>Stuur ons een bericht
+          <i className="bi bi-envelope me-2"></i>{t('contactForm.title')}
         </h3>
 
         <form onSubmit={handleSubmit} className="php-email-form">
@@ -81,7 +83,7 @@ const ContactForm = () => {
           {success && (
             <div className="sent-message alert alert-success d-block mb-4">
               <i className="bi bi-check-circle me-2"></i>
-              Uw bericht is succesvol verzonden! We nemen zo spoedig mogelijk contact met u op.
+              {t('contactForm.success')}
             </div>
           )}
 
@@ -97,9 +99,9 @@ const ContactForm = () => {
           {loading && (
             <div className="loading d-block text-center mb-4">
               <div className="spinner-border text-warning" role="status">
-                <span className="visually-hidden">Verzenden...</span>
+                <span className="visually-hidden">{t('contactForm.sending')}</span>
               </div>
-              <p className="text-white mt-2">Uw bericht wordt verzonden...</p>
+              <p className="text-white mt-2">{t('contactForm.sending')}</p>
             </div>
           )}
 
@@ -108,7 +110,7 @@ const ContactForm = () => {
             <div className="col-12 col-md-6">
               <div className="form-group">
                 <label htmlFor="name" className="text-white mb-2">
-                  Naam <span className="text-warning">*</span>
+                  {t('contactForm.name')} <span className="text-warning">*</span>
                 </label>
                 <input
                   type="text"
@@ -118,7 +120,7 @@ const ContactForm = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  placeholder="Uw naam"
+                  placeholder={t('contactForm.namePlaceholder')}
                 />
               </div>
             </div>
@@ -127,7 +129,7 @@ const ContactForm = () => {
             <div className="col-12 col-md-6">
               <div className="form-group">
                 <label htmlFor="email" className="text-white mb-2">
-                  Email <span className="text-warning">*</span>
+                  {t('contactForm.email')} <span className="text-warning">*</span>
                 </label>
                 <input
                   type="email"
@@ -137,7 +139,7 @@ const ContactForm = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="uw.email@voorbeeld.be"
+                  placeholder={t('contactForm.emailPlaceholder')}
                 />
               </div>
             </div>
@@ -146,7 +148,7 @@ const ContactForm = () => {
             <div className="col-12 col-md-6">
               <div className="form-group">
                 <label htmlFor="phone" className="text-white mb-2">
-                  Telefoon
+                  {t('contactForm.phone')}
                 </label>
                 <input
                   type="tel"
@@ -155,7 +157,7 @@ const ContactForm = () => {
                   className="form-control bg-dark text-white border-warning"
                   value={formData.phone}
                   onChange={handleChange}
-                  placeholder="+32 XXX XX XX XX"
+                  placeholder={t('contactForm.phonePlaceholder')}
                 />
               </div>
             </div>
@@ -164,7 +166,7 @@ const ContactForm = () => {
             <div className="col-12 col-md-6">
               <div className="form-group">
                 <label htmlFor="subject" className="text-white mb-2">
-                  Onderwerp
+                  {t('contactForm.subject')}
                 </label>
                 <select
                   id="subject"
@@ -173,13 +175,13 @@ const ContactForm = () => {
                   value={formData.subject}
                   onChange={handleChange}
                 >
-                  <option value="">Selecteer onderwerp</option>
-                  <option value="Reservering">Reservering</option>
-                  <option value="Evenement">Evenement</option>
-                  <option value="Algemene vraag">Algemene vraag</option>
-                  <option value="Klacht">Klacht</option>
-                  <option value="Compliment">Compliment</option>
-                  <option value="Anders">Anders</option>
+                  <option value="">{t('contactForm.selectSubject')}</option>
+                  <option value={t('contact.reservation')}>{t('contact.reservation')}</option>
+                  <option value={t('contact.event')}>{t('contact.event')}</option>
+                  <option value={t('contact.generalQuestion')}>{t('contact.generalQuestion')}</option>
+                  <option value={t('contact.complaint')}>{t('contact.complaint')}</option>
+                  <option value={t('contact.compliment')}>{t('contact.compliment')}</option>
+                  <option value={t('contact.other')}>{t('contact.other')}</option>
                 </select>
               </div>
             </div>
@@ -188,7 +190,7 @@ const ContactForm = () => {
             <div className="col-12">
               <div className="form-group">
                 <label htmlFor="message" className="text-white mb-2">
-                  Bericht <span className="text-warning">*</span>
+                  {t('contactForm.message')} <span className="text-warning">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -198,7 +200,7 @@ const ContactForm = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  placeholder="Uw bericht..."
+                  placeholder={t('contactForm.messagePlaceholder')}
                 ></textarea>
               </div>
             </div>
@@ -214,11 +216,11 @@ const ContactForm = () => {
                 {loading ? (
                   <>
                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Verzenden...
+                    {t('contactForm.sending')}
                   </>
                 ) : (
                   <>
-                    <i className="bi bi-send me-2"></i>Verzend Bericht
+                    <i className="bi bi-send me-2"></i>{t('contactForm.send')}
                   </>
                 )}
               </button>

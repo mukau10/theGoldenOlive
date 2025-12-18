@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 const PrivacyPolicy = () => {
+  const { t } = useTranslation();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -18,10 +20,10 @@ const PrivacyPolicy = () => {
                 className="display-4 fw-bold text-golden mb-4"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                Privacy Policy
+                {t('privacyPolicy.title')}
               </h1>
               <p className="fs-5 text-white-50">
-                Laatst bijgewerkt: <span className="text-warning">1 januari 2025</span>
+                {t('privacyPolicy.lastUpdated')}: <span className="text-warning">{t('privacyPolicy.lastUpdatedDate')}</span>
               </p>
               <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '96px', height: '4px' }}></div>
             </div>
@@ -335,9 +337,9 @@ const PrivacyPolicy = () => {
                 <button
                   onClick={scrollToTop}
                   className="btn btn-outline-warning me-3 rounded-pill px-4"
-                  aria-label="Terug naar boven"
+                  aria-label={t('common.backToTop')}
                 >
-                  <i className="bi bi-arrow-up me-2"></i>Terug naar boven
+                  <i className="bi bi-arrow-up me-2"></i>{t('common.backToTop')}
                 </button>
                 <a
                   href="#hero"
@@ -347,7 +349,7 @@ const PrivacyPolicy = () => {
                   }}
                   className="btn btn-warning rounded-pill px-4"
                 >
-                  <i className="bi bi-house-door me-2"></i>Terug naar Home
+                  <i className="bi bi-house-door me-2"></i>{t('common.backToHome')}
                 </a>
               </div>
             </div>

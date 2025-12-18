@@ -1,0 +1,524 @@
+{
+  "splash": {
+    "welcome": "Welcome to The Golden Olive",
+    "welcomeLine1": "Get ready",
+    "welcomeLine2": "for a delicious experience!",
+    "selectLanguage": "Choose your language",
+    "continue": "Continue"
+  },
+  "common": {
+    "home": "Home",
+    "about": "About Us",
+    "menu": "Menu",
+    "events": "Events",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "ourMenu": "Our Menu",
+    "viewMenu": "View our menu",
+    "backToTop": "Back to top",
+    "backToHome": "Back to Home",
+    "close": "Close"
+  },
+  "header": {
+    "navigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation",
+    "goToHome": "Go to home section",
+    "hours": "Mon-Sun: 5:00 PM - 11:00 PM",
+    "address": "Vlaamsekaai 65, 2000 ANTWERP",
+    "contactInfo": "Contact information",
+    "toggleMobileMenu": "Toggle mobile menu",
+    "closeMobileMenu": "Close mobile menu"
+  },
+  "hero": {
+    "viewMenu": "View our menu",
+    "sectionLabel": "Hero section",
+    "videoLabel": "Restaurant ambiance video"
+  },
+  "about": {
+    "title": "Flavorful Encounters at The Golden Olive",
+    "description": "Don't feel like cooking today? Come by and enjoy delicious dishes with family and friends. At The Golden Olive, we treat you to breathtaking soul food, prepared with the best ingredients and a passion for flavor. Check out our menu online. Reservations are not required, so feel free to drop in and experience the warm hospitality of our bistro-restaurant."
+  },
+  "possibilities": {
+    "title": "Possibilities",
+    "subtitle": "Why Choose Our Restaurant",
+    "takeaway": {
+      "title": "Takeaway",
+      "description": "Call us, tell us your favorite dishes and when you want to pick them up. We'll make sure your food is ready."
+    },
+    "delivery": {
+      "title": "Order and Enjoy at Home",
+      "badge": "Coming Soon",
+      "description": "Place your order via our website or by phone, and we'll bring your favorite dishes directly to your door."
+    },
+    "reservation": {
+      "title": "Reservation",
+      "description": "Reservations are not necessary, as we work with a 'first come, first serve' policy.",
+      "callNow": "Call Now"
+    }
+  },
+  "events": {
+    "title": "Events",
+    "subtitle": "Organize Your Events with Us",
+    "birthdays": {
+      "title": "Birthdays",
+      "description": "Celebrate your birthday in style with a unique party at our restaurant.<br />Enjoy delicious food, a festive atmosphere and excellent service.<br /> We ensure an unforgettable birthday."
+    },
+    "corporate": {
+      "title": "Corporate Events",
+      "description": "Organize a professional and successful corporate event at our restaurant. Whether it's a team building, company anniversary or end-of-year party, we offer the perfect setting and catering for your event."
+    },
+    "other": {
+      "title": "Other Events",
+      "description": "From family celebrations and anniversaries to special gatherings and more, our restaurant offers a warm and inviting environment for all kinds of events. We're happy to help you plan and execute your special occasion."
+    },
+    "planEvent": "Plan Your Event"
+  },
+  "gallery": {
+    "title": "Gallery",
+    "subtitle": "A Preview",
+    "fullSubtitle": "Discover our culinary creations",
+    "showMore": "Show More",
+    "backToHome": "Back to home"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in Touch",
+    "address": {
+      "title": "Address:",
+      "street": "Vlaamsekaai 65",
+      "city": "2000 ANTWERP",
+      "country": "Belgium"
+    },
+    "hours": {
+      "title": "Opening Hours:",
+      "days": "Monday - Sunday:",
+      "time": "5:00 PM - 11:00 PM"
+    },
+    "phone": {
+      "title": "Phone Number:"
+    }
+  },
+  "contactForm": {
+    "title": "Send Us a Message",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "subject": "Subject",
+    "selectSubject": "Select subject",
+    "message": "Message",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your.email@example.com",
+    "phonePlaceholder": "+32 XXX XX XX XX",
+    "messagePlaceholder": "Your message...",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Your message has been sent successfully! We will contact you as soon as possible.",
+    "error": "An error occurred. Please try again.",
+    "connectionError": "Could not connect to the server. Check your internet connection or call us at +32 494 19 43 97."
+  },
+  "footer": {
+    "visitFacebook": "Visit our Facebook page",
+    "followInstagram": "Follow us on Instagram",
+    "copyright": "All Rights Reserved",
+    "vatNumber": "VAT Number",
+    "privacyPolicy": "Privacy Policy",
+    "allergenInfo": "Allergen Info"
+  },
+  "languageSwitcher": {
+    "changeLanguage": "Change language"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated",
+    "lastUpdatedDate": "January 1, 2025"
+  },
+  "seo": {
+    "title": "The Golden Olive - Restaurant Antwerp | Spareribs, Mix BBQ & Events",
+    "description": "Enjoy authentic dishes at The Golden Olive in Antwerp. Specialties: spareribs, mix BBQ, burgers. Perfect for birthdays, corporate events and celebrations. Book now!",
+    "keywords": "The Golden Olive, restaurant Antwerp, spareribs, mix BBQ, burgers, birthday party, corporate event, events, reservation, food, drinks, Vlaamsekaai, Antwerp restaurant"
+  },
+  "contact": {
+    "title": "Contact",
+    "subject": "Subject",
+    "selectSubject": "Select subject",
+    "reservation": "Reservation",
+    "event": "Event",
+    "generalQuestion": "General question",
+    "complaint": "Complaint",
+    "compliment": "Compliment",
+    "other": "Other",
+    "message": "Message",
+    "messagePlaceholder": "Your message...",
+    "send": "Send"
+  },
+  "allergens": {
+    "title": "Allergen Information",
+    "subtitle": "Comprehensive information about allergens and dietary indicators",
+    "important": "Important",
+    "warning": "If you are allergic to certain ingredients, always inform the staff before ordering. We do our best to avoid allergens, but cannot guarantee due to shared kitchen space.",
+    "loading": "Loading...",
+    "foodAllergens": "Food Allergens",
+    "dietaryIndicators": "Dietary Indicators",
+    "haveQuestions": "Have questions about allergens?",
+    "contactStaff": "Contact our staff or call us at",
+    "items": {
+      "G": {
+        "type": "Gluten",
+        "description": "Gluten - Contains gluten-containing cereals (wheat, rye, barley, spelt)"
+      },
+      "S": {
+        "type": "Shellfish",
+        "description": "Shellfish - Shrimp, crabs and lobsters"
+      },
+      "E": {
+        "type": "Eggs",
+        "description": "Eggs - Egg yolk and egg white, used for baking and sauces"
+      },
+      "F": {
+        "type": "Fish",
+        "description": "Fish - All types of fish"
+      },
+      "P": {
+        "type": "Peanuts",
+        "description": "Peanuts - Peanuts and peanut oil"
+      },
+      "So": {
+        "type": "Soy",
+        "description": "Soy - Soy is a legume, processed into oil, lecithin or flour"
+      },
+      "M": {
+        "type": "Milk",
+        "description": "Milk - Including lactose, butter, cheese, cream and yogurt"
+      },
+      "N": {
+        "type": "Nuts",
+        "description": "Nuts - Almonds, hazelnuts, walnuts, cashews, pecans, Brazil nuts, pistachios and macadamia nuts"
+      },
+      "Ce": {
+        "type": "Celery",
+        "description": "Celery - Celery and celery products"
+      },
+      "Mu": {
+        "type": "Mustard",
+        "description": "Mustard - All types of mustard"
+      },
+      "Se": {
+        "type": "Sesame",
+        "description": "Sesame - Sesame seeds or sesame oil"
+      },
+      "Su": {
+        "type": "Sulfites",
+        "description": "Sulfites - Sulfur dioxide and sulfites"
+      },
+      "L": {
+        "type": "Lupin",
+        "description": "Lupin - Lupin and lupin products"
+      },
+      "Mo": {
+        "type": "Molluscs",
+        "description": "Molluscs - Mussels, oysters, squid, etc."
+      },
+      "C": {
+        "type": "Coconut",
+        "description": "Coconut - Coconut and coconut products"
+      },
+      "V": {
+        "type": "Vegetarian",
+        "description": "Vegetarian - Contains no meat or fish"
+      },
+      "Ve": {
+        "type": "Vegan",
+        "description": "Vegan - Contains no animal products"
+      },
+      "GF": {
+        "type": "Gluten Free",
+        "description": "Gluten Free - Contains no gluten"
+      },
+      "LF": {
+        "type": "Lactose Free",
+        "description": "Lactose Free - Contains no lactose"
+      },
+      "H": {
+        "type": "Halal",
+        "description": "Halal - Prepared according to halal guidelines"
+      }
+    }
+  },
+  "menu": {
+    "title": "Menu",
+    "subtitle": "Discover our culinary specialties",
+    "clickAllergens": "Click on allergens for more information",
+    "extendedAllergenInfo": "Extended allergen info",
+    "loading": "Loading...",
+    "error": "Error loading menu. Please refresh the page.",
+    "showCategories": "Show categories",
+    "chooseCategory": "Choose a category",
+    "selectCategory": "Select a menu category",
+    "swipeNavigate": "Swipe or use arrows to navigate",
+    "allCategories": "All",
+    "completeMenu": "Complete Menu",
+    "allergens": "Allergens:",
+    "understood": "Understood",
+    "allergenInfo": "Allergen Information",
+    "categories": {
+      "voorgerechten": {
+        "title": "Starters",
+        "description": "Delicious starters to begin your meal"
+      },
+      "mixed-bbq": {
+        "title": "Mix BBQ",
+        "description": "A combination of different types of meat."
+      },
+      "spareribs": {
+        "title": "Spareribs",
+        "description": "Tender spareribs with our homemade sauces"
+      },
+      "loaded-scoops": {
+        "title": "Loaded Scoops",
+        "description": "Loaded scoops with fries or nachos, mac & cheese and toppings"
+      },
+      "burgers": {
+        "title": "Burgers",
+        "description": "Juicy burgers with fresh ingredients"
+      },
+      "kindermenu": {
+        "title": "Kids Menu",
+        "description": "Specially designed for our youngest guests"
+      },
+      "supplementen": {
+        "title": "Extras",
+        "description": "Extras to complete your dish"
+      },
+      "desserten": {
+        "title": "Desserts",
+        "description": "Sweet ending to your perfect meal"
+      },
+      "mocktails": {
+        "title": "Mocktails",
+        "description": "Refreshing alcohol-free cocktails"
+      },
+      "frisdranken": {
+        "title": "Soft Drinks",
+        "description": "Cold and refreshing drinks"
+      },
+      "warme-dranken": {
+        "title": "Hot Drinks",
+        "description": "Hot drinks for cozy moments"
+      }
+    },
+    "items": {
+      "tiger-garnalen": {
+        "name": "Tiger Shrimp",
+        "description": "Lightly spiced fried shrimp."
+      },
+      "chicken-wings": {
+        "name": "Chicken Wings",
+        "description": "Choice of BBQ or sweet and sour sauce."
+      },
+      "mini-loempia": {
+        "name": "Mini Spring Rolls",
+        "description": "Crispy served with sweet and sour sauce."
+      },
+      "mixed-bbq": {
+        "name": "Mix BBQ",
+        "description": "Various types of meat<br />Served with Mushroom sauce and salad"
+      },
+      "spareribs-natuur": {
+        "name": "Spareribs Natural",
+        "description": "Choice of: Fries and Nachos"
+      },
+      "spareribs-bbq": {
+        "name": "Spareribs Barbecue",
+        "description": "Choice of: Fries and Nachos"
+      },
+      "spareribs-gekarameliseerd": {
+        "name": "Spareribs Caramelized",
+        "description": "Honey, coleslaw<br />Choice of: Fries and Nachos"
+      },
+      "spareribs-spicy": {
+        "name": "Spareribs Spicy",
+        "description": "Coleslaw<br />Choice of: Fries and Nachos"
+      },
+      "spareribs-thai": {
+        "name": "Spareribs Thai Sweet Chili",
+        "description": "Coleslaw<br />Choice of: Fries and Nachos"
+      },
+      "shredded-chicken-loaded-scoop": {
+        "name": "Shredded Chicken Loaded Scoop",
+        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled chicken with olives, salsa and crispy onions."
+      },
+      "spicy-minced-meat-loaded-scoop": {
+        "name": "Spicy Minced Meat Loaded Scoop",
+        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Minced meat in spicy bolognese sauce, special sauce, jalapeños and crispy onions."
+      },
+      "juicy-bbq-meat-loaded-scoop": {
+        "name": "Juicy BBQ Meat Loaded Scoop",
+        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled meat with BBQ sauce, special sauce and crispy onions."
+      },
+      "merguez-loaded-scoop": {
+        "name": "Merguez Loaded Scoop",
+        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Spicy merguez with special sauce, salsa and crispy onions."
+      },
+      "scampi-loaded-scoop": {
+        "name": "Scampi Loaded Scoop",
+        "description": "Each Loaded Scoop is filled with fries or nachos, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Fried scampi with special sauce, salsa and crispy onions."
+      },
+      "spicy-gabriel-burger": {
+        "name": "Spicy Gabriel Burger",
+        "description": "Grilled chicken fillet with creamy cheese, caramelized onions, fresh lettuce, jalapeño peppers and our homemade Spicy Signature Sauce<br />Choice of: Fries and Nachos"
+      },
+      "the-golden-olive-burger": {
+        "name": "The Golden Olive Burger",
+        "description": "Juicy beef burger combined with tender pulled beef, cheese, crispy lettuce, BBQ sauce and our Original Signature Sauce<br />Choice of: Fries and Nachos"
+      },
+      "ouezzane-chicken-burger": {
+        "name": "Ouezzane Chicken Burger",
+        "description": "Shredded chicken with crispy onions, cheese, fresh coleslaw, olives and our Original Signature Sauce<br />Choice of: Fries and Nachos"
+      },
+      "classic-house-burger": {
+        "name": "Classic House Burger",
+        "description": "Artisanal beef burger with caramelized onions, pickle, lettuce and our Original Signature Sauce<br />Choice of: Fries and Nachos"
+      },
+      "flame-house-burger": {
+        "name": "Flame House Burger",
+        "description": "Beef burger with spicy bolognese sauce, crispy onions and our Spicy Signature Sauce<br />Choice of: Fries and Nachos"
+      },
+      "crunchy-fish-burger": {
+        "name": "Crunchy Fish Burger",
+        "description": "Crispy fish fillet with cheese, lettuce, crispy onions, pickle and tartar sauce<br />Choice of: Fries and Nachos"
+      },
+      "veggie-delight-burger": {
+        "name": "Veggie Delight Burger",
+        "description": "Vegetarian burger with pickle, salsa, cheese and lettuce<br />Choice of: Fries and Nachos"
+      },
+      "gehaktburger": {
+        "name": "Minced Meat Burger",
+        "description": "Kid-friendly version of our classic burger."
+      },
+      "crispy-kipburger": {
+        "name": "Crispy Chicken Burger",
+        "description": "Light and crispy chicken burger."
+      },
+      "friet": {
+        "name": "Fries",
+        "description": ""
+      },
+      "rijst": {
+        "name": "Rice",
+        "description": ""
+      },
+      "nachos": {
+        "name": "Nachos",
+        "description": ""
+      },
+      "mac-cheese": {
+        "name": "Mac & Cheese",
+        "description": ""
+      },
+      "champignonsaus": {
+        "name": "Mushroom Sauce",
+        "description": ""
+      },
+      "diabolique-saus": {
+        "name": "Diabolique Sauce",
+        "description": ""
+      },
+      "cheesecake-chocoladesaus": {
+        "name": "Cheesecake in Chocolate Sauce",
+        "description": "Creamy cheesecake covered in warm chocolate sauce."
+      },
+      "cheesecake-pistachesaus": {
+        "name": "Cheesecake in Pistachio Sauce",
+        "description": "Delicious cheesecake topped with luxurious pistachio sauce."
+      },
+      "moelleux-chocolade": {
+        "name": "Chocolate Lava Cake",
+        "description": "Warm chocolate cake with ice cream and whipped cream."
+      },
+      "dame-blanche": {
+        "name": "Dame Blanche",
+        "description": "Vanilla ice cream with warm chocolate sauce and whipped cream."
+      },
+      "mojito-blue-hawaii": {
+        "name": "Mojito Blue Hawaii",
+        "description": "Tropical mojito with blue color"
+      },
+      "strawberry-mojito": {
+        "name": "Strawberry Mojito",
+        "description": "Mojito with strawberries"
+      },
+      "classic-mojito": {
+        "name": "Classic Mojito",
+        "description": "Classic mojito without alcohol"
+      },
+      "sprite": {
+        "name": "Sprite",
+        "description": "Sprite Lemon"
+      },
+      "fuze-tea-lemon": {
+        "name": "FUZE TEA LEMON",
+        "description": "Fuze Tea with lemon"
+      },
+      "fuze-tea-peach": {
+        "name": "Fuze Tea Peach",
+        "description": "Fuze Tea with peach"
+      },
+      "minute-maid-apple": {
+        "name": "Minute Maid Apple",
+        "description": "Minute Maid apple juice"
+      },
+      "fanta": {
+        "name": "Fanta",
+        "description": "Fanta Orange"
+      },
+      "bruiswater-05l": {
+        "name": "Sparkling Water 0.5L",
+        "description": "Carbonated water"
+      },
+      "cola-zero": {
+        "name": "Coke Zero",
+        "description": "Coca Cola Zero without sugar"
+      },
+      "coca-cola": {
+        "name": "Coca Cola",
+        "description": "Classic Coca Cola"
+      },
+      "water-05l": {
+        "name": "Water 0.5L",
+        "description": "Still water"
+      },
+      "cappuccino": {
+        "name": "Cappuccino",
+        "description": "Cappuccino with milk foam"
+      },
+      "lipton-thee": {
+        "name": "Lipton Tea",
+        "description": "Choice of different flavors"
+      },
+      "munt-thee": {
+        "name": "Mint Tea",
+        "description": "Refreshing mint tea"
+      },
+      "latte-macchiato": {
+        "name": "Latte Macchiato",
+        "description": "Latte macchiato with milk"
+      },
+      "dubbele-expresso": {
+        "name": "Double Espresso",
+        "description": "Double espresso for extra caffeine"
+      },
+      "koffie": {
+        "name": "Coffee",
+        "description": "Fresh coffee"
+      },
+      "koffie-met-melk": {
+        "name": "Coffee with Milk",
+        "description": "Coffee with warm milk"
+      },
+      "expresso": {
+        "name": "Espresso",
+        "description": "Strong espresso"
+      }
+    }
+  }
+}

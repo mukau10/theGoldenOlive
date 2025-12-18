@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
 const Header = () => {
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -24,7 +27,7 @@ const Header = () => {
   return (
     <>
       {/* Topbar */}
-      <div id="topbar" className="d-flex align-items-center justify-content-center small position-fixed top-0 start-0 end-0" style={{ height: 'auto', minHeight: '36px', padding: '6px 12px', zIndex: 1050, background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)' }} role="complementary" aria-label="Contact informatie">
+      <div id="topbar" className="d-flex align-items-center justify-content-center small position-fixed top-0 start-0 end-0" style={{ height: 'auto', minHeight: '36px', padding: '6px 12px', zIndex: 1050, background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)' }} role="complementary" aria-label={t('header.contactInfo')}>
         <div className="d-flex align-items-center justify-content-center small w-100">
           <div className="d-flex align-items-center text-warning overflow-hidden flex-wrap justify-content-center gap-2 gap-sm-3">
             <div className="d-flex align-items-center">
@@ -35,11 +38,11 @@ const Header = () => {
             </div>
             <div className="d-none d-sm-flex align-items-center">
               <i className="bi bi-clock text-warning me-2" style={{ fontSize: '0.85rem' }}></i>
-              <span className="text-white" style={{ fontSize: '0.75rem' }}>Ma-Zo: 17:OO - 23:OO</span>
+              <span className="text-white" style={{ fontSize: '0.75rem' }}>{t('header.hours')}</span>
             </div>
             <div className="d-none d-md-flex align-items-center">
               <i className="bi bi-geo-alt text-warning me-2" style={{ fontSize: '0.85rem' }}></i>
-              <span className="text-white" style={{ fontSize: '0.75rem' }}>Vlaamsekaai 65, 2000 ANTWERPEN</span>
+              <span className="text-white" style={{ fontSize: '0.75rem' }}>{t('header.address')}</span>
             </div>
           </div>
         </div>
@@ -77,7 +80,7 @@ const Header = () => {
             </h1>
 
             {/* Desktop Navigation */}
-            <nav id="navbar" className="d-none d-lg-block" role="navigation" aria-label="Hoofdnavigatie">
+            <nav id="navbar" className="d-none d-lg-block" role="navigation" aria-label={t('header.navigation')}>
               <ul className="d-flex align-items-center mb-0 list-unstyled" style={{ gap: '2rem' }} role="menubar">
                 <li role="none">
                   <a
@@ -88,9 +91,9 @@ const Header = () => {
                       scrollToSection('hero');
                     }}
                     role="menuitem"
-                    aria-label="Ga naar home sectie"
+                    aria-label={t('header.goToHome')}
                   >
-                    Home
+                    {t('common.home')}
                   </a>
                 </li>
                 <li>
@@ -102,7 +105,7 @@ const Header = () => {
                       scrollToSection('about');
                     }}
                   >
-                    Over Ons
+                    {t('common.about')}
                   </a>
                 </li>
                 <li>
@@ -114,7 +117,7 @@ const Header = () => {
                       scrollToSection('menu');
                     }}
                   >
-                    Menu
+                    {t('common.menu')}
                   </a>
                 </li>
                 <li>
@@ -126,7 +129,7 @@ const Header = () => {
                       scrollToSection('events');
                     }}
                   >
-                    Events
+                    {t('common.events')}
                   </a>
                 </li>
                 <li>
@@ -138,7 +141,7 @@ const Header = () => {
                       scrollToSection('gallery');
                     }}
                   >
-                    Galerij
+                    {t('common.gallery')}
                   </a>
                 </li>
                 <li>
@@ -150,8 +153,11 @@ const Header = () => {
                       scrollToSection('contact');
                     }}
                   >
-                    Contact
+                    {t('common.contact')}
                   </a>
+                </li>
+                <li>
+                  <LanguageSwitcher />
                 </li>
               </ul>
             </nav>
@@ -159,7 +165,7 @@ const Header = () => {
             {/* Mobile Menu Button */}
             <button
               className="d-lg-none mobile-nav-toggle"
-              aria-label="Toggle mobile menu"
+              aria-label={t('header.toggleMobileMenu')}
               aria-expanded={isMobileMenuOpen}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               style={{
@@ -207,7 +213,7 @@ const Header = () => {
               </h2>
               <button
                 className="mobile-nav-close text-warning fs-2 p-2 border border-warning rounded bg-black"
-                aria-label="Close mobile menu"
+                aria-label={t('header.closeMobileMenu')}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <i className="bi bi-x"></i>
@@ -215,15 +221,15 @@ const Header = () => {
             </div>
 
             {/* Mobile Navigation Links */}
-            <nav className="flex-fill px-4 py-4" style={{ background: '#000' }} role="navigation" aria-label="Mobiele navigatie">
+            <nav className="flex-fill px-4 py-4" style={{ background: '#000' }} role="navigation" aria-label={t('header.mobileNavigation')}>
               <ul className="list-unstyled">
                 {[
-                  { href: '#hero', label: 'Home', icon: 'bi-house-door' },
-                  { href: '#about', label: 'Over Ons', icon: 'bi-info-circle' },
-                  { href: '#menu', label: 'Menu', icon: 'bi-list-ul' },
-                  { href: '#events', label: 'Events', icon: 'bi-calendar-event' },
-                  { href: '#gallery', label: 'Galerij', icon: 'bi-images' },
-                  { href: '#contact', label: 'Contact', icon: 'bi-telephone' },
+                  { href: '#hero', label: t('common.home'), icon: 'bi-house-door' },
+                  { href: '#about', label: t('common.about'), icon: 'bi-info-circle' },
+                  { href: '#menu', label: t('common.menu'), icon: 'bi-list-ul' },
+                  { href: '#events', label: t('common.events'), icon: 'bi-calendar-event' },
+                  { href: '#gallery', label: t('common.gallery'), icon: 'bi-images' },
+                  { href: '#contact', label: t('common.contact'), icon: 'bi-telephone' },
                 ].map((item) => (
                   <li key={item.href} className="mb-3">
                     <a
@@ -239,6 +245,11 @@ const Header = () => {
                     </a>
                   </li>
                 ))}
+                <li className="mb-3 mt-4 pt-3 border-top border-warning">
+                  <div className="px-2">
+                    <LanguageSwitcher />
+                  </div>
+                </li>
               </ul>
             </nav>
 
@@ -253,11 +264,11 @@ const Header = () => {
                 </div>
                 <div className="d-flex align-items-center mb-3">
                   <i className="bi bi-clock text-warning me-3"></i>
-                  <span>Ma-Zo: 17:OO - 23:OO</span>
+                  <span>{t('header.hours')}</span>
                 </div>
                 <div className="d-flex align-items-center">
                   <i className="bi bi-geo-alt text-warning me-3"></i>
-                  <span>Vlaamsekaai 65, 2000 ANTWERPEN</span>
+                  <span>{t('header.address')}</span>
                 </div>
               </div>
             </div>

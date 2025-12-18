@@ -1,12 +1,16 @@
+import { useTranslation } from 'react-i18next';
+
 const Mogelijkheden = () => {
+  const { t } = useTranslation();
+  
   return (
     <section id="why-us" className="py-4 py-md-5 bg-dark-light">
       <div className="container-fluid px-3 px-md-4" data-aos="fade-up">
         <div className="text-center mb-4 mb-md-5">
           <h2 className="display-5 display-md-4 fw-bold text-golden mb-3 mb-md-4" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
-            Mogelijkheden
+            {t('possibilities.title')}
           </h2>
-          <p className="fs-5 fs-md-4 text-white opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>Waarom voor Ons Restaurant Kiezen</p>
+          <p className="fs-5 fs-md-4 text-white opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>{t('possibilities.subtitle')}</p>
         </div>
 
         <div className="row g-4 justify-content-center">
@@ -40,11 +44,10 @@ const Mogelijkheden = () => {
                 <i className="bi bi-bag-check text-golden" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}></i>
               </div>
               <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)' }}>
-                Afhalen
+                {t('possibilities.takeaway.title')}
               </h4>
               <p className="text-white small lh-base opacity-75" style={{ fontSize: 'clamp(0.85rem, 2vw, 0.9rem)' }}>
-                Bel ons, geef je favoriete gerechten door en vertel ons wanneer je het wilt ophalen. Wij zorgen ervoor
-                dat je eten klaar staat.
+                {t('possibilities.takeaway.description')}
               </p>
             </div>
           </div>
@@ -79,14 +82,13 @@ const Mogelijkheden = () => {
                 <i className="bi bi-house-heart text-golden" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}></i>
               </div>
               <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)' }}>
-                Bestel en geniet thuis
+                {t('possibilities.delivery.title')}
               </h4>
               <span className="badge bg-warning text-dark px-3 py-2 mb-2 mb-md-3" style={{ fontSize: 'clamp(0.75rem, 1.8vw, 0.85rem)', fontWeight: 600 }}>
-                Binnenkort beschikbaar
+                {t('possibilities.delivery.badge')}
               </span>
               <p className="text-white small lh-base opacity-50" style={{ fontSize: 'clamp(0.85rem, 2vw, 0.9rem)',  }}>
-                Plaats telefonisch je bestelling via onze website of telefonisch, en wij brengen je favoriete gerechten
-                rechtstreeks naar je deur.
+                {t('possibilities.delivery.description')}
               </p>
             </div>
           </div>
@@ -121,17 +123,17 @@ const Mogelijkheden = () => {
                 <i className="bi bi-telephone text-golden" style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}></i>
               </div>
               <h4 className="fs-5 fs-md-4 fw-bold text-white mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.1rem, 2.5vw, 1.25rem)' }}>
-                Reserveren
+                {t('possibilities.reservation.title')}
               </h4>
               <p className="text-white small lh-base mb-2 mb-md-3 opacity-75" style={{ fontSize: 'clamp(0.85rem, 2vw, 0.9rem)' }}>
-                Reserveren is niet noodzakelijk, want wij werken met een 'first come, first serve'-beleid.
+                {t('possibilities.reservation.description')}
               </p>
               <a
                 href="tel:+32494194397"
                 className="btn btn-outline-warning rounded-pill px-3 px-md-4 py-2 fw-medium text-decoration-none"
                 style={{ borderColor: 'var(--bs-golden)', color: 'var(--bs-golden)', fontSize: 'clamp(0.85rem, 2vw, 0.9rem)' }}
               >
-                <i className="bi bi-telephone me-1"></i>Bel nu
+                <i className="bi bi-telephone me-1"></i>{t('possibilities.reservation.callNow')}
               </a>
             </div>
           </div>

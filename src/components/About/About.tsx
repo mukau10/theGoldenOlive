@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const About = () => {
+  const { t } = useTranslation();
+  
   return (
     <section id="about" className="py-4 py-md-5 bg-dark-custom" aria-labelledby="about-heading" itemScope itemType="https://schema.org/AboutPage">
       <div className="container-fluid px-3 px-md-4" data-aos="fade-up">
@@ -27,13 +31,10 @@ const About = () => {
               className="display-6 display-md-5 fw-bold text-golden mb-3 mb-md-4 text-center text-lg-start"
               style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}
             >
-              Smaakvolle Ontmoetingen bij The Golden Olive
+              {t('about.title')}
             </h3>
             <p className="fs-6 fs-md-5 text-white fst-italic lh-lg text-center text-lg-start opacity-75" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>
-              Geen zin om te koken vandaag? Kom langs en geniet van heerlijke gerechten samen met familie en vrienden.
-              Bij The Golden Olive verwennen we u met adembenemende soulfood, bereid met de beste ingrediënten en een
-              passie voor smaak. Bekijk alvast onze menukaart online. Reserveren is niet nodig, dus loop gerust binnen
-              en ervaar de warme gastvrijheid van ons bistro-restaurant.
+              {t('about.description')}
             </p>
           </div>
         </div>

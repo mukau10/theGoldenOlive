@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
 const FullGallery = () => {
+  const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -57,13 +59,13 @@ const FullGallery = () => {
                 className="btn btn-outline-warning mb-4"
                 style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)' }}
               >
-                <i className="bi bi-arrow-left me-2"></i>Terug naar home
+                <i className="bi bi-arrow-left me-2"></i>{t('gallery.backToHome')}
               </button>
               <h2 className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
-                Galerij
+                {t('gallery.title')}
               </h2>
               <p className="fs-5 fs-md-4 text-warning fw-light opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>
-                Ontdek onze culinaire creaties
+                {t('gallery.fullSubtitle')}
               </p>
               <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '96px', height: '4px' }}></div>
             </div>
@@ -108,7 +110,7 @@ const FullGallery = () => {
           <button
             className="position-absolute top-0 end-0 m-4 btn-close btn-close-white"
             onClick={() => setSelectedImage(null)}
-            aria-label="Close"
+            aria-label={t('common.close')}
             style={{ fontSize: '2rem' }}
           ></button>
           <img

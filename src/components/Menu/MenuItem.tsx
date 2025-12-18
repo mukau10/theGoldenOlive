@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { MenuItem as MenuItemType } from '../../types/menu';
 import { useAllergens } from '../../hooks/useAllergens';
+import { useMenuTranslation } from '../../utils/menuTranslations';
+import { useAllergenTranslation } from '../../utils/allergenTranslations';
 
 interface MenuItemProps {
   item: MenuItemType;
@@ -10,10 +13,15 @@ interface MenuItemProps {
 }
 
 const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps) => {
+  const { t } = useTranslation();
+  const { translateMenuItem } = useMenuTranslation();
+  const { translateAllergen } = useAllergenTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const { getAllergenByCode } = useAllergens();
+  
+  const translatedItem = translateMenuItem(item);
 
   // Intersection Observer for entrance animation
   useEffect(() => {
@@ -57,25 +65,34 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
   const getEnhancedAllergenInfo = (allergen: { code: string; type: string; color: string; description: string }) => {
     const referenceAllergen = getAllergenByCode(allergen.code);
     if (referenceAllergen) {
+      // Translate the reference allergen
+      const translated = translateAllergen(referenceAllergen);
       // Use reference data if available, but keep item's description if it's more specific
       return {
         ...referenceAllergen,
-        description: allergen.description || referenceAllergen.description,
+        type: translated.type,
+        description: allergen.description ? translateAllergen({ ...allergen, type: allergen.type, description: allergen.description }).description : translated.description,
         color: allergen.color || referenceAllergen.color,
       };
     }
-    // Fallback to item's allergen data
-    return allergen;
+    // Fallback to item's allergen data - translate it
+    const translated = translateAllergen(allergen as any);
+    return {
+      ...allergen,
+      type: translated.type,
+      description: translated.description,
+    };
   };
 
   // Handle placeholder items
   if (item.id === 'burgers-placeholder') {
+    const placeholderTranslated = translateMenuItem(item);
     return (
       <div className={`col-12 mb-4`}>
         <div className="bg-black border border-warning rounded-3 p-5 text-center shadow-sm">
           <i className="bi bi-hamburger text-warning fs-1 mb-3 d-block"></i>
           <h5 className="text-warning fw-bold mb-0" style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem' }}>
-            {item.name}
+            {placeholderTranslated.name}
           </h5>
         </div>
       </div>
@@ -199,12 +216,12 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
                 e.currentTarget.style.textShadow = 'none';
               }}
             >
-              {item.name}
+              {translatedItem.name}
             </a>
           </h5>
 
           {/* Description */}
-          {item.description && (
+          {translatedItem.description && (
             <p
               className="text-white-50 small mb-3 lh-base"
               style={{ 
@@ -213,7 +230,7 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
                 transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
                 transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
               }}
-              dangerouslySetInnerHTML={{ __html: item.description }}
+              dangerouslySetInnerHTML={{ __html: translatedItem.description }}
             />
           )}
 
@@ -240,7 +257,7 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
                     transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
                   }}
                 ></i>
-                <span className="small text-warning fw-medium">Allergenen:</span>
+                <span className="small text-warning fw-medium">{t('menu.allergens')}</span>
               </div>
             <div className="d-flex flex-wrap gap-1 allergen-symbols mb-2">
               {item.allergens.map((allergen, allergenIndex) => {

@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Gallery = () => {
+  const { t } = useTranslation();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -51,8 +53,8 @@ const Gallery = () => {
 
         <div className="container-fluid px-3 px-md-4 position-relative" data-aos="fade-up">
           <div className="text-center mb-4 mb-md-5">
-            <h2 className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>Galerij</h2>
-            <p className="fs-5 fs-md-4 text-warning fw-light opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>Een voorproefje</p>
+            <h2 className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>{t('gallery.title')}</h2>
+            <p className="fs-5 fs-md-4 text-warning fw-light opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>{t('gallery.subtitle')}</p>
             <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '96px', height: '4px' }}></div>
           </div>
         </div>
@@ -85,7 +87,7 @@ const Gallery = () => {
               className="btn btn-warning btn-lg rounded-pill px-5 py-3 fw-semibold"
               style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}
             >
-              Toon meer <i className="bi bi-arrow-right ms-2"></i>
+              {t('gallery.showMore')} <i className="bi bi-arrow-right ms-2"></i>
             </button>
           </div>
         </div>
@@ -105,7 +107,7 @@ const Gallery = () => {
           <button
             className="position-absolute top-0 end-0 m-4 btn-close btn-close-white"
             onClick={() => setSelectedImage(null)}
-            aria-label="Close"
+            aria-label={t('common.close')}
             style={{ fontSize: '2rem' }}
           ></button>
           <img

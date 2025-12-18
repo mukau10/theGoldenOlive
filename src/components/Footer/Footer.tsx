@@ -1,4 +1,8 @@
+import { useTranslation } from 'react-i18next';
+
 const Footer = () => {
+  const { t } = useTranslation();
+  
   return (
     <footer
       id="footer"
@@ -25,7 +29,7 @@ const Footer = () => {
                     href="https://www.facebook.com/TheGoldenolivee"
                     className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center"
                     style={{ width: 'clamp(44px, 8vw, 50px)', height: 'clamp(44px, 8vw, 50px)', transition: 'all 0.3s' }}
-                    aria-label="Bezoek onze Facebook pagina"
+                    aria-label={t('footer.visitFacebook')}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -35,7 +39,7 @@ const Footer = () => {
                     href="https://www.instagram.com/thegoldenolive._"
                     className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center"
                     style={{ width: 'clamp(44px, 8vw, 50px)', height: 'clamp(44px, 8vw, 50px)', transition: 'all 0.3s' }}
-                    aria-label="Volg ons op Instagram"
+                    aria-label={t('footer.followInstagram')}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -60,26 +64,26 @@ const Footer = () => {
               <strong>
                 <span className="text-warning">The Golden Olive</span>
               </strong>
-              . All Rights Reserved
+              . {t('footer.copyright')}
             </div>
             <div className="text-white-50 small" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
               <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2 gap-sm-3">
                 <div>
-                  BTW-nummer{' '}
-                  <a href="#" aria-label="BTW nummer" className="text-warning text-decoration-none">
+                  {t('footer.vatNumber')}{' '}
+                  <a href="#" aria-label={t('footer.vatNumber')} className="text-warning text-decoration-none">
                     BE0738909475
                   </a>
                 </div>
                 <div className="d-none d-sm-block text-secondary">|</div>
                 <div>
                   <a href="/privacy-policy" className="text-warning text-decoration-none">
-                    Privacy Policy
+                    {t('footer.privacyPolicy')}
                   </a>
                 </div>
                 <div className="d-none d-sm-block text-secondary">|</div>
                 <div>
                   <a href="/allergenen" className="text-warning text-decoration-none">
-                    Allergenen Info
+                    {t('footer.allergenInfo')}
                   </a>
                 </div>
               </div>
