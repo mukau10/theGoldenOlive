@@ -16,6 +16,7 @@ import AllergenInfo from './components/AllergenInfo/AllergenInfo';
 import StructuredData from './components/SEO/StructuredData';
 import SEOHead from './components/SEO/SEOHead';
 import SplashScreen from './components/SplashScreen/SplashScreen';
+import CookieConsent from './components/CookieConsent/CookieConsent';
 import { preloadMenu } from './hooks/useMenu';
 import { preloadAllergens } from './hooks/useAllergens';
 import './App.css';
@@ -71,6 +72,7 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <SplashScreen />
+      <CookieConsent />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />

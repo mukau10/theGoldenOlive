@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { saveLanguagePreference } from '../../utils/languageStorage';
 import './LanguageSwitcher.css';
 
 const LanguageSwitcher = () => {
@@ -28,7 +29,7 @@ const LanguageSwitcher = () => {
 
   const handleLanguageChange = (langCode: string) => {
     i18n.changeLanguage(langCode);
-    localStorage.setItem('i18nextLng', langCode);
+    saveLanguagePreference(langCode);
     setIsOpen(false);
   };
 

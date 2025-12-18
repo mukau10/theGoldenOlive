@@ -508,5 +508,12 @@
         "description": "Sterke espresso"
       }
     }
+  },
+  "cookieConsent": {
+    "title": "Cookie Toestemming",
+    "description": "We gebruiken cookies en lokale opslag om uw browse-ervaring te verbeteren, uw taalvoorkeur op te slaan en ons verkeer te analyseren. Door op 'Accepteren' te klikken, stemt u in met ons gebruik van cookies.",
+    "learnMore": "Meer informatie",
+    "accept": "Accepteren",
+    "decline": "Weigeren"
   }
 }

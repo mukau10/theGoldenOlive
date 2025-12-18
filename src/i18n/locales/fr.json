@@ -508,5 +508,12 @@
         "description": "Expresso fort"
       }
     }
+  },
+  "cookieConsent": {
+    "title": "Consentement aux Cookies",
+    "description": "Nous utilisons des cookies et le stockage local pour améliorer votre expérience de navigation, sauvegarder votre préférence linguistique et analyser notre trafic. En cliquant sur 'Accepter', vous acceptez notre utilisation des cookies.",
+    "learnMore": "En savoir plus",
+    "accept": "Accepter",
+    "decline": "Refuser"
   }
 }

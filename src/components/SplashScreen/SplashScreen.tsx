@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { saveLanguagePreference, getLanguagePreference } from '../../utils/languageStorage';
 import './SplashScreen.css';
 
 const SplashScreen = () => {
@@ -11,22 +12,32 @@ const SplashScreen = () => {
 
   // Check if language was already selected before
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('i18nextLng');
+    const savedLanguage = getLanguagePreference();
     if (savedLanguage) {
       // Set the language if it was previously saved
       i18n.changeLanguage(savedLanguage);
+      // If language is already saved, skip splash screen quickly
+      setLanguageSelected(true);
+      setShowLanguageSelector(false);
+      // Hide splash screen faster since language is already known
+      setTimeout(() => {
+        setIsVisible(false);
+        setTimeout(() => {
+          setShouldRender(false);
+        }, 300);
+      }, 500);
+    } else {
+      // Only show language selector if no language is saved
+      const timer = setTimeout(() => {
+        setShowLanguageSelector(true);
+      }, 1500);
+      return () => clearTimeout(timer);
     }
-    // Always show language selector after logo animation
-    // User must select a language (or confirm existing one) to continue
-    const timer = setTimeout(() => {
-      setShowLanguageSelector(true);
-    }, 1500);
-    return () => clearTimeout(timer);
   }, [i18n]);
 
   const handleLanguageSelect = (lang: string) => {
     i18n.changeLanguage(lang);
-    localStorage.setItem('i18nextLng', lang);
+    saveLanguagePreference(lang);
     setLanguageSelected(true);
     setShowLanguageSelector(false);
     

@@ -508,5 +508,12 @@
         "description": "Strong espresso"
       }
     }
+  },
+  "cookieConsent": {
+    "title": "Cookie Consent",
+    "description": "We use cookies and local storage to enhance your browsing experience, save your language preference, and analyze our traffic. By clicking 'Accept', you consent to our use of cookies.",
+    "learnMore": "Learn more",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

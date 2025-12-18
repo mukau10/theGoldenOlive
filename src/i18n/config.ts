@@ -31,6 +31,8 @@ i18n
       lookupLocalStorage: 'i18nextLng',
       caches: ['localStorage'],
     },
+    // Whitelist of supported languages
+    supportedLngs: ['nl', 'en', 'fr'],
   });
 
 export default i18n;

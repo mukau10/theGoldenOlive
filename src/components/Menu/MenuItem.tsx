@@ -153,10 +153,19 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
             style={{ 
               height: '220px', 
               objectFit: 'cover',
-              transform: isHovered ? 'scale(1.15)' : 'scale(1)',
+              transform: isHovered ? 'scale(1.08)' : 'scale(1)',
               transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
-            src={item.image.replace('assets/img', '/img')}
+            src={(() => {
+              // Normalize image paths to /img/ format
+              let path = item.image;
+              // Remove any public/ prefix
+              path = path.replace(/^\/?public\/img\//, '/img/');
+              path = path.replace(/^public\/img\//, '/img/');
+              // Replace assets/img with /img
+              path = path.replace(/^assets\/img\//, '/img/');
+              return path;
+            })()}
             alt={item.alt}
             loading="lazy"
           />
