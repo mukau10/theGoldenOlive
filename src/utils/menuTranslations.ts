@@ -29,13 +29,15 @@ export const useMenuTranslation = () => {
 /**
  * Translate category name
  */
-export const translateCategory = (categoryKey: string, t: (key: string) => string): string => {
-  return t(`menu.categories.${categoryKey}.title`, { defaultValue: categoryKey });
+export const translateCategory = (categoryKey: string, t: (key: string, options?: { defaultValue?: string }) => string): string => {
+  const translated = t(`menu.categories.${categoryKey}.title`, { defaultValue: categoryKey });
+  return translated === `menu.categories.${categoryKey}.title` ? categoryKey : translated;
 };
 
 /**
  * Translate category description
  */
-export const translateCategoryDescription = (categoryKey: string, t: (key: string) => string): string => {
-  return t(`menu.categories.${categoryKey}.description`, { defaultValue: '' });
+export const translateCategoryDescription = (categoryKey: string, t: (key: string, options?: { defaultValue?: string }) => string): string => {
+  const translated = t(`menu.categories.${categoryKey}.description`, { defaultValue: '' });
+  return translated === `menu.categories.${categoryKey}.description` ? '' : translated;
 };

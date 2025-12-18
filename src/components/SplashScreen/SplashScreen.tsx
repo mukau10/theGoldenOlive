@@ -13,23 +13,16 @@ const SplashScreen = () => {
   useEffect(() => {
     const savedLanguage = localStorage.getItem('i18nextLng');
     if (savedLanguage) {
-      setLanguageSelected(true);
-      // Auto-hide after showing logo and text
-      const timer = setTimeout(() => {
-        setIsVisible(false);
-        setTimeout(() => {
-          setShouldRender(false);
-        }, 500);
-      }, 2500);
-      return () => clearTimeout(timer);
-    } else {
-      // Show language selector after logo animation
-      const timer = setTimeout(() => {
-        setShowLanguageSelector(true);
-      }, 1500);
-      return () => clearTimeout(timer);
+      // Set the language if it was previously saved
+      i18n.changeLanguage(savedLanguage);
     }
-  }, []);
+    // Always show language selector after logo animation
+    // User must select a language (or confirm existing one) to continue
+    const timer = setTimeout(() => {
+      setShowLanguageSelector(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [i18n]);
 
   const handleLanguageSelect = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -99,7 +92,7 @@ const SplashScreen = () => {
           </div>
         )}
 
-        {!showLanguageSelector && (
+        {!showLanguageSelector && !languageSelected && (
           <div className="loading-dots">
             <span></span>
             <span></span>
