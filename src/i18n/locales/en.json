@@ -333,15 +333,15 @@
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Caramelized",
-        "description": "Honey, coleslaw<br />Served with fries and 2 sauces"
+        "description": "With Honey<br />Served with fries and 2 sauces"
       },
       "spareribs-spicy": {
         "name": "Spareribs Spicy",
-        "description": "Coleslaw<br />Served with fries and 2 sauces"
+        "description": "<br />Served with fries and 2 sauces"
       },
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili",
-        "description": "Coleslaw<br />Served with fries and 2 sauces"
+        "description": "<br />Served with fries and 2 sauces"
       },
       "shredded-chicken-loaded-scoop": {
         "name": "Shredded Chicken Loaded Scoop",
@@ -373,7 +373,7 @@
       },
       "ouezzane-chicken-burger": {
         "name": "Ouezzane Chicken Burger",
-        "description": "Shredded chicken with crispy onions, cheese, fresh coleslaw, olives and our Original Signature Sauce<br />Served with fries and 2 sauces"
+        "description": "Shredded chicken with crispy onions, cheese, olives and our Original Signature Sauce<br />Served with fries and 2 sauces"
       },
       "classic-house-burger": {
         "name": "Classic House Burger",
@@ -395,16 +395,12 @@
         "name": "Minced Meat Burger",
         "description": "Kid-friendly version of our classic burger."
       },
-      "crispy-kipburger": {
-        "name": "Crispy Chicken Burger",
+      "kids-kipburger": {
+        "name": "Kids Kipburger",
         "description": "Light and crispy chicken burger."
       },
       "friet": {
         "name": "Fries",
-        "description": ""
-      },
-      "rijst": {
-        "name": "Rice",
         "description": ""
       },
       "mac-cheese": {
@@ -413,10 +409,6 @@
       },
       "champignonsaus": {
         "name": "Mushroom Sauce",
-        "description": ""
-      },
-      "diabolique-saus": {
-        "name": "Diabolique Sauce",
         "description": ""
       },
       "cheesecake-chocoladesaus": {

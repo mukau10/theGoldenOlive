@@ -333,15 +333,15 @@
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Gekarameliseerd",
-        "description": "Honing, coleslaw<br />Geserveerd met frietjes en 2 sauzen"
+        "description": "Met Honing<br />Geserveerd met frietjes en 2 sauzen"
       },
       "spareribs-spicy": {
         "name": "Spareribs Spicy (Pikant)",
-        "description": "Coleslaw<br />Geserveerd met frietjes en 2 sauzen"
+        "description": "<br />Geserveerd met frietjes en 2 sauzen"
       },
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili",
-        "description": "Coleslaw<br />Geserveerd met frietjes en 2 sauzen"
+        "description": "<br />Geserveerd met frietjes en 2 sauzen"
       },
       "shredded-chicken-loaded-scoop": {
         "name": "Shredded Chicken Loaded Scoop",
@@ -395,16 +395,12 @@
         "name": "Gehaktburger",
         "description": "Kindvriendelijke versie van onze klassieke burger."
       },
-      "crispy-kipburger": {
-        "name": "Crispy Kipburger",
+      "kids-kipburger": {
+        "name": "Kids Kipburger",
         "description": "Lichte en krokante kipburger."
       },
       "friet": {
         "name": "Friet",
-        "description": ""
-      },
-      "rijst": {
-        "name": "Rijst",
         "description": ""
       },
       "mac-cheese": {
@@ -413,10 +409,6 @@
       },
       "champignonsaus": {
         "name": "Champignonsaus",
-        "description": ""
-      },
-      "diabolique-saus": {
-        "name": "Diabolique saus",
         "description": ""
       },
       "cheesecake-chocoladesaus": {

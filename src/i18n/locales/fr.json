@@ -333,15 +333,15 @@
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Caramélisées",
-        "description": "Miel, coleslaw<br />Servi avec frites et 2 sauces"
+        "description": "Avec Miel<br />Servi avec frites et 2 sauces"
       },
       "spareribs-spicy": {
         "name": "Spareribs Épicées",
-        "description": "Coleslaw<br />Servi avec frites et 2 sauces"
+        "description": "<br />Servi avec frites et 2 sauces"
       },
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili",
-        "description": "Coleslaw<br />Servi avec frites et 2 sauces"
+        "description": "<br />Servi avec frites et 2 sauces"
       },
       "shredded-chicken-loaded-scoop": {
         "name": "Loaded Scoop au Poulet Effiloché",
@@ -373,7 +373,7 @@
       },
       "ouezzane-chicken-burger": {
         "name": "Burger Poulet Ouezzane",
-        "description": "Poulet effiloché avec oignons croustillants, fromage, coleslaw frais, olives et notre Sauce Signature Originale<br />Servi avec frites et 2 sauces"
+        "description": "Poulet effiloché avec oignons croustillants, fromage, olives et notre Sauce Signature Originale<br />Servi avec frites et 2 sauces"
       },
       "classic-house-burger": {
         "name": "Burger Maison Classique",
@@ -395,16 +395,12 @@
         "name": "Burger à la Viande Hachée",
         "description": "Version adaptée aux enfants de notre burger classique."
       },
-      "crispy-kipburger": {
-        "name": "Burger Poulet Croustillant",
+      "kids-kipburger": {
+        "name": "Burger Poulet pour Enfants",
         "description": "Burger poulet léger et croustillant."
       },
       "friet": {
         "name": "Frites",
-        "description": ""
-      },
-      "rijst": {
-        "name": "Riz",
         "description": ""
       },
       "mac-cheese": {
@@ -413,10 +409,6 @@
       },
       "champignonsaus": {
         "name": "Sauce aux Champignons",
-        "description": ""
-      },
-      "diabolique-saus": {
-        "name": "Sauce Diabolique",
         "description": ""
       },
       "cheesecake-chocoladesaus": {
