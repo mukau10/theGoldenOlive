@@ -19,114 +19,167 @@ const Hero = () => {
     video.setAttribute('x5-video-player-fullscreen', 'true');
     video.setAttribute('x5-video-orientation', 'portrait');
     video.setAttribute('preload', 'auto');
+    
+    // Force muted state - critical for autoplay
     video.muted = true;
     video.playsInline = true;
-    video.volume = 0; // Ensure volume is 0 for mobile autoplay
-    video.defaultMuted = true; // Additional mobile support
+    video.volume = 0;
+    video.defaultMuted = true;
 
-    // Function to attempt video play with retry logic
-    const attemptPlay = async () => {
+    // Function to ensure video is visible
+    const ensureVideoVisible = () => {
+      video.style.display = 'block';
+      video.style.visibility = 'visible';
+      video.style.opacity = '1';
+      video.style.zIndex = '1';
+    };
+
+    // Aggressive function to force video play - will retry continuously
+    const forcePlay = async () => {
+      // Always ensure muted state before playing
+      video.muted = true;
+      video.volume = 0;
+      video.defaultMuted = true;
+      ensureVideoVisible();
+      
       try {
-        // Ensure video is muted before attempting to play (critical for mobile)
-        video.muted = true;
-        video.volume = 0;
-        video.defaultMuted = true;
-        
-        // Force load the video
-        video.load();
-        
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          await playPromise;
-          console.log('Video is playing successfully');
-          video.style.background = 'transparent';
-          video.style.backgroundColor = 'transparent';
+        if (video.paused) {
+          // Try multiple play strategies
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            await playPromise;
+            return true;
+          }
         }
       } catch (error) {
-        console.warn('Video autoplay prevented:', error);
-        // Retry with multiple strategies for mobile
-        const retryPlay = () => {
-          if (video.paused) {
-            video.muted = true;
-            video.volume = 0;
-            video.defaultMuted = true;
-            video.play().catch(() => {
-              // Silently fail if still blocked
-            });
-          }
-        };
+        // Try clicking play button programmatically if it exists
+        const playButton = video.parentElement?.querySelector('.vjs-big-play-button') as HTMLElement;
+        if (playButton) {
+          playButton.click();
+        }
         
-        // Multiple retry attempts with increasing delays
-        setTimeout(retryPlay, 100);
-        setTimeout(retryPlay, 500);
-        setTimeout(retryPlay, 1000);
+        // Try to trigger play via click event on video
+        const clickEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        });
+        video.dispatchEvent(clickEvent);
+        
+        // Try touch event for mobile
+        const touchEvent = new TouchEvent('touchstart', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        } as TouchEventInit);
+        try {
+          video.dispatchEvent(touchEvent);
+        } catch (e) {
+          // TouchEvent might not be available
+        }
       }
+      return false;
     };
 
-    // Try to play immediately - attempt multiple times for mobile
-    attemptPlay();
+    // Ensure video is visible immediately
+    ensureVideoVisible();
     
-    // Try to play when video is ready
-    if (video.readyState >= 3) {
-      // Video is already loaded enough
-      attemptPlay();
-    }
+    // Load video first
+    video.load();
+    
+    // Immediate play attempt
+    forcePlay();
 
-    // Listen for video events - multiple events for better mobile support
-    const handleVideoReady = () => {
-      video.muted = true;
-      video.volume = 0;
-      attemptPlay();
+    // More aggressive retry interval - check every 100ms for mobile
+    const playInterval = setInterval(() => {
+      if (video.paused && video.readyState >= 1) {
+        forcePlay();
+      }
+    }, 100); // Check every 100ms for faster response
+
+    // Listen for all video events and force play
+    const handleVideoEvent = () => {
+      forcePlay();
     };
     
-    video.addEventListener('loadedmetadata', handleVideoReady, { once: false });
-    video.addEventListener('loadeddata', handleVideoReady, { once: false });
-    video.addEventListener('canplay', handleVideoReady, { once: false });
-    video.addEventListener('canplaythrough', handleVideoReady, { once: false });
+    video.addEventListener('loadedmetadata', handleVideoEvent);
+    video.addEventListener('loadeddata', handleVideoEvent);
+    video.addEventListener('canplay', handleVideoEvent);
+    video.addEventListener('canplaythrough', handleVideoEvent);
     video.addEventListener('playing', () => {
-      video.style.background = 'transparent';
-      video.style.backgroundColor = 'transparent';
+      ensureVideoVisible();
+    });
+    video.addEventListener('pause', () => {
+      // If video gets paused, immediately try to play again
+      setTimeout(forcePlay, 100);
+    });
+    video.addEventListener('ended', () => {
+      // If video ends, restart it
+      video.currentTime = 0;
+      forcePlay();
     });
 
-    // On mobile, autoplay might be blocked - enable play on first user interaction
+    // On any user interaction, force play immediately
     const enableVideoOnInteraction = () => {
-      video.muted = true;
-      video.volume = 0;
-      attemptPlay();
+      // Immediately try to play on any interaction
+      forcePlay();
+      
+      // Also try to click any play button that might be visible
+      setTimeout(() => {
+        const playButtons = document.querySelectorAll('button[aria-label*="play"], .vjs-big-play-button, .vjs-play-control');
+        playButtons.forEach((btn) => {
+          (btn as HTMLElement).click();
+        });
+      }, 50);
     };
 
-    // Multiple interaction events for better mobile support
-    const interactionOptions = { once: true, passive: true };
-    document.addEventListener('touchstart', enableVideoOnInteraction, interactionOptions);
-    document.addEventListener('touchend', enableVideoOnInteraction, interactionOptions);
-    document.addEventListener('click', enableVideoOnInteraction, interactionOptions);
-    document.addEventListener('scroll', enableVideoOnInteraction, interactionOptions);
+    // Multiple interaction events - not once, so it keeps working
+    // Use capture phase for earlier execution
+    document.addEventListener('touchstart', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('touchend', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('touchmove', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('click', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('scroll', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('mousemove', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('keydown', enableVideoOnInteraction, { passive: true, capture: true });
+    document.addEventListener('pointerdown', enableVideoOnInteraction, { passive: true, capture: true });
+    window.addEventListener('load', enableVideoOnInteraction, { once: true });
+    window.addEventListener('DOMContentLoaded', enableVideoOnInteraction, { once: true });
 
-    // Intersection Observer - retry when video comes into view
+    // Intersection Observer - force play when video comes into view
+    let observer: IntersectionObserver | null = null;
     if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
+      observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting && video.paused) {
-              attemptPlay();
+            if (entry.isIntersecting) {
+              forcePlay();
             }
           });
         },
         { threshold: 0.1 }
       );
       observer.observe(video);
-      
-      return () => {
-        observer.disconnect();
-      };
     }
 
     // Cleanup function
     return () => {
-      document.removeEventListener('touchstart', enableVideoOnInteraction);
-      document.removeEventListener('touchend', enableVideoOnInteraction);
-      document.removeEventListener('click', enableVideoOnInteraction);
-      document.removeEventListener('scroll', enableVideoOnInteraction);
+      clearInterval(playInterval);
+      if (observer) {
+        observer.disconnect();
+      }
+      document.removeEventListener('touchstart', enableVideoOnInteraction, true);
+      document.removeEventListener('touchend', enableVideoOnInteraction, true);
+      document.removeEventListener('touchmove', enableVideoOnInteraction, true);
+      document.removeEventListener('click', enableVideoOnInteraction, true);
+      document.removeEventListener('scroll', enableVideoOnInteraction, true);
+      document.removeEventListener('mousemove', enableVideoOnInteraction, true);
+      document.removeEventListener('keydown', enableVideoOnInteraction, true);
+      document.removeEventListener('pointerdown', enableVideoOnInteraction, true);
+      video.removeEventListener('loadedmetadata', handleVideoEvent);
+      video.removeEventListener('loadeddata', handleVideoEvent);
+      video.removeEventListener('canplay', handleVideoEvent);
+      video.removeEventListener('canplaythrough', handleVideoEvent);
     };
   }, []);
 
@@ -166,18 +219,48 @@ const Hero = () => {
           opacity: 1,
           width: '100%',
           height: '100%',
+          minWidth: '100%',
+          minHeight: '100%',
           background: 'transparent',
+          pointerEvents: 'auto', // Changed to auto so video can receive events
         }}
         preload="auto"
         aria-label={t('hero.videoLabel')}
+        onClick={(e) => {
+          const video = e.currentTarget;
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+        }}
+        onTouchStart={(e) => {
+          const video = e.currentTarget;
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+        }}
+        onLoadedData={(e) => {
+          const video = e.currentTarget;
+          video.style.display = 'block';
+          video.style.visibility = 'visible';
+          video.style.opacity = '1';
+          // Try to play immediately when data is loaded
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+        }}
+        onCanPlay={(e) => {
+          const video = e.currentTarget;
+          video.style.display = 'block';
+          video.style.visibility = 'visible';
+          video.style.opacity = '1';
+          // Try to play when video can play
+          if (video.paused) {
+            video.play().catch(() => {});
+          }
+        }}
       >
         <source src="/img/header_video.mp4" type="video/mp4" />
-        <img
-          src="/img/golden/IMG_4117.JPEG"
-          alt="Restaurant ambiance"
-          className="position-absolute top-0 start-0 w-100 h-100"
-          style={{ objectFit: 'cover' }}
-        />
+        Your browser does not support the video tag.
       </video>
 
       {/* Modern gradient overlay */}
@@ -192,12 +275,13 @@ const Hero = () => {
 
       {/* Content */}
       <div
-        className="position-relative container-fluid px-3 px-md-4 text-center"
+        className="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-between container-fluid px-3 px-md-4 text-center"
         style={{ zIndex: 10, paddingTop: '120px', paddingBottom: '60px' }}
         data-aos="zoom-in"
         data-aos-delay="100"
       >
-        <div className="row justify-content-center">
+        {/* Title - hidden on mobile to show more video */}
+        <div className="row justify-content-center d-none d-md-block">
           <div className="col-12 col-lg-8">
             <h1
               className="display-3 display-md-2 display-lg-1 fw-bold text-white mb-3 mb-md-4 lh-1"
@@ -212,8 +296,8 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Menu button */}
-        <div className="row justify-content-center mt-4 mt-md-5">
+        {/* Menu button - positioned at bottom on mobile, center on desktop */}
+        <div className="row justify-content-center mt-auto mt-md-4">
           <div className="col-12 col-sm-auto">
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <button

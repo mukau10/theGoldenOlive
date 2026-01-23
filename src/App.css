@@ -8,3 +8,12 @@
 #main {
   padding-top: 0;
 }
+
+/* Loading container for lazy loaded components */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  padding: 2rem;
+}

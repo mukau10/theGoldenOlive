@@ -138,6 +138,83 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     );
   }
 
+  // Simple list layout for drinks (frisdranken and warme-dranken) - no images
+  const isDrinkCategory = category === 'frisdranken' || category === 'warme-dranken';
+  
+  if (isDrinkCategory) {
+    return (
+      <div 
+        ref={cardRef}
+        className={`menu-item-modern filter-${category} col-12 mb-3`}
+        style={{
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+          transition: `opacity 0.4s ease ${index * 0.05}s, transform 0.4s ease ${index * 0.05}s`,
+        }}
+      >
+        <div className="bg-black border border-warning rounded-3 p-3 px-4">
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="flex-grow-1">
+              <h6 
+                className="text-white fw-bold mb-1"
+                style={{ 
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1.1rem',
+                }}
+              >
+                {translatedItem.name}
+              </h6>
+              {translatedItem.description && (
+                <p className="text-white-50 small mb-0" style={{ fontSize: '0.85rem' }}>
+                  {translatedItem.description}
+                </p>
+              )}
+            </div>
+            <div className="ms-3">
+              <span 
+                className="badge bg-warning text-black fw-bold px-3 py-2 rounded-pill"
+                style={{ fontSize: '0.95rem' }}
+              >
+                {item.price}
+              </span>
+            </div>
+          </div>
+          {/* Allergen Section for drinks */}
+          {item.allergens && item.allergens.length > 0 && (
+            <div className="border-top border-warning pt-2 mt-2">
+              <div className="d-flex flex-wrap gap-1 allergen-symbols">
+                {item.allergens.map((allergen, allergenIndex) => {
+                  const enhancedAllergen = getEnhancedAllergenInfo(allergen);
+                  const bgColor = allergenColors[enhancedAllergen.color] || '#dc3545';
+                  const textColor = enhancedAllergen.color === 'yellow' || enhancedAllergen.color === 'amber' ? '#000' : '#fff';
+                  return (
+                    <span
+                      key={`${allergen.code}-${allergenIndex}`}
+                      className={`allergen-symbol allergen-${enhancedAllergen.color} badge rounded-circle d-inline-flex align-items-center justify-content-center fw-bold`}
+                      onClick={() => onAllergenClick(enhancedAllergen.description)}
+                      title={`${enhancedAllergen.type}: ${enhancedAllergen.description}`}
+                      style={{
+                        background: `${bgColor} !important`,
+                        color: `${textColor} !important`,
+                        border: `2px solid ${bgColor} !important`,
+                        width: '24px',
+                        height: '24px',
+                        fontSize: '10px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {enhancedAllergen.code}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       ref={cardRef}

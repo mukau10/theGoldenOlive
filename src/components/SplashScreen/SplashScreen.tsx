@@ -5,25 +5,29 @@ import './SplashScreen.css';
 
 const SplashScreen = () => {
   const { t, i18n } = useTranslation();
-  const [isVisible, setIsVisible] = useState(true);
-  const [shouldRender, setShouldRender] = useState(true);
-  const [languageSelected, setLanguageSelected] = useState(false);
+  
+  // Check immediately if language preference exists - if so, don't render splash screen at all
+  const savedLanguage = getLanguagePreference();
+  const [isVisible, setIsVisible] = useState(!savedLanguage);
+  const [shouldRender, setShouldRender] = useState(!savedLanguage);
+  const [languageSelected, setLanguageSelected] = useState(!!savedLanguage);
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 
-  // Always show language selector - user must always choose a language
+  // Initialize language if it was already saved
   useEffect(() => {
-    const savedLanguage = getLanguagePreference();
     if (savedLanguage) {
-      // Set the language temporarily for display, but user must still confirm
+      // Set the language if it was previously saved
       i18n.changeLanguage(savedLanguage);
+      // Don't show splash screen at all if language is already saved
+      return;
+    } else {
+      // Only show language selector if no language is saved
+      const timer = setTimeout(() => {
+        setShowLanguageSelector(true);
+      }, 1500);
+      return () => clearTimeout(timer);
     }
-    // Always show language selector after logo animation
-    // User must always select a language (even if one was previously saved)
-    const timer = setTimeout(() => {
-      setShowLanguageSelector(true);
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, [i18n]);
+  }, [i18n, savedLanguage]);
 
   const handleLanguageSelect = (lang: string) => {
     i18n.changeLanguage(lang);

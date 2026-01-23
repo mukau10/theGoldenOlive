@@ -9,11 +9,14 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
-  // Ensure proper routing for SPA
+  // Disable all code splitting - everything in one bundle
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: undefined
+        manualChunks: undefined,
+        // Force everything into one chunk
+        inlineDynamicImports: true
       }
     }
   }
