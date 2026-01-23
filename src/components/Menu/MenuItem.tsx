@@ -18,6 +18,7 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
   const { translateAllergen } = useAllergenTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const { getAllergenByCode } = useAllergens();
   
@@ -60,6 +61,44 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     amber: '#ff9f43',
     brown: '#8b4513',
   };
+
+  // Normalize image path
+  const getImagePath = () => {
+    let path = item.image;
+    // Remove any public/ prefix
+    path = path.replace(/^\/?public\/img\//, '/img/');
+    path = path.replace(/^public\/img\//, '/img/');
+    // Replace assets/img with /img
+    path = path.replace(/^assets\/img\//, '/img/');
+    return path;
+  };
+
+  // Handle image click to open modal
+  const handleImageClick = () => {
+    setShowImageModal(true);
+  };
+
+  // Handle modal close
+  const handleCloseModal = () => {
+    setShowImageModal(false);
+  };
+
+  // Handle ESC key to close modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && showImageModal) {
+        handleCloseModal();
+      }
+    };
+    if (showImageModal) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showImageModal]);
 
   // Get allergen info from reference data or use item's allergen data
   const getEnhancedAllergenInfo = (allergen: { code: string; type: string; color: string; description: string }) => {
@@ -147,7 +186,20 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
         />
 
         {/* Image with overlay */}
-        <div className="position-relative" style={{ overflow: 'hidden', zIndex: 2 }}>
+        <div 
+          className="position-relative" 
+          style={{ overflow: 'hidden', zIndex: 2, cursor: 'pointer' }}
+          onClick={handleImageClick}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleImageClick();
+            }
+          }}
+          aria-label={t('menu.viewFullImage', { item: translatedItem.name })}
+        >
           <img
             className="w-100"
             style={{ 
@@ -156,19 +208,22 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
               transform: isHovered ? 'scale(1.08)' : 'scale(1)',
               transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
-            src={(() => {
-              // Normalize image paths to /img/ format
-              let path = item.image;
-              // Remove any public/ prefix
-              path = path.replace(/^\/?public\/img\//, '/img/');
-              path = path.replace(/^public\/img\//, '/img/');
-              // Replace assets/img with /img
-              path = path.replace(/^assets\/img\//, '/img/');
-              return path;
-            })()}
+            src={getImagePath()}
             alt={item.alt}
             loading="lazy"
           />
+          {/* Click indicator overlay */}
+          <div
+            className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+            style={{
+              background: 'rgba(0, 0, 0, 0)',
+              opacity: isHovered ? 0.3 : 0,
+              transition: 'opacity 0.3s ease',
+              pointerEvents: 'none',
+            }}
+          >
+            <i className="bi bi-zoom-in text-white fs-1" style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)' }}></i>
+          </div>
           {/* Image overlay gradient */}
           <div
             className="position-absolute bottom-0 start-0 w-100"
@@ -317,6 +372,90 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
           }
           50% {
             transform: scale(1.25) rotate(-5deg);
+          }
+        }
+      `}</style>
+      
+      {/* Image Modal */}
+      {showImageModal && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{
+            zIndex: 10000,
+            background: 'rgba(0, 0, 0, 0.9)',
+            backdropFilter: 'blur(5px)',
+            animation: 'fadeIn 0.3s ease',
+          }}
+          onClick={handleCloseModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="image-modal-title"
+        >
+          <div
+            className="position-relative"
+            style={{
+              maxWidth: '90vw',
+              maxHeight: '90vh',
+              animation: 'zoomIn 0.3s ease',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="btn btn-outline-warning position-absolute top-0 end-0 m-3 rounded-circle d-flex align-items-center justify-content-center"
+              style={{
+                width: '50px',
+                height: '50px',
+                zIndex: 10001,
+                fontSize: '1.5rem',
+              }}
+              onClick={handleCloseModal}
+              aria-label={t('common.close')}
+            >
+              <i className="bi bi-x"></i>
+            </button>
+            <img
+              src={getImagePath()}
+              alt={item.alt}
+              style={{
+                maxWidth: '100%',
+                maxHeight: '90vh',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                boxShadow: '0 10px 40px rgba(255, 193, 7, 0.3)',
+              }}
+            />
+            <div
+              className="position-absolute bottom-0 start-0 w-100 text-center p-3"
+              style={{
+                background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%)',
+                borderRadius: '0 0 8px 8px',
+              }}
+            >
+              <h5 id="image-modal-title" className="text-warning mb-0 fw-bold">
+                {translatedItem.name}
+              </h5>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes zoomIn {
+          from {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
           }
         }
       `}</style>

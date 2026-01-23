@@ -18,16 +18,22 @@ const Hero = () => {
     video.setAttribute('x5-video-player-type', 'h5');
     video.setAttribute('x5-video-player-fullscreen', 'true');
     video.setAttribute('x5-video-orientation', 'portrait');
+    video.setAttribute('preload', 'auto');
     video.muted = true;
     video.playsInline = true;
     video.volume = 0; // Ensure volume is 0 for mobile autoplay
+    video.defaultMuted = true; // Additional mobile support
 
     // Function to attempt video play with retry logic
     const attemptPlay = async () => {
       try {
-        // Ensure video is muted before attempting to play
+        // Ensure video is muted before attempting to play (critical for mobile)
         video.muted = true;
         video.volume = 0;
+        video.defaultMuted = true;
+        
+        // Force load the video
+        video.load();
         
         const playPromise = video.play();
         if (playPromise !== undefined) {
@@ -38,30 +44,45 @@ const Hero = () => {
         }
       } catch (error) {
         console.warn('Video autoplay prevented:', error);
-        // Retry after a short delay
-        setTimeout(() => {
+        // Retry with multiple strategies for mobile
+        const retryPlay = () => {
           if (video.paused) {
             video.muted = true;
             video.volume = 0;
+            video.defaultMuted = true;
             video.play().catch(() => {
               // Silently fail if still blocked
             });
           }
-        }, 500);
+        };
+        
+        // Multiple retry attempts with increasing delays
+        setTimeout(retryPlay, 100);
+        setTimeout(retryPlay, 500);
+        setTimeout(retryPlay, 1000);
       }
     };
 
-    // Try to play immediately when video is ready
+    // Try to play immediately - attempt multiple times for mobile
+    attemptPlay();
+    
+    // Try to play when video is ready
     if (video.readyState >= 3) {
       // Video is already loaded enough
       attemptPlay();
     }
 
     // Listen for video events - multiple events for better mobile support
-    video.addEventListener('loadedmetadata', attemptPlay, { once: true });
-    video.addEventListener('loadeddata', attemptPlay, { once: true });
-    video.addEventListener('canplay', attemptPlay, { once: true });
-    video.addEventListener('canplaythrough', attemptPlay, { once: true });
+    const handleVideoReady = () => {
+      video.muted = true;
+      video.volume = 0;
+      attemptPlay();
+    };
+    
+    video.addEventListener('loadedmetadata', handleVideoReady, { once: false });
+    video.addEventListener('loadeddata', handleVideoReady, { once: false });
+    video.addEventListener('canplay', handleVideoReady, { once: false });
+    video.addEventListener('canplaythrough', handleVideoReady, { once: false });
     video.addEventListener('playing', () => {
       video.style.background = 'transparent';
       video.style.backgroundColor = 'transparent';
@@ -134,6 +155,8 @@ const Hero = () => {
         muted
         loop
         playsInline
+        webkit-playsinline="true"
+        x5-playsinline="true"
         className="position-absolute top-0 start-0 w-100 h-100"
         style={{
           objectFit: 'cover',
@@ -149,7 +172,6 @@ const Hero = () => {
         aria-label={t('hero.videoLabel')}
       >
         <source src="/img/header_video.mp4" type="video/mp4" />
-        <source src="/img/header_video.mov" type="video/quicktime" />
         <img
           src="/img/golden/IMG_4117.JPEG"
           alt="Restaurant ambiance"

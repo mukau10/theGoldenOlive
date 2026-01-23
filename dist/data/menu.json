@@ -60,8 +60,8 @@
     {
       "id": "spareribs-natuur",
       "name": "Spareribs Natuur",
-      "price": "€29,99",
-      "description": "Geserveerd met frietjes en 2 sauzen",
+      "price": "€38,99",
+      "description": "Geserveerd met frietjes, coleslaw en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs natuur The Golden Olive Antwerpen",
       "allergens": [
@@ -72,8 +72,8 @@
     {
       "id": "spareribs-bbq",
       "name": "Spareribs Barbeque",
-      "price": "€29,99",
-      "description": "Geserveerd met frietjes en 2 sauzen",
+      "price": "€38,99",
+      "description": "Geserveerd met frietjes, coleslaw en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs BBQ The Golden Olive Antwerpen",
       "allergens": [
@@ -84,8 +84,8 @@
     {
       "id": "spareribs-gekarameliseerd",
       "name": "Spareribs Gekarameliseerd",
-      "price": "€29,99",
-      "description": "Met Honing<br />Geserveerd met frietjes en 2 sauzen",
+      "price": "€38,99",
+      "description": "Met Honing<br />Geserveerd met frietjes, coleslaw en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
       "allergens": [
@@ -96,8 +96,8 @@
     {
       "id": "spareribs-spicy",
       "name": "Spareribs Spicy (Pikant)",
-      "price": "€29,99",
-      "description": "Met Saucen<br />Geserveerd met frietjes en 2 sauzen",
+      "price": "€38,99",
+      "description": "Met Saucen<br />Geserveerd met frietjes, coleslaw en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs spicy The Golden Olive Antwerpen",
       "allergens": [
@@ -108,8 +108,8 @@
     {
       "id": "spareribs-thai",
       "name": "Spareribs Thai Sweet Chili",
-      "price": "€29,99",
-      "description": "<br />Geserveerd met frietjes en 2 sauzen",
+      "price": "€38,99",
+      "description": "<br />Geserveerd met frietjes, coleslaw en 2 sauzen",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs Thai The Golden Olive Antwerpen",
       "allergens": [
@@ -122,7 +122,7 @@
     {
       "id": "shredded-chicken-loaded-scoop",
       "name": "Shredded Chicken Loaded Scoop",
-      "price": "€24,99",
+      "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
       "image": "/img/chicken-scoop.JPG",  
       "alt": "Shredded Chicken Loaded Scoop The Golden Olive Antwerpen",
@@ -134,7 +134,7 @@
     {
       "id": "spicy-minced-meat-loaded-scoop",
       "name": "Spicy Minced Meat Loaded Scoop",
-      "price": "€24,99",
+      "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Spicy Minced Meat Loaded Scoop The Golden Olive Antwerpen",
@@ -147,7 +147,7 @@
     {
       "id": "juicy-bbq-meat-loaded-scoop",
       "name": "Juicy BBQ Meat Loaded Scoop",
-      "price": "€24,99",
+      "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Juicy BBQ Meat Loaded Scoop The Golden Olive Antwerpen",
@@ -159,7 +159,7 @@
     {
       "id": "merguez-loaded-scoop",
       "name": "Merguez Loaded Scoop",
-      "price": "€24,99",
+      "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions.",
       "image": "/img/merguez-scoop.JPG",
       "alt": "Merguez Loaded Scoop The Golden Olive Antwerpen",
@@ -171,7 +171,7 @@
     {
       "id": "scampi-loaded-scoop",
       "name": "Scampi Loaded Scoop",
-      "price": "€24,99",
+      "price": "€26,99",
         "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Scampi Loaded Scoop The Golden Olive Antwerpen",
@@ -198,7 +198,7 @@
     {
       "id": "the-golden-olive-burger",
       "name": "The Golden Olive Burger",
-      "price": "€22.99",
+      "price": "€23,99",
       "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "The Golden Olive Burger The Golden Olive Antwerpen",
@@ -212,7 +212,7 @@
       "name": "Ouezzane Chicken Burger",
       "price": "€19.99",
       "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
-      "image": "assets/img/golden/hamburger1.JPEG",
+      "image": "assets/img/golden/ouzzane-burger.png",
       "alt": "Ouezzane Chicken Burger The Golden Olive Antwerpen",
       "allergens": [
         {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},

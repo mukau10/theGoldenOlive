@@ -260,6 +260,7 @@
     "allergens": "Allergènes :",
     "understood": "Compris",
     "allergenInfo": "Informations sur les Allergènes",
+    "viewFullImage": "Voir l'image complète de {{item}}",
     "categories": {
       "voorgerechten": {
         "title": "Entrées",
