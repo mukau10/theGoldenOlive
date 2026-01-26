@@ -6,10 +6,29 @@
 const LANGUAGE_STORAGE_KEY = 'i18nextLng';
 
 /**
+ * Check if localStorage is available
+ */
+const isLocalStorageAvailable = (): boolean => {
+  try {
+    const test = '__localStorage_test__';
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+/**
  * Save language preference to localStorage
  * @param langCode - Language code (e.g., 'nl', 'en', 'fr')
  */
 export const saveLanguagePreference = (langCode: string): void => {
+  if (!isLocalStorageAvailable()) {
+    console.warn('localStorage is not available, language preference will not be saved');
+    return;
+  }
+  
   try {
     localStorage.setItem(LANGUAGE_STORAGE_KEY, langCode);
     // Also save timestamp for tracking
@@ -24,6 +43,10 @@ export const saveLanguagePreference = (langCode: string): void => {
  * @returns Language code or null if not found
  */
 export const getLanguagePreference = (): string | null => {
+  if (!isLocalStorageAvailable()) {
+    return null;
+  }
+  
   try {
     return localStorage.getItem(LANGUAGE_STORAGE_KEY);
   } catch (error) {

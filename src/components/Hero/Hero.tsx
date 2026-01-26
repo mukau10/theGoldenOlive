@@ -90,12 +90,16 @@ const Hero = () => {
     // Immediate play attempt
     forcePlay();
 
-    // More aggressive retry interval - check every 100ms for mobile
+    // Optimized retry interval - check every 500ms to reduce CPU usage
+    let lastPlayAttempt = 0;
     const playInterval = setInterval(() => {
-      if (video.paused && video.readyState >= 1) {
+      const now = Date.now();
+      // Throttle play attempts to max once per 500ms
+      if (now - lastPlayAttempt > 500 && video.paused && video.readyState >= 1) {
+        lastPlayAttempt = now;
         forcePlay();
       }
-    }, 100); // Check every 100ms for faster response
+    }, 500); // Reduced frequency for better performance
 
     // Listen for all video events and force play
     const handleVideoEvent = () => {
@@ -119,30 +123,39 @@ const Hero = () => {
       forcePlay();
     });
 
-    // On any user interaction, force play immediately
+    // Debounced video interaction handler for better performance
+    let interactionTimeout: ReturnType<typeof setTimeout> | null = null;
+    let lastInteractionTime = 0;
+    
     const enableVideoOnInteraction = () => {
-      // Immediately try to play on any interaction
-      forcePlay();
+      const now = Date.now();
+      // Throttle interactions to max once per 200ms
+      if (now - lastInteractionTime < 200) {
+        return;
+      }
+      lastInteractionTime = now;
       
-      // Also try to click any play button that might be visible
-      setTimeout(() => {
+      // Clear existing timeout
+      if (interactionTimeout) {
+        clearTimeout(interactionTimeout);
+      }
+      
+      // Debounce the play attempt
+      interactionTimeout = setTimeout(() => {
+        forcePlay();
+        
+        // Also try to click any play button that might be visible
         const playButtons = document.querySelectorAll('button[aria-label*="play"], .vjs-big-play-button, .vjs-play-control');
-        playButtons.forEach((btn) => {
-          (btn as HTMLElement).click();
-        });
-      }, 50);
+        if (playButtons.length > 0) {
+          (playButtons[0] as HTMLElement).click();
+        }
+      }, 100);
     };
 
-    // Multiple interaction events - not once, so it keeps working
-    // Use capture phase for earlier execution
-    document.addEventListener('touchstart', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('touchend', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('touchmove', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('click', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('scroll', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('mousemove', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('keydown', enableVideoOnInteraction, { passive: true, capture: true });
-    document.addEventListener('pointerdown', enableVideoOnInteraction, { passive: true, capture: true });
+    // Optimized interaction events - only essential ones, with passive listeners
+    const eventOptions = { passive: true, capture: false };
+    document.addEventListener('touchstart', enableVideoOnInteraction, eventOptions);
+    document.addEventListener('click', enableVideoOnInteraction, eventOptions);
     window.addEventListener('load', enableVideoOnInteraction, { once: true });
     window.addEventListener('DOMContentLoaded', enableVideoOnInteraction, { once: true });
 
@@ -165,17 +178,14 @@ const Hero = () => {
     // Cleanup function
     return () => {
       clearInterval(playInterval);
+      if (interactionTimeout) {
+        clearTimeout(interactionTimeout);
+      }
       if (observer) {
         observer.disconnect();
       }
-      document.removeEventListener('touchstart', enableVideoOnInteraction, true);
-      document.removeEventListener('touchend', enableVideoOnInteraction, true);
-      document.removeEventListener('touchmove', enableVideoOnInteraction, true);
-      document.removeEventListener('click', enableVideoOnInteraction, true);
-      document.removeEventListener('scroll', enableVideoOnInteraction, true);
-      document.removeEventListener('mousemove', enableVideoOnInteraction, true);
-      document.removeEventListener('keydown', enableVideoOnInteraction, true);
-      document.removeEventListener('pointerdown', enableVideoOnInteraction, true);
+      document.removeEventListener('touchstart', enableVideoOnInteraction);
+      document.removeEventListener('click', enableVideoOnInteraction);
       video.removeEventListener('loadedmetadata', handleVideoEvent);
       video.removeEventListener('loadeddata', handleVideoEvent);
       video.removeEventListener('canplay', handleVideoEvent);
@@ -196,7 +206,7 @@ const Hero = () => {
       className="position-relative d-flex align-items-center justify-content-center overflow-hidden"
       style={{
         minHeight: '100dvh', // Dynamic viewport height for mobile
-        background: "url('/img/golden/IMG_4117.JPEG') center/cover no-repeat",
+        background: 'transparent', // Background image removed - using video instead
       }}
       role="banner"
       aria-label={t('hero.sectionLabel')}

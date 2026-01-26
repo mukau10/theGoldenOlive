@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MenuItem as MenuItemType } from '../../types/menu';
 import { useAllergens } from '../../hooks/useAllergens';
@@ -22,7 +22,8 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
   const cardRef = useRef<HTMLDivElement>(null);
   const { getAllergenByCode } = useAllergens();
   
-  const translatedItem = translateMenuItem(item);
+  // Memoize translated item to prevent unnecessary recalculations
+  const translatedItem = useMemo(() => translateMenuItem(item), [item, translateMenuItem]);
 
   // Intersection Observer for entrance animation
   useEffect(() => {
@@ -49,8 +50,8 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     };
   }, []);
 
-  // Allergen color mapping (fallback if not in allergens.json)
-  const allergenColors: Record<string, string> = {
+  // Memoize allergen colors - static data
+  const allergenColors = useMemo<Record<string, string>>(() => ({
     red: '#dc3545',
     orange: '#ff7e00',
     yellow: '#ffc107',
@@ -60,10 +61,10 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     cyan: '#17a2b8',
     amber: '#ff9f43',
     brown: '#8b4513',
-  };
+  }), []);
 
-  // Normalize image path
-  const getImagePath = () => {
+  // Memoize image path calculation
+  const imagePath = useMemo(() => {
     let path = item.image;
     // Remove any public/ prefix
     path = path.replace(/^\/?public\/img\//, '/img/');
@@ -71,17 +72,16 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     // Replace assets/img with /img
     path = path.replace(/^assets\/img\//, '/img/');
     return path;
-  };
+  }, [item.image]);
 
-  // Handle image click to open modal
-  const handleImageClick = () => {
+  // Memoize event handlers
+  const handleImageClick = useCallback(() => {
     setShowImageModal(true);
-  };
+  }, []);
 
-  // Handle modal close
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setShowImageModal(false);
-  };
+  }, []);
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -100,8 +100,8 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     };
   }, [showImageModal]);
 
-  // Get allergen info from reference data or use item's allergen data
-  const getEnhancedAllergenInfo = (allergen: { code: string; type: string; color: string; description: string }) => {
+  // Memoize allergen info function
+  const getEnhancedAllergenInfo = useCallback((allergen: { code: string; type: string; color: string; description: string }) => {
     const referenceAllergen = getAllergenByCode(allergen.code);
     if (referenceAllergen) {
       // Translate the reference allergen
@@ -121,7 +121,7 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
       type: translated.type,
       description: translated.description,
     };
-  };
+  }, [getAllergenByCode, translateAllergen]);
 
   // Handle placeholder items
   if (item.id === 'burgers-placeholder') {
@@ -285,7 +285,7 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
               transform: isHovered ? 'scale(1.08)' : 'scale(1)',
               transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
-            src={getImagePath()}
+            src={imagePath}
             alt={item.alt}
             loading="lazy"
           />
@@ -491,7 +491,7 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
               <i className="bi bi-x"></i>
             </button>
             <img
-              src={getImagePath()}
+              src={imagePath}
               alt={item.alt}
               style={{
                 maxWidth: '100%',
@@ -540,5 +540,14 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
   );
 };
 
-export default MenuItem;
+// Memoize MenuItem to prevent unnecessary re-renders
+export default memo(MenuItem, (prevProps, nextProps) => {
+  // Custom comparison function for better performance
+  return (
+    prevProps.item.id === nextProps.item.id &&
+    prevProps.category === nextProps.category &&
+    prevProps.index === nextProps.index &&
+    prevProps.onAllergenClick === nextProps.onAllergenClick
+  );
+});
 

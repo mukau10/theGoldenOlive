@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -7,7 +7,8 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const galleryImages = [
+  // Memoize gallery images array
+  const galleryImages = useMemo(() => [
     '/img/golden/mixedGrill.JPEG',
     '/img/golden/tigerGarnalen.JPEG',
     '/img/golden/IMG_1809.JPEG',
@@ -41,10 +42,19 @@ const Gallery = () => {
     '/img/golden/IMG_4250.JPEG',
     '/img/golden/IMG_4254.JPEG',
     '/img/golden/IMG_7252.JPEG',
-  ];
+  ], []);
 
-  // Show only first 4 images
-  const displayedImages = galleryImages.slice(0, 4);
+  // Memoize displayed images
+  const displayedImages = useMemo(() => galleryImages.slice(0, 4), [galleryImages]);
+
+  // Memoize event handlers
+  const handleImageClick = useCallback((image: string) => {
+    setSelectedImage(image);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setSelectedImage(null);
+  }, []);
 
   return (
     <>
@@ -68,7 +78,7 @@ const Gallery = () => {
                   className="gallery-lightbox"
                   onClick={(e) => {
                     e.preventDefault();
-                    setSelectedImage(image);
+                    handleImageClick(image);
                   }}
                 >
                   <img src={image} alt={`Gallery image ${index + 1} - The Golden Olive Antwerpen`} loading="lazy" />
@@ -102,11 +112,11 @@ const Gallery = () => {
             zIndex: 10000,
             padding: '2rem',
           }}
-          onClick={() => setSelectedImage(null)}
+          onClick={handleCloseModal}
         >
           <button
             className="position-absolute top-0 end-0 m-4 btn-close btn-close-white"
-            onClick={() => setSelectedImage(null)}
+            onClick={handleCloseModal}
             aria-label={t('common.close')}
             style={{ fontSize: '2rem' }}
           ></button>
