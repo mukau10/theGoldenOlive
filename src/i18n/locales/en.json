@@ -122,7 +122,9 @@
     "copyright": "All Rights Reserved",
     "vatNumber": "VAT Number",
     "privacyPolicy": "Privacy Policy",
-    "allergenInfo": "Allergen Info"
+    "allergenInfo": "Allergen Info",
+    "callNow": "Call Now",
+    "whatsapp": "WhatsApp"
   },
   "languageSwitcher": {
     "changeLanguage": "Change language"
@@ -261,6 +263,8 @@
     "understood": "Understood",
     "allergenInfo": "Allergen Information",
     "viewFullImage": "View full image of {{item}}",
+    "searchPlaceholder": "Search menu...",
+    "searchResults": "results found",
     "categories": {
       "voorgerechten": {
         "title": "Starters",
@@ -516,5 +520,22 @@
     "learnMore": "Learn more",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "floatingActions": {
+    "toggleMenu": "Toggle actions menu",
+    "reserve": "Reserve",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hello, I would like to make a reservation at The Golden Olive!"
+  },
+  "trustSignals": {
+    "openingHours": "Opening Hours",
+    "openNow": "Open now",
+    "closedNow": "Closed now",
+    "everyDay": "Open every day",
+    "walkIn": "Walk-ins welcome",
+    "noReservation": "No reservation needed",
+    "quickContact": "Quick Contact",
+    "location": "Location"
   }
 }

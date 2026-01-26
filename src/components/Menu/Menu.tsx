@@ -9,7 +9,7 @@ import MenuItem from './MenuItem';
 import MenuCategoryCard from './MenuCategoryCard';
 import CategorySelectorModal from './CategorySelectorModal';
 import { BiGridAlt } from 'react-icons/bi';
-import { translateCategory, translateCategoryDescription } from '../../utils/menuTranslations';
+import { translateCategory, translateCategoryDescription, useMenuTranslation } from '../../utils/menuTranslations';
 
 const Menu = () => {
   const { t } = useTranslation();
@@ -20,6 +20,7 @@ const Menu = () => {
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [isMenuSectionVisible, setIsMenuSectionVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const menuSectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -146,25 +147,47 @@ const Menu = () => {
       })
     : [];
 
+  // Search functionality
+  const { translateMenuItem } = useMenuTranslation();
+  
   const filteredItems = () => {
     if (!menuData) return [];
-    if (selectedCategory === '*') {
-      // Show all categories with headers
-      const allItems: Array<{ item: any; category: MenuCategory; isHeader?: boolean }> = [];
+    
+    let items: Array<{ item: any; category: MenuCategory; isHeader?: boolean }> = [];
+    
+    // If search query exists, search across all items
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
       categories.forEach((category) => {
-        // Always show all items for each category, including placeholder for burgers
         const categoryItems = menuData[category];
-        
         if (categoryItems && categoryItems.length > 0) {
-          // Add category header
-          allItems.push({ item: null as any, category, isHeader: true });
-          // Add category items
           categoryItems.forEach((item) => {
-            allItems.push({ item, category, isHeader: false });
+            const translated = translateMenuItem(item);
+            const searchText = `${translated.name} ${translated.description} ${item.price || ''}`.toLowerCase();
+            if (searchText.includes(query)) {
+              items.push({ item, category, isHeader: false });
+            }
           });
         }
       });
-      return allItems;
+      return items;
+    }
+    
+    // Normal category filtering
+    if (selectedCategory === '*') {
+      // Show all categories with headers
+      categories.forEach((category) => {
+        const categoryItems = menuData[category];
+        if (categoryItems && categoryItems.length > 0) {
+          // Add category header
+          items.push({ item: null as any, category, isHeader: true });
+          // Add category items
+          categoryItems.forEach((item) => {
+            items.push({ item, category, isHeader: false });
+          });
+        }
+      });
+      return items;
     }
     // When a specific category is selected, show all items including placeholder
     if (menuData[selectedCategory]) {
@@ -207,6 +230,53 @@ const Menu = () => {
             <i className="bi bi-journal-bookmark text-warning me-2 me-md-3" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}></i>{t('menu.title')}
           </h2>
           <p className="fs-6 fs-md-5 text-white mb-3 mb-md-4 opacity-75" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>{t('menu.subtitle')}</p>
+          
+          {/* Search Bar */}
+          <div className="row justify-content-center mb-4">
+            <div className="col-12 col-md-8 col-lg-6">
+              <div className="position-relative">
+                <input
+                  type="text"
+                  className="form-control form-control-lg bg-black border-warning text-white"
+                  placeholder={t('menu.searchPlaceholder') || 'Zoek in menu...'}
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (e.target.value) {
+                      setSelectedCategory('*'); // Reset category when searching
+                    }
+                  }}
+                  style={{
+                    borderRadius: '50px',
+                    paddingLeft: '3rem',
+                    paddingRight: searchQuery ? '3rem' : '1.5rem',
+                    fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                    border: '2px solid var(--bs-golden)',
+                    boxShadow: '0 4px 16px rgba(255, 193, 7, 0.2)',
+                  }}
+                />
+                <i className="bi bi-search text-warning position-absolute" style={{ left: '1.25rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1.2rem' }}></i>
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="btn btn-link text-warning position-absolute p-0"
+                    style={{ right: '1rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1.2rem' }}
+                    aria-label={t('common.close') || 'Sluiten'}
+                  >
+                    <i className="bi bi-x-circle"></i>
+                  </button>
+                )}
+              </div>
+              {searchQuery && (
+                <div className="mt-2">
+                  <small className="text-white-50">
+                    {filteredItems().length} {t('menu.searchResults') || 'resultaten gevonden'}
+                  </small>
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="row justify-content-center">
             <div className="col-12 col-md-8">
               <div className="bg-black border border-warning rounded-pill p-2 p-md-3 d-flex align-items-center justify-content-center flex-wrap gap-2">

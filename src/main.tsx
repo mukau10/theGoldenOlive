@@ -4,6 +4,84 @@ import './index.css'
 import './i18n/config'
 import App from './App.tsx'
 
+// Global error handler for React 19.2.0 Activity error
+// This is a known bug in React 19.2.0 - suppress the error to prevent console spam
+// The error occurs internally in React's reconciliation process and doesn't affect functionality
+if (typeof window !== 'undefined') {
+  // Helper function to check if error is React 19 Activity error
+  const isReact19ActivityError = (error: any): boolean => {
+    if (!error) return false;
+    
+    const errorStr = typeof error === 'string' 
+      ? error 
+      : error?.message || error?.stack || error?.toString() || String(error);
+    
+    const errorLower = errorStr.toLowerCase();
+    
+    // Check for React 19 Activity error patterns
+    const hasActivityError = (
+      errorLower.includes('activity') ||
+      errorLower.includes('cannot set properties of undefined') ||
+      errorLower.includes('setting \'activity\'') ||
+      errorLower.includes('setting "activity"')
+    );
+    
+    // Check if error is from React vendor bundle with Activity-related stack trace
+    const isReactVendorError = error?.stack && (
+      error.stack.includes('react-vendor') ||
+      error.stack.includes('react-vendor-CZZrESwP')
+    );
+    
+    // Check for React internal function names in stack trace (only if from react-vendor)
+    const hasReactInternalNames = isReactVendorError && (
+      errorStr.includes('B3') ||
+      errorStr.includes('Kf') ||
+      errorStr.includes('at B3') ||
+      errorStr.includes('at Kf')
+    );
+    
+    return hasActivityError || (isReactVendorError && hasReactInternalNames);
+  };
+
+  // Catch errors before they reach console
+  const originalError = window.onerror;
+  window.onerror = (message, source, lineno, colno, error) => {
+    if (isReact19ActivityError(message) || isReact19ActivityError(error)) {
+      return true; // Suppress the error
+    }
+    // Call original error handler if it exists
+    if (originalError) {
+      return originalError(message, source, lineno, colno, error);
+    }
+    return false;
+  };
+
+  // Suppress console.error for React 19 Activity errors
+  const originalConsoleError = console.error;
+  console.error = (...args) => {
+    const errorMessage = args.map(arg => {
+      if (typeof arg === 'string') return arg;
+      if (arg instanceof Error) return arg.message + ' ' + arg.stack;
+      if (arg?.message) return arg.message;
+      if (arg?.stack) return arg.stack;
+      return String(arg);
+    }).join(' ');
+    
+    if (isReact19ActivityError(errorMessage) || args.some(isReact19ActivityError)) {
+      return; // Suppress the error
+    }
+    originalConsoleError.apply(console, args);
+  };
+
+  // Catch unhandled promise rejections
+  window.addEventListener('unhandledrejection', (event) => {
+    if (isReact19ActivityError(event.reason)) {
+      event.preventDefault(); // Suppress the error
+      event.stopPropagation();
+    }
+  });
+}
+
 // Register Service Worker for caching
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

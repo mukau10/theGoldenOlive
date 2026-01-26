@@ -1,0 +1,1 @@
+import{u as l}from"./react-vendor-CZZrESwP.js";const p=()=>{const{t}=l();return{translateAllergen:e=>{const s=`allergens.items.${e.code}`,n=`${s}.type`,r=`${s}.description`,a=t(n,{defaultValue:e.type}),o=t(r,{defaultValue:e.description});return{type:a,description:o}}}};export{p as u};

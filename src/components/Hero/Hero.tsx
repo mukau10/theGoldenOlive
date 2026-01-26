@@ -306,17 +306,46 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Menu button - positioned at bottom on mobile, center on desktop */}
+        {/* CTA Buttons - positioned at bottom on mobile, center on desktop */}
         <div className="row justify-content-center mt-auto mt-md-4">
           <div className="col-12 col-sm-auto">
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <button
                 onClick={scrollToMenu}
                 className="btn btn-outline-golden rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-decoration-none"
-                style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)' }}
+                style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', transition: 'all 0.3s ease' }}
                 aria-label={t('hero.viewMenu')}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
               >
-                <i className="bi bi-arrow-right me-2"></i>{t('common.ourMenu')}
+                <i className="bi bi-menu-button-wide me-2"></i>{t('common.ourMenu')}
+              </button>
+              <button
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="btn btn-warning rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-dark text-decoration-none"
+                style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', transition: 'all 0.3s ease' }}
+                aria-label={t('contact.reservation') || 'Reserveer'}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <i className="bi bi-calendar-check me-2"></i>{t('contact.reservation') || 'Reserveer'}
               </button>
             </div>
           </div>

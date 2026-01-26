@@ -24,6 +24,43 @@ const Footer = () => {
                   loading="lazy"
                 />
 
+                {/* Quick Contact Buttons */}
+                <div className="d-flex flex-column flex-sm-row justify-content-center gap-2 gap-sm-3 mb-3 mb-md-4">
+                  <a
+                    href="tel:+32494194397"
+                    className="btn btn-warning rounded-pill px-4 py-2 fw-semibold"
+                    style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', transition: 'all 0.3s ease' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
+                  >
+                    <i className="bi bi-telephone-fill me-2"></i>
+                    {t('footer.callNow') || 'Bel Nu'}
+                  </a>
+                  <a
+                    href="https://wa.me/32494194397"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-warning rounded-pill px-4 py-2 fw-semibold"
+                    style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', transition: 'all 0.3s ease' }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                      e.currentTarget.style.borderColor = 'var(--bs-golden)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    }}
+                  >
+                    <i className="bi bi-whatsapp me-2"></i>
+                    {t('footer.whatsapp') || 'WhatsApp'}
+                  </a>
+                </div>
+
                 <div className="d-flex justify-content-center gap-3 mb-3 mb-md-4" aria-label="Social media links">
                   <a
                     href="https://www.facebook.com/TheGoldenolivee"

@@ -815,10 +815,26 @@ img {
     padding-right: 1rem !important;
   }
   
-  /* Touch-friendly button sizes */
+  /* Touch-friendly button sizes - Restaurant specific */
   button, .btn, a.btn {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px; /* Larger for easier tapping on mobile */
+    min-width: 48px;
+    padding: 0.75rem 1.5rem; /* More padding for better touch targets */
+  }
+  
+  /* Quick action buttons - larger on mobile */
+  .floating-action-btn,
+  .floating-menu-toggle {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  
+  /* Phone links - make them more prominent on mobile */
+  a[href^="tel:"] {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    padding: 0.5rem 1rem;
+    display: inline-block;
   }
   
   /* Better spacing on mobile */
@@ -839,6 +855,17 @@ img {
   p, span, div {
     word-wrap: break-word;
     overflow-wrap: break-word;
+  }
+  
+  /* Menu search bar - full width on mobile */
+  #menu input[type="text"] {
+    width: 100% !important;
+    font-size: 1rem !important; /* Prevent zoom on iOS */
+  }
+  
+  /* Trust signals cards - stack nicely on mobile */
+  .trust-card {
+    margin-bottom: 1rem;
   }
 }
 

@@ -1,6 +1,7 @@
 import { useEffect, lazy, Suspense, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
+import FloatingActions from './components/FloatingActions/FloatingActions';
 import { preloadMenu } from './hooks/useMenu';
 import { preloadAllergens } from './hooks/useAllergens';
 import './App.css';
@@ -179,6 +180,8 @@ function App() {
         <div className="App">
           {routes}
         </div>
+        {/* Floating Action Buttons for quick access to key actions */}
+        <FloatingActions />
       </BrowserRouter>
     </ErrorBoundary>
   );

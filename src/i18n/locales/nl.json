@@ -229,7 +229,9 @@
     "copyright": "All Rights Reserved",
     "vatNumber": "BTW-nummer",
     "privacyPolicy": "Privacy Policy",
-    "allergenInfo": "Allergenen Info"
+    "allergenInfo": "Allergenen Info",
+    "callNow": "Bel Nu",
+    "whatsapp": "WhatsApp"
   },
   "languageSwitcher": {
     "changeLanguage": "Verander taal"
@@ -261,6 +263,8 @@
     "understood": "Begrepen",
     "allergenInfo": "Allergenen Informatie",
     "viewFullImage": "Bekijk volledige afbeelding van {{item}}",
+    "searchPlaceholder": "Zoek in menu...",
+    "searchResults": "resultaten gevonden",
     "categories": {
       "voorgerechten": {
         "title": "Voorgerechten",
@@ -516,5 +520,22 @@
     "learnMore": "Meer informatie",
     "accept": "Accepteren",
     "decline": "Weigeren"
+  },
+  "floatingActions": {
+    "toggleMenu": "Toggle acties menu",
+    "reserve": "Reserveer",
+    "call": "Bel",
+    "whatsapp": "WhatsApp",
+    "whatsappMessage": "Hallo, ik wil graag reserveren bij The Golden Olive!"
+  },
+  "trustSignals": {
+    "openingHours": "Openingsuren",
+    "openNow": "Nu open",
+    "closedNow": "Nu gesloten",
+    "everyDay": "Elke dag open",
+    "walkIn": "Loop gerust binnen",
+    "noReservation": "Reserveren niet nodig",
+    "quickContact": "Snelle Contact",
+    "location": "Locatie"
   }
 }

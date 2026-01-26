@@ -122,7 +122,9 @@
     "copyright": "Tous Droits Réservés",
     "vatNumber": "Numéro de TVA",
     "privacyPolicy": "Politique de Confidentialité",
-    "allergenInfo": "Infos Allergènes"
+    "allergenInfo": "Infos Allergènes",
+    "callNow": "Appeler Maintenant",
+    "whatsapp": "WhatsApp"
   },
   "languageSwitcher": {
     "changeLanguage": "Changer de langue"
@@ -261,6 +263,8 @@
     "understood": "Compris",
     "allergenInfo": "Informations sur les Allergènes",
     "viewFullImage": "Voir l'image complète de {{item}}",
+    "searchPlaceholder": "Rechercher dans le menu...",
+    "searchResults": "résultats trouvés",
     "categories": {
       "voorgerechten": {
         "title": "Entrées",
@@ -516,5 +520,22 @@
     "learnMore": "En savoir plus",
     "accept": "Accepter",
     "decline": "Refuser"
+  },
+  "floatingActions": {
+    "toggleMenu": "Basculer le menu d'actions",
+    "reserve": "Réserver",
+    "call": "Appeler",
+    "whatsapp": "WhatsApp",
+    "whatsappMessage": "Bonjour, je voudrais faire une réservation au The Golden Olive!"
+  },
+  "trustSignals": {
+    "openingHours": "Heures d'ouverture",
+    "openNow": "Ouvert maintenant",
+    "closedNow": "Fermé maintenant",
+    "everyDay": "Ouvert tous les jours",
+    "walkIn": "Entrée libre",
+    "noReservation": "Réservation non nécessaire",
+    "quickContact": "Contact rapide",
+    "location": "Emplacement"
   }
 }

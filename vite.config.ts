@@ -44,9 +44,10 @@ export default defineConfig({
     },
     // Enable minification with esbuild (faster than terser)
     minify: 'esbuild',
-    // Note: To remove console.log in production, you can use a plugin or configure esbuild
     // Source maps for production debugging (can be disabled for smaller builds)
     sourcemap: false,
+    // Target modern browsers to avoid eval polyfills
+    target: 'es2015',
   },
   // Optimize dependencies
   optimizeDeps: {

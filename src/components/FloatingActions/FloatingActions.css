@@ -1,0 +1,222 @@
+.floating-actions {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.floating-menu-toggle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--bs-golden), var(--bs-golden-light));
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  color: #000;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 193, 7, 0.4), 0 0 0 4px rgba(255, 193, 7, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1001;
+}
+
+.floating-menu-toggle:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 12px 32px rgba(255, 193, 7, 0.6), 0 0 0 6px rgba(255, 193, 7, 0.2);
+}
+
+.floating-menu-toggle.active {
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: #fff;
+}
+
+.floating-actions-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.floating-actions-menu.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.floating-action-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  overflow: visible;
+}
+
+.floating-action-btn:hover {
+  transform: scale(1.15) translateX(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.floating-action-btn:active {
+  transform: scale(1.05) translateX(-3px);
+}
+
+.floating-action-reserve {
+  background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.floating-action-menu {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.floating-action-phone {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+.floating-action-whatsapp {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+}
+
+.floating-action-label {
+  position: absolute;
+  right: 70px;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  border: 1px solid var(--bs-golden);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.floating-action-label::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 6px solid var(--bs-golden);
+}
+
+.floating-action-btn:hover .floating-action-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Staggered animation for menu items */
+.floating-actions-menu.visible .floating-action-btn:nth-child(1) {
+  animation: slideInRight 0.3s ease 0.1s both;
+}
+
+.floating-actions-menu.visible .floating-action-btn:nth-child(2) {
+  animation: slideInRight 0.3s ease 0.2s both;
+}
+
+.floating-actions-menu.visible .floating-action-btn:nth-child(3) {
+  animation: slideInRight 0.3s ease 0.3s both;
+}
+
+.floating-actions-menu.visible .floating-action-btn:nth-child(4) {
+  animation: slideInRight 0.3s ease 0.4s both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .floating-actions {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .floating-menu-toggle,
+  .floating-action-btn {
+    width: 52px;
+    height: 52px;
+    font-size: 1.3rem;
+  }
+
+  .floating-action-label {
+    right: 60px;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .floating-actions {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .floating-menu-toggle,
+  .floating-action-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+
+  .floating-action-label {
+    display: none; /* Hide labels on very small screens */
+  }
+}
+
+/* Accessibility - focus states */
+.floating-menu-toggle:focus,
+.floating-action-btn:focus {
+  outline: 3px solid rgba(255, 193, 7, 0.5);
+  outline-offset: 3px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .floating-actions-menu,
+  .floating-action-btn,
+  .floating-menu-toggle {
+    transition: none;
+    animation: none;
+  }
+}

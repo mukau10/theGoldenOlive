@@ -43,7 +43,25 @@ const Header = () => {
             <div className="d-flex align-items-center">
               <i className="bi bi-phone text-warning me-1 me-sm-2" style={{ fontSize: '0.85rem' }}></i>
               <span style={{ fontSize: '0.75rem' }}>
-                <a href="tel:+32494194397" className="text-white text-decoration-none" style={{ fontSize: 'inherit' }}>+32 494 19 43 97</a>
+                <a 
+                  href="tel:+32494194397" 
+                  className="text-white text-decoration-none" 
+                  style={{ 
+                    fontSize: 'inherit',
+                    transition: 'all 0.3s ease',
+                    fontWeight: '600'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = 'var(--bs-golden)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
+                >
+                  +32 494 19 43 97
+                </a>
               </span>
             </div>
             <div className="d-none d-sm-flex align-items-center">
