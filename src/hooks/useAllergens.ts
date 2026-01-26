@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import type { AllergensData, Allergen } from '../types/allergens';
+import { LocalCacheManager, fetchWithCache, CACHE_DURATIONS } from '../utils/cacheManager';
 
-// Cache for allergens data
+// Cache for allergens data (in-memory)
 let allergensCache: AllergensData | null = null;
 let allergensPromise: Promise<AllergensData> | null = null;
+const CACHE_KEY = 'allergens-data';
 
 export const useAllergens = () => {
   const [allergensData, setAllergensData] = useState<AllergensData | null>(allergensCache);
@@ -11,10 +13,21 @@ export const useAllergens = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // If we already have cached data, use it immediately
+    // Check in-memory cache first
     if (allergensCache) {
       setAllergensData(allergensCache);
       setLoading(false);
+      return;
+    }
+
+    // Check localStorage cache
+    const cachedData = LocalCacheManager.get<AllergensData>(CACHE_KEY);
+    if (cachedData) {
+      allergensCache = cachedData;
+      setAllergensData(cachedData);
+      setLoading(false);
+      // Still fetch in background to update cache
+      fetchAllergens(true);
       return;
     }
 
@@ -33,27 +46,37 @@ export const useAllergens = () => {
     }
 
     // Start new fetch
-    const fetchAllergens = async () => {
-      try {
-        const response = await fetch('/data/allergens.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        allergensCache = data;
+    fetchAllergens(false);
+  }, []);
+
+  const fetchAllergens = async (silent: boolean = false) => {
+    try {
+      const data = await fetchWithCache<AllergensData>(
+        '/data/allergens.json',
+        {},
+        CACHE_KEY,
+        CACHE_DURATIONS.VERY_LONG // Cache allergens for 7 days (rarely changes)
+      );
+      
+      allergensCache = data;
+      LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.VERY_LONG);
+      
+      if (!silent) {
         setAllergensData(data);
         setLoading(false);
-      } catch (err) {
+      }
+      
+      allergensPromise = Promise.resolve(data);
+      return data;
+    } catch (err) {
+      if (!silent) {
         setError(err instanceof Error ? err.message : 'Failed to load allergens');
         setLoading(false);
       }
-    };
-
-    allergensPromise = fetchAllergens().then(() => allergensCache!);
-    allergensPromise.catch(() => {
       allergensPromise = null;
-    });
-  }, []);
+      throw err;
+    }
+  };
 
   // Helper function to get allergen by code
   const getAllergenByCode = (code: string): Allergen | undefined => {
@@ -86,17 +109,26 @@ export const preloadAllergens = async (): Promise<AllergensData | null> => {
     return allergensCache;
   }
 
+  // Check localStorage cache
+  const cachedData = LocalCacheManager.get<AllergensData>(CACHE_KEY);
+  if (cachedData) {
+    allergensCache = cachedData;
+    return cachedData;
+  }
+
   if (allergensPromise) {
     return allergensPromise;
   }
 
   try {
-    const response = await fetch('/data/allergens.json');
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await fetchWithCache<AllergensData>(
+      '/data/allergens.json',
+      {},
+      CACHE_KEY,
+      CACHE_DURATIONS.VERY_LONG
+    );
     allergensCache = data;
+    LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.VERY_LONG);
     allergensPromise = Promise.resolve(data);
     return data;
   } catch (err) {

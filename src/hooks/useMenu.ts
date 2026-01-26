@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import type { MenuData } from '../types/menu';
+import { LocalCacheManager, fetchWithCache, CACHE_DURATIONS } from '../utils/cacheManager';
 
-// Cache for menu data
+// Cache for menu data (in-memory)
 let menuCache: MenuData | null = null;
 let menuPromise: Promise<MenuData> | null = null;
+const CACHE_KEY = 'menu-data';
 
 export const useMenu = () => {
   const [menuData, setMenuData] = useState<MenuData | null>(menuCache);
@@ -11,10 +13,21 @@ export const useMenu = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // If we already have cached data, use it immediately
+    // Check in-memory cache first
     if (menuCache) {
       setMenuData(menuCache);
       setLoading(false);
+      return;
+    }
+
+    // Check localStorage cache
+    const cachedData = LocalCacheManager.get<MenuData>(CACHE_KEY);
+    if (cachedData) {
+      menuCache = cachedData;
+      setMenuData(cachedData);
+      setLoading(false);
+      // Still fetch in background to update cache
+      fetchMenu(true);
       return;
     }
 
@@ -33,27 +46,37 @@ export const useMenu = () => {
     }
 
     // Start new fetch
-    const fetchMenu = async () => {
-      try {
-        const response = await fetch('/data/menu.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        menuCache = data;
+    fetchMenu(false);
+  }, []);
+
+  const fetchMenu = async (silent: boolean = false) => {
+    try {
+      const data = await fetchWithCache<MenuData>(
+        '/data/menu.json',
+        {},
+        CACHE_KEY,
+        CACHE_DURATIONS.LONG // Cache menu for 24 hours
+      );
+      
+      menuCache = data;
+      LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.LONG);
+      
+      if (!silent) {
         setMenuData(data);
         setLoading(false);
-      } catch (err) {
+      }
+      
+      menuPromise = Promise.resolve(data);
+      return data;
+    } catch (err) {
+      if (!silent) {
         setError(err instanceof Error ? err.message : 'Failed to load menu');
         setLoading(false);
       }
-    };
-
-    menuPromise = fetchMenu().then(() => menuCache!);
-    menuPromise.catch(() => {
       menuPromise = null;
-    });
-  }, []);
+      throw err;
+    }
+  };
 
   return { menuData, loading, error };
 };
@@ -64,17 +87,26 @@ export const preloadMenu = async (): Promise<MenuData | null> => {
     return menuCache;
   }
 
+  // Check localStorage cache
+  const cachedData = LocalCacheManager.get<MenuData>(CACHE_KEY);
+  if (cachedData) {
+    menuCache = cachedData;
+    return cachedData;
+  }
+
   if (menuPromise) {
     return menuPromise;
   }
 
   try {
-    const response = await fetch('/data/menu.json');
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await fetchWithCache<MenuData>(
+      '/data/menu.json',
+      {},
+      CACHE_KEY,
+      CACHE_DURATIONS.LONG
+    );
     menuCache = data;
+    LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.LONG);
     menuPromise = Promise.resolve(data);
     return data;
   } catch (err) {

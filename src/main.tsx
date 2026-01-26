@@ -1,9 +1,34 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './index.css'
 import './i18n/config'
 import App from './App.tsx'
+
+// Register Service Worker for caching
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((registration) => {
+        console.log('[Service Worker] Registered successfully:', registration.scope);
+        
+        // Check for updates every hour
+        setInterval(() => {
+          registration.update();
+        }, 60 * 60 * 1000);
+      })
+      .catch((error) => {
+        console.warn('[Service Worker] Registration failed:', error);
+      });
+
+    // Listen for service worker updates
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('[Service Worker] New version available, reloading...');
+      // Optionally reload the page when new service worker is activated
+      // window.location.reload();
+    });
+  });
+}
 
 // Error handling for root element
 const rootElement = document.getElementById('root');
@@ -34,10 +59,10 @@ if (!rootElement) {
 // Initialize app with error handling
 try {
   const root = createRoot(rootElement);
+  // Temporarily disable StrictMode to avoid React 19 Activity error
+  // StrictMode can cause issues with some third-party libraries
   root.render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
+    <App />
   );
 } catch (error) {
   console.error('Failed to render app:', error);

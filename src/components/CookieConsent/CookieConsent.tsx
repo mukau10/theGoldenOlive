@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { LocalCacheManager } from '../../utils/cacheManager';
 import './CookieConsent.css';
+
+const COOKIE_CONSENT_KEY = 'cookieConsent';
+const COOKIE_CONSENT_DATE_KEY = 'cookieConsentDate';
+const COOKIE_CONSENT_EXPIRY = 365 * 24 * 60 * 60 * 1000; // 1 year
 
 const CookieConsent = () => {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user has already given consent
-    const consent = localStorage.getItem('cookieConsent');
+    // Check if user has already given consent (with expiry check)
+    const consent = getCookieConsent();
     if (!consent) {
       // Show banner after a short delay for better UX
       const timer = setTimeout(() => {
@@ -19,16 +24,61 @@ const CookieConsent = () => {
     }
   }, []);
 
+  const getCookieConsent = (): string | null => {
+    try {
+      const consent = localStorage.getItem(COOKIE_CONSENT_KEY);
+      if (!consent) return null;
+
+      // Check if consent has expired (older than 1 year)
+      const consentDate = localStorage.getItem(COOKIE_CONSENT_DATE_KEY);
+      if (consentDate) {
+        const date = new Date(consentDate);
+        const now = new Date();
+        if (now.getTime() - date.getTime() > COOKIE_CONSENT_EXPIRY) {
+          // Consent expired, clear it
+          localStorage.removeItem(COOKIE_CONSENT_KEY);
+          localStorage.removeItem(COOKIE_CONSENT_DATE_KEY);
+          return null;
+        }
+      }
+
+      return consent;
+    } catch (error) {
+      console.warn('Failed to get cookie consent:', error);
+      return null;
+    }
+  };
+
+  const setCookieConsent = (value: string) => {
+    try {
+      localStorage.setItem(COOKIE_CONSENT_KEY, value);
+      localStorage.setItem(COOKIE_CONSENT_DATE_KEY, new Date().toISOString());
+      
+      // Also store in cache manager for consistency
+      LocalCacheManager.set(COOKIE_CONSENT_KEY, value, COOKIE_CONSENT_EXPIRY);
+    } catch (error) {
+      console.error('Failed to set cookie consent:', error);
+    }
+  };
+
   const handleAccept = () => {
-    localStorage.setItem('cookieConsent', 'accepted');
-    localStorage.setItem('cookieConsentDate', new Date().toISOString());
+    setCookieConsent('accepted');
     setIsVisible(false);
+    
+    // Enable service worker caching if user accepts
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(() => {
+        console.log('[Cookie Consent] Service Worker enabled');
+      });
+    }
   };
 
   const handleDecline = () => {
-    localStorage.setItem('cookieConsent', 'declined');
-    localStorage.setItem('cookieConsentDate', new Date().toISOString());
+    setCookieConsent('declined');
     setIsVisible(false);
+    
+    // Optionally clear some caches if user declines
+    // Note: Service Worker will still work, but we can limit what we cache
   };
 
   if (!isVisible) {
