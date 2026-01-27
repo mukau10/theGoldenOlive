@@ -53,10 +53,10 @@ const Header = () => {
   return (
     <>
       {/* Topbar */}
-      <div id="topbar" className="d-flex align-items-center justify-content-center small position-fixed top-0 start-0 end-0" style={{ height: 'auto', minHeight: '36px', padding: '6px 12px', zIndex: 1050, background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)' }} role="complementary" aria-label={t('header.contactInfo')}>
+      <div id="topbar" className="d-none d-sm-flex align-items-center justify-content-center small position-fixed top-0 start-0 end-0" style={{ height: 'auto', minHeight: '36px', padding: '6px 12px', zIndex: 1050, background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)' }} role="complementary" aria-label={t('header.contactInfo')}>
         <div className="d-flex align-items-center justify-content-center small w-100">
           <div className="d-flex align-items-center text-warning overflow-hidden flex-wrap justify-content-center gap-2 gap-sm-3">
-            <div className="d-flex align-items-center">
+            <div className="d-none d-sm-flex align-items-center">
               <i className="bi bi-phone text-warning me-1 me-sm-2" style={{ fontSize: '0.85rem' }}></i>
               <span style={{ fontSize: '0.75rem' }}>
                 <a 
@@ -101,8 +101,11 @@ const Header = () => {
       {/* Header */}
       <header
         id="header"
-        className={`position-fixed start-0 end-0 backdrop-blur ${isScrolled ? 'header-scrolled' : ''}`}
-        style={{ top: '36px', zIndex: 1040 }}
+        className={`position-fixed start-0 end-0 ${isScrolled ? 'header-scrolled' : ''}`}
+        style={{ 
+          zIndex: 1040,
+          background: 'transparent',
+        }}
         role="banner"
       >
         <div className="container-fluid px-3 px-md-4 py-2 py-md-3">
@@ -121,11 +124,9 @@ const Header = () => {
                 <img
                   src="/img/favicon11.png"
                   alt="The Golden Olive Logo"
-                  className="me-2 me-md-3"
-                  style={{ width: 'clamp(24px, 5vw, 32px)', height: 'clamp(24px, 5vw, 32px)', objectFit: 'contain' }}
+                  className="header-logo"
+                  style={{ objectFit: 'contain' }}
                 />
-                <span className="d-none d-sm-inline">THE GOLDEN OLIVE</span>
-                <span className="d-sm-none">THE GOLDEN OLIVE</span>
               </a>
             </h1>
 
@@ -212,32 +213,35 @@ const Header = () => {
               </ul>
             </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="d-lg-none mobile-nav-toggle"
-              aria-label={t('header.toggleMobileMenu')}
-              aria-expanded={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              style={{
-                background: '#000',
-                border: '2px solid var(--bs-golden)',
-                color: 'var(--bs-golden)',
-                width: '44px',
-                height: '44px',
-                borderRadius: '4px',
-                position: 'relative',
-                minWidth: '44px',
-                minHeight: '44px',
-              }}
-            >
-              <span style={{ fontSize: 0 }}>
-                {isMobileMenuOpen ? (
-                  <i className="bi bi-x" style={{ fontSize: '1.5rem' }}></i>
-                ) : (
-                  <i className="bi bi-list" style={{ fontSize: '1.5rem' }}></i>
-                )}
-              </span>
-            </button>
+            {/* Mobile: Language Switcher + Menu Button */}
+            <div className="d-lg-none d-flex align-items-center" style={{ gap: '0.75rem' }}>
+              <LanguageSwitcher />
+              <button
+                className="mobile-nav-toggle"
+                aria-label={t('header.toggleMobileMenu')}
+                aria-expanded={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                style={{
+                  background: '#000',
+                  border: '2px solid var(--bs-golden)',
+                  color: 'var(--bs-golden)',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '4px',
+                  position: 'relative',
+                  minWidth: '44px',
+                  minHeight: '44px',
+                }}
+              >
+                <span style={{ fontSize: 0 }}>
+                  {isMobileMenuOpen ? (
+                    <i className="bi bi-x" style={{ fontSize: '1.5rem' }}></i>
+                  ) : (
+                    <i className="bi bi-list" style={{ fontSize: '1.5rem' }}></i>
+                  )}
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 

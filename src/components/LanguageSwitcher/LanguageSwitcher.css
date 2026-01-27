@@ -92,18 +92,39 @@
 }
 
 /* Mobile adjustments */
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
   .language-switcher-button {
     padding: 0.4rem 0.6rem;
     font-size: 0.8rem;
+    min-width: auto;
   }
 
   .language-flag-icon {
     font-size: 1rem;
   }
 
+  .language-code {
+    font-size: 0.75rem;
+  }
+
   .language-dropdown {
     min-width: 140px;
     right: 0;
+  }
+}
+
+/* Extra small mobile - compact version */
+@media (max-width: 576px) {
+  .language-switcher-button {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .language-flag-icon {
+    font-size: 0.9rem;
+  }
+
+  .language-code {
+    font-size: 0.7rem;
   }
 }

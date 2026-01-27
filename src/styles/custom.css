@@ -80,6 +80,69 @@
   border-bottom: 1px solid rgba(255, 193, 7, 0.3) !important;
 }
 
+/* Header positioning: optimized for mobile and desktop UX */
+#header {
+  /* Mobile: 10px from top - optimal spacing for status bar clearance */
+  top: 10px !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+  transition: top 0.3s ease;
+}
+
+#header.header-scrolled {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+
+/* Desktop: 40px from top (36px topbar + 4px visual gap) */
+@media (min-width: 576px) {
+  #header {
+    top: 40px !important; /* 36px (topbar) + 4px (optimal visual gap) */
+  }
+}
+
+/* Large screens: slightly more space for better visual hierarchy */
+@media (min-width: 992px) {
+  #header {
+    top: 42px !important; /* Slightly more breathing room on large screens */
+  }
+}
+
+/* Logo sizing - much larger on mobile for better visibility */
+.header-logo {
+  width: 56px;
+  height: 56px;
+  transition: transform 0.3s ease;
+}
+
+/* Extra large on very small mobile screens */
+@media (max-width: 480px) {
+  .header-logo {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* Smaller on tablet and desktop */
+@media (min-width: 576px) {
+  .header-logo {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Standard size on large screens */
+@media (min-width: 992px) {
+  .header-logo {
+    width: 48px;
+    height: 48px;
+  }
+}
+
 /* Navigation */
 .nav-link-modern {
   position: relative;
