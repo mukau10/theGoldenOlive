@@ -11,32 +11,13 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1000,
+    // Disable code splitting completely to avoid React 19 Activity error
+    // This prevents the React 19 Activity error that occurs with dynamic imports
     rollupOptions: {
       output: {
-        // Smart code splitting for better performance
-        manualChunks: (id) => {
-          // Vendor chunks
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('react-router')) {
-              return 'router-vendor';
-            }
-            if (id.includes('swiper')) {
-              return 'swiper-vendor';
-            }
-            if (id.includes('aos')) {
-              return 'aos-vendor';
-            }
-            if (id.includes('i18next')) {
-              return 'i18n-vendor';
-            }
-            // Other vendor libraries
-            return 'vendor';
-          }
-        },
-        // Optimize chunk file names
+        inlineDynamicImports: true, // Inline all dynamic imports into single bundle
+        format: 'es', // Keep ES modules format
+        // Optimize file names
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',

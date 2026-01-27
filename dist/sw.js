@@ -19,11 +19,22 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] Caching static assets');
-      return cache.addAll(STATIC_ASSETS).catch((err) => {
-        console.warn('[Service Worker] Failed to cache some assets:', err);
-        // Continue even if some assets fail to cache
-        return Promise.resolve();
-      });
+      // Cache assets one by one to handle failures gracefully
+      return Promise.allSettled(
+        STATIC_ASSETS.map((asset) =>
+          fetch(asset)
+            .then((response) => {
+              // Only cache full responses (200), not partial (206)
+              if (response.ok && response.status === 200) {
+                return cache.put(asset, response);
+              }
+              console.warn(`[Service Worker] Skipping cache for ${asset}: status ${response.status}`);
+            })
+            .catch((err) => {
+              console.warn(`[Service Worker] Failed to cache ${asset}:`, err);
+            })
+        )
+      );
     })
   );
   // Force the waiting service worker to become the active service worker
@@ -65,6 +76,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Skip range requests (partial content requests) - these can't be cached
+  const rangeHeader = request.headers.get('range');
+  if (rangeHeader) {
+    // For range requests, just fetch from network without caching
+    event.respondWith(fetch(request));
+    return;
+  }
+
   // Strategy: Cache First for static assets, Network First for API/data
   if (
     request.url.includes('/data/') ||
@@ -77,6 +96,7 @@ self.addEventListener('fetch', (event) => {
     request.url.includes('/assets/')
   ) {
     // Cache First strategy for static assets
+    // Note: Video files (mp4) with range requests are handled above
     event.respondWith(cacheFirstStrategy(request));
   } else {
     // Stale While Revalidate for HTML pages
@@ -93,9 +113,15 @@ async function cacheFirstStrategy(request) {
     }
 
     const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
+    // Only cache full responses (200), not partial responses (206)
+    // Partial responses occur with range requests (e.g., video streaming)
+    if (networkResponse.ok && networkResponse.status === 200) {
+      // Also check if this is a range request - don't cache those
+      const rangeHeader = request.headers.get('range');
+      if (!rangeHeader) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(request, networkResponse.clone());
+      }
     }
     return networkResponse;
   } catch (error) {
@@ -110,9 +136,13 @@ async function cacheFirstStrategy(request) {
 async function networkFirstStrategy(request) {
   try {
     const networkResponse = await fetch(request);
-    if (networkResponse.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
-      cache.put(request, networkResponse.clone());
+    // Only cache full responses (200), not partial responses (206)
+    if (networkResponse.ok && networkResponse.status === 200) {
+      const rangeHeader = request.headers.get('range');
+      if (!rangeHeader) {
+        const cache = await caches.open(RUNTIME_CACHE);
+        cache.put(request, networkResponse.clone());
+      }
     }
     return networkResponse;
   } catch (error) {
@@ -139,8 +169,12 @@ async function staleWhileRevalidateStrategy(request) {
 
   // Fetch from network in background
   const fetchPromise = fetch(request).then((networkResponse) => {
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
+    // Only cache full responses (200), not partial responses (206)
+    if (networkResponse.ok && networkResponse.status === 200) {
+      const rangeHeader = request.headers.get('range');
+      if (!rangeHeader) {
+        cache.put(request, networkResponse.clone());
+      }
     }
     return networkResponse;
   }).catch(() => {

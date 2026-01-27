@@ -7,45 +7,16 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Memoize gallery images array
+  // Gallery images - only show images that are NOT used in menu items
+  // Menu items use: tigerGarnalen, chickeniwings, mixedGrill, spareribs, hamburger2, hamburger3, IMG_3356, ouzzane-burger, moeilleux, mocktail2
   const galleryImages = useMemo(() => [
-    '/img/golden/mixedGrill.JPEG',
-    '/img/golden/tigerGarnalen.JPEG',
     '/img/golden/IMG_1809.JPEG',
-    '/img/golden/spareribs.JPEG',
-    '/img/golden/chickeniwings.JPEG',
-    '/img/golden/hamburger1.JPEG',
-    '/img/golden/hamburger2.JPEG',
-    '/img/golden/hamburger3.JPEG',
-    '/img/golden/dessert.JPEG',
-    '/img/golden/dessert1.JPEG',
-    '/img/golden/mocktail1.JPEG',
-    '/img/golden/mocktail2.JPEG',
-    '/img/golden/mocktail3.JPEG',
-    '/img/golden/IMG_1799.JPEG',
-    '/img/golden/IMG_1812.JPEG',
-    '/img/golden/IMG_1966.JPEG',
-    '/img/golden/IMG_2022.JPEG',
-    '/img/golden/IMG_2085.JPEG',
-    '/img/golden/IMG_2136.JPEG',
-    '/img/golden/IMG_2139.JPEG',
-    '/img/golden/IMG_2215.JPEG',
-    '/img/golden/IMG_3356.JPEG',
-    '/img/golden/IMG_3447.JPEG',
-    '/img/golden/IMG_3465.JPEG',
-    '/img/golden/IMG_4098.JPEG',
-    '/img/golden/IMG_4100.JPEG',
     '/img/golden/IMG_4117.JPEG',
-    '/img/golden/IMG_4215.JPEG',
-    '/img/golden/IMG_4221.JPEG',
-    '/img/golden/IMG_4243.JPEG',
     '/img/golden/IMG_4250.JPEG',
-    '/img/golden/IMG_4254.JPEG',
-    '/img/golden/IMG_7252.JPEG',
   ], []);
 
-  // Memoize displayed images
-  const displayedImages = useMemo(() => galleryImages.slice(0, 4), [galleryImages]);
+  // Memoize displayed images - show only 3
+  const displayedImages = useMemo(() => galleryImages.slice(0, 3), [galleryImages]);
 
   // Memoize event handlers
   const handleImageClick = useCallback((image: string) => {
@@ -90,15 +61,43 @@ const Gallery = () => {
             ))}
           </div>
           
-          {/* Toon meer button */}
+          {/* Action buttons */}
           <div className="text-center mt-4 mt-md-5" data-aos="fade-up" data-aos-delay="200">
-            <button
-              onClick={() => navigate('/galerij')}
-              className="btn btn-warning btn-lg rounded-pill px-5 py-3 fw-semibold"
-              style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}
-            >
-              {t('gallery.showMore')} <i className="bi bi-arrow-right ms-2"></i>
-            </button>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center">
+              <button
+                onClick={() => navigate('/galerij')}
+                className="btn btn-warning btn-lg rounded-pill px-5 py-3 fw-semibold"
+                style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', transition: 'all 0.3s ease' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                {t('gallery.showMore')} <i className="bi bi-arrow-right ms-2"></i>
+              </button>
+              <a
+                href="https://www.instagram.com/thegoldenolive._/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline-warning btn-lg rounded-pill px-5 py-3 fw-semibold"
+                style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', transition: 'all 0.3s ease' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  e.currentTarget.style.borderColor = 'var(--bs-golden)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                }}
+              >
+                <i className="bi bi-instagram me-2"></i>
+                {t('gallery.followInstagram') || 'Volg ons op Instagram'}
+              </a>
+            </div>
           </div>
         </div>
       </section>

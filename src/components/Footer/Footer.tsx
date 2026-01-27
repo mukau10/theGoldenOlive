@@ -119,6 +119,12 @@ const Footer = () => {
                 </div>
                 <div className="d-none d-sm-block text-secondary">|</div>
                 <div>
+                  <a href="/cookie-policy" className="text-warning text-decoration-none">
+                    {t('footer.cookiePolicy')}
+                  </a>
+                </div>
+                <div className="d-none d-sm-block text-secondary">|</div>
+                <div>
                   <a href="/allergenen" className="text-warning text-decoration-none">
                     {t('footer.allergenInfo')}
                   </a>

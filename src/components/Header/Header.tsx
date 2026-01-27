@@ -6,6 +6,22 @@ const Header = () => {
   const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Check if restaurant is currently open
+  useEffect(() => {
+    const checkStatus = () => {
+      const now = new Date();
+      const hour = now.getHours();
+      // Restaurant is open Ma-Zo: 17:00 - 23:00
+      setIsOpen(hour >= 17 && hour < 23);
+    };
+    
+    checkStatus();
+    // Update every minute to reflect status changes
+    const interval = setInterval(checkStatus, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Throttle scroll handler for better performance
   useEffect(() => {
@@ -65,10 +81,16 @@ const Header = () => {
               </span>
             </div>
             <div className="d-none d-sm-flex align-items-center">
+              <i className={`bi ${isOpen ? 'bi-circle-fill' : 'bi-circle'} me-2`} style={{ fontSize: '0.6rem', color: isOpen ? '#28a745' : '#dc3545' }}></i>
+              <span className="text-white fw-semibold" style={{ fontSize: '0.75rem' }}>
+                {isOpen ? (t('trustSignals.openNow') || 'Nu open') : (t('trustSignals.closedNow') || 'Nu gesloten')}
+              </span>
+            </div>
+            <div className="d-none d-md-flex align-items-center">
               <i className="bi bi-clock text-warning me-2" style={{ fontSize: '0.85rem' }}></i>
               <span className="text-white" style={{ fontSize: '0.75rem' }}>{t('header.hours')}</span>
             </div>
-            <div className="d-none d-md-flex align-items-center">
+            <div className="d-none d-lg-flex align-items-center">
               <i className="bi bi-geo-alt text-warning me-2" style={{ fontSize: '0.85rem' }}></i>
               <span className="text-white" style={{ fontSize: '0.75rem' }}>{t('header.address')}</span>
             </div>
@@ -103,7 +125,7 @@ const Header = () => {
                   style={{ width: 'clamp(24px, 5vw, 32px)', height: 'clamp(24px, 5vw, 32px)', objectFit: 'contain' }}
                 />
                 <span className="d-none d-sm-inline">THE GOLDEN OLIVE</span>
-                <span className="d-sm-none">GOLDEN OLIVE</span>
+                <span className="d-sm-none">THE GOLDEN OLIVE</span>
               </a>
             </h1>
 

@@ -33,40 +33,21 @@ const FloatingActions = () => {
 
   const handlePhoneClick = () => {
     window.location.href = 'tel:+32494194397';
+    setShowMenu(false);
   };
 
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent(t('floatingActions.whatsappMessage') || 'Hallo, ik wil graag reserveren bij The Golden Olive!');
     window.open(`https://wa.me/32494194397?text=${message}`, '_blank');
+    setShowMenu(false);
   };
 
   if (!isVisible) return null;
 
   return (
     <div className="floating-actions">
-      {/* Main floating menu button */}
-      <button
-        className={`floating-menu-toggle ${showMenu ? 'active' : ''}`}
-        onClick={() => setShowMenu(!showMenu)}
-        aria-label={t('floatingActions.toggleMenu') || 'Toggle menu'}
-        aria-expanded={showMenu}
-      >
-        <i className={`bi ${showMenu ? 'bi-x' : 'bi-three-dots-vertical'}`}></i>
-      </button>
-
-      {/* Action buttons */}
+      {/* Action buttons - placed first so they appear above toggle */}
       <div className={`floating-actions-menu ${showMenu ? 'visible' : ''}`}>
-        {/* Reserveer button */}
-        <button
-          className="floating-action-btn floating-action-reserve"
-          onClick={() => scrollToSection('contact')}
-          aria-label={t('floatingActions.reserve') || 'Reserveer'}
-          title={t('floatingActions.reserve') || 'Reserveer'}
-        >
-          <i className="bi bi-calendar-check"></i>
-          <span className="floating-action-label">{t('floatingActions.reserve') || 'Reserveer'}</span>
-        </button>
-
         {/* Menu button */}
         <button
           className="floating-action-btn floating-action-menu"
@@ -100,6 +81,16 @@ const FloatingActions = () => {
           <span className="floating-action-label">{t('floatingActions.whatsapp') || 'WhatsApp'}</span>
         </button>
       </div>
+
+      {/* Main floating menu button - placed last so it appears on top */}
+      <button
+        className={`floating-menu-toggle ${showMenu ? 'active' : ''}`}
+        onClick={() => setShowMenu(!showMenu)}
+        aria-label={t('floatingActions.toggleMenu') || 'Toggle menu'}
+        aria-expanded={showMenu}
+      >
+        <i className={`bi ${showMenu ? 'bi-x' : 'bi-three-dots-vertical'}`}></i>
+      </button>
     </div>
   );
 };

@@ -78,11 +78,23 @@
     "subtitle": "Un Aperçu",
     "fullSubtitle": "Découvrez nos créations culinaires",
     "showMore": "Voir Plus",
-    "backToHome": "Retour à l'accueil"
+    "backToHome": "Retour à l'accueil",
+    "followInstagram": "Voir plus sur Instagram"
   },
   "contact": {
     "title": "Contact",
     "subtitle": "Contactez-Nous",
+    "subject": "Sujet",
+    "selectSubject": "Sélectionner un sujet",
+    "reservation": "Réservation",
+    "event": "Événement",
+    "generalQuestion": "Question générale",
+    "complaint": "Plainte",
+    "compliment": "Compliment",
+    "other": "Autre",
+    "message": "Message",
+    "messagePlaceholder": "Votre message...",
+    "send": "Envoyer",
     "address": {
       "title": "Adresse :",
       "street": "Vlaamsekaai 65",
@@ -122,6 +134,7 @@
     "copyright": "Tous Droits Réservés",
     "vatNumber": "Numéro de TVA",
     "privacyPolicy": "Politique de Confidentialité",
+    "cookiePolicy": "Politique des Cookies",
     "allergenInfo": "Infos Allergènes",
     "callNow": "Appeler Maintenant",
     "whatsapp": "WhatsApp"
@@ -138,20 +151,6 @@
     "title": "The Golden Olive - Restaurant Anvers | Spareribs, Mix BBQ & Événements",
     "description": "Dégustez des plats authentiques chez The Golden Olive à Anvers. Spécialités : spareribs, mix BBQ, hamburgers. Parfait pour les anniversaires, événements d'entreprise et célébrations. Réservez maintenant !",
     "keywords": "The Golden Olive, restaurant Anvers, spareribs, mix BBQ, hamburgers, fête d'anniversaire, événement d'entreprise, événements, réservation, nourriture, boissons, Vlaamsekaai, restaurant Anvers"
-  },
-  "contact": {
-    "title": "Contact",
-    "subject": "Sujet",
-    "selectSubject": "Sélectionner un sujet",
-    "reservation": "Réservation",
-    "event": "Événement",
-    "generalQuestion": "Question générale",
-    "complaint": "Plainte",
-    "compliment": "Compliment",
-    "other": "Autre",
-    "message": "Message",
-    "messagePlaceholder": "Votre message...",
-    "send": "Envoyer"
   },
   "allergens": {
     "title": "Informations sur les Allergènes",
@@ -520,6 +519,57 @@
     "learnMore": "En savoir plus",
     "accept": "Accepter",
     "decline": "Refuser"
+  },
+  "cookiePolicy": {
+    "title": "Politique des Cookies",
+    "lastUpdated": "Dernière mise à jour",
+    "lastUpdatedDate": "1er janvier 2025",
+    "introduction": {
+      "title": "1. Introduction",
+      "text1": "Cette Politique des Cookies explique comment The Golden Olive (ci-après \"nous\", \"notre\", \"restaurant\") utilise les cookies et technologies similaires sur notre site web.",
+      "text2": "En utilisant notre site web, vous acceptez l'utilisation de cookies conformément à cette politique."
+    },
+    "whatAreCookies": {
+      "title": "2. Qu'est-ce qu'un cookie ?",
+      "text1": "Les cookies sont de petits fichiers texte stockés sur votre appareil (ordinateur, tablette ou appareil mobile) lorsque vous visitez un site web.",
+      "text2": "Les cookies permettent aux sites web de mémoriser des informations, telles que votre préférence linguistique, et aident à améliorer votre expérience de navigation."
+    },
+    "typesOfCookies": {
+      "title": "3. Types de cookies que nous utilisons",
+      "essential": {
+        "title": "3.1 Cookies essentiels",
+        "text": "Ces cookies sont essentiels au fonctionnement de notre site web. Ils vous permettent de naviguer sur le site et d'utiliser ses fonctionnalités. Sans ces cookies, certains services ne peuvent pas être offerts."
+      },
+      "functional": {
+        "title": "3.2 Cookies fonctionnels",
+        "text": "Ces cookies mémorisent vos préférences (telles que votre préférence linguistique) et offrent une expérience améliorée et plus personnalisée."
+      },
+      "analytics": {
+        "title": "3.3 Cookies analytiques",
+        "text": "Ces cookies nous aident à comprendre comment les visiteurs utilisent notre site web en collectant des informations sur le nombre de visiteurs, les pages visitées et le temps passé sur le site."
+      }
+    },
+    "howWeUseCookies": {
+      "title": "4. Comment utilisons-nous les cookies ?",
+      "use1": "Pour mémoriser votre préférence linguistique",
+      "use2": "Pour améliorer la fonctionnalité du site web",
+      "use3": "Pour collecter des analyses et statistiques du site web",
+      "use4": "Pour optimiser votre expérience de navigation"
+    },
+    "managingCookies": {
+      "title": "5. Gestion des cookies",
+      "text1": "Vous pouvez gérer les cookies via les paramètres de votre navigateur. La plupart des navigateurs vous permettent de refuser ou de supprimer les cookies.",
+      "text2": "Veuillez noter que la désactivation des cookies peut affecter la fonctionnalité de notre site web.",
+      "note": "Remarque : En désactivant les cookies, certaines fonctionnalités de notre site web peuvent ne pas fonctionner correctement."
+    },
+    "thirdPartyCookies": {
+      "title": "6. Cookies tiers",
+      "text": "Notre site web peut utiliser des cookies tiers, tels que Google Maps pour l'affichage de la localisation. Ces services ont leurs propres politiques de cookies que vous devriez consulter."
+    },
+    "contact": {
+      "title": "7. Contact",
+      "text": "Pour toute question concernant notre utilisation des cookies, vous pouvez nous contacter :"
+    }
   },
   "floatingActions": {
     "toggleMenu": "Basculer le menu d'actions",

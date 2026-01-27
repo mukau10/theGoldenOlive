@@ -78,11 +78,23 @@
     "subtitle": "A Preview",
     "fullSubtitle": "Discover our culinary creations",
     "showMore": "Show More",
-    "backToHome": "Back to home"
+    "backToHome": "Back to home",
+    "followInstagram": "See more on Instagram"
   },
   "contact": {
     "title": "Contact",
     "subtitle": "Get in Touch",
+    "subject": "Subject",
+    "selectSubject": "Select subject",
+    "reservation": "Reservation",
+    "event": "Event",
+    "generalQuestion": "General question",
+    "complaint": "Complaint",
+    "compliment": "Compliment",
+    "other": "Other",
+    "message": "Message",
+    "messagePlaceholder": "Your message...",
+    "send": "Send",
     "address": {
       "title": "Address:",
       "street": "Vlaamsekaai 65",
@@ -122,6 +134,7 @@
     "copyright": "All Rights Reserved",
     "vatNumber": "VAT Number",
     "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
     "allergenInfo": "Allergen Info",
     "callNow": "Call Now",
     "whatsapp": "WhatsApp"
@@ -138,20 +151,6 @@
     "title": "The Golden Olive - Restaurant Antwerp | Spareribs, Mix BBQ & Events",
     "description": "Enjoy authentic dishes at The Golden Olive in Antwerp. Specialties: spareribs, mix BBQ, burgers. Perfect for birthdays, corporate events and celebrations. Book now!",
     "keywords": "The Golden Olive, restaurant Antwerp, spareribs, mix BBQ, burgers, birthday party, corporate event, events, reservation, food, drinks, Vlaamsekaai, Antwerp restaurant"
-  },
-  "contact": {
-    "title": "Contact",
-    "subject": "Subject",
-    "selectSubject": "Select subject",
-    "reservation": "Reservation",
-    "event": "Event",
-    "generalQuestion": "General question",
-    "complaint": "Complaint",
-    "compliment": "Compliment",
-    "other": "Other",
-    "message": "Message",
-    "messagePlaceholder": "Your message...",
-    "send": "Send"
   },
   "allergens": {
     "title": "Allergen Information",
@@ -520,6 +519,57 @@
     "learnMore": "Learn more",
     "accept": "Accept",
     "decline": "Decline"
+  },
+  "cookiePolicy": {
+    "title": "Cookie Policy",
+    "lastUpdated": "Last updated",
+    "lastUpdatedDate": "January 1, 2025",
+    "introduction": {
+      "title": "1. Introduction",
+      "text1": "This Cookie Policy explains how The Golden Olive (hereinafter \"we\", \"us\", \"restaurant\") uses cookies and similar technologies on our website.",
+      "text2": "By using our website, you consent to the use of cookies in accordance with this policy."
+    },
+    "whatAreCookies": {
+      "title": "2. What are cookies?",
+      "text1": "Cookies are small text files that are stored on your device (computer, tablet or mobile device) when you visit a website.",
+      "text2": "Cookies allow websites to remember information, such as your language preference, and help improve your browsing experience."
+    },
+    "typesOfCookies": {
+      "title": "3. Types of cookies we use",
+      "essential": {
+        "title": "3.1 Essential cookies",
+        "text": "These cookies are essential for the functioning of our website. They allow you to navigate the site and use its features. Without these cookies, certain services cannot be offered."
+      },
+      "functional": {
+        "title": "3.2 Functional cookies",
+        "text": "These cookies remember your preferences (such as your language preference) and provide an improved, more personalized experience."
+      },
+      "analytics": {
+        "title": "3.3 Analytics cookies",
+        "text": "These cookies help us understand how visitors use our website by collecting information about the number of visitors, pages visited and time spent on the site."
+      }
+    },
+    "howWeUseCookies": {
+      "title": "4. How do we use cookies?",
+      "use1": "To remember your language preference",
+      "use2": "To improve website functionality",
+      "use3": "To collect website analytics and statistics",
+      "use4": "To optimize your browsing experience"
+    },
+    "managingCookies": {
+      "title": "5. Managing cookies",
+      "text1": "You can manage cookies through your browser settings. Most browsers allow you to refuse or delete cookies.",
+      "text2": "Please note that disabling cookies may affect the functionality of our website.",
+      "note": "Note: By disabling cookies, some features of our website may not work correctly."
+    },
+    "thirdPartyCookies": {
+      "title": "6. Third-party cookies",
+      "text": "Our website may use third-party cookies, such as Google Maps for location display. These services have their own cookie policies that you should consult."
+    },
+    "contact": {
+      "title": "7. Contact",
+      "text": "For questions about our use of cookies, you can contact us:"
+    }
   },
   "floatingActions": {
     "toggleMenu": "Toggle actions menu",

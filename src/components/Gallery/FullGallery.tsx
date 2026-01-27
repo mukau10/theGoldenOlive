@@ -9,20 +9,10 @@ const FullGallery = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  // Gallery images - only show images that are NOT used in menu items
+  // Menu items use: tigerGarnalen, chickeniwings, mixedGrill, spareribs, hamburger2, hamburger3, IMG_3356, ouzzane-burger, moeilleux, mocktail2
   const galleryImages = [
-    '/img/golden/mixedGrill.JPEG',
-    '/img/golden/tigerGarnalen.JPEG',
     '/img/golden/IMG_1809.JPEG',
-    '/img/golden/spareribs.JPEG',
-    '/img/golden/chickeniwings.JPEG',
-    '/img/golden/hamburger1.JPEG',
-    '/img/golden/hamburger2.JPEG',
-    '/img/golden/hamburger3.JPEG',
-    '/img/golden/dessert.JPEG',
-    '/img/golden/dessert1.JPEG',
-    '/img/golden/mocktail1.JPEG',
-    '/img/golden/mocktail2.JPEG',
-    '/img/golden/mocktail3.JPEG',
     '/img/golden/IMG_1799.JPEG',
     '/img/golden/IMG_1812.JPEG',
     '/img/golden/IMG_1966.JPEG',
@@ -31,7 +21,6 @@ const FullGallery = () => {
     '/img/golden/IMG_2136.JPEG',
     '/img/golden/IMG_2139.JPEG',
     '/img/golden/IMG_2215.JPEG',
-    '/img/golden/IMG_3356.JPEG',
     '/img/golden/IMG_3447.JPEG',
     '/img/golden/IMG_3465.JPEG',
     '/img/golden/IMG_4098.JPEG',
@@ -43,6 +32,11 @@ const FullGallery = () => {
     '/img/golden/IMG_4250.JPEG',
     '/img/golden/IMG_4254.JPEG',
     '/img/golden/IMG_7252.JPEG',
+    '/img/golden/hamburger1.JPEG',
+    '/img/golden/dessert.JPEG',
+    '/img/golden/dessert1.JPEG',
+    '/img/golden/mocktail1.JPEG',
+    '/img/golden/mocktail3.JPEG',
   ];
 
   return (

@@ -38,20 +38,6 @@
     "title": "Smaakvolle Ontmoetingen bij The Golden Olive",
     "description": "Geen zin om te koken vandaag? Kom langs en geniet van heerlijke gerechten samen met familie en vrienden. Bij The Golden Olive verwennen we u met adembenemende soulfood, bereid met de beste ingrediënten en een passie voor smaak. Bekijk alvast onze menukaart online. Reserveren is niet nodig, dus loop gerust binnen en ervaar de warme gastvrijheid van ons bistro-restaurant."
   },
-  "contact": {
-    "title": "Contact",
-    "subject": "Onderwerp",
-    "selectSubject": "Selecteer onderwerp",
-    "reservation": "Reservering",
-    "event": "Evenement",
-    "generalQuestion": "Algemene vraag",
-    "complaint": "Klacht",
-    "compliment": "Compliment",
-    "other": "Anders",
-    "message": "Bericht",
-    "messagePlaceholder": "Uw bericht...",
-    "send": "Verzenden"
-  },
   "allergens": {
     "title": "Allergenen Informatie",
     "subtitle": "Uitgebreide informatie over allergenen en dieetindicatoren",
@@ -185,11 +171,23 @@
     "subtitle": "Een voorproefje",
     "fullSubtitle": "Ontdek onze culinaire creaties",
     "showMore": "Toon meer",
-    "backToHome": "Terug naar home"
+    "backToHome": "Terug naar home",
+    "followInstagram": "Zie meer op Instagram"
   },
   "contact": {
     "title": "Contact",
     "subtitle": "Neem contact op",
+    "subject": "Onderwerp",
+    "selectSubject": "Selecteer onderwerp",
+    "reservation": "Reservering",
+    "event": "Evenement",
+    "generalQuestion": "Algemene vraag",
+    "complaint": "Klacht",
+    "compliment": "Compliment",
+    "other": "Anders",
+    "message": "Bericht",
+    "messagePlaceholder": "Uw bericht...",
+    "send": "Verzenden",
     "address": {
       "title": "Adres:",
       "street": "Vlaamsekaai 65",
@@ -229,6 +227,7 @@
     "copyright": "All Rights Reserved",
     "vatNumber": "BTW-nummer",
     "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
     "allergenInfo": "Allergenen Info",
     "callNow": "Bel Nu",
     "whatsapp": "WhatsApp"
@@ -520,6 +519,57 @@
     "learnMore": "Meer informatie",
     "accept": "Accepteren",
     "decline": "Weigeren"
+  },
+  "cookiePolicy": {
+    "title": "Cookie Policy",
+    "lastUpdated": "Laatst bijgewerkt",
+    "lastUpdatedDate": "1 januari 2025",
+    "introduction": {
+      "title": "1. Inleiding",
+      "text1": "Deze Cookie Policy legt uit hoe The Golden Olive (hierna \"wij\", \"ons\", \"restaurant\") cookies en vergelijkbare technologieën gebruikt op onze website.",
+      "text2": "Door onze website te gebruiken, stemt u in met het gebruik van cookies in overeenstemming met dit beleid."
+    },
+    "whatAreCookies": {
+      "title": "2. Wat zijn cookies?",
+      "text1": "Cookies zijn kleine tekstbestanden die op uw apparaat (computer, tablet of mobiel apparaat) worden opgeslagen wanneer u een website bezoekt.",
+      "text2": "Cookies stellen websites in staat om informatie te onthouden, zoals uw taalvoorkeur, en helpen bij het verbeteren van uw browse-ervaring."
+    },
+    "typesOfCookies": {
+      "title": "3. Soorten cookies die wij gebruiken",
+      "essential": {
+        "title": "3.1 Noodzakelijke cookies",
+        "text": "Deze cookies zijn essentieel voor het functioneren van onze website. Ze stellen u in staat om door de site te navigeren en gebruik te maken van de functies. Zonder deze cookies kunnen bepaalde diensten niet worden aangeboden."
+      },
+      "functional": {
+        "title": "3.2 Functionele cookies",
+        "text": "Deze cookies onthouden uw voorkeuren (zoals uw taalvoorkeur) en zorgen voor een verbeterde, meer gepersonaliseerde ervaring."
+      },
+      "analytics": {
+        "title": "3.3 Analytische cookies",
+        "text": "Deze cookies helpen ons te begrijpen hoe bezoekers onze website gebruiken door informatie te verzamelen over het aantal bezoekers, de bezochte pagina's en de tijd die op de site wordt doorgebracht."
+      }
+    },
+    "howWeUseCookies": {
+      "title": "4. Hoe gebruiken wij cookies?",
+      "use1": "Om uw taalvoorkeur te onthouden",
+      "use2": "Om de functionaliteit van de website te verbeteren",
+      "use3": "Om website-analyse en statistieken te verzamelen",
+      "use4": "Om uw browse-ervaring te optimaliseren"
+    },
+    "managingCookies": {
+      "title": "5. Cookies beheren",
+      "text1": "U kunt cookies beheren via de instellingen van uw browser. De meeste browsers staan u toe om cookies te weigeren of te verwijderen.",
+      "text2": "Houd er rekening mee dat het uitschakelen van cookies de functionaliteit van onze website kan beïnvloeden.",
+      "note": "Opmerking: Door cookies uit te schakelen, kunnen sommige functies van onze website niet correct werken."
+    },
+    "thirdPartyCookies": {
+      "title": "6. Cookies van derden",
+      "text": "Onze website kan cookies van derden gebruiken, zoals Google Maps voor locatieweergave. Deze diensten hebben hun eigen cookiebeleid dat u dient te raadplegen."
+    },
+    "contact": {
+      "title": "7. Contact",
+      "text": "Voor vragen over ons gebruik van cookies, kunt u contact met ons opnemen:"
+    }
   },
   "floatingActions": {
     "toggleMenu": "Toggle acties menu",

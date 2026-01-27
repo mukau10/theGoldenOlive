@@ -45,6 +45,10 @@ i18n
     missingKeyHandler: (lng, _ns, key) => {
       console.warn(`Missing translation key: ${key} for language: ${lng}`);
     },
+    // Return key if translation is missing (instead of showing the key)
+    returnNull: false,
+    returnEmptyString: false,
+    returnObjects: false,
   })
   .catch((error) => {
     console.error('i18n initialization error:', error);

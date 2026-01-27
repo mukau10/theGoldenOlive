@@ -335,7 +335,7 @@ const Hero = () => {
                 }}
                 className="btn btn-warning rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-dark text-decoration-none"
                 style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', transition: 'all 0.3s ease' }}
-                aria-label={t('contact.reservation') || 'Reserveer'}
+                aria-label={t('contact.reservation', { defaultValue: 'Reserveer' })}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
                   e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.5)';
@@ -345,7 +345,7 @@ const Hero = () => {
                   e.currentTarget.style.boxShadow = 'none';
                 }}
               >
-                <i className="bi bi-calendar-check me-2"></i>{t('contact.reservation') || 'Reserveer'}
+                <i className="bi bi-calendar-check me-2"></i>{t('contact.reservation', { defaultValue: 'Reserveer' })}
               </button>
             </div>
           </div>
