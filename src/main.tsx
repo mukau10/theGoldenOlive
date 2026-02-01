@@ -4,6 +4,76 @@ import './index.css'
 import './i18n/config'
 import App from './App.tsx'
 
+// App version - increment this when deploying new versions
+// This helps detect when the app needs to clear caches
+const APP_VERSION = '2.0.0';
+const VERSION_KEY = 'tgo_app_version';
+
+// Global function to clear caches and reload - can be called from error handlers
+declare global {
+  interface Window {
+    clearCachesAndReload: () => void;
+  }
+}
+
+window.clearCachesAndReload = async () => {
+  try {
+    // Clear all caches
+    if ('caches' in window) {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map(name => caches.delete(name)));
+    }
+    
+    // Unregister service workers
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map(reg => reg.unregister()));
+    }
+    
+    // Clear localStorage version to force fresh start
+    localStorage.removeItem(VERSION_KEY);
+    
+    // Force reload from server
+    window.location.reload();
+  } catch (error) {
+    console.error('Failed to clear caches:', error);
+    window.location.reload();
+  }
+};
+
+// Check if we need to clear caches due to version mismatch
+const checkVersionAndClearCaches = async () => {
+  try {
+    const storedVersion = localStorage.getItem(VERSION_KEY);
+    if (storedVersion !== APP_VERSION) {
+      console.log(`[App] Version changed from ${storedVersion} to ${APP_VERSION}, clearing caches...`);
+      
+      // Clear all caches
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        await Promise.all(cacheNames.map(name => caches.delete(name)));
+        console.log('[App] Caches cleared');
+      }
+      
+      // Store new version
+      localStorage.setItem(VERSION_KEY, APP_VERSION);
+      
+      // If this is a significant version change, force reload
+      if (storedVersion && storedVersion.split('.')[0] !== APP_VERSION.split('.')[0]) {
+        window.location.reload();
+        return false;
+      }
+    }
+    return true;
+  } catch (error) {
+    console.warn('[App] Failed to check version:', error);
+    return true;
+  }
+};
+
+// Run version check immediately
+checkVersionAndClearCaches();
+
 // Global error handler for React 19.2.0 Activity error
 // This is a known bug in React 19.2.0 - suppress the error to prevent console spam
 // The error occurs internally in React's reconciliation process and doesn't affect functionality
@@ -82,31 +152,63 @@ if (typeof window !== 'undefined') {
   });
 }
 
-// Register Service Worker for caching
+// Register Service Worker for caching - with improved update handling
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((registration) => {
-        console.log('[Service Worker] Registered successfully:', registration.scope);
-        
-        // Check for updates every hour
-        setInterval(() => {
-          registration.update();
-        }, 60 * 60 * 1000);
-      })
-      .catch((error) => {
-        console.warn('[Service Worker] Registration failed:', error);
+  window.addEventListener('load', async () => {
+    try {
+      const registration = await navigator.serviceWorker.register('/sw.js');
+      console.log('[Service Worker] Registered successfully:', registration.scope);
+      
+      // Check for updates immediately
+      registration.update();
+      
+      // Check for updates every 5 minutes (more frequent to catch new deployments)
+      setInterval(() => {
+        registration.update();
+      }, 5 * 60 * 1000);
+      
+      // Handle updates - prompt user or auto-reload
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // New service worker is ready - reload to use new version
+              console.log('[Service Worker] New version installed, reloading...');
+              // Clear caches and reload
+              if ('caches' in window) {
+                caches.keys().then(names => {
+                  names.forEach(name => caches.delete(name));
+                });
+              }
+              window.location.reload();
+            }
+          });
+        }
       });
+    } catch (error) {
+      console.warn('[Service Worker] Registration failed:', error);
+    }
 
-    // Listen for service worker updates
+    // Listen for service worker controller change
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      console.log('[Service Worker] New version available, reloading...');
-      // Optionally reload the page when new service worker is activated
-      // window.location.reload();
+      console.log('[Service Worker] Controller changed, reloading...');
+      window.location.reload();
     });
   });
 }
+
+// Remove initial loader to show React app
+const removeInitialLoader = () => {
+  const loader = document.getElementById('initial-loader');
+  if (loader) {
+    loader.style.opacity = '0';
+    loader.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+      loader.remove();
+    }, 300);
+  }
+};
 
 // Error handling for root element
 const rootElement = document.getElementById('root');
@@ -119,7 +221,7 @@ if (!rootElement) {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #000;
+    background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
     color: #fff;
     text-align: center;
     padding: 2rem;
@@ -128,6 +230,21 @@ if (!rootElement) {
     <div>
       <h1 style="color: #ffc107; margin-bottom: 1rem;">Fout bij het laden</h1>
       <p>De applicatie kan niet worden geladen. Controleer of de HTML correct is.</p>
+      <button 
+        onclick="clearCachesAndReload()" 
+        style="
+          padding: 0.75rem 2rem;
+          background-color: #ffc107;
+          color: #000;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          margin-top: 1rem;
+        "
+      >
+        Pagina vernieuwen
+      </button>
     </div>
   `;
   document.body.appendChild(errorDiv);
@@ -142,15 +259,31 @@ try {
   root.render(
     <App />
   );
+  
+  // Remove initial loader after React has mounted
+  // Use requestAnimationFrame to ensure render is complete
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      removeInitialLoader();
+    });
+  });
 } catch (error) {
   console.error('Failed to render app:', error);
+  
+  // Clear caches on render failure - likely stale cache issue
+  if ('caches' in window) {
+    caches.keys().then(names => {
+      names.forEach(name => caches.delete(name));
+    });
+  }
+  
   rootElement.innerHTML = `
     <div style="
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #000;
+      background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
       color: #fff;
       text-align: center;
       padding: 2rem;
@@ -159,7 +292,7 @@ try {
         <h1 style="color: #ffc107; margin-bottom: 1rem;">Fout bij het initialiseren</h1>
         <p style="margin-bottom: 1rem;">Er is een fout opgetreden bij het laden van de applicatie.</p>
         <button 
-          onclick="window.location.reload()" 
+          onclick="clearCachesAndReload()" 
           style="
             padding: 0.75rem 2rem;
             background-color: #ffc107;

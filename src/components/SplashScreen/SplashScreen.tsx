@@ -30,7 +30,7 @@ const SplashScreen = () => {
   const [languageSelected, setLanguageSelected] = useState(!!savedLanguage);
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 
-  // Safety timeout - hide splash screen after maximum 10 seconds
+  // Safety timeout - hide splash screen after maximum 5 seconds (reduced from 10)
   useEffect(() => {
     const safetyTimeout = setTimeout(() => {
       if (shouldRender && isVisible) {
@@ -38,9 +38,9 @@ const SplashScreen = () => {
         setIsVisible(false);
         setTimeout(() => {
           setShouldRender(false);
-        }, 500);
+        }, 300); // Reduced from 500ms
       }
-    }, 10000); // 10 seconds max
+    }, 5000); // 5 seconds max (reduced from 10)
 
     return () => clearTimeout(safetyTimeout);
   }, [shouldRender, isVisible]);

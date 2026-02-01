@@ -1,8 +1,14 @@
 /* App specific styles */
 .App {
   min-height: 100vh;
-  background-color: #000;
-  }
+  min-height: 100dvh;
+  background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+}
+
+/* Hide initial loader when React has mounted */
+#initial-loader {
+  display: none !important;
+}
 
 /* Ensure proper spacing for fixed header */
 #main {

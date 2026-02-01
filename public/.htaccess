@@ -119,6 +119,13 @@
     Header set Expires "0"
   </FilesMatch>
 
+  # Don't cache Service Worker - must always be fresh
+  <FilesMatch "sw\.js$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
   # Security Headers
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"

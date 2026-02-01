@@ -1,7 +1,8 @@
 // Service Worker for The Golden Olive
-// Version 1.0.0
-const CACHE_NAME = 'the-golden-olive-v1';
-const RUNTIME_CACHE = 'runtime-cache-v1';
+// Version 2.0.0 - Fixed caching issues causing black screen
+const CACHE_VERSION = '2.0.0';
+const CACHE_NAME = `the-golden-olive-v${CACHE_VERSION}`;
+const RUNTIME_CACHE = `runtime-cache-v${CACHE_VERSION}`;
 
 // Assets to cache immediately on install
 const STATIC_ASSETS = [
@@ -163,13 +164,47 @@ async function networkFirstStrategy(request) {
 }
 
 // Stale While Revalidate Strategy - good for HTML pages
+// IMPORTANT: For HTML, always try network first to avoid stale HTML with wrong asset hashes
 async function staleWhileRevalidateStrategy(request) {
   const cache = await caches.open(CACHE_NAME);
+  
+  // For HTML requests (navigation), try network first with short timeout
+  // This prevents serving stale HTML with outdated JS/CSS hashes
+  const isNavigationRequest = request.mode === 'navigate' || 
+                               request.destination === 'document' ||
+                               request.url.endsWith('/') ||
+                               request.url.endsWith('.html') ||
+                               !request.url.includes('.');
+  
+  if (isNavigationRequest) {
+    try {
+      // Try network with 3 second timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
+      
+      const networkResponse = await fetch(request, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      
+      if (networkResponse.ok && networkResponse.status === 200) {
+        cache.put(request, networkResponse.clone());
+      }
+      return networkResponse;
+    } catch (error) {
+      // Network failed, try cache
+      const cachedResponse = await cache.match(request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      // No cache, return offline page
+      return new Response('Offline', { status: 503 });
+    }
+  }
+  
+  // For non-navigation requests, use standard stale-while-revalidate
   const cachedResponse = await cache.match(request);
 
   // Fetch from network in background
   const fetchPromise = fetch(request).then((networkResponse) => {
-    // Only cache full responses (200), not partial responses (206)
     if (networkResponse.ok && networkResponse.status === 200) {
       const rangeHeader = request.headers.get('range');
       if (!rangeHeader) {
