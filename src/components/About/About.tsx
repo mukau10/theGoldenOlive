@@ -22,11 +22,6 @@ const About = () => {
                   className="about-image"
                 />
               </div>
-              {/* Floating accent card */}
-              <div className="about-accent-card" data-aos="fade-up" data-aos-delay="300">
-                <span className="accent-number">10+</span>
-                <span className="accent-text">{t('about.yearsExperience', 'Jaar Ervaring')}</span>
-              </div>
             </div>
           </div>
 

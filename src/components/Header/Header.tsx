@@ -57,52 +57,6 @@ const Header = () => {
 
   return (
     <>
-      {/* Topbar */}
-      <div id="topbar" className="d-none d-sm-flex align-items-center justify-content-center small position-fixed top-0 start-0 end-0" style={{ height: 'auto', minHeight: '36px', padding: '6px 12px', zIndex: 1050, background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(10px)' }} role="complementary" aria-label={t('header.contactInfo')}>
-        <div className="d-flex align-items-center justify-content-center small w-100">
-          <div className="d-flex align-items-center text-warning overflow-hidden flex-wrap justify-content-center gap-2 gap-sm-3">
-            <div className="d-none d-sm-flex align-items-center">
-              <i className="bi bi-phone text-warning me-1 me-sm-2" style={{ fontSize: '0.85rem' }}></i>
-              <span style={{ fontSize: '0.75rem' }}>
-                <a 
-                  href="tel:+32494194397" 
-                  className="text-white text-decoration-none" 
-                  style={{ 
-                    fontSize: 'inherit',
-                    transition: 'all 0.3s ease',
-                    fontWeight: '600'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'var(--bs-golden)';
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = '#fff';
-                    e.currentTarget.style.transform = 'scale(1)';
-                  }}
-                >
-                  +32 494 19 43 97
-                </a>
-              </span>
-            </div>
-            <div className="d-none d-sm-flex align-items-center">
-              <i className={`bi ${isOpen ? 'bi-circle-fill' : 'bi-circle'} me-2`} style={{ fontSize: '0.6rem', color: isOpen ? '#28a745' : '#dc3545' }}></i>
-              <span className="text-white fw-semibold" style={{ fontSize: '0.75rem' }}>
-                {isOpen ? (t('trustSignals.openNow') || 'Nu open') : (t('trustSignals.closedNow') || 'Nu gesloten')}
-              </span>
-            </div>
-            <div className="d-none d-md-flex align-items-center">
-              <i className="bi bi-clock text-warning me-2" style={{ fontSize: '0.85rem' }}></i>
-              <span className="text-white" style={{ fontSize: '0.75rem' }}>{t('header.hours')}</span>
-            </div>
-            <div className="d-none d-lg-flex align-items-center">
-              <i className="bi bi-geo-alt text-warning me-2" style={{ fontSize: '0.85rem' }}></i>
-              <span className="text-white" style={{ fontSize: '0.75rem' }}>{t('header.address')}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Header */}
       <header
         id="header"
