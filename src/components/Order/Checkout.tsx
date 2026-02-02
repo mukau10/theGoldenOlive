@@ -535,7 +535,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
             <span>€{cart.deliveryFee.toFixed(2)}</span>
           </div>
         )}
-        <div className="d-flex justify-content-between mt-2 pt-2 border-top" style={{ borderColor: 'var(--order-border) !important' }}>
+        <div className="d-flex justify-content-between mt-2 pt-2 border-top">
           <strong>{t('order.total', 'Totaal')}</strong>
           <strong className="text-golden">€{total.toFixed(2)}</strong>
         </div>

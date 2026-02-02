@@ -51,12 +51,6 @@
   color: var(--order-text) !important;
 }
 
-.order-page p,
-.order-page span,
-.order-page div {
-  color: inherit;
-}
-
 .order-page small {
   color: var(--order-text-muted);
 }
@@ -1682,6 +1676,12 @@
   padding: 16px;
   margin-bottom: 20px;
   color: var(--order-text);
+}
+
+/* Make Bootstrap border utility match order theme */
+.order-page .order-summary-card.border-top,
+.order-page .order-summary-card .border-top {
+  border-top-color: var(--order-border) !important;
 }
 
 .order-summary-card h6 {

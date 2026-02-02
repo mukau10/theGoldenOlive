@@ -152,21 +152,48 @@ if (typeof window !== 'undefined') {
   });
 }
 
-// Register Service Worker for caching - with improved update handling
+// Service Worker:
+// - PROD: enable caching/offline
+// - DEV: disable/unregister to prevent stale JS/CSS (very common source of “CSS not loading”)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
+    // DEV: proactively disable any previously-registered SW + clear caches once per tab
+    if (import.meta.env.DEV) {
+      try {
+        const flagKey = 'tgo_sw_disabled_in_dev';
+        if (!sessionStorage.getItem(flagKey)) {
+          sessionStorage.setItem(flagKey, '1');
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map((r) => r.unregister()));
+          if ('caches' in window) {
+            const names = await caches.keys();
+            await Promise.all(names.map((n) => caches.delete(n)));
+          }
+          // Ensure current page is controlled by network, not old SW
+          window.location.reload();
+          return;
+        }
+      } catch (error) {
+        console.warn('[Service Worker] Failed to disable in dev:', error);
+      }
+      return;
+    }
+
+    // PROD: register and manage updates
+    if (!import.meta.env.PROD) return;
+
     try {
       const registration = await navigator.serviceWorker.register('/sw.js');
       console.log('[Service Worker] Registered successfully:', registration.scope);
-      
+
       // Check for updates immediately
       registration.update();
-      
+
       // Check for updates every 5 minutes (more frequent to catch new deployments)
       setInterval(() => {
         registration.update();
       }, 5 * 60 * 1000);
-      
+
       // Handle updates - prompt user or auto-reload
       registration.addEventListener('updatefound', () => {
         const newWorker = registration.installing;
@@ -177,8 +204,8 @@ if ('serviceWorker' in navigator) {
               console.log('[Service Worker] New version installed, reloading...');
               // Clear caches and reload
               if ('caches' in window) {
-                caches.keys().then(names => {
-                  names.forEach(name => caches.delete(name));
+                caches.keys().then((names) => {
+                  names.forEach((name) => caches.delete(name));
                 });
               }
               window.location.reload();
