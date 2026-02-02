@@ -26,14 +26,17 @@ const About = () => {
 
           {/* Content */}
           <div className="col-12 col-lg-6 order-1 order-lg-2">
-            <h3
-              id="about-heading"
-              className="display-6 display-md-5 fw-bold text-golden mb-3 mb-md-4 text-center text-lg-start"
-              style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}
-            >
-              {t('about.title')}
-            </h3>
-            <p className="fs-6 fs-md-5 text-white fst-italic lh-lg text-center text-lg-start opacity-75" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>
+            <div className="section-title-modern text-center text-lg-start mb-4">
+              <span className="section-label">{t('about.label', 'Over Ons')}</span>
+              <h3
+                id="about-heading"
+                className="section-heading"
+              >
+                {t('about.title')}
+              </h3>
+              <div className="section-line"></div>
+            </div>
+            <p className="fs-6 fs-md-5 text-white fst-italic lh-lg text-center text-lg-start opacity-85" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>
               {t('about.description')}
             </p>
           </div>

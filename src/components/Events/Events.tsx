@@ -17,10 +17,11 @@ const Events = () => {
       <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"></div>
 
       <div className="container-fluid px-3 px-md-4 position-relative" data-aos="fade-up">
-        <div className="text-center mb-4 mb-md-5">
-          <h2 className="display-4 display-md-3 fw-bold text-warning mb-3 mb-md-4" style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>{t('events.title')}</h2>
-          <h3 className="fs-5 fs-md-4 text-white fw-light px-2 px-md-4 text-center opacity-75" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.5rem)' }}>{t('events.subtitle')}</h3>
-          <div className="mx-auto mt-3 bg-warning rounded-pill" style={{ width: '80px', height: '4px' }}></div>
+        <div className="section-title-modern text-center mb-4 mb-md-5">
+          <span className="section-label">{t('events.label', 'Evenementen')}</span>
+          <h2 className="section-heading">{t('events.title')}</h2>
+          <p className="section-subtitle">{t('events.subtitle')}</p>
+          <div className="section-line mx-auto"></div>
         </div>
 
         <div className="bg-black border border-warning rounded p-3 p-md-4 shadow-lg" data-aos="fade-up" data-aos-delay="100">

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoError, setVideoError] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -85,11 +87,12 @@ const Hero = () => {
     };
   }, []);
 
-  const scrollToMenu = () => {
-    const menuSection = document.getElementById('menu');
-    if (menuSection) {
-      menuSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const goToMenu = () => {
+    navigate('/menu');
+  };
+  
+  const goToContact = () => {
+    navigate('/contact');
   };
 
   return (
@@ -177,9 +180,9 @@ const Hero = () => {
         {/* CTA Buttons - positioned at bottom on mobile, center on desktop */}
         <div className="row justify-content-center mt-auto mt-md-4">
           <div className="col-12 col-sm-auto">
-            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center flex-wrap">
               <button
-                onClick={scrollToMenu}
+                onClick={goToMenu}
                 className="btn btn-outline-golden rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-decoration-none"
                 style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', transition: 'all 0.3s ease' }}
                 aria-label={t('hero.viewMenu')}
@@ -195,12 +198,29 @@ const Hero = () => {
                 <i className="bi bi-menu-button-wide me-2"></i>{t('common.ourMenu')}
               </button>
               <button
-                onClick={() => {
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  }
+                onClick={() => navigate('/bestellen')}
+                className="btn rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-decoration-none"
+                style={{ 
+                  fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', 
+                  transition: 'all 0.3s ease',
+                  background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
+                  color: '#000',
+                  border: 'none'
                 }}
+                aria-label={t('order.orderOnline', { defaultValue: 'Online Bestellen' })}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.5)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <i className="bi bi-bag-check me-2"></i>{t('order.orderOnline', { defaultValue: 'Online Bestellen' })}
+              </button>
+              <button
+                onClick={goToContact}
                 className="btn btn-warning rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-dark text-decoration-none"
                 style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', transition: 'all 0.3s ease' }}
                 aria-label={t('contact.reservation', { defaultValue: 'Reserveer' })}

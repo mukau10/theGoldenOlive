@@ -252,7 +252,7 @@ const Menu = () => {
                     paddingRight: searchQuery ? '3rem' : '1.5rem',
                     fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
                     border: '2px solid var(--bs-golden)',
-                    boxShadow: '0 4px 16px rgba(255, 193, 7, 0.2)',
+                    boxShadow: '0 4px 16px rgba(192, 187, 175, 0.2)',
                   }}
                 />
                 <i className="bi bi-search text-warning position-absolute" style={{ left: '1.25rem', top: '50%', transform: 'translateY(-50%)', fontSize: '1.2rem' }}></i>

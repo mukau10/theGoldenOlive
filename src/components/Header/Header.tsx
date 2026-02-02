@@ -1,12 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
 const Header = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Check if we're on the homepage
+  const isHomePage = location.pathname === '/';
 
   // Check if restaurant is currently open
   useEffect(() => {
@@ -134,78 +139,93 @@ const Header = () => {
             <nav id="navbar" className="d-none d-lg-block" role="navigation" aria-label={t('header.navigation')}>
               <ul className="d-flex align-items-center mb-0 list-unstyled" style={{ gap: '2rem' }} role="menubar">
                 <li role="none">
-                  <a
+                  <Link
                     className="nav-link-modern text-white text-decoration-none fw-medium"
-                    href="#hero"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('hero');
-                    }}
+                    to="/"
                     role="menuitem"
                     aria-label={t('header.goToHome')}
                   >
                     {t('common.home')}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    className="nav-link-modern text-white text-decoration-none fw-medium"
-                    href="#about"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('about');
-                    }}
-                  >
-                    {t('common.about')}
-                  </a>
+                  {isHomePage ? (
+                    <a
+                      className="nav-link-modern text-white text-decoration-none fw-medium"
+                      href="#about"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection('about');
+                      }}
+                    >
+                      {t('common.about')}
+                    </a>
+                  ) : (
+                    <Link
+                      className="nav-link-modern text-white text-decoration-none fw-medium"
+                      to="/#about"
+                    >
+                      {t('common.about')}
+                    </Link>
+                  )}
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="nav-link-modern text-white text-decoration-none fw-medium"
-                    href="#menu"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('menu');
-                    }}
+                    to="/menu"
                   >
                     {t('common.menu')}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    className="nav-link-modern text-white text-decoration-none fw-medium"
-                    href="#events"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('events');
-                    }}
-                  >
-                    {t('common.events')}
-                  </a>
+                  {isHomePage ? (
+                    <a
+                      className="nav-link-modern text-white text-decoration-none fw-medium"
+                      href="#events"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection('events');
+                      }}
+                    >
+                      {t('common.events')}
+                    </a>
+                  ) : (
+                    <Link
+                      className="nav-link-modern text-white text-decoration-none fw-medium"
+                      to="/#events"
+                    >
+                      {t('common.events')}
+                    </Link>
+                  )}
                 </li>
                 <li>
-                  <a
-                    className="nav-link-modern text-white text-decoration-none fw-medium"
-                    href="#gallery"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('gallery');
-                    }}
-                  >
-                    {t('common.gallery')}
-                  </a>
+                  {isHomePage ? (
+                    <a
+                      className="nav-link-modern text-white text-decoration-none fw-medium"
+                      href="#gallery"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection('gallery');
+                      }}
+                    >
+                      {t('common.gallery')}
+                    </a>
+                  ) : (
+                    <Link
+                      className="nav-link-modern text-white text-decoration-none fw-medium"
+                      to="/#gallery"
+                    >
+                      {t('common.gallery')}
+                    </Link>
+                  )}
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="nav-link-modern text-white text-decoration-none fw-medium"
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      scrollToSection('contact');
-                    }}
+                    to="/contact"
                   >
                     {t('common.contact')}
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <LanguageSwitcher />
@@ -245,85 +265,278 @@ const Header = () => {
           </div>
         </div>
 
+        {/* Mobile Navigation Backdrop */}
+        {isMobileMenuOpen && (
+          <div
+            className="d-lg-none position-fixed top-0 start-0 w-100 h-100"
+            style={{
+              zIndex: 1055,
+              background: 'rgba(0, 0, 0, 0.6)',
+              backdropFilter: 'blur(4px)',
+            }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+
         {/* Mobile Navigation Menu */}
         <div
           id="mobile-nav"
-          className={`d-lg-none position-fixed top-0 start-0 w-100 h-100`}
+          className={`d-lg-none position-fixed top-0 start-0 h-100`}
           style={{
             zIndex: 1060,
+            width: '85%',
+            maxWidth: '320px',
             transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
-            transition: 'transform 0.3s ease-in-out',
-            background: 'rgba(0, 0, 0, 0.95)',
-            backdropFilter: 'blur(20px)',
-            borderRight: '1px solid rgba(255, 193, 7, 0.2)',
-            boxShadow: '4px 0 32px rgba(0, 0, 0, 0.5)',
+            transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+            background: '#0a0a0a',
+            boxShadow: isMobileMenuOpen ? '8px 0 40px rgba(0, 0, 0, 0.8)' : 'none',
           }}
         >
-          <div className="d-flex flex-column h-100" style={{ background: '#000' }}>
+          <div className="d-flex flex-column h-100">
             {/* Mobile Header */}
-            <div className="d-flex align-items-center justify-content-between p-4 border-bottom border-warning bg-black">
-              <h2 className="fs-5 text-warning mb-0" style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700 }}>
-                Menu
-              </h2>
+            <div 
+              className="d-flex align-items-center justify-content-between p-4"
+              style={{ 
+                background: '#0a0a0a',
+                borderBottom: '1px solid rgba(255, 193, 7, 0.15)'
+              }}
+            >
+              <img
+                src="/img/favicon11.png"
+                alt="The Golden Olive"
+                style={{ height: '40px', objectFit: 'contain' }}
+              />
               <button
-                className="mobile-nav-close text-warning fs-2 p-2 border border-warning rounded bg-black"
+                className="d-flex align-items-center justify-content-center"
                 aria-label={t('header.closeMobileMenu')}
                 onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(255, 193, 7, 0.3)',
+                  color: 'var(--bs-golden)',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  transition: 'all 0.2s ease',
+                }}
               >
-                <i className="bi bi-x"></i>
+                <i className="bi bi-x-lg" style={{ fontSize: '1.1rem' }}></i>
               </button>
             </div>
 
+            {/* Order Button - Prominent CTA */}
+            <div className="px-4 py-4" style={{ background: '#0a0a0a' }}>
+              <Link
+                to="/bestellen"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="d-flex align-items-center justify-content-center gap-2 w-100 py-3 text-decoration-none"
+                style={{
+                  background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
+                  color: '#000',
+                  fontWeight: '700',
+                  fontSize: '1rem',
+                  borderRadius: '12px',
+                  boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                <i className="bi bi-bag-check" style={{ fontSize: '1.2rem' }}></i>
+                {t('hero.orderOnline', 'Online Bestellen')}
+              </Link>
+            </div>
+
             {/* Mobile Navigation Links */}
-            <nav className="flex-fill px-4 py-4" style={{ background: '#000' }} role="navigation" aria-label={t('header.mobileNavigation')}>
-              <ul className="list-unstyled">
-                {[
-                  { href: '#hero', label: t('common.home'), icon: 'bi-house-door' },
-                  { href: '#about', label: t('common.about'), icon: 'bi-info-circle' },
-                  { href: '#menu', label: t('common.menu'), icon: 'bi-list-ul' },
-                  { href: '#events', label: t('common.events'), icon: 'bi-calendar-event' },
-                  { href: '#gallery', label: t('common.gallery'), icon: 'bi-images' },
-                  { href: '#contact', label: t('common.contact'), icon: 'bi-telephone' },
-                ].map((item) => (
-                  <li key={item.href} className="mb-3">
+            <nav 
+              className="flex-fill px-4 overflow-auto" 
+              style={{ background: '#0a0a0a' }} 
+              role="navigation" 
+              aria-label={t('header.mobileNavigation')}
+            >
+              <ul className="list-unstyled mb-0">
+                {/* Home */}
+                <li>
+                  <Link
+                    className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                    to="/"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="mobile-nav-icon">
+                      <i className="bi-house-door"></i>
+                    </span>
+                    <span>{t('common.home')}</span>
+                  </Link>
+                </li>
+                {/* About */}
+                <li>
+                  {isHomePage ? (
                     <a
-                      className="mobile-nav-link d-block fs-5 text-white text-decoration-none py-3 border-bottom border-warning"
-                      href={item.href}
+                      className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                      href="#about"
                       onClick={(e) => {
                         e.preventDefault();
-                        scrollToSection(item.href.substring(1));
+                        scrollToSection('about');
                       }}
                     >
-                      <i className={`${item.icon} me-3 text-warning`}></i>
-                      {item.label}
+                      <span className="mobile-nav-icon">
+                        <i className="bi-info-circle"></i>
+                      </span>
+                      <span>{t('common.about')}</span>
                     </a>
-                  </li>
-                ))}
-                <li className="mb-3 mt-4 pt-3 border-top border-warning">
-                  <div className="px-2">
-                    <LanguageSwitcher />
-                  </div>
+                  ) : (
+                    <Link
+                      className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                      to="/#about"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="mobile-nav-icon">
+                        <i className="bi-info-circle"></i>
+                      </span>
+                      <span>{t('common.about')}</span>
+                    </Link>
+                  )}
+                </li>
+                {/* Menu */}
+                <li>
+                  <Link
+                    className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                    to="/menu"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="mobile-nav-icon">
+                      <i className="bi-book"></i>
+                    </span>
+                    <span>{t('common.menu')}</span>
+                  </Link>
+                </li>
+                {/* Events */}
+                <li>
+                  {isHomePage ? (
+                    <a
+                      className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                      href="#events"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection('events');
+                      }}
+                    >
+                      <span className="mobile-nav-icon">
+                        <i className="bi-calendar-event"></i>
+                      </span>
+                      <span>{t('common.events')}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                      to="/#events"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="mobile-nav-icon">
+                        <i className="bi-calendar-event"></i>
+                      </span>
+                      <span>{t('common.events')}</span>
+                    </Link>
+                  )}
+                </li>
+                {/* Gallery */}
+                <li>
+                  {isHomePage ? (
+                    <a
+                      className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                      href="#gallery"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection('gallery');
+                      }}
+                    >
+                      <span className="mobile-nav-icon">
+                        <i className="bi-images"></i>
+                      </span>
+                      <span>{t('common.gallery')}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                      to="/#gallery"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="mobile-nav-icon">
+                        <i className="bi-images"></i>
+                      </span>
+                      <span>{t('common.gallery')}</span>
+                    </Link>
+                  )}
+                </li>
+                {/* Contact */}
+                <li>
+                  <Link
+                    className="mobile-nav-link-modern d-flex align-items-center text-white text-decoration-none py-3"
+                    to="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="mobile-nav-icon">
+                      <i className="bi-telephone"></i>
+                    </span>
+                    <span>{t('common.contact')}</span>
+                  </Link>
                 </li>
               </ul>
             </nav>
 
-            {/* Mobile Contact Info */}
-            <div className="p-4 border-top border-warning" style={{ background: '#000' }}>
-              <div className="small text-white">
-                <div className="d-flex align-items-center mb-3">
-                  <i className="bi bi-phone text-warning me-3"></i>
-                  <a href="tel:+32494194397" className="text-white text-decoration-none">
-                    +32 494 19 43 97
-                  </a>
+            {/* Mobile Footer */}
+            <div 
+              className="p-4" 
+              style={{ 
+                background: '#0a0a0a',
+                borderTop: '1px solid rgba(255, 193, 7, 0.15)'
+              }}
+            >
+              {/* Language Switcher */}
+              <div className="mb-4">
+                <LanguageSwitcher />
+              </div>
+              
+              {/* Contact Info */}
+              <div className="d-flex flex-column gap-3" style={{ fontSize: '0.9rem' }}>
+                <a 
+                  href="tel:+32494194397" 
+                  className="d-flex align-items-center text-white text-decoration-none"
+                  style={{ transition: 'color 0.2s' }}
+                >
+                  <i className="bi bi-telephone-fill me-3" style={{ color: 'var(--bs-golden)', width: '20px' }}></i>
+                  +32 494 19 43 97
+                </a>
+                <div className="d-flex align-items-center text-white" style={{ opacity: 0.8 }}>
+                  <i className="bi bi-clock me-3" style={{ color: 'var(--bs-golden)', width: '20px' }}></i>
+                  <span style={{ fontSize: '0.85rem' }}>{t('header.hours')}</span>
                 </div>
-                <div className="d-flex align-items-center mb-3">
-                  <i className="bi bi-clock text-warning me-3"></i>
-                  <span>{t('header.hours')}</span>
+                <div className="d-flex align-items-start text-white" style={{ opacity: 0.8 }}>
+                  <i className="bi bi-geo-alt-fill me-3" style={{ color: 'var(--bs-golden)', width: '20px', marginTop: '2px' }}></i>
+                  <span style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>{t('header.address')}</span>
                 </div>
-                <div className="d-flex align-items-center">
-                  <i className="bi bi-geo-alt text-warning me-3"></i>
-                  <span>{t('header.address')}</span>
-                </div>
+              </div>
+              
+              {/* Status Badge */}
+              <div 
+                className="d-flex align-items-center justify-content-center mt-4 py-2 px-3"
+                style={{
+                  background: isOpen ? 'rgba(40, 167, 69, 0.15)' : 'rgba(220, 53, 69, 0.15)',
+                  borderRadius: '8px',
+                  border: `1px solid ${isOpen ? 'rgba(40, 167, 69, 0.3)' : 'rgba(220, 53, 69, 0.3)'}`,
+                }}
+              >
+                <span 
+                  style={{ 
+                    width: '8px', 
+                    height: '8px', 
+                    borderRadius: '50%', 
+                    background: isOpen ? '#28a745' : '#dc3545',
+                    marginRight: '8px',
+                    animation: isOpen ? 'pulse 2s infinite' : 'none'
+                  }}
+                />
+                <span style={{ fontSize: '0.85rem', fontWeight: 500, color: isOpen ? '#28a745' : '#dc3545' }}>
+                  {isOpen ? (t('trustSignals.openNow') || 'Nu open') : (t('trustSignals.closedNow') || 'Nu gesloten')}
+                </span>
               </div>
             </div>
           </div>

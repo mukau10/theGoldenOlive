@@ -8,6 +8,14 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    // Proxy API requests to backend server
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5087',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   build: {
     chunkSizeWarningLimit: 1000,

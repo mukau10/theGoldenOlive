@@ -5,11 +5,9 @@ import FloatingActions from './components/FloatingActions/FloatingActions';
 import Header from './components/Header/Header';
 import Hero from './components/Hero/Hero';
 import About from './components/About/About';
-import Menu from './components/Menu/Menu';
 import Events from './components/Events/Events';
 import Gallery from './components/Gallery/Gallery';
 import FullGallery from './components/Gallery/FullGallery';
-import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy/PrivacyPolicy';
 import CookiePolicy from './components/CookiePolicy/CookiePolicy';
@@ -18,6 +16,9 @@ import StructuredData from './components/SEO/StructuredData';
 import SEOHead from './components/SEO/SEOHead';
 import SplashScreen from './components/SplashScreen/SplashScreen';
 import CookieConsent from './components/CookieConsent/CookieConsent';
+import { OrderPage } from './components/Order';
+import MenuPage from './components/Menu/MenuPage';
+import ContactPage from './components/Contact/ContactPage';
 import { preloadMenu } from './hooks/useMenu';
 import { preloadAllergens } from './hooks/useAllergens';
 import './App.css';
@@ -26,7 +27,7 @@ import './App.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Main page component
+// Main page component - Homepage with Hero, About, Events, Gallery
 const HomePage = () => {
   return (
     <>
@@ -36,26 +37,36 @@ const HomePage = () => {
       <main id="main">
         <Hero />
         <About />
-        <Menu />
         <Events />
         <Gallery />
-        <Contact />
       </main>
       <Footer />
     </>
   );
 };
 
-// Scroll to top on route change - memoized
+// Scroll to top on route change, or scroll to hash if present
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // Use requestAnimationFrame for smoother scroll
+    // If there's a hash, scroll to that element
+    if (hash) {
+      // Small delay to ensure the page has rendered
+      const timer = setTimeout(() => {
+        const element = document.getElementById(hash.replace('#', ''));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+    
+    // Otherwise scroll to top
     requestAnimationFrame(() => {
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     });
-  }, [pathname]);
+  }, [pathname, hash]);
 
   return null;
 };
@@ -97,11 +108,22 @@ function App() {
   const routes = useMemo(() => (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      {/* Menu Page */}
+      <Route path="/menu" element={<MenuPage />} />
+      <Route path="/menukaart" element={<MenuPage />} />
+      {/* Contact Page */}
+      <Route path="/contact" element={<ContactPage />} />
+      {/* Gallery */}
       <Route path="/galerij" element={<FullGallery />} />
+      {/* Legal & Info */}
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/cookie-policy" element={<CookiePolicy />} />
       <Route path="/allergenen" element={<AllergenInfo />} />
       <Route path="/allergie" element={<AllergenInfo />} />
+      {/* Online Order System */}
+      <Route path="/bestellen" element={<OrderPage />} />
+      <Route path="/order" element={<OrderPage />} />
+      <Route path="/order/success" element={<OrderPage />} />
       {/* Fallback to home for any other routes */}
       <Route path="*" element={<HomePage />} />
     </Routes>

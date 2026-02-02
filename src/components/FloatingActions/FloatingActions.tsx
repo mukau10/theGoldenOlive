@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import './FloatingActions.css';
 
 const FloatingActions = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -23,12 +25,9 @@ const FloatingActions = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setShowMenu(false);
-    }
+  const goToMenu = () => {
+    navigate('/menu');
+    setShowMenu(false);
   };
 
   const handlePhoneClick = () => {
@@ -51,7 +50,7 @@ const FloatingActions = () => {
         {/* Menu button */}
         <button
           className="floating-action-btn floating-action-menu"
-          onClick={() => scrollToSection('menu')}
+          onClick={goToMenu}
           aria-label={t('common.menu') || 'Menu'}
           title={t('common.menu') || 'Menu'}
         >
