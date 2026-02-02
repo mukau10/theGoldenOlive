@@ -690,24 +690,33 @@ body {
 .filters-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
   align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .filters-group {
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .filters-bar .form-select,
 .filters-bar .form-control {
-  background: var(--dark-light);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--text);
-  font-size: 0.875rem;
-  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  min-height: 42px;
 }
 
 .filters-bar .form-select:focus,
@@ -718,6 +727,40 @@ body {
 
 .filters-actions {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filters-bar .input-group {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.filters-bar .input-group .form-control {
+  border-radius: 0;
+  border-right: 0;
+}
+
+.filters-bar .input-group .btn {
+  border-radius: 0;
+  border-left: 0;
+}
+
+.filters-bar .btn {
+  min-height: 42px;
+}
+
+.filters-bar .btn-outline-secondary {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.filters-bar .btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 /* =====================================================
@@ -1085,6 +1128,27 @@ body {
   line-height: 1.4;
 }
 
+/* Clickable stat cards */
+.stat-card-clickable {
+  cursor: pointer;
+  position: relative;
+}
+.stat-card-clickable::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  opacity: 0;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.stat-card-clickable:hover {
+  transform: translateY(-1px);
+}
+.stat-card-clickable:hover::after {
+  opacity: 1;
+}
+
 /* Notifications modal list */
 #notifications-list .list-group-item {
   background: rgba(255,255,255,0.04);
@@ -1209,6 +1273,25 @@ body {
 
   .filters-actions {
     margin-left: 0;
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .filters-group {
+    width: 100%;
+  }
+
+  .filters-group > * ,
+  .filters-actions > * {
+    width: 100%;
+  }
+
+  .filters-bar .input-group {
+    width: 100%;
+  }
+
+  .filters-bar .input-group .btn {
+    width: auto;
   }
 
   .table-responsive {

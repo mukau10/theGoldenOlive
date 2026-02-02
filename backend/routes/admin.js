@@ -636,6 +636,104 @@ router.get('/reports/range', requirePermission('view_orders'), async (req, res, 
   }
 });
 
+/**
+ * GET /api/admin/revenue
+ * Returns chart points + summary for a revenue period.
+ * period: today | week | month
+ */
+router.get('/revenue', requirePermission('view_orders'), async (req, res, next) => {
+  try {
+    const period = String(req.query.period || 'today');
+    const { taxRate, restaurant } = await getReportSettings();
+
+    const now = new Date();
+    const today = new Date(now);
+    today.setHours(0, 0, 0, 0);
+
+    let title = 'Omzet';
+    let whereSql = 'DATE(o.created_at) = ?';
+    let params = [isoDate(today)];
+    let seriesSql = '';
+    let seriesParams = [];
+
+    if (period === 'today') {
+      title = 'Omzet Vandaag';
+      whereSql = 'DATE(o.created_at) = ?';
+      params = [isoDate(today)];
+      seriesSql = `
+        SELECT HOUR(o.created_at) as label, COUNT(*) as orders, COALESCE(SUM(o.total),0) as revenue
+        FROM orders o
+        WHERE DATE(o.created_at) = ? AND o.status != 'cancelled'
+        GROUP BY HOUR(o.created_at)
+        ORDER BY label
+      `;
+      seriesParams = params;
+    } else if (period === 'week') {
+      title = 'Omzet Deze Week';
+      const from = new Date(today);
+      from.setDate(from.getDate() - 6); // last 7 days inclusive
+      const dateFrom = isoDate(from);
+      const dateTo = isoDate(today);
+      whereSql = 'DATE(o.created_at) >= ? AND DATE(o.created_at) <= ?';
+      params = [dateFrom, dateTo];
+      seriesSql = `
+        SELECT DATE(o.created_at) as label, COUNT(*) as orders, COALESCE(SUM(o.total),0) as revenue
+        FROM orders o
+        WHERE DATE(o.created_at) >= ? AND DATE(o.created_at) <= ? AND o.status != 'cancelled'
+        GROUP BY DATE(o.created_at)
+        ORDER BY label
+      `;
+      seriesParams = params;
+    } else if (period === 'month') {
+      title = 'Omzet Deze Maand';
+      const from = new Date(today.getFullYear(), today.getMonth(), 1);
+      const to = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      const dateFrom = isoDate(from);
+      const dateTo = isoDate(to);
+      whereSql = 'DATE(o.created_at) >= ? AND DATE(o.created_at) <= ?';
+      params = [dateFrom, dateTo];
+      seriesSql = `
+        SELECT DATE(o.created_at) as label, COUNT(*) as orders, COALESCE(SUM(o.total),0) as revenue
+        FROM orders o
+        WHERE DATE(o.created_at) >= ? AND DATE(o.created_at) <= ? AND o.status != 'cancelled'
+        GROUP BY DATE(o.created_at)
+        ORDER BY label
+      `;
+      seriesParams = params;
+    } else {
+      throw new AppError('Onbekende periode', 400);
+    }
+
+    const baseTotals = await getOrderTotals({ whereSql, params });
+    const bd = computeVatBreakdown(baseTotals.revenue, taxRate);
+
+    const rows = await query(seriesSql, seriesParams);
+    const points = rows.map((r) => ({
+      label: String(r.label),
+      orders: Number(r.orders || 0),
+      revenue: round2(parseFloat(r.revenue || 0)),
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        period,
+        title,
+        restaurant,
+        totals: {
+          ...baseTotals,
+          tax_rate: taxRate,
+          net_amount: bd.net,
+          vat_amount: bd.vat,
+        },
+        points,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 function buildReportPdf(doc, { title, subtitle, restaurant, totals, orders = [], generatedAt }) {
   // Theme (print-friendly)
   const C = {

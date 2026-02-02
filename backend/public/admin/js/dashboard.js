@@ -12,6 +12,7 @@ let lastUpdateTime = null;
 let categoriesCache = [];
 let orderDetailMap = null;
 let lastOrderDetail = null;
+let revenueChart = null;
 
 // =====================================================
 // NEW ORDER NOTIFICATIONS (show once)
@@ -1932,6 +1933,139 @@ function formatCurrency(value) {
   return '€' + parseFloat(value || 0).toFixed(2);
 }
 
+function openRevenueModal(period) {
+  const modalEl = document.getElementById('revenueModal');
+  const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+  modal.show();
+  loadRevenueModal(period);
+}
+
+async function loadRevenueModal(period) {
+  const titleEl = document.getElementById('revenue-modal-title');
+  const subtitleEl = document.getElementById('revenue-modal-subtitle');
+  const summaryEl = document.getElementById('revenue-summary');
+  const ordersTbody = document.getElementById('revenue-orders-table');
+
+  if (subtitleEl) subtitleEl.textContent = 'Laden...';
+  if (summaryEl) summaryEl.textContent = 'Laden...';
+  if (ordersTbody) ordersTbody.innerHTML = '<tr><td colspan="7" class="text-center py-4">Laden...</td></tr>';
+
+  const rev = await apiRequest(`/admin/revenue?period=${encodeURIComponent(period)}`);
+  const data = rev.data;
+  if (titleEl) titleEl.innerHTML = `<i class="bi bi-currency-euro me-2"></i>${escapeHtml(data.title || 'Omzet details')}`;
+
+  const t = data.totals;
+  if (subtitleEl) subtitleEl.textContent = `${t.orders} bestellingen • ${formatCurrency(t.revenue)} omzet`;
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div class="d-flex justify-content-between"><span>Omzet (incl. BTW)</span><strong>${formatCurrency(t.revenue)}</strong></div>
+      <div class="d-flex justify-content-between"><span>Netto</span><span>${formatCurrency(t.net_amount)}</span></div>
+      <div class="d-flex justify-content-between"><span>BTW (${t.tax_rate}%)</span><span>${formatCurrency(t.vat_amount)}</span></div>
+      <div class="d-flex justify-content-between mt-2 pt-2 border-top"><span>Bestellingen</span><span>${t.orders}</span></div>
+      <div class="d-flex justify-content-between"><span>Bezorgen</span><span>${t.delivery_orders}</span></div>
+      <div class="d-flex justify-content-between"><span>Afhalen</span><span>${t.pickup_orders}</span></div>
+    `;
+  }
+
+  // Orders list for details (reuse existing /admin/orders)
+  let date_from = '';
+  let date_to = '';
+  const now = new Date();
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const iso = (d) => d.toISOString().slice(0, 10);
+  if (period === 'today') {
+    date_from = iso(today);
+    date_to = iso(today);
+  } else if (period === 'week') {
+    const from = new Date(today);
+    from.setDate(from.getDate() - 6);
+    date_from = iso(from);
+    date_to = iso(today);
+  } else if (period === 'month') {
+    const from = new Date(today.getFullYear(), today.getMonth(), 1);
+    const to = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    date_from = iso(from);
+    date_to = iso(to);
+  }
+
+  const ordersResp = await apiRequest(`/admin/orders?date_from=${encodeURIComponent(date_from)}&date_to=${encodeURIComponent(date_to)}&limit=200`);
+  const orders = ordersResp.data.orders || [];
+
+  if (ordersTbody) {
+    if (!orders.length) {
+      ordersTbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-muted">Geen bestellingen</td></tr>';
+    } else {
+      ordersTbody.innerHTML = orders.map((o) => `
+        <tr>
+          <td><span class="text-primary fw-semibold">${escapeHtml(o.order_number)}</span></td>
+          <td>${escapeHtml(o.customer_name)}</td>
+          <td><span class="badge ${o.delivery_type === 'delivery' ? 'bg-info' : 'bg-secondary'}">${o.delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen'}</span></td>
+          <td><span class="badge badge-status status-${o.status}">${translateStatus(o.status)}</span></td>
+          <td><span class="badge badge-status status-${o.payment_status || 'pending'}">${translatePaymentStatus(o.payment_status)}</span></td>
+          <td class="text-end fw-semibold">${formatCurrency(o.total)}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-outline-primary btn-icon" onclick="showOrderDetail(${o.id})" title="Details">
+              <i class="bi bi-eye"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+  }
+
+  // Chart.js
+  const ctx = document.getElementById('revenueChart');
+  if (ctx && window.Chart) {
+    if (revenueChart) {
+      try { revenueChart.destroy(); } catch {}
+      revenueChart = null;
+    }
+    const labels = (data.points || []).map((p) => p.label);
+    const revenues = (data.points || []).map((p) => Number(p.revenue || 0));
+    const counts = (data.points || []).map((p) => Number(p.orders || 0));
+
+    revenueChart = new window.Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Omzet (€)',
+            data: revenues,
+            backgroundColor: 'rgba(255,193,7,0.35)',
+            borderColor: 'rgba(255,193,7,0.9)',
+            borderWidth: 1,
+            yAxisID: 'y'
+          },
+          {
+            label: 'Bestellingen',
+            data: counts,
+            type: 'line',
+            borderColor: 'rgba(59,130,246,0.9)',
+            backgroundColor: 'rgba(59,130,246,0.15)',
+            tension: 0.25,
+            yAxisID: 'y1'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: 'rgba(255,255,255,0.85)' } },
+          tooltip: { enabled: true }
+        },
+        scales: {
+          x: { ticks: { color: 'rgba(255,255,255,0.75)' }, grid: { color: 'rgba(255,255,255,0.06)' } },
+          y: { ticks: { color: 'rgba(255,255,255,0.75)' }, grid: { color: 'rgba(255,255,255,0.06)' } },
+          y1: { position: 'right', ticks: { color: 'rgba(255,255,255,0.75)' }, grid: { drawOnChartArea: false } }
+        }
+      }
+    });
+  }
+}
+
 function formatDateTime(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString('nl-BE', {
@@ -2128,6 +2262,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('logs-filter-date-from')?.addEventListener('change', loadLogs);
   document.getElementById('logs-filter-limit')?.addEventListener('change', loadLogs);
+
+  // Revenue stat cards -> modal with charts/details
+  document.querySelectorAll('.stat-card-clickable[data-revenue-period]').forEach((el) => {
+    el.addEventListener('click', () => {
+      const period = el.getAttribute('data-revenue-period') || 'today';
+      openRevenueModal(period);
+    });
+  });
 
   // Reports listeners
   document.getElementById('report-daily-date')?.addEventListener('change', previewDailyReport);
