@@ -24,7 +24,7 @@
     "mobileNavigation": "Navigation mobile",
     "goToHome": "Aller à la section d'accueil",
     "hours": "Lun-Dim: 17h00 - 23h00",
-    "address": "Vlaamsekaai 65, 2000 ANVERS",
+    "address": "Desguinlei 86, 2018 Anvers",
     "contactInfo": "Informations de contact",
     "toggleMobileMenu": "Basculer le menu mobile",
     "closeMobileMenu": "Fermer le menu mobile"
@@ -36,7 +36,11 @@
   },
   "about": {
     "title": "Rencontres Savoureuses chez The Golden Olive",
-    "description": "Pas envie de cuisiner aujourd'hui ? Venez déguster de délicieux plats en famille ou entre amis. Chez The Golden Olive, nous vous régalons avec une soul food à couper le souffle, préparée avec les meilleurs ingrédients et une passion pour la saveur. Consultez notre menu en ligne. Les réservations ne sont pas nécessaires, alors n'hésitez pas à passer et découvrez l'hospitalité chaleureuse de notre bistro-restaurant."
+    "description": "Pas envie de cuisiner aujourd'hui ? Venez déguster de délicieux plats en famille ou entre amis. Chez The Golden Olive, nous vous régalons avec une soul food à couper le souffle, préparée avec les meilleurs ingrédients et une passion pour la saveur. Consultez notre menu en ligne. Les réservations ne sont pas nécessaires, alors n'hésitez pas à passer et découvrez l'hospitalité chaleureuse de notre bistro-restaurant.",
+    "feature1Title": "Qualité",
+    "feature1Desc": "Ingrédients frais",
+    "feature2Title": "Passion",
+    "feature2Desc": "Préparé avec amour"
   },
   "possibilities": {
     "title": "Possibilités",
@@ -97,8 +101,8 @@
     "send": "Envoyer",
     "address": {
       "title": "Adresse :",
-      "street": "Vlaamsekaai 65",
-      "city": "2000 ANVERS",
+      "street": "Desguinlei 86",
+      "city": "2018 Anvers",
       "country": "Belgique"
     },
     "hours": {
@@ -137,7 +141,10 @@
     "cookiePolicy": "Politique des Cookies",
     "allergenInfo": "Infos Allergènes",
     "callNow": "Appeler Maintenant",
-    "whatsapp": "WhatsApp"
+    "whatsapp": "WhatsApp",
+    "tagline": "Saveurs authentiques, hospitalité chaleureuse",
+    "contact": "Contact",
+    "quickLinks": "Liens"
   },
   "languageSwitcher": {
     "changeLanguage": "Changer de langue"
@@ -150,7 +157,7 @@
   "seo": {
     "title": "The Golden Olive - Restaurant Anvers | Spareribs, Mix BBQ & Événements",
     "description": "Dégustez des plats authentiques chez The Golden Olive à Anvers. Spécialités : spareribs, mix BBQ, hamburgers. Parfait pour les anniversaires, événements d'entreprise et célébrations. Réservez maintenant !",
-    "keywords": "The Golden Olive, restaurant Anvers, spareribs, mix BBQ, hamburgers, fête d'anniversaire, événement d'entreprise, événements, réservation, nourriture, boissons, Vlaamsekaai, restaurant Anvers"
+    "keywords": "The Golden Olive, restaurant Anvers, spareribs, mix BBQ, hamburgers, fête d'anniversaire, événement d'entreprise, événements, réservation, nourriture, boissons, Desguinlei, restaurant Anvers"
   },
   "allergens": {
     "title": "Informations sur les Allergènes",
@@ -587,5 +594,59 @@
     "noReservation": "Réservation non nécessaire",
     "quickContact": "Contact rapide",
     "location": "Emplacement"
+  },
+  "order": {
+    "orderOnline": "Commander en ligne",
+    "cartEmpty": "Votre panier est vide",
+    "yourCart": "Votre Panier",
+    "openCart": "Ouvrir le panier",
+    "deliveryType": "Livraison ou à emporter ?",
+    "pickup": "À emporter",
+    "delivery": "Livraison",
+    "subtotal": "Sous-total",
+    "deliveryFee": "Frais de livraison",
+    "total": "Total",
+    "minimumOrder": "Le montant minimum de commande est de €{{amount}}",
+    "checkout": "Payer",
+    "addToCart": "Ajouter",
+    "added": "Ajouté !",
+    "details": "Détails",
+    "address": "Adresse",
+    "confirm": "Confirmer",
+    "payment": "Paiement",
+    "yourDetails": "Vos Coordonnées",
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Numéro de téléphone",
+    "deliveryAddress": "Adresse de livraison",
+    "street": "Rue",
+    "houseNumber": "N°",
+    "bus": "Appt/Boîte",
+    "postalCode": "Code postal",
+    "city": "Ville",
+    "notes": "Remarques",
+    "back": "Retour",
+    "continue": "Continuer",
+    "pickupInfo": "À emporter chez The Golden Olive",
+    "deliveryInfo": "Livraison à Anvers et environs",
+    "paymentSummary": "Récapitulatif du paiement",
+    "customer": "Client",
+    "paymentMethods": "Méthodes de paiement disponibles",
+    "processing": "Traitement...",
+    "payNow": "Payer maintenant",
+    "orderSummary": "Votre Commande",
+    "thankYou": "Merci pour votre commande !",
+    "successMessage": "Votre commande a été reçue avec succès et est en cours de préparation.",
+    "confirmationEmail": "Vous recevrez une confirmation par e-mail.",
+    "backToMenu": "Retour au Menu",
+    "backToWebsite": "Site web",
+    "pickupAddress": "Desguinlei 86, 2018 Anvers",
+    "orderNumber": "Numéro de commande",
+    "payOnline": "Payer en ligne",
+    "payOnlineDesc": "Payez en toute sécurité avec iDEAL, Bancontact ou carte de crédit",
+    "payCash": "Payer à l'enlèvement",
+    "payCashDesc": "Payez en espèces lors de l'enlèvement de votre commande",
+    "payCashDelivery": "Payer à la livraison",
+    "payCashDeliveryDesc": "Payez en espèces lors de la livraison de votre commande"
   }
 }

@@ -631,6 +631,15 @@
     "thankYou": "Bedankt voor je bestelling!",
     "successMessage": "Je bestelling is succesvol ontvangen en wordt voorbereid.",
     "confirmationEmail": "Je ontvangt een bevestiging per e-mail.",
-    "backToMenu": "Terug naar Menu"
+    "backToMenu": "Terug naar Menu",
+    "backToWebsite": "Website",
+    "pickupAddress": "Desguinlei 86, 2018 Antwerpen",
+    "orderNumber": "Bestelnummer",
+    "payOnline": "Online Betalen",
+    "payOnlineDesc": "Betaal veilig met iDEAL, Bancontact of creditcard",
+    "payCash": "Cash bij Afhalen",
+    "payCashDesc": "Betaal contant wanneer je je bestelling ophaalt",
+    "payCashDelivery": "Cash bij Bezorging",
+    "payCashDeliveryDesc": "Betaal contant wanneer je bestelling wordt bezorgd"
   }
 }
