@@ -9,6 +9,12 @@
   <link rel="icon" href="/img/favicon11.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
   <link href="/admin/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
@@ -16,7 +22,7 @@
   <div id="login-page" class="login-page">
     <div class="login-card">
       <div class="login-logo">
-        <img src="/img/favicon11.png" alt="Logo">
+        <img src="/img/logo.png" alt="The Golden Olive logo">
       </div>
       <h4>Admin Dashboard</h4>
       <p class="text-muted mb-4">The Golden Olive</p>
@@ -45,7 +51,7 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <img src="/img/favicon11.png" alt="Logo" class="sidebar-logo">
+        <img src="/img/logo.png" alt="The Golden Olive logo" class="sidebar-logo">
         <div class="sidebar-brand">
           <span class="brand-name">The Golden Olive</span>
           <span class="brand-subtitle">Admin Panel</span>
@@ -61,6 +67,10 @@
           <a href="#" class="nav-link active" data-page="dashboard">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
+          </a>
+          <a href="#" class="nav-link" data-page="reports" data-permission="view_orders">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>Rapporten</span>
           </a>
         </div>
 
@@ -132,6 +142,9 @@
         <div class="topbar-actions">
           <button class="topbar-btn" id="refresh-btn" title="Vernieuwen">
             <i class="bi bi-arrow-clockwise"></i>
+          </button>
+          <button class="topbar-btn" id="report-btn" title="Rapporten">
+            <i class="bi bi-printer-fill"></i>
           </button>
           <div class="topbar-notifications">
             <button class="topbar-btn" id="notifications-btn">
@@ -239,6 +252,88 @@
           </div>
         </div>
 
+        <!-- Reports Page -->
+        <div class="page" id="page-reports">
+          <div class="reports-hero">
+            <div class="reports-hero-title">
+              <h2>Rapporten</h2>
+              <p class="text-muted mb-0">Genereer PDF-rapporten om te downloaden of te versturen via e-mail.</p>
+            </div>
+          </div>
+
+          <div class="row g-4 mt-1">
+            <div class="col-lg-6">
+              <div class="card report-card">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5 class="mb-0"><i class="bi bi-calendar-day me-2"></i>Dagrapport</h5>
+                  <span class="badge bg-secondary">PDF</span>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3 align-items-end">
+                    <div class="col-sm-6">
+                      <label class="form-label">Datum</label>
+                      <input type="date" class="form-control" id="report-daily-date">
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">E-mail (optioneel)</label>
+                      <input type="email" class="form-control" id="report-daily-email" placeholder="bv. boekhouding@...">
+                    </div>
+                  </div>
+                  <div class="report-actions mt-3">
+                    <button class="btn btn-primary" type="button" id="btn-daily-download">
+                      <i class="bi bi-download me-2"></i>Download PDF
+                    </button>
+                    <button class="btn btn-outline-primary" type="button" id="btn-daily-email">
+                      <i class="bi bi-envelope me-2"></i>Verstuur via mail
+                    </button>
+                  </div>
+                  <div class="report-preview mt-4">
+                    <div class="report-preview-title">Preview</div>
+                    <div id="report-daily-preview" class="report-preview-body text-muted">Kies een datum om te previewen.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="card report-card">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <h5 class="mb-0"><i class="bi bi-calendar-range me-2"></i>Periode rapport</h5>
+                  <span class="badge bg-secondary">PDF</span>
+                </div>
+                <div class="card-body">
+                  <div class="row g-3 align-items-end">
+                    <div class="col-sm-6">
+                      <label class="form-label">Van</label>
+                      <input type="date" class="form-control" id="report-range-from">
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label">Tot</label>
+                      <input type="date" class="form-control" id="report-range-to">
+                    </div>
+                    <div class="col-sm-12">
+                      <label class="form-label">E-mail (optioneel)</label>
+                      <input type="email" class="form-control" id="report-range-email" placeholder="bv. boekhouding@...">
+                    </div>
+                  </div>
+                  <div class="report-actions mt-3">
+                    <button class="btn btn-primary" type="button" id="btn-range-download">
+                      <i class="bi bi-download me-2"></i>Download PDF
+                    </button>
+                    <button class="btn btn-outline-primary" type="button" id="btn-range-email">
+                      <i class="bi bi-envelope me-2"></i>Verstuur via mail
+                    </button>
+                  </div>
+                  <div class="report-preview mt-4">
+                    <div class="report-preview-title">Preview</div>
+                    <div id="report-range-preview" class="report-preview-body text-muted">Kies een periode om te previewen.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Orders Page -->
         <div class="page" id="page-orders">
           <!-- Filters -->
@@ -253,6 +348,15 @@
                 <option value="delivering">Onderweg</option>
                 <option value="delivered">Geleverd</option>
                 <option value="cancelled">Geannuleerd</option>
+              </select>
+              <select class="form-select" id="filter-payment">
+                <option value="">Alle betalingen</option>
+                <option value="paid">Betaald</option>
+                <option value="open">Open</option>
+                <option value="pending">In behandeling</option>
+                <option value="failed">Mislukt</option>
+                <option value="canceled">Geannuleerd</option>
+                <option value="expired">Verlopen</option>
               </select>
               <select class="form-select" id="filter-delivery">
                 <option value="">Alle types</option>
@@ -280,12 +384,12 @@
                     <tr>
                       <th>Order #</th>
                       <th>Klant</th>
-                      <th>Contact</th>
+                      <th>Adres</th>
                       <th>Type</th>
                       <th>Totaal</th>
                       <th>Betaling</th>
                       <th>Status</th>
-                      <th>Datum</th>
+                      <th>Contact</th>
                       <th>Acties</th>
                     </tr>
                   </thead>
@@ -307,6 +411,26 @@
             <button class="btn btn-primary" onclick="showProductModal()">
               <i class="bi bi-plus-lg me-2"></i>Nieuw Product
             </button>
+          </div>
+          <div class="filters-bar mb-4">
+            <div class="filters-group">
+              <select class="form-select" id="product-filter-category" style="min-width:220px">
+                <option value="">Alle categorieën</option>
+              </select>
+              <select class="form-select" id="product-filter-available" style="width:auto">
+                <option value="">Alles</option>
+                <option value="true">Beschikbaar</option>
+                <option value="false">Niet beschikbaar</option>
+              </select>
+            </div>
+            <div class="filters-actions">
+              <div class="input-group">
+                <input type="text" class="form-control" id="product-filter-search" placeholder="Zoeken product...">
+                <button class="btn btn-outline-secondary" type="button" onclick="loadProducts()">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="card">
             <div class="card-body p-0">
@@ -338,6 +462,23 @@
               <i class="bi bi-plus-lg me-2"></i>Nieuwe Categorie
             </button>
           </div>
+          <div class="filters-bar mb-4">
+            <div class="filters-group">
+              <select class="form-select" id="category-filter-active" style="width:auto">
+                <option value="">Alle</option>
+                <option value="true">Actief</option>
+                <option value="false">Inactief</option>
+              </select>
+            </div>
+            <div class="filters-actions">
+              <div class="input-group">
+                <input type="text" class="form-control" id="category-filter-search" placeholder="Zoeken categorie...">
+                <button class="btn btn-outline-secondary" type="button" onclick="loadCategories()">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="card">
             <div class="card-body p-0">
               <div class="table-responsive">
@@ -364,15 +505,24 @@
         <!-- Payments Page -->
         <div class="page" id="page-payments">
           <div class="filters-bar mb-4">
-            <select class="form-select" id="payment-status-filter" style="width:auto">
-              <option value="">Alle statussen</option>
-              <option value="paid">Betaald</option>
-              <option value="open">Open</option>
-              <option value="pending">In behandeling</option>
-              <option value="failed">Mislukt</option>
-              <option value="canceled">Geannuleerd</option>
-              <option value="expired">Verlopen</option>
-            </select>
+            <div class="filters-group">
+              <select class="form-select" id="payment-status-filter" style="width:auto">
+                <option value="">Alle statussen</option>
+                <option value="paid">Betaald</option>
+                <option value="open">Open</option>
+                <option value="pending">In behandeling</option>
+                <option value="failed">Mislukt</option>
+                <option value="canceled">Geannuleerd</option>
+                <option value="expired">Verlopen</option>
+              </select>
+              <input type="date" class="form-control" id="payment-date-from">
+              <input type="date" class="form-control" id="payment-date-to">
+            </div>
+            <div class="filters-actions">
+              <button class="btn btn-outline-secondary" type="button" onclick="loadPayments()">
+                <i class="bi bi-search me-2"></i>Filter
+              </button>
+            </div>
           </div>
           <div class="card">
             <div class="card-body p-0">
@@ -478,6 +628,10 @@
                     <input class="form-check-input" type="checkbox" id="setting-auto_accept_orders">
                     <label class="form-check-label" for="setting-auto_accept_orders">Automatisch Orders Accepteren</label>
                   </div>
+                  <div class="form-check form-switch mt-3">
+                    <input class="form-check-input" type="checkbox" id="setting-print_auto">
+                    <label class="form-check-label" for="setting-print_auto">Automatisch printen bij nieuwe order</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -486,6 +640,28 @@
 
         <!-- Users Page -->
         <div class="page" id="page-users">
+          <div class="filters-bar mb-4">
+            <div class="filters-group">
+              <select class="form-select" id="user-filter-role" style="width:auto">
+                <option value="">Alle rollen</option>
+                <option value="admin">Administrator</option>
+                <option value="staff">Medewerker</option>
+              </select>
+              <select class="form-select" id="user-filter-active" style="width:auto">
+                <option value="">Alle</option>
+                <option value="true">Actief</option>
+                <option value="false">Inactief</option>
+              </select>
+            </div>
+            <div class="filters-actions">
+              <div class="input-group">
+                <input type="text" class="form-control" id="user-filter-search" placeholder="Zoeken gebruiker...">
+                <button class="btn btn-outline-secondary" type="button" onclick="loadUsers()">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="page-actions mb-4">
             <button class="btn btn-primary" onclick="showUserModal()">
               <i class="bi bi-plus-lg me-2"></i>Nieuwe Gebruiker
@@ -516,6 +692,22 @@
 
         <!-- Logs Page -->
         <div class="page" id="page-logs">
+          <div class="filters-bar mb-4">
+            <div class="filters-group">
+              <input type="text" class="form-control" id="logs-filter-action" placeholder="Actie (bv. update_product)" style="min-width:220px">
+              <input type="date" class="form-control" id="logs-filter-date-from">
+              <select class="form-select" id="logs-filter-limit" style="width:auto">
+                <option value="50">50</option>
+                <option value="100" selected>100</option>
+                <option value="200">200</option>
+              </select>
+            </div>
+            <div class="filters-actions">
+              <button class="btn btn-outline-secondary" type="button" onclick="loadLogs()">
+                <i class="bi bi-search me-2"></i>Filter
+              </button>
+            </div>
+          </div>
           <div class="card">
             <div class="card-body p-0">
               <div class="table-responsive">
@@ -554,6 +746,9 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
           <button type="button" class="btn btn-outline-primary" id="btn-print-order">
             <i class="bi bi-printer me-2"></i>Printen
+          </button>
+          <button type="button" class="btn btn-primary" id="btn-invoice-order">
+            <i class="bi bi-receipt me-2"></i>Factuur
           </button>
         </div>
       </div>
@@ -652,6 +847,46 @@
     </div>
   </div>
 
+  <!-- Category Products Modal -->
+  <div class="modal fade" id="categoryProductsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="category-products-title">Producten</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-muted small" id="category-products-subtitle"></div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-open-products-filtered">
+                <i class="bi bi-box-seam me-2"></i>Naar Producten
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Naam</th>
+                  <th>Prijs</th>
+                  <th>Beschikbaar</th>
+                  <th class="text-end">Acties</th>
+                </tr>
+              </thead>
+              <tbody id="category-products-table">
+                <tr><td colspan="4" class="text-center py-4">Laden...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- User Modal -->
   <div class="modal fade" id="userModal" tabindex="-1">
     <div class="modal-dialog">
@@ -691,6 +926,77 @@
     </div>
   </div>
 
+  <!-- Notifications Modal -->
+  <div class="modal fade" id="notificationsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-bell me-2"></i>Notificaties</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-muted small" id="notifications-subtitle">Laden...</div>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-notifications-readall">
+              <i class="bi bi-check2-all me-2"></i>Alles gelezen
+            </button>
+          </div>
+          <div class="list-group" id="notifications-list">
+            <div class="text-center py-4 text-muted">Laden...</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Order Overlay (shown once per new order) -->
+  <div id="new-order-overlay" class="new-order-overlay d-none" aria-hidden="true">
+    <div class="new-order-card" role="dialog" aria-modal="true" aria-labelledby="new-order-title">
+      <div class="new-order-glow" aria-hidden="true"></div>
+      <button type="button" class="new-order-close" id="new-order-close" aria-label="Sluiten">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <div class="new-order-icon">
+        <i class="bi bi-bell-fill"></i>
+      </div>
+      <h3 id="new-order-title" class="new-order-title">Nieuwe bestelling!</h3>
+      <p class="new-order-subtitle" id="new-order-subtitle">Er is een nieuwe bestelling binnengekomen.</p>
+
+      <div class="new-order-details">
+        <div class="new-order-detail-row">
+          <span class="label">Order</span>
+          <span class="value" id="new-order-number">—</span>
+        </div>
+        <div class="new-order-detail-row">
+          <span class="label">Klant</span>
+          <span class="value" id="new-order-customer">—</span>
+        </div>
+        <div class="new-order-detail-row">
+          <span class="label">Totaal</span>
+          <span class="value" id="new-order-total">—</span>
+        </div>
+        <div class="new-order-detail-row">
+          <span class="label">Type</span>
+          <span class="value" id="new-order-type">—</span>
+        </div>
+      </div>
+
+      <div class="new-order-actions">
+        <button type="button" class="btn btn-outline-primary" id="new-order-view">
+          <i class="bi bi-eye me-2"></i>Bekijk details
+        </button>
+        <button type="button" class="btn btn-primary" id="new-order-seen">
+          <i class="bi bi-check2-circle me-2"></i>Gezien
+        </button>
+      </div>
+
+      <div class="new-order-queue" id="new-order-queue"></div>
+    </div>
+  </div>
+
   <!-- Toast Container -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toast-container"></div>
 
@@ -700,6 +1006,11 @@
   </audio>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
   <script src="/admin/js/dashboard.js"></script>
 </body>
 </html>

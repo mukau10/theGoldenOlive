@@ -24,7 +24,7 @@
     "mobileNavigation": "Navigation mobile",
     "goToHome": "Aller à la section d'accueil",
     "hours": "Lun-Dim: 17h00 - 23h00",
-    "address": "Desguinlei 86, 2018 Anvers",
+    "address": "Vlaamsekaai 65, 2000 Anvers",
     "contactInfo": "Informations de contact",
     "toggleMobileMenu": "Basculer le menu mobile",
     "closeMobileMenu": "Fermer le menu mobile"
@@ -101,7 +101,7 @@
     "send": "Envoyer",
     "address": {
       "title": "Adresse :",
-      "street": "Desguinlei 86",
+      "street": "Vlaamsekaai 65",
       "city": "2018 Anvers",
       "country": "Belgique"
     },
@@ -156,8 +156,8 @@
   },
   "seo": {
     "title": "The Golden Olive - Restaurant Anvers | Spareribs, Mix BBQ & Événements",
-    "description": "Dégustez des plats authentiques chez The Golden Olive à Anvers. Spécialités : spareribs, mix BBQ, hamburgers. Parfait pour les anniversaires, événements d'entreprise et célébrations. Réservez maintenant !",
-    "keywords": "The Golden Olive, restaurant Anvers, spareribs, mix BBQ, hamburgers, fête d'anniversaire, événement d'entreprise, événements, réservation, nourriture, boissons, Desguinlei, restaurant Anvers"
+    "description": "Dégustez des plats authentiques chez The Golden Olive à Anvers. Spécialités : spareribs, mix BBQ, hamburgers. À emporter ou livraison à Anvers. Parfait pour les anniversaires, événements d'entreprise et célébrations. Réservez maintenant !",
+    "keywords": "The Golden Olive, restaurant Anvers, livraison Anvers, à emporter Anvers, spareribs, mix BBQ, hamburgers, fête d'anniversaire, événement d'entreprise, événements, réservation, nourriture, boissons, Vlaamsekaai, restaurant Anvers"
   },
   "allergens": {
     "title": "Informations sur les Allergènes",
@@ -640,7 +640,7 @@
     "confirmationEmail": "Vous recevrez une confirmation par e-mail.",
     "backToMenu": "Retour au Menu",
     "backToWebsite": "Site web",
-    "pickupAddress": "Desguinlei 86, 2018 Anvers",
+    "pickupAddress": "Vlaamsekaai 65, 2000 Anvers",
     "orderNumber": "Numéro de commande",
     "payOnline": "Payer en ligne",
     "payOnlineDesc": "Payez en toute sécurité avec iDEAL, Bancontact ou carte de crédit",

@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 -- =====================================================
 INSERT INTO settings (setting_key, setting_value, setting_type, description) VALUES
 ('restaurant_name', 'The Golden Olive', 'string', 'Restaurant naam'),
-('restaurant_address', 'Desguinlei 86, 2018 Antwerpen', 'string', 'Restaurant adres'),
+('restaurant_address', 'Vlaamsekaai 65, 2000 Antwerpen', 'string', 'Restaurant adres'),
 ('restaurant_phone', '+32 494 19 43 97', 'string', 'Restaurant telefoonnummer'),
 ('restaurant_email', 'info@thegoldenolive.be', 'string', 'Restaurant email'),
 ('auto_accept_orders', 'false', 'boolean', 'Automatisch orders accepteren'),

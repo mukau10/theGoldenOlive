@@ -49,10 +49,25 @@ interface ValidationErrors {
   house_number?: string;
   postal_code?: string;
   city?: string;
+  antibot_answer?: string;
 }
 
-// Validation patterns
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+// Validation patterns (stronger, pragmatic)
+const EMAIL_BASIC_REGEX =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+const DISPOSABLE_EMAIL_DOMAINS = new Set([
+  'mailinator.com',
+  'tempmail.com',
+  '10minutemail.com',
+  'guerrillamail.com',
+  'yopmail.com',
+  'trashmail.com',
+  'getnada.com',
+  'dispostable.com',
+  'maildrop.cc',
+  'temp-mail.org',
+  'minuteinbox.com',
+]);
 // Phone regex - local number without country code (7-12 digits)
 const PHONE_REGEX = /^[0-9]{7,12}$/;
 const BELGIAN_POSTCODE_REGEX = /^[1-9][0-9]{3}$/;
@@ -99,6 +114,17 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
   const [error, setError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  // Anti-bot challenge (simple math exercise)
+  const [antiBot, setAntiBot] = useState<{
+    token: string;
+    question: string;
+    expiresAt: number;
+    a: number;
+    b: number;
+    op: '+' | '-';
+  } | null>(null);
+  const [antiBotAnswer, setAntiBotAnswer] = useState('');
   
   // Load saved data
   const savedData = loadSavedCheckoutData();
@@ -190,7 +216,29 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
         break;
       case 'customer_email':
         if (!value.trim()) return t('order.errorEmail', 'E-mail is verplicht');
-        if (!EMAIL_REGEX.test(value)) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+        {
+          const email = value.trim();
+          if (email.length > 254) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+          const parts = email.split('@');
+          if (parts.length !== 2) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+          const [local, domain] = parts;
+          if (!local || local.length > 64) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+          if (!EMAIL_BASIC_REGEX.test(email)) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+          if (domain.includes('..')) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+          const tld = domain.split('.').pop() || '';
+          if (tld.length < 2) return t('order.errorEmailInvalid', 'Ongeldig e-mailadres');
+          if (DISPOSABLE_EMAIL_DOMAINS.has(domain.toLowerCase())) {
+            return t('order.errorEmailDisposable', 'Tijdelijk e-mailadres is niet toegestaan');
+          }
+        }
+        break;
+      case 'antibot_answer':
+        if (!value.trim()) return t('order.errorAntiBot', 'Beantwoord de rekenoefening om verder te gaan');
+        if (!/^-?\d+$/.test(value.trim())) return t('order.errorAntiBot', 'Beantwoord de rekenoefening om verder te gaan');
+        if (antiBot) {
+          const expected = antiBot.op === '+' ? antiBot.a + antiBot.b : antiBot.a - antiBot.b;
+          if (parseInt(value.trim(), 10) !== expected) return t('order.errorAntiBotWrong', 'Antwoord is niet correct');
+        }
         break;
       case 'customer_phone':
         if (!value.trim()) return t('order.errorPhone', 'Telefoonnummer is verplicht');
@@ -218,7 +266,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
         break;
     }
     return undefined;
-  }, [cart.deliveryType, t]);
+  }, [cart.deliveryType, t, antiBot]);
 
   // Update form data with validation
   const updateFormData = (field: string, value: string) => {
@@ -263,6 +311,28 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
     
     setError(null);
   };
+
+  const refreshAntiBot = useCallback(async () => {
+    try {
+      const resp = await fetch(`${API_URL}/antibot/challenge`);
+      const data = await resp.json();
+      if (resp.ok && data?.data?.token) {
+        setAntiBot(data.data);
+        setAntiBotAnswer('');
+        setValidationErrors((prev) => ({ ...prev, antibot_answer: undefined }));
+        setTouched((prev) => ({ ...prev, antibot_answer: false }));
+      }
+    } catch (err) {
+      console.error('Error loading anti-bot challenge:', err);
+    }
+  }, []);
+
+  // Load anti-bot challenge when reaching payment step (step 3)
+  useEffect(() => {
+    if (step === 3 && !antiBot) {
+      refreshAntiBot();
+    }
+  }, [step, antiBot, refreshAntiBot]);
 
   // Handle field blur
   const handleBlur = (field: string) => {
@@ -413,6 +483,19 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
     setError(null);
 
     try {
+      // Anti-bot check (UI + backend)
+      if (!antiBot) {
+        await refreshAntiBot();
+      }
+      const antiErr = validateField('antibot_answer', antiBotAnswer);
+      if (antiErr) {
+        setValidationErrors((prev) => ({ ...prev, antibot_answer: antiErr }));
+        setTouched((prev) => ({ ...prev, antibot_answer: true }));
+        setError(antiErr);
+        setLoading(false);
+        return;
+      }
+
       // Combine country code with phone number, removing leading zero if present
       const phoneNumber = formData.customer_phone.startsWith('0') 
         ? formData.customer_phone.substring(1) 
@@ -425,6 +508,8 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
         customer_phone: fullPhone,
         delivery_type: cart.deliveryType,
         payment_method: paymentMethod,
+        antibot_token: antiBot?.token,
+        antibot_answer: parseInt(antiBotAnswer.trim(), 10),
         address: cart.deliveryType === 'delivery' ? formData.address : undefined,
         notes: formData.notes || undefined,
         items: cart.items.map(item => ({
@@ -491,6 +576,22 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
 
   return (
     <div className="checkout-container">
+      {/* Processing Overlay */}
+      {loading && (
+        <div className="order-processing-overlay" role="status" aria-live="polite">
+          <div className="order-processing-card">
+            <div className="order-processing-spinner" />
+            <div className="order-processing-title">
+              {t('order.processing', 'Verwerken...')}
+            </div>
+            <div className="order-processing-subtitle">
+              {t('order.processingHint', 'Even geduld — we plaatsen je bestelling veilig.')}
+            </div>
+            <div className="order-processing-bar" aria-hidden="true" />
+          </div>
+        </div>
+      )}
+
       {/* Progress Steps */}
       <div className="checkout-steps">
         <div 
@@ -773,7 +874,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
               <h5 className="text-white">{t('order.pickupAt', 'Afhalen bij')}</h5>
               <p className="text-white mb-1">The Golden Olive</p>
               <p className="text-muted mb-3">
-                Desguinlei 86, 2018 Antwerpen
+                Vlaamsekaai 65, 2000 Antwerpen
               </p>
               <div className="order-note justify-content-center">
                 <i className="bi bi-clock"></i>
@@ -845,7 +946,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
               <div className="mb-3">
                 <strong className="text-golden d-block mb-2">{t('order.pickup', 'Afhalen')}</strong>
                 <span className="text-white">The Golden Olive</span><br />
-                <span className="text-muted small">Desguinlei 86, 2018 Antwerpen</span>
+                <span className="text-muted small">Vlaamsekaai 65, 2000 Antwerpen</span>
               </div>
             )}
 
@@ -909,6 +1010,56 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
                     : t('order.cashPaymentDeliveryDesc', 'Betaal contant aan de bezorger')
                   }
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Anti-bot math challenge (simple) */}
+          <div className="card border-0 mb-3" style={{ background: 'rgba(0,0,0,0.18)' }}>
+            <div className="card-body">
+              <div className="d-flex justify-content-between align-items-start">
+                <div>
+                  <div className="fw-semibold mb-1">
+                    <i className="bi bi-shield-check me-2"></i>
+                    {t('order.antiBotTitle', 'Beveiligingscontrole')}
+                  </div>
+                  <div className="text-muted small">
+                    {t('order.antiBotHint', 'Kleine rekenoefening om robots te vermijden.')}
+                  </div>
+                </div>
+                <button type="button" className="btn btn-sm btn-outline-secondary" onClick={refreshAntiBot}>
+                  <i className="bi bi-arrow-repeat me-2"></i>
+                  {t('order.newExercise', 'Nieuwe oefening')}
+                </button>
+              </div>
+
+              <div className="mt-3">
+                <label className="form-label mb-1">
+                  {antiBot?.question || t('order.loading', 'Laden...')}
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  className={`form-control ${validationErrors.antibot_answer ? 'is-invalid' : touched.antibot_answer && antiBotAnswer ? 'is-valid' : ''}`}
+                  value={antiBotAnswer}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^\d-]/g, '').slice(0, 5);
+                    setAntiBotAnswer(v);
+                    if (touched.antibot_answer) {
+                      const msg = validateField('antibot_answer', v);
+                      setValidationErrors((prev) => ({ ...prev, antibot_answer: msg }));
+                    }
+                  }}
+                  onBlur={() => {
+                    setTouched((prev) => ({ ...prev, antibot_answer: true }));
+                    const msg = validateField('antibot_answer', antiBotAnswer);
+                    setValidationErrors((prev) => ({ ...prev, antibot_answer: msg }));
+                  }}
+                  placeholder={t('order.antiBotPlaceholder', 'Antwoord')}
+                />
+                {validationErrors.antibot_answer && (
+                  <div className="invalid-feedback">{validationErrors.antibot_answer}</div>
+                )}
               </div>
             </div>
           </div>

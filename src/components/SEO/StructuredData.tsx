@@ -12,7 +12,7 @@ const StructuredData = () => {
       '@type': 'Restaurant',
       name: 'The Golden Olive',
       description:
-        'Authentiek restaurant in Antwerpen gespecialiseerd in spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen.',
+        'Authentiek restaurant in Antwerpen gespecialiseerd in spareribs, mix BBQ, hamburgers. Afhalen en levering in Antwerpen. Perfect voor verjaardagen, bedrijfsfeesten en evenementen.',
       url: 'https://the-goldenolive.be',
       telephone: '+32494194397',
       address: {
@@ -22,6 +22,12 @@ const StructuredData = () => {
         postalCode: '2000',
         addressCountry: 'BE',
       },
+      areaServed: [
+        {
+          '@type': 'City',
+          name: 'Antwerpen',
+        },
+      ],
       geo: {
         '@type': 'GeoCoordinates',
         latitude: 51.20782050181604,

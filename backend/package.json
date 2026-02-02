@@ -7,10 +7,12 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "admin": "node adminServer.js",
     "migrate": "node migrations/run.js",
     "seed": "node migrations/seed.js"
   },
   "dependencies": {
+    "@mollie/api-client": "^4.4.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -18,9 +20,11 @@
     "express-rate-limit": "^7.1.5",
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
+    "http-proxy-middleware": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
-    "@mollie/api-client": "^4.4.0",
     "mysql2": "^3.6.5",
+    "nodemailer": "^7.0.13",
+    "pdfkit": "^0.17.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

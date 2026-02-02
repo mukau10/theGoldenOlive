@@ -10,6 +10,140 @@ let currentPage = 'dashboard';
 let liveUpdateInterval = null;
 let lastUpdateTime = null;
 let categoriesCache = [];
+let orderDetailMap = null;
+let lastOrderDetail = null;
+
+// =====================================================
+// NEW ORDER NOTIFICATIONS (show once)
+// =====================================================
+const SEEN_ORDERS_KEY = 'tgo_admin_seen_order_ids_v1';
+const SEEN_ORDERS_MAX = 300;
+let seenOrderIds = loadSeenOrderIds();
+let newOrderQueue = [];
+let isNewOrderOverlayOpen = false;
+let currentOverlayOrderId = null;
+
+function loadSeenOrderIds() {
+  try {
+    const raw = localStorage.getItem(SEEN_ORDERS_KEY);
+    if (!raw) return new Set();
+    const arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) return new Set();
+    return new Set(arr.filter((x) => typeof x === 'number'));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveSeenOrderIds() {
+  try {
+    const arr = Array.from(seenOrderIds).slice(-SEEN_ORDERS_MAX);
+    localStorage.setItem(SEEN_ORDERS_KEY, JSON.stringify(arr));
+  } catch {
+    // ignore
+  }
+}
+
+function markOrderSeen(orderId) {
+  if (typeof orderId !== 'number') return;
+  seenOrderIds.add(orderId);
+  saveSeenOrderIds();
+}
+
+function isOrderQueued(orderId) {
+  return newOrderQueue.some((o) => o?.id === orderId) || currentOverlayOrderId === orderId;
+}
+
+function getNewOrderOverlayEl() {
+  return document.getElementById('new-order-overlay');
+}
+
+function setupNewOrderOverlay() {
+  const overlay = getNewOrderOverlayEl();
+  if (!overlay) return;
+
+  const closeBtn = document.getElementById('new-order-close');
+  const seenBtn = document.getElementById('new-order-seen');
+  const viewBtn = document.getElementById('new-order-view');
+
+  const close = () => hideNewOrderOverlay({ markSeen: true });
+
+  closeBtn?.addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!isNewOrderOverlayOpen) return;
+    if (e.key === 'Escape') close();
+  });
+
+  seenBtn?.addEventListener('click', () => hideNewOrderOverlay({ markSeen: true }));
+  viewBtn?.addEventListener('click', () => {
+    if (typeof currentOverlayOrderId === 'number') {
+      // Mark as seen once user opens details
+      markOrderSeen(currentOverlayOrderId);
+      hideNewOrderOverlay({ markSeen: false });
+      showOrderDetail(currentOverlayOrderId);
+      showPage('orders');
+    }
+  });
+}
+
+function showNewOrderOverlay(order) {
+  const overlay = getNewOrderOverlayEl();
+  if (!overlay) return;
+
+  currentOverlayOrderId = order?.id ?? null;
+  isNewOrderOverlayOpen = true;
+
+  const numberEl = document.getElementById('new-order-number');
+  const customerEl = document.getElementById('new-order-customer');
+  const totalEl = document.getElementById('new-order-total');
+  const typeEl = document.getElementById('new-order-type');
+  const subtitleEl = document.getElementById('new-order-subtitle');
+  const queueEl = document.getElementById('new-order-queue');
+
+  const orderNumber = order?.order_number || `#${order?.id || ''}`;
+  const customer = order?.customer_name || '—';
+  const total = typeof order?.total !== 'undefined' ? formatCurrency(order.total) : '—';
+  const type = order?.delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen';
+
+  if (numberEl) numberEl.textContent = orderNumber;
+  if (customerEl) customerEl.textContent = customer;
+  if (totalEl) totalEl.textContent = total;
+  if (typeEl) typeEl.textContent = type;
+  if (subtitleEl) subtitleEl.textContent = 'Er is een nieuwe bestelling binnengekomen.';
+
+  if (queueEl) {
+    const remaining = newOrderQueue.length;
+    queueEl.textContent = remaining > 0 ? `Nog ${remaining} nieuwe bestelling(en) in wachtrij` : '';
+  }
+
+  overlay.classList.remove('d-none');
+  overlay.setAttribute('aria-hidden', 'false');
+}
+
+function hideNewOrderOverlay({ markSeen }) {
+  const overlay = getNewOrderOverlayEl();
+  if (!overlay) return;
+
+  if (markSeen && typeof currentOverlayOrderId === 'number') {
+    markOrderSeen(currentOverlayOrderId);
+  }
+
+  overlay.classList.add('d-none');
+  overlay.setAttribute('aria-hidden', 'true');
+  isNewOrderOverlayOpen = false;
+  currentOverlayOrderId = null;
+
+  // Show next queued order (if any)
+  if (newOrderQueue.length > 0) {
+    const next = newOrderQueue.shift();
+    if (next) {
+      showNewOrderOverlay(next);
+    }
+  }
+}
 
 // =====================================================
 // API HELPERS
@@ -87,6 +221,7 @@ function showLoginPage() {
 function showApp() {
   document.getElementById('login-page').classList.add('d-none');
   document.getElementById('app').classList.remove('d-none');
+  setupNewOrderOverlay();
   
   // Update user info
   document.getElementById('user-name').textContent = currentUser.name;
@@ -120,6 +255,7 @@ function showPage(pageId) {
   // Update title
   const titles = {
     dashboard: 'Dashboard',
+    reports: 'Rapporten',
     orders: 'Bestellingen',
     products: 'Producten',
     categories: 'Categorieën',
@@ -140,6 +276,7 @@ function showPage(pageId) {
 function loadPageData(pageId) {
   switch (pageId) {
     case 'dashboard': loadDashboard(); break;
+    case 'reports': loadReports(); break;
     case 'orders': loadOrders(); break;
     case 'products': loadProducts(); break;
     case 'categories': loadCategories(); break;
@@ -205,6 +342,9 @@ async function checkForUpdates() {
     if (data.data.newOrders.length > 0) {
       handleNewOrders(data.data.newOrders);
     }
+
+    // Refresh notifications indicator (bell dot)
+    refreshNotificationsIndicator().catch(() => {});
     
     // Update connection status
     document.getElementById('connection-status').style.background = 'var(--success)';
@@ -214,17 +354,138 @@ async function checkForUpdates() {
   }
 }
 
-function handleNewOrders(orders) {
-  // Play notification sound
-  const soundEnabled = document.getElementById('setting-notification_sound')?.checked !== false;
-  if (soundEnabled) {
-    document.getElementById('notification-sound')?.play().catch(() => {});
+async function refreshNotificationsIndicator() {
+  const dot = document.querySelector('.notification-dot');
+  if (!dot) return;
+  try {
+    const data = await apiRequest('/admin/notifications');
+    const unread = Number(data?.data?.unreadCount || 0);
+    if (unread > 0) dot.classList.remove('d-none');
+    else dot.classList.add('d-none');
+  } catch {
+    // ignore
   }
-  
-  // Show toast
-  orders.forEach(order => {
-    showToast(`Nieuwe bestelling: ${order.order_number}`, 'success');
+}
+
+function parseNotificationLink(link) {
+  // Supported:
+  // - order:<id>
+  // - /admin/... (ignored)
+  const raw = String(link || '');
+  if (raw.startsWith('order:')) {
+    const id = Number(raw.slice('order:'.length));
+    if (!Number.isNaN(id) && id > 0) return { type: 'order', id };
+  }
+  return null;
+}
+
+async function openNotificationsModal() {
+  const modalEl = document.getElementById('notificationsModal');
+  const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+  modal.show();
+  await loadNotifications();
+}
+
+async function loadNotifications() {
+  const list = document.getElementById('notifications-list');
+  const subtitle = document.getElementById('notifications-subtitle');
+  if (list) list.innerHTML = '<div class="text-center py-4 text-muted">Laden...</div>';
+  if (subtitle) subtitle.textContent = 'Laden...';
+
+  const data = await apiRequest('/admin/notifications');
+  const notifications = Array.isArray(data?.data?.notifications) ? data.data.notifications : [];
+  const unreadCount = Number(data?.data?.unreadCount || 0);
+
+  if (subtitle) subtitle.textContent = unreadCount > 0 ? `${unreadCount} ongelezen` : 'Alles gelezen';
+
+  const dot = document.querySelector('.notification-dot');
+  if (dot) {
+    if (unreadCount > 0) dot.classList.remove('d-none');
+    else dot.classList.add('d-none');
+  }
+
+  if (!list) return;
+  if (notifications.length === 0) {
+    list.innerHTML = '<div class="text-center py-4 text-muted">Geen notificaties</div>';
+    return;
+  }
+
+  list.innerHTML = notifications.map((n) => {
+    const isUnread = !n.is_read;
+    const title = escapeHtml(n.title || '');
+    const msg = escapeHtml(n.message || '');
+    const when = n.created_at ? formatDateTime(n.created_at) : '';
+    return `
+      <button type="button" class="list-group-item list-group-item-action ${isUnread ? 'unread' : ''}" data-link="${escapeHtml(n.link || '')}">
+        <div class="d-flex w-100 justify-content-between align-items-start">
+          <div>
+            <div class="fw-semibold">${title}</div>
+            ${msg ? `<div class="small text-muted">${msg}</div>` : ''}
+          </div>
+          <div class="small text-muted">${escapeHtml(when)}</div>
+        </div>
+      </button>
+    `;
+  }).join('');
+
+  // Click handler: open order details if link is order:<id>
+  list.querySelectorAll('[data-link]').forEach((el) => {
+    el.addEventListener('click', async () => {
+      const link = el.getAttribute('data-link');
+      const parsed = parseNotificationLink(link);
+      if (parsed?.type === 'order') {
+        // mark all read for simplicity
+        try { await apiRequest('/admin/notifications/read', { method: 'POST' }); } catch {}
+        bootstrap.Modal.getInstance(document.getElementById('notificationsModal'))?.hide();
+        showPage('orders');
+        showOrderDetail(parsed.id);
+        refreshNotificationsIndicator().catch(() => {});
+      }
+    });
   });
+}
+
+function handleNewOrders(orders) {
+  // Only notify once per order (persisted). Queue unseen orders and show big overlay.
+  const incoming = Array.isArray(orders) ? orders : [];
+  const unseen = incoming
+    .filter((o) => typeof o?.id === 'number')
+    .filter((o) => !seenOrderIds.has(o.id))
+    .filter((o) => !isOrderQueued(o.id));
+
+  if (unseen.length === 0) {
+    // Still refresh lists below
+  } else {
+    // Keep newest first in overlay
+    unseen
+      .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+      .forEach((o) => newOrderQueue.push(o));
+
+    // Play sound once per batch (not for every poll)
+    const soundEnabled = document.getElementById('setting-notification_sound')?.checked !== false;
+    if (soundEnabled) {
+      document.getElementById('notification-sound')?.play().catch(() => {});
+    }
+
+    // Show overlay if not currently open
+    if (!isNewOrderOverlayOpen) {
+      const next = newOrderQueue.shift();
+      if (next) showNewOrderOverlay(next);
+    } else {
+      const queueEl = document.getElementById('new-order-queue');
+      if (queueEl) queueEl.textContent = `Nog ${newOrderQueue.length} nieuwe bestelling(en) in wachtrij`;
+    }
+
+    // Auto-print (optional)
+    const printAutoEnabled = document.getElementById('setting-print_auto')?.checked === true;
+    if (printAutoEnabled) {
+      // Try to print the newest order only once (browser may block popups)
+      const newest = unseen[0];
+      if (newest?.id) {
+        printOrder(newest.id);
+      }
+    }
+  }
   
   // Refresh dashboard if on that page
   if (currentPage === 'dashboard') {
@@ -344,10 +605,22 @@ function renderPopularProducts(products) {
   container.innerHTML = products.map((product, index) => `
     <div class="popular-item">
       <span class="popular-rank">${index + 1}</span>
-      <span class="popular-name">${escapeHtml(product.product_name)}</span>
+      <button type="button" class="btn btn-link p-0 popular-name" onclick='openProductsSearch(${JSON.stringify(product.product_name || "")})'>
+        ${escapeHtml(product.product_name)}
+      </button>
       <span class="popular-qty">${product.qty}x</span>
     </div>
   `).join('');
+}
+
+function openProductsSearch(term) {
+  try {
+    const input = document.getElementById('product-filter-search');
+    if (input) input.value = term || '';
+    showPage('products');
+  } catch {
+    // ignore
+  }
 }
 
 // =====================================================
@@ -357,12 +630,14 @@ function renderPopularProducts(products) {
 async function loadOrders() {
   try {
     const status = document.getElementById('filter-status')?.value || '';
+    const paymentStatus = document.getElementById('filter-payment')?.value || '';
     const delivery = document.getElementById('filter-delivery')?.value || '';
     const date = document.getElementById('filter-date')?.value || '';
     const search = document.getElementById('filter-search')?.value || '';
     
     let query = '?';
     if (status) query += `status=${status}&`;
+    if (paymentStatus) query += `payment_status=${paymentStatus}&`;
     if (delivery) query += `delivery_type=${delivery}&`;
     if (date) query += `date_from=${date}&date_to=${date}&`;
     if (search) query += `search=${encodeURIComponent(search)}&`;
@@ -390,8 +665,12 @@ function renderOrdersTable(orders) {
       <td><span class="text-primary fw-semibold">${order.order_number}</span></td>
       <td>${escapeHtml(order.customer_name)}</td>
       <td>
-        <small class="text-muted">${escapeHtml(order.customer_phone)}</small><br>
-        <small class="text-muted">${escapeHtml(order.customer_email)}</small>
+        ${order.delivery_type === 'delivery' ? `
+          <small class="text-muted">
+            ${escapeHtml(order.street || '')} ${escapeHtml(order.house_number || '')}${order.bus ? ' ' + escapeHtml(order.bus) : ''}
+          </small><br>
+          <small class="text-muted">${escapeHtml(order.postal_code || '')} ${escapeHtml(order.city || '')}</small>
+        ` : `<small class="text-muted">—</small>`}
       </td>
       <td><span class="badge ${order.delivery_type === 'delivery' ? 'bg-info' : 'bg-secondary'}">${order.delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen'}</span></td>
       <td class="fw-semibold">${formatCurrency(order.total)}</td>
@@ -401,7 +680,10 @@ function renderOrdersTable(orders) {
           ${getStatusOptions(order.status)}
         </select>
       </td>
-      <td class="text-muted">${formatDateTime(order.created_at)}</td>
+      <td>
+        <small class="text-muted">${escapeHtml(order.customer_phone)}</small><br>
+        <small class="text-muted">${escapeHtml(order.customer_email)}</small>
+      </td>
       <td>
         <button class="btn btn-sm btn-outline-primary btn-icon" onclick="showOrderDetail(${order.id})" title="Details">
           <i class="bi bi-eye"></i>
@@ -446,6 +728,7 @@ async function showOrderDetail(orderId) {
   try {
     const data = await apiRequest(`/admin/orders/${orderId}`);
     const order = data.data;
+    lastOrderDetail = order;
     
     const modal = document.getElementById('order-modal-content');
     modal.innerHTML = `
@@ -455,6 +738,7 @@ async function showOrderDetail(orderId) {
           <p><strong>${escapeHtml(order.customer_name)}</strong></p>
           <p>${escapeHtml(order.customer_email)}</p>
           <p>${escapeHtml(order.customer_phone)}</p>
+          <p><small class="text-muted">BTW-nummer:</small> <span class="fw-semibold">${escapeHtml(order.customer_vat_number || '—')}</span></p>
         </div>
         <div class="order-detail-section">
           <h6>${order.delivery_type === 'delivery' ? 'Bezorgadres' : 'Afhalen'}</h6>
@@ -466,6 +750,14 @@ async function showOrderDetail(orderId) {
           `}
         </div>
       </div>
+
+      ${order.delivery_type === 'delivery' ? `
+        <div class="order-detail-section mt-3">
+          <h6>Kaart</h6>
+          <div id="order-map" class="order-map"></div>
+          <div id="order-map-hint" class="text-muted small mt-2"></div>
+        </div>
+      ` : ''}
       
       ${order.notes ? `
         <div class="order-detail-section mt-3">
@@ -540,11 +832,395 @@ async function showOrderDetail(orderId) {
     
     // Store order ID for print
     document.getElementById('btn-print-order').onclick = () => printOrder(orderId);
+    document.getElementById('btn-invoice-order').onclick = () => printInvoice(orderId);
     
     new bootstrap.Modal(document.getElementById('orderModal')).show();
+
+    // Render map only for delivery orders
+    if (order.delivery_type === 'delivery') {
+      // Leaflet needs dimensions, so wait until modal is visible
+      setTimeout(() => renderOrderDetailMap(order), 150);
+    } else {
+      cleanupOrderDetailMap();
+    }
   } catch (error) {
     console.error('Order detail error:', error);
     showToast('Fout bij laden bestelling', 'error');
+  }
+}
+
+async function printInvoice(orderId) {
+  try {
+    // Use latest loaded order or refetch
+    let order = lastOrderDetail && Number(lastOrderDetail.id) === Number(orderId) ? lastOrderDetail : null;
+    if (!order) {
+      const data = await apiRequest(`/admin/orders/${orderId}`);
+      order = data.data;
+      lastOrderDetail = order;
+    }
+
+    // Ensure VAT number exists
+    let vat = (order.customer_vat_number || '').toString().trim();
+    if (!vat) {
+      vat = window.prompt('Geef het BTW-nummer van de klant (vereist voor factuur):', '')?.trim() || '';
+      if (!vat) {
+        showToast('Factuur geannuleerd: BTW-nummer ontbreekt', 'warning');
+        return;
+      }
+      await apiRequest(`/admin/orders/${orderId}/vat-number`, {
+        method: 'PATCH',
+        body: JSON.stringify({ vat_number: vat })
+      });
+      order.customer_vat_number = vat;
+      lastOrderDetail = order;
+    }
+
+    // Get settings (tax + restaurant info)
+    const settingsRes = await apiRequest('/admin/settings');
+    const settingsMap = {};
+    settingsRes.data.forEach(s => { settingsMap[s.setting_key] = s.setting_value; });
+    const taxRate = parseFloat(settingsMap.tax_rate || 21);
+    const restaurantName = settingsMap.restaurant_name || order.restaurant?.name || 'The Golden Olive';
+    const restaurantAddress = settingsMap.restaurant_address || order.restaurant?.address || '';
+    const restaurantPhone = settingsMap.restaurant_phone || '';
+    const restaurantEmail = settingsMap.restaurant_email || '';
+
+    const total = parseFloat(order.total || 0);
+    const net = taxRate > 0 ? total / (1 + taxRate / 100) : total;
+    const vatAmount = total - net;
+
+    const w = window.open('', '_blank', 'noopener,noreferrer,width=900,height=900');
+    if (!w) {
+      showToast('Popup blocked: kan factuur niet openen', 'error');
+      return;
+    }
+
+    const issueDate = new Date().toLocaleDateString('nl-BE');
+
+    w.document.open();
+    w.document.write(`
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Factuur ${escapeHtml(order.order_number)}</title>
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:32px;color:#111}
+    h1{margin:0 0 6px;font-size:22px}
+    .muted{color:#555}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+    .card{border:1px solid #ddd;border-radius:12px;padding:14px}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;font-size:14px}
+    th{background:#fafafa}
+    .right{text-align:right}
+    .totals{margin-top:10px;max-width:360px;margin-left:auto}
+    .totals .row{display:flex;justify-content:space-between;padding:6px 0}
+    .totals .total{font-weight:800;font-size:16px;border-top:2px solid #111;padding-top:10px;margin-top:8px}
+    @media print{body{margin:0;padding:0}}
+  </style>
+</head>
+<body>
+  <h1>Factuur</h1>
+  <div class="muted">Factuurdatum: ${issueDate} • Order: ${escapeHtml(order.order_number)}</div>
+
+  <div class="grid">
+    <div class="card">
+      <div style="font-weight:800;margin-bottom:6px">Van</div>
+      <div>${escapeHtml(restaurantName)}</div>
+      <div class="muted">${escapeHtml(restaurantAddress)}</div>
+      ${restaurantPhone ? `<div class="muted">${escapeHtml(restaurantPhone)}</div>` : ''}
+      ${restaurantEmail ? `<div class="muted">${escapeHtml(restaurantEmail)}</div>` : ''}
+    </div>
+    <div class="card">
+      <div style="font-weight:800;margin-bottom:6px">Aan</div>
+      <div>${escapeHtml(order.customer_name)}</div>
+      <div class="muted">${escapeHtml(order.customer_email)}</div>
+      <div class="muted">${escapeHtml(order.customer_phone)}</div>
+      <div style="margin-top:6px"><span class="muted">BTW-nummer klant:</span> <strong>${escapeHtml(vat)}</strong></div>
+      ${order.delivery_type === 'delivery' && order.street ? `
+        <div style="margin-top:8px" class="muted">
+          ${escapeHtml(order.street)} ${escapeHtml(order.house_number)}${order.bus ? ' ' + escapeHtml(order.bus) : ''}<br/>
+          ${escapeHtml(order.postal_code)} ${escapeHtml(order.city)}
+        </div>
+      ` : ''}
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Omschrijving</th>
+        <th class="right">Aantal</th>
+        <th class="right">Prijs</th>
+        <th class="right">Subtotaal</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${(order.items || []).map(it => `
+        <tr>
+          <td>${escapeHtml(it.product_name)}</td>
+          <td class="right">${Number(it.quantity)}</td>
+          <td class="right">€${parseFloat(it.product_price).toFixed(2)}</td>
+          <td class="right">€${parseFloat(it.subtotal).toFixed(2)}</td>
+        </tr>
+      `).join('')}
+      ${parseFloat(order.delivery_fee || 0) > 0 ? `
+        <tr>
+          <td>Bezorgkosten</td>
+          <td class="right">1</td>
+          <td class="right">€${parseFloat(order.delivery_fee).toFixed(2)}</td>
+          <td class="right">€${parseFloat(order.delivery_fee).toFixed(2)}</td>
+        </tr>
+      ` : ''}
+    </tbody>
+  </table>
+
+  <div class="totals">
+    <div class="row"><span class="muted">Excl. BTW</span><span>€${net.toFixed(2)}</span></div>
+    <div class="row"><span class="muted">BTW (${taxRate}%)</span><span>€${vatAmount.toFixed(2)}</span></div>
+    <div class="row total"><span>Totaal</span><span>€${total.toFixed(2)}</span></div>
+  </div>
+
+  <script>window.focus(); setTimeout(()=>window.print(), 250);</script>
+</body>
+</html>
+    `);
+    w.document.close();
+  } catch (error) {
+    console.error('Invoice error:', error);
+    showToast('Fout bij maken factuur: ' + (error?.message || error), 'error');
+  }
+}
+
+async function printDailyReport() {
+  try {
+    const data = await apiRequest('/admin/reports/daily');
+    const r = data.data.restaurant;
+    const t = data.data.totals;
+    const w = window.open('', '_blank', 'noopener,noreferrer,width=900,height=900');
+    if (!w) return;
+    w.document.open();
+    w.document.write(`
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Dagrapport ${escapeHtml(data.data.date)}</title>
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:32px;color:#111}
+    h1{margin:0 0 6px;font-size:22px}
+    .muted{color:#555}
+    .card{border:1px solid #ddd;border-radius:12px;padding:14px;margin-top:16px}
+    .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee}
+    .row:last-child{border-bottom:none}
+    .total{font-weight:800}
+    @media print{body{margin:0;padding:0}}
+  </style>
+</head>
+<body>
+  <h1>Dagrapport</h1>
+  <div class="muted">${escapeHtml(r.name)} • ${escapeHtml(data.data.date)}</div>
+  <div class="muted">${escapeHtml(r.address || '')}</div>
+
+  <div class="card">
+    <div class="row"><span>Aantal bestellingen</span><span class="total">${t.orders}</span></div>
+    <div class="row"><span>Delivery</span><span>${t.delivery_orders}</span></div>
+    <div class="row"><span>Pickup</span><span>${t.pickup_orders}</span></div>
+    <div class="row"><span>Omzet (incl. BTW)</span><span class="total">€${t.revenue.toFixed(2)}</span></div>
+    <div class="row"><span>Excl. BTW</span><span>€${t.net_amount.toFixed(2)}</span></div>
+    <div class="row"><span>BTW (${t.tax_rate}%)</span><span>€${t.vat_amount.toFixed(2)}</span></div>
+    <div class="row"><span>Bezorgkosten</span><span>€${t.delivery_fees.toFixed(2)}</span></div>
+  </div>
+
+  <script>window.focus(); setTimeout(()=>window.print(), 250);</script>
+</body>
+</html>
+    `);
+    w.document.close();
+  } catch (e) {
+    showToast('Fout bij rapport: ' + (e?.message || e), 'error');
+  }
+}
+
+// =====================================================
+// REPORTS (PDF download + email)
+// =====================================================
+
+function todayISODate() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+async function loadReports() {
+  // Set defaults once
+  const dailyDate = document.getElementById('report-daily-date');
+  if (dailyDate && !dailyDate.value) dailyDate.value = todayISODate();
+
+  const rangeFrom = document.getElementById('report-range-from');
+  const rangeTo = document.getElementById('report-range-to');
+  if (rangeTo && !rangeTo.value) rangeTo.value = todayISODate();
+  if (rangeFrom && !rangeFrom.value) {
+    const d = new Date();
+    d.setDate(d.getDate() - 7);
+    rangeFrom.value = d.toISOString().slice(0, 10);
+  }
+
+  await Promise.allSettled([previewDailyReport(), previewRangeReport()]);
+}
+
+async function previewDailyReport() {
+  const date = document.getElementById('report-daily-date')?.value || '';
+  const box = document.getElementById('report-daily-preview');
+  if (!box) return;
+  if (!date) {
+    box.textContent = 'Kies een datum om te previewen.';
+    return;
+  }
+  try {
+    box.textContent = 'Laden...';
+    const data = await apiRequest(`/admin/reports/daily?date=${encodeURIComponent(date)}`);
+    const t = data.data.totals;
+    box.innerHTML = `
+      <div><strong>Bestellingen:</strong> ${t.orders} (${t.delivery_orders} bezorgen, ${t.pickup_orders} afhalen)</div>
+      <div><strong>Omzet:</strong> ${formatCurrency(t.revenue)} • <span class="text-muted">Netto</span> ${formatCurrency(t.net_amount)} • <span class="text-muted">BTW</span> ${formatCurrency(t.vat_amount)}</div>
+    `;
+  } catch (e) {
+    box.textContent = 'Fout bij laden preview.';
+  }
+}
+
+async function previewRangeReport() {
+  const from = document.getElementById('report-range-from')?.value || '';
+  const to = document.getElementById('report-range-to')?.value || '';
+  const box = document.getElementById('report-range-preview');
+  if (!box) return;
+  if (!from || !to) {
+    box.textContent = 'Kies een periode om te previewen.';
+    return;
+  }
+  try {
+    box.textContent = 'Laden...';
+    const data = await apiRequest(`/admin/reports/range?date_from=${encodeURIComponent(from)}&date_to=${encodeURIComponent(to)}`);
+    const t = data.data.totals;
+    box.innerHTML = `
+      <div><strong>Periode:</strong> ${escapeHtml(data.data.date_from)} → ${escapeHtml(data.data.date_to)}</div>
+      <div><strong>Bestellingen:</strong> ${t.orders} (${t.delivery_orders} bezorgen, ${t.pickup_orders} afhalen)</div>
+      <div><strong>Omzet:</strong> ${formatCurrency(t.revenue)} • <span class="text-muted">Netto</span> ${formatCurrency(t.net_amount)} • <span class="text-muted">BTW</span> ${formatCurrency(t.vat_amount)}</div>
+    `;
+  } catch (e) {
+    box.textContent = 'Fout bij laden preview.';
+  }
+}
+
+async function downloadReportPdf(type, params) {
+  const qs = new URLSearchParams({ type, ...params }).toString();
+  const resp = await fetch(`/api/admin/reports/pdf?${qs}`, {
+    headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
+  });
+  if (!resp.ok) {
+    let msg = 'Fout bij genereren PDF';
+    try { const j = await resp.json(); msg = j?.error?.message || msg; } catch {}
+    throw new Error(msg);
+  }
+  const blob = await resp.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `rapport-${type}-${todayISODate()}.pdf`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+async function emailReportPdf(type, params, toEmail) {
+  const resp = await apiRequest('/admin/reports/email', {
+    method: 'POST',
+    body: JSON.stringify({ type, ...params, to: toEmail })
+  });
+  return resp;
+}
+
+function cleanupOrderDetailMap() {
+  try {
+    if (orderDetailMap) {
+      orderDetailMap.remove();
+      orderDetailMap = null;
+    }
+  } catch {}
+}
+
+function renderOrderDetailMap(order) {
+  const container = document.getElementById('order-map');
+  const hint = document.getElementById('order-map-hint');
+  if (!container) return;
+
+  // Clean old map instance (if any)
+  cleanupOrderDetailMap();
+
+  if (!window.L) {
+    if (hint) hint.textContent = 'Kaart library (Leaflet) is niet geladen.';
+    return;
+  }
+
+  const restaurant = order.restaurant;
+  const rLat = restaurant?.latitude;
+  const rLng = restaurant?.longitude;
+
+  const dLat = order.latitude ?? null;
+  const dLng = order.longitude ?? null;
+
+  // If we don't have restaurant coords, don't render map
+  if (!Number.isFinite(rLat) || !Number.isFinite(rLng)) {
+    if (hint) hint.textContent = 'Restaurant locatie ontbreekt.';
+    return;
+  }
+
+  // Init map
+  orderDetailMap = window.L.map(container, {
+    zoomControl: true,
+    scrollWheelZoom: true
+  });
+
+  window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(orderDetailMap);
+
+  const icon = (label, variant) =>
+    window.L.divIcon({
+      className: '',
+      html: `<div class="order-map-marker ${variant || ''}">${label}</div>`,
+      iconSize: [34, 34],
+      iconAnchor: [17, 17]
+    });
+
+  const rMarker = window.L.marker([rLat, rLng], { icon: icon('R', 'restaurant') }).addTo(orderDetailMap);
+  rMarker.bindPopup(`<strong>${escapeHtml(restaurant.name || 'Restaurant')}</strong><div>${escapeHtml(restaurant.address || '')}</div>`);
+
+  // Delivery: show destination + route
+  if (order.delivery_type === 'delivery') {
+    if (!Number.isFinite(dLat) || !Number.isFinite(dLng)) {
+      if (hint) hint.textContent = 'Geen coördinaten voor dit adres (wordt automatisch ingevuld bij nieuwe orders).';
+      orderDetailMap.setView([rLat, rLng], 14);
+      return;
+    }
+
+    const dMarker = window.L.marker([dLat, dLng], { icon: icon('1', '') }).addTo(orderDetailMap);
+    dMarker.bindPopup(
+      `<strong>${escapeHtml(order.customer_name || 'Klant')}</strong>` +
+      `<div>${escapeHtml(order.street || '')} ${escapeHtml(order.house_number || '')}${order.bus ? ' ' + escapeHtml(order.bus) : ''}</div>` +
+      `<div>${escapeHtml(order.postal_code || '')} ${escapeHtml(order.city || '')}</div>`
+    );
+
+    const line = window.L.polyline([[rLat, rLng], [dLat, dLng]], { color: '#ffc107', weight: 5, opacity: 0.85 }).addTo(orderDetailMap);
+    const bounds = window.L.latLngBounds(line.getLatLngs());
+    orderDetailMap.fitBounds(bounds, { padding: [30, 30] });
+    if (hint) hint.textContent = '';
+  } else {
+    // Pickup is intentionally not shown (caller should not render map section)
+    cleanupOrderDetailMap();
+    return;
   }
 }
 
@@ -563,10 +1239,104 @@ async function updateOrderStatus(orderId, status) {
 
 async function printOrder(orderId) {
   try {
-    await apiRequest(`/admin/orders/${orderId}/print`, { method: 'POST' });
-    window.print();
+    // Fetch full order detail to print a proper receipt
+    const data = await apiRequest(`/admin/orders/${orderId}`);
+    const order = data.data;
+
+    // Mark printed in backend (best effort)
+    try {
+      await apiRequest(`/admin/orders/${orderId}/print`, { method: 'POST' });
+    } catch {}
+
+    const w = window.open('', '_blank', 'noopener,noreferrer,width=900,height=900');
+    if (!w) {
+      showToast('Popup blocked: kan niet printen', 'error');
+      return;
+    }
+
+    const issueDate = new Date().toLocaleString('nl-BE');
+
+    w.document.open();
+    w.document.write(`
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Order ${escapeHtml(order.order_number)}</title>
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:18px;color:#111}
+    h1{margin:0 0 6px;font-size:18px}
+    .muted{color:#555}
+    .card{border:1px solid #ddd;border-radius:10px;padding:10px;margin-top:10px}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left;font-size:13px}
+    th{background:#fafafa}
+    .right{text-align:right}
+    .totals{margin-top:8px}
+    .totals .row{display:flex;justify-content:space-between;padding:4px 0}
+    .total{font-weight:800;border-top:2px solid #111;padding-top:8px;margin-top:8px}
+    @media print{body{margin:0}}
+  </style>
+</head>
+<body>
+  <h1>Bestelling ${escapeHtml(order.order_number)}</h1>
+  <div class="muted">${issueDate} • ${escapeHtml(order.delivery_type)}</div>
+
+  <div class="card">
+    <div><strong>${escapeHtml(order.customer_name)}</strong></div>
+    <div class="muted">${escapeHtml(order.customer_phone || '')}</div>
+    <div class="muted">${escapeHtml(order.customer_email || '')}</div>
+    ${order.delivery_type === 'delivery' && order.street ? `
+      <div style="margin-top:6px" class="muted">
+        ${escapeHtml(order.street)} ${escapeHtml(order.house_number)}${order.bus ? ' ' + escapeHtml(order.bus) : ''}<br/>
+        ${escapeHtml(order.postal_code)} ${escapeHtml(order.city)}
+      </div>
+    ` : ''}
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th class="right">Aantal</th>
+        <th class="right">Prijs</th>
+        <th class="right">Subtotaal</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${(order.items || []).map(it => `
+        <tr>
+          <td>${escapeHtml(it.product_name)}</td>
+          <td class="right">${Number(it.quantity)}</td>
+          <td class="right">€${parseFloat(it.product_price).toFixed(2)}</td>
+          <td class="right">€${parseFloat(it.subtotal).toFixed(2)}</td>
+        </tr>
+      `).join('')}
+      ${parseFloat(order.delivery_fee || 0) > 0 ? `
+        <tr>
+          <td>Bezorgkosten</td>
+          <td class="right">1</td>
+          <td class="right">€${parseFloat(order.delivery_fee).toFixed(2)}</td>
+          <td class="right">€${parseFloat(order.delivery_fee).toFixed(2)}</td>
+        </tr>
+      ` : ''}
+    </tbody>
+  </table>
+
+  <div class="totals">
+    <div class="row"><span class="muted">Subtotaal</span><span>€${parseFloat(order.subtotal || 0).toFixed(2)}</span></div>
+    ${parseFloat(order.delivery_fee || 0) > 0 ? `<div class="row"><span class="muted">Bezorgkosten</span><span>€${parseFloat(order.delivery_fee).toFixed(2)}</span></div>` : ''}
+    <div class="row total"><span>Totaal</span><span>€${parseFloat(order.total || 0).toFixed(2)}</span></div>
+  </div>
+
+  <script>window.focus(); setTimeout(()=>window.print(), 250);</script>
+</body>
+</html>
+    `);
+    w.document.close();
   } catch (error) {
     console.error('Print error:', error);
+    showToast('Fout bij printen: ' + (error?.message || error), 'error');
   }
 }
 
@@ -576,7 +1346,19 @@ async function printOrder(orderId) {
 
 async function loadProducts() {
   try {
-    const data = await apiRequest('/admin/products');
+    await ensureCategoriesForFilters();
+    populateProductCategoryFilter();
+
+    const category = document.getElementById('product-filter-category')?.value || '';
+    const available = document.getElementById('product-filter-available')?.value || '';
+    const search = document.getElementById('product-filter-search')?.value || '';
+
+    let query = '?';
+    if (category) query += `category=${encodeURIComponent(category)}&`;
+    if (available) query += `available=${encodeURIComponent(available)}&`;
+    if (search) query += `search=${encodeURIComponent(search)}&`;
+
+    const data = await apiRequest(`/admin/products${query}`);
     renderProductsTable(data.data);
   } catch (error) {
     console.error('Products error:', error);
@@ -604,7 +1386,13 @@ function renderProductsTable(products) {
         <span class="fw-semibold">${escapeHtml(p.name)}</span>
         ${p.description ? `<br><small class="text-muted">${escapeHtml(p.description.substring(0, 50))}${p.description.length > 50 ? '...' : ''}</small>` : ''}
       </td>
-      <td><span class="badge bg-secondary">${escapeHtml(p.category_name || '-')}</span></td>
+      <td>
+        ${p.category_id ? `
+          <button type="button" class="btn btn-link p-0 text-decoration-none" onclick="showCategoryProducts(${p.category_id})">
+            <span class="badge bg-secondary">${escapeHtml(p.category_name || '-')}</span>
+          </button>
+        ` : `<span class="badge bg-secondary">${escapeHtml(p.category_name || '-')}</span>`}
+      </td>
       <td class="fw-semibold">${formatCurrency(p.price)}</td>
       <td>
         <button class="btn btn-sm ${p.is_available ? 'btn-success' : 'btn-outline-secondary'}" onclick="toggleProduct(${p.id})">
@@ -621,6 +1409,37 @@ function renderProductsTable(products) {
       </td>
     </tr>
   `).join('');
+}
+
+async function ensureCategoriesForFilters() {
+  // We need categories to fill product category filter and for category-product modal titles.
+  if (Array.isArray(categoriesCache) && categoriesCache.length > 0) return;
+  try {
+    const data = await apiRequest('/admin/categories');
+    categoriesCache = Array.isArray(data.data) ? data.data : [];
+  } catch {
+    // ignore
+  }
+}
+
+function populateProductCategoryFilter() {
+  const select = document.getElementById('product-filter-category');
+  if (!select) return;
+  const current = select.value || '';
+  const options = [`<option value="">Alle categorieën</option>`].concat(
+    (categoriesCache || []).map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`)
+  );
+  select.innerHTML = options.join('');
+  select.value = current;
+}
+
+function setProductFilters({ categoryId = '', available = '', search = '' } = {}) {
+  const catEl = document.getElementById('product-filter-category');
+  const availEl = document.getElementById('product-filter-available');
+  const searchEl = document.getElementById('product-filter-search');
+  if (catEl) catEl.value = categoryId ? String(categoryId) : '';
+  if (availEl) availEl.value = available || '';
+  if (searchEl) searchEl.value = search || '';
 }
 
 async function loadCategoriesForSelect() {
@@ -720,7 +1539,26 @@ async function deleteProduct(id, name) {
 async function loadCategories() {
   try {
     const data = await apiRequest('/admin/categories');
-    renderCategoriesTable(data.data);
+    // Keep cache in sync so editCategory works reliably
+    categoriesCache = Array.isArray(data.data) ? data.data : [];
+
+    const search = document.getElementById('category-filter-search')?.value?.trim().toLowerCase() || '';
+    const active = document.getElementById('category-filter-active')?.value || '';
+
+    let filtered = categoriesCache;
+    if (active) {
+      const wantActive = active === 'true';
+      filtered = filtered.filter((c) => Boolean(c.is_active) === wantActive);
+    }
+    if (search) {
+      filtered = filtered.filter((c) => {
+        const name = String(c.name || '').toLowerCase();
+        const slug = String(c.slug || '').toLowerCase();
+        return name.includes(search) || slug.includes(search);
+      });
+    }
+
+    renderCategoriesTable(filtered);
   } catch (error) {
     console.error('Categories error:', error);
     showToast('Fout bij laden categorieën', 'error');
@@ -734,7 +1572,11 @@ function renderCategoriesTable(categories) {
     <tr>
       <td class="fw-semibold">${escapeHtml(c.name)}</td>
       <td><code class="text-muted">${escapeHtml(c.slug)}</code></td>
-      <td>${c.product_count || 0}</td>
+      <td>
+        <button type="button" class="btn btn-link p-0 text-decoration-none" onclick="showCategoryProducts(${c.id})" title="Toon producten in deze categorie">
+          <span class="fw-semibold text-primary">${c.product_count || 0}</span>
+        </button>
+      </td>
       <td>${c.sort_order}</td>
       <td>
         <span class="badge ${c.is_active ? 'bg-success' : 'bg-secondary'}">${c.is_active ? 'Actief' : 'Inactief'}</span>
@@ -751,6 +1593,65 @@ function renderCategoriesTable(categories) {
       </td>
     </tr>
   `).join('');
+}
+
+async function showCategoryProducts(categoryId) {
+  try {
+    await ensureCategoriesForFilters();
+    const category = (categoriesCache || []).find((c) => c.id === categoryId) || { id: categoryId, name: `Categorie #${categoryId}` };
+
+    const titleEl = document.getElementById('category-products-title');
+    const subEl = document.getElementById('category-products-subtitle');
+    const tbody = document.getElementById('category-products-table');
+    if (titleEl) titleEl.textContent = `Producten: ${category.name}`;
+    if (subEl) subEl.textContent = 'Klik op een actie om snel aan te passen.';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4">Laden...</td></tr>';
+
+    const btnOpen = document.getElementById('btn-open-products-filtered');
+    if (btnOpen) {
+      btnOpen.onclick = () => {
+        setProductFilters({ categoryId: String(categoryId) });
+        showPage('products');
+        bootstrap.Modal.getInstance(document.getElementById('categoryProductsModal'))?.hide();
+      };
+    }
+
+    const modalEl = document.getElementById('categoryProductsModal');
+    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+    modal.show();
+
+    const data = await apiRequest(`/admin/products?category=${encodeURIComponent(categoryId)}`);
+    const products = Array.isArray(data.data) ? data.data : [];
+
+    if (!tbody) return;
+    if (products.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-muted">Geen producten in deze categorie</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = products.map((p) => `
+      <tr>
+        <td class="fw-semibold">${escapeHtml(p.name)}</td>
+        <td class="fw-semibold">${formatCurrency(p.price)}</td>
+        <td>
+          <span class="badge ${p.is_available ? 'bg-success' : 'bg-secondary'}">
+            ${p.is_available ? 'Ja' : 'Nee'}
+          </span>
+        </td>
+        <td class="text-end">
+          <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editProduct(${p.id}); bootstrap.Modal.getInstance(document.getElementById('categoryProductsModal'))?.hide();" title="Bewerken">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm ${p.is_available ? 'btn-outline-secondary' : 'btn-success'}" onclick="toggleProduct(${p.id}); showCategoryProducts(${categoryId});" title="Toggle beschikbaar">
+            ${p.is_available ? '<i class="bi bi-x"></i>' : '<i class="bi bi-check"></i>'}
+          </button>
+        </td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    console.error('Category products error:', error);
+    showToast('Fout bij laden producten in categorie', 'error');
+  }
 }
 
 function showCategoryModal(category = null) {
@@ -817,7 +1718,14 @@ async function deleteCategory(id) {
 async function loadPayments() {
   try {
     const status = document.getElementById('payment-status-filter')?.value || '';
-    const query = status ? `?status=${status}` : '';
+    const dateFrom = document.getElementById('payment-date-from')?.value || '';
+    const dateTo = document.getElementById('payment-date-to')?.value || '';
+
+    let query = '?';
+    if (status) query += `status=${encodeURIComponent(status)}&`;
+    if (dateFrom) query += `date_from=${encodeURIComponent(dateFrom)}&`;
+    if (dateTo) query += `date_to=${encodeURIComponent(dateTo)}&`;
+
     const data = await apiRequest(`/admin/payments${query}`);
     renderPaymentsTable(data.data);
   } catch (error) {
@@ -909,7 +1817,25 @@ async function saveSettingsForm(formId, settingKeys) {
 async function loadUsers() {
   try {
     const data = await apiRequest('/admin/users');
-    renderUsersTable(data.data);
+    const search = document.getElementById('user-filter-search')?.value?.trim().toLowerCase() || '';
+    const role = document.getElementById('user-filter-role')?.value || '';
+    const active = document.getElementById('user-filter-active')?.value || '';
+
+    let users = Array.isArray(data.data) ? data.data : [];
+    if (role) users = users.filter((u) => u.role === role);
+    if (active) {
+      const want = active === 'true';
+      users = users.filter((u) => Boolean(u.is_active) === want);
+    }
+    if (search) {
+      users = users.filter((u) => {
+        const name = String(u.name || '').toLowerCase();
+        const email = String(u.email || '').toLowerCase();
+        return name.includes(search) || email.includes(search);
+      });
+    }
+
+    renderUsersTable(users);
   } catch (error) {
     console.error('Users error:', error);
     showToast('Fout bij laden gebruikers', 'error');
@@ -962,7 +1888,16 @@ async function saveUser(e) {
 
 async function loadLogs() {
   try {
-    const data = await apiRequest('/admin/logs');
+    const action = document.getElementById('logs-filter-action')?.value?.trim() || '';
+    const dateFrom = document.getElementById('logs-filter-date-from')?.value || '';
+    const limit = document.getElementById('logs-filter-limit')?.value || '100';
+
+    let query = '?';
+    if (action) query += `action=${encodeURIComponent(action)}&`;
+    if (dateFrom) query += `date_from=${encodeURIComponent(dateFrom)}&`;
+    if (limit) query += `limit=${encodeURIComponent(limit)}&`;
+
+    const data = await apiRequest(`/admin/logs${query}`);
     renderLogsTable(data.data);
   } catch (error) {
     console.error('Logs error:', error);
@@ -1123,6 +2058,17 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Refresh
   document.getElementById('refresh-btn')?.addEventListener('click', () => loadPageData(currentPage));
+  document.getElementById('report-btn')?.addEventListener('click', () => showPage('reports'));
+  document.getElementById('notifications-btn')?.addEventListener('click', openNotificationsModal);
+  document.getElementById('btn-notifications-readall')?.addEventListener('click', async () => {
+    try {
+      await apiRequest('/admin/notifications/read', { method: 'POST' });
+      await loadNotifications();
+      showToast('Notificaties gemarkeerd als gelezen', 'success');
+    } catch (e) {
+      showToast('Fout: ' + (e?.message || e), 'error');
+    }
+  });
   
   // Forms
   document.getElementById('product-form')?.addEventListener('submit', saveProduct);
@@ -1141,7 +2087,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   // Settings toggles (auto-save)
-  ['is_open', 'notification_sound', 'auto_accept_orders'].forEach(key => {
+  ['is_open', 'notification_sound', 'auto_accept_orders', 'print_auto'].forEach(key => {
     document.getElementById(`setting-${key}`)?.addEventListener('change', (e) => {
       saveSetting(key, e.target.checked);
     });
@@ -1149,7 +2095,89 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Filter listeners
   document.getElementById('filter-status')?.addEventListener('change', loadOrders);
+  document.getElementById('filter-payment')?.addEventListener('change', loadOrders);
   document.getElementById('filter-delivery')?.addEventListener('change', loadOrders);
   document.getElementById('filter-date')?.addEventListener('change', loadOrders);
+  document.getElementById('filter-search')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loadOrders();
+  });
+
+  document.getElementById('product-filter-category')?.addEventListener('change', loadProducts);
+  document.getElementById('product-filter-available')?.addEventListener('change', loadProducts);
+  document.getElementById('product-filter-search')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loadProducts();
+  });
+
+  document.getElementById('category-filter-active')?.addEventListener('change', loadCategories);
+  document.getElementById('category-filter-search')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loadCategories();
+  });
+
   document.getElementById('payment-status-filter')?.addEventListener('change', loadPayments);
+  document.getElementById('payment-date-from')?.addEventListener('change', loadPayments);
+  document.getElementById('payment-date-to')?.addEventListener('change', loadPayments);
+
+  document.getElementById('user-filter-role')?.addEventListener('change', loadUsers);
+  document.getElementById('user-filter-active')?.addEventListener('change', loadUsers);
+  document.getElementById('user-filter-search')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loadUsers();
+  });
+
+  document.getElementById('logs-filter-action')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') loadLogs();
+  });
+  document.getElementById('logs-filter-date-from')?.addEventListener('change', loadLogs);
+  document.getElementById('logs-filter-limit')?.addEventListener('change', loadLogs);
+
+  // Reports listeners
+  document.getElementById('report-daily-date')?.addEventListener('change', previewDailyReport);
+  document.getElementById('report-range-from')?.addEventListener('change', previewRangeReport);
+  document.getElementById('report-range-to')?.addEventListener('change', previewRangeReport);
+
+  document.getElementById('btn-daily-download')?.addEventListener('click', async () => {
+    try {
+      const date = document.getElementById('report-daily-date')?.value || '';
+      if (!date) throw new Error('Kies een datum');
+      await downloadReportPdf('daily', { date });
+      showToast('PDF gedownload', 'success');
+    } catch (e) {
+      showToast('Fout: ' + (e?.message || e), 'error');
+    }
+  });
+  document.getElementById('btn-range-download')?.addEventListener('click', async () => {
+    try {
+      const date_from = document.getElementById('report-range-from')?.value || '';
+      const date_to = document.getElementById('report-range-to')?.value || '';
+      if (!date_from || !date_to) throw new Error('Kies een periode');
+      await downloadReportPdf('range', { date_from, date_to });
+      showToast('PDF gedownload', 'success');
+    } catch (e) {
+      showToast('Fout: ' + (e?.message || e), 'error');
+    }
+  });
+  document.getElementById('btn-daily-email')?.addEventListener('click', async () => {
+    try {
+      const date = document.getElementById('report-daily-date')?.value || '';
+      const to = document.getElementById('report-daily-email')?.value || '';
+      if (!date) throw new Error('Kies een datum');
+      if (!to) throw new Error('Vul een e-mailadres in');
+      await emailReportPdf('daily', { date }, to);
+      showToast('Rapport verzonden', 'success');
+    } catch (e) {
+      showToast('Fout: ' + (e?.message || e), 'error');
+    }
+  });
+  document.getElementById('btn-range-email')?.addEventListener('click', async () => {
+    try {
+      const date_from = document.getElementById('report-range-from')?.value || '';
+      const date_to = document.getElementById('report-range-to')?.value || '';
+      const to = document.getElementById('report-range-email')?.value || '';
+      if (!date_from || !date_to) throw new Error('Kies een periode');
+      if (!to) throw new Error('Vul een e-mailadres in');
+      await emailReportPdf('range', { date_from, date_to }, to);
+      showToast('Rapport verzonden', 'success');
+    } catch (e) {
+      showToast('Fout: ' + (e?.message || e), 'error');
+    }
+  });
 });

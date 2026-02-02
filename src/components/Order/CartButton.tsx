@@ -3,7 +3,7 @@
  * Shows cart icon in top-right corner with slide-out drawer
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useOrder } from './OrderContext';
 import Cart from './Cart';
@@ -17,6 +17,17 @@ const CartButton: React.FC<CartButtonProps> = ({ onCheckout }) => {
   const { t } = useTranslation();
   const { itemCount, total } = useOrder();
   const [isOpen, setIsOpen] = useState(false);
+  const [pulse, setPulse] = useState(false);
+  const prevItemCount = useRef(itemCount);
+
+  // Pulse cart button when items increase
+  useEffect(() => {
+    if (itemCount > prevItemCount.current) {
+      setPulse(true);
+      window.setTimeout(() => setPulse(false), 300);
+    }
+    prevItemCount.current = itemCount;
+  }, [itemCount]);
 
   const handleCheckout = useCallback(() => {
     setIsOpen(false);
@@ -35,7 +46,7 @@ const CartButton: React.FC<CartButtonProps> = ({ onCheckout }) => {
     <>
       {/* Top Right Cart Button */}
       <button
-        className={`cart-button-top ${itemCount > 0 ? 'has-items' : ''}`}
+        className={`cart-button-top ${itemCount > 0 ? 'has-items' : ''} ${pulse ? 'pulse' : ''}`}
         onClick={handleOpen}
         aria-label={t('order.openCart', 'Open winkelwagen')}
       >

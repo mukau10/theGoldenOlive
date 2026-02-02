@@ -21,6 +21,7 @@ import categoryRoutes from './routes/categories.js';
 import orderRoutes from './routes/orders.js';
 import paymentRoutes from './routes/payments.js';
 import adminRoutes from './routes/admin.js';
+import antiBotRoutes from './routes/antibot.js';
 
 // Import middleware
 import { errorHandler } from './middleware/errorHandler.js';
@@ -63,7 +64,13 @@ const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per windowMs
   message: { error: 'Te veel verzoeken, probeer het later opnieuw.' }
 });
-app.use('/api/', limiter);
+// Do not rate-limit authenticated admin/dashboard APIs (they poll often).
+// Keep rate limiting for public endpoints to protect abuse.
+app.use('/api/', (req, res, next) => {
+  const p = req.path || '';
+  if (p.startsWith('/admin') || p.startsWith('/auth')) return next();
+  return limiter(req, res, next);
+});
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
@@ -71,6 +78,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Serve static files for admin panel
 app.use('/admin', express.static(path.join(__dirname, 'public/admin')));
+// Serve shared public images (logo/favicon) for admin UI
+app.use('/img', express.static(path.join(__dirname, '../public/img')));
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -79,6 +88,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/antibot', antiBotRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

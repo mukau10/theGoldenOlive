@@ -1,0 +1,160 @@
+/* Delivery Routes screen */
+.delivery-routes-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #000;
+  color: #fff;
+  padding-top: 90px; /* align with site header spacing */
+  padding-bottom: 40px;
+}
+
+.delivery-routes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.delivery-routes-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.delivery-routes-title {
+  font-weight: 800;
+  font-size: 1.6rem;
+  margin: 0;
+  color: #ffc107;
+}
+
+.delivery-routes-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.delivery-routes-actions .btn {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.delivery-routes-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.delivery-routes-map {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 193, 7, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.delivery-routes-map .leaflet-container {
+  height: min(60vh, 520px);
+  width: 100%;
+}
+
+.delivery-routes-panel {
+  border-radius: 18px;
+  border: 1px solid rgba(255, 193, 7, 0.18);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 14px;
+}
+
+.delivery-routes-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.delivery-routes-meta strong {
+  color: #ffc107;
+}
+
+.delivery-routes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.delivery-routes-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.delivery-routes-step-number {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  background: rgba(255, 193, 7, 0.15);
+  border: 1px solid rgba(255, 193, 7, 0.25);
+  color: #ffc107;
+  flex-shrink: 0;
+}
+
+.delivery-routes-step-title {
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.delivery-routes-step-sub {
+  margin: 4px 0 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+}
+
+.delivery-routes-error {
+  border-radius: 16px;
+  padding: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.12);
+  color: #fff;
+}
+
+/* Numbered marker */
+.dr-marker {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #000;
+  background: #ffc107;
+  border: 2px solid rgba(0, 0, 0, 0.65);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.dr-marker.restaurant {
+  background: #10b981;
+  color: #000;
+}
+
+@media (min-width: 992px) {
+  .delivery-routes-layout {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+  }
+  .delivery-routes-map .leaflet-container {
+    height: min(70vh, 640px);
+  }
+}*** End Patch"}"}]}

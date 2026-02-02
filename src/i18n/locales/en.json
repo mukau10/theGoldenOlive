@@ -149,8 +149,8 @@
   },
   "seo": {
     "title": "The Golden Olive - Restaurant Antwerp | Spareribs, Mix BBQ & Events",
-    "description": "Enjoy authentic dishes at The Golden Olive in Antwerp. Specialties: spareribs, mix BBQ, burgers. Perfect for birthdays, corporate events and celebrations. Book now!",
-    "keywords": "The Golden Olive, restaurant Antwerp, spareribs, mix BBQ, burgers, birthday party, corporate event, events, reservation, food, drinks, Vlaamsekaai, Antwerp restaurant"
+    "description": "Enjoy authentic dishes at The Golden Olive in Antwerp. Specialties: spareribs, mix BBQ, burgers. Pickup or delivery in Antwerp. Perfect for birthdays, corporate events and celebrations. Book now!",
+    "keywords": "The Golden Olive, restaurant Antwerp, delivery Antwerp, Antwerp delivery, pickup Antwerp, spareribs, mix BBQ, burgers, birthday party, corporate event, events, reservation, food, drinks, Vlaamsekaai, Antwerp restaurant"
   },
   "allergens": {
     "title": "Allergen Information",
@@ -633,7 +633,7 @@
     "confirmationEmail": "You will receive a confirmation by email.",
     "backToMenu": "Back to Menu",
     "backToWebsite": "Website",
-    "pickupAddress": "Desguinlei 86, 2018 Antwerp",
+    "pickupAddress": "Vlaamsekaai 65, 2000 Antwerp",
     "orderNumber": "Order number",
     "payOnline": "Pay Online",
     "payOnlineDesc": "Pay securely with iDEAL, Bancontact or credit card",

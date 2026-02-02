@@ -65,7 +65,7 @@ const Footer = () => {
               <ul className="footer-links">
                 <li>
                   <i className="bi bi-geo-alt"></i>
-                  <span>Desguinlei 86<br />2018 Antwerpen</span>
+                  <span>Vlaamsekaai 65<br />2000 Antwerpen</span>
                 </li>
                 <li>
                   <i className="bi bi-telephone"></i>

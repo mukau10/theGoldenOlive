@@ -51,11 +51,24 @@ router.post('/webhook', async (req, res, next) => {
     // Map Mollie status to our status
     let newStatus = molliePayment.status;
     let orderStatus = null;
+    let autoAccept = false;
+
+    // Read setting: auto_accept_orders
+    try {
+      const [row] = await query('SELECT setting_value FROM settings WHERE setting_key = ?', ['auto_accept_orders']);
+      autoAccept =
+        row?.setting_value === true ||
+        row?.setting_value === 'true' ||
+        row?.setting_value === 1 ||
+        row?.setting_value === '1';
+    } catch {
+      autoAccept = false;
+    }
 
     switch (molliePayment.status) {
       case 'paid':
         newStatus = 'paid';
-        orderStatus = 'paid';
+        orderStatus = autoAccept ? 'preparing' : 'paid';
         break;
       case 'pending':
         newStatus = 'pending';
@@ -99,7 +112,20 @@ router.post('/webhook', async (req, res, next) => {
 
     // Update order status if needed
     if (orderStatus) {
-      await query('UPDATE orders SET status = ? WHERE id = ?', [orderStatus, payment.order_id]);
+      // Track history
+      try {
+        const [current] = await query('SELECT status FROM orders WHERE id = ?', [payment.order_id]);
+        const prevStatus = current?.status || null;
+        await query('UPDATE orders SET status = ? WHERE id = ?', [orderStatus, payment.order_id]);
+        // Record status change (changed_by NULL = system)
+        await query(
+          'INSERT INTO order_status_history (order_id, previous_status, new_status, changed_by, notes) VALUES (?, ?, ?, NULL, ?)',
+          [payment.order_id, prevStatus, orderStatus, autoAccept ? 'Auto-accept enabled' : 'Payment update']
+        );
+      } catch {
+        // Fallback to status update only
+        await query('UPDATE orders SET status = ? WHERE id = ?', [orderStatus, payment.order_id]);
+      }
     }
 
     console.log(`[Webhook] Updated payment ${payment.id} to status: ${newStatus}`);

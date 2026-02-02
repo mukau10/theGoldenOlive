@@ -242,8 +242,8 @@
   },
   "seo": {
     "title": "The Golden Olive - Restaurant Antwerpen | Spareribs, Mix BBQ & Events",
-    "description": "Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers. Perfect voor verjaardagen, bedrijfsfeesten en evenementen. Reserveer nu!",
-    "keywords": "The Golden Olive, restaurant Antwerpen, spareribs, mix BBQ, hamburgers, verjaardagsfeest, bedrijfsfeest, evenementen, reserveren, eten, drinken, Vlaamsekaai, Antwerpen restaurant"
+    "description": "Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers. Afhalen of levering in Antwerpen. Perfect voor verjaardagen, bedrijfsfeesten en evenementen. Reserveer nu!",
+    "keywords": "The Golden Olive, restaurant Antwerpen, levering Antwerpen, bezorgen Antwerpen, afhalen Antwerpen, spareribs, mix BBQ, hamburgers, verjaardagsfeest, bedrijfsfeest, evenementen, reserveren, eten, drinken, Vlaamsekaai, Antwerpen restaurant"
   },
   "menu": {
     "title": "Menu",
@@ -633,7 +633,7 @@
     "confirmationEmail": "Je ontvangt een bevestiging per e-mail.",
     "backToMenu": "Terug naar Menu",
     "backToWebsite": "Website",
-    "pickupAddress": "Desguinlei 86, 2018 Antwerpen",
+    "pickupAddress": "Vlaamsekaai 65, 2000 Antwerpen",
     "orderNumber": "Bestelnummer",
     "payOnline": "Online Betalen",
     "payOnlineDesc": "Betaal veilig met iDEAL, Bancontact of creditcard",

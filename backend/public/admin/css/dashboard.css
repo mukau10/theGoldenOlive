@@ -4,9 +4,10 @@
  */
 
 :root {
-  --primary: #d4a056;
-  --primary-dark: #b8843d;
-  --primary-light: #e8c48a;
+  /* Brand (match website “golden”) */
+  --primary: #ffc107;
+  --primary-dark: #e6ac00;
+  --primary-light: rgba(255, 193, 7, 0.18);
   --dark: #1a1a2e;
   --dark-light: #252541;
   --dark-lighter: #2d2d4a;
@@ -34,6 +35,32 @@ body {
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
+}
+
+/* Align Bootstrap “primary” with our brand */
+:root {
+  --bs-primary: var(--primary);
+  --bs-primary-rgb: 255, 193, 7;
+  --bs-body-bg: var(--dark);
+  --bs-body-color: var(--text);
+}
+
+.text-primary { color: var(--primary) !important; }
+
+/* Never show dark text on dark backgrounds for bootstrap utilities */
+.text-dark { color: var(--text) !important; }
+.text-black { color: var(--text) !important; }
+.text-black-50 { color: var(--text-muted) !important; }
+.link-dark { color: var(--text) !important; }
+
+/* Keep good contrast on warning backgrounds */
+.bg-warning.text-dark,
+.bg-warning.text-black,
+.btn-warning.text-dark,
+.btn-warning.text-black,
+.badge.bg-warning.text-dark,
+.badge.bg-warning.text-black {
+  color: #000 !important;
 }
 
 /* =====================================================
@@ -67,6 +94,9 @@ body {
   width: 80px;
   height: 80px;
   border-radius: 16px;
+  object-fit: contain;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .login-card h4 {
@@ -89,7 +119,7 @@ body {
 .login-card .form-control:focus {
   background: var(--dark);
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(212, 160, 86, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.18);
   color: var(--text);
 }
 
@@ -137,9 +167,12 @@ body {
 }
 
 .sidebar-logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  object-fit: contain;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .sidebar-brand {
@@ -217,7 +250,7 @@ body {
 }
 
 .nav-link.active {
-  background: rgba(212, 160, 86, 0.1);
+  background: rgba(255, 193, 7, 0.12);
   color: var(--primary);
   border-right: 3px solid var(--primary);
 }
@@ -465,7 +498,7 @@ body {
 .stat-primary .stat-icon { background: rgba(59, 130, 246, 0.15); color: var(--info); }
 .stat-success .stat-icon { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 .stat-warning .stat-icon { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
-.stat-info .stat-icon { background: rgba(212, 160, 86, 0.15); color: var(--primary); }
+.stat-info .stat-icon { background: rgba(255, 193, 7, 0.18); color: var(--primary); }
 
 .stat-content {
   display: flex;
@@ -527,6 +560,9 @@ body {
    TABLES
 ===================================================== */
 .table {
+  /* Ensure Bootstrap table variables don’t fallback to dark text */
+  --bs-table-color: var(--text);
+  --bs-table-bg: transparent;
   color: var(--text);
   margin: 0;
 }
@@ -548,6 +584,42 @@ body {
   border-bottom: 1px solid var(--border);
   vertical-align: middle;
   font-size: 0.875rem;
+  color: var(--text);
+}
+
+/* =====================================================
+   ORDER DETAILS TEXT (force white for customer + totals)
+===================================================== */
+#order-modal-content .order-detail-section p,
+#order-modal-content .order-detail-section strong,
+#order-modal-content .order-detail-section a {
+  color: var(--text);
+}
+
+#order-modal-content .order-total-row span {
+  color: var(--text);
+}
+
+#order-modal-content .order-total-row.total span {
+  color: var(--primary);
+}
+
+#order-modal-content .order-item > span {
+  color: var(--text);
+}
+
+#order-modal-content .order-item div span {
+  color: var(--text);
+}
+
+#order-modal-content .order-item-qty {
+  color: var(--primary);
+}
+
+/* Keep muted helper text muted */
+#order-modal-content .text-muted,
+#order-modal-content small.text-muted {
+  color: var(--text-muted) !important;
 }
 
 .table tbody tr:hover {
@@ -641,7 +713,7 @@ body {
 .filters-bar .form-select:focus,
 .filters-bar .form-control:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(212, 160, 86, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.18);
 }
 
 .filters-actions {
@@ -662,7 +734,7 @@ body {
   background: var(--dark);
   border-color: var(--primary);
   color: var(--text);
-  box-shadow: 0 0 0 3px rgba(212, 160, 86, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.18);
 }
 
 .form-label {
@@ -683,7 +755,7 @@ body {
 }
 
 .form-check-input:focus {
-  box-shadow: 0 0 0 3px rgba(212, 160, 86, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.18);
 }
 
 /* =====================================================
@@ -750,18 +822,22 @@ body {
 .modal-content {
   background: var(--dark-light);
   border: 1px solid var(--border);
+  color: var(--text);
 }
 
 .modal-header {
   border-bottom-color: var(--border);
+  color: var(--text);
 }
 
 .modal-header .modal-title {
   font-weight: 600;
+  color: var(--text);
 }
 
 .modal-footer {
   border-top-color: var(--border);
+  color: var(--text);
 }
 
 .btn-close {
@@ -781,6 +857,7 @@ body {
   background: var(--dark);
   border-radius: 8px;
   padding: 1rem;
+  color: var(--text);
 }
 
 .order-detail-section h6 {
@@ -795,6 +872,7 @@ body {
   background: var(--dark);
   border-radius: 8px;
   margin-top: 1rem;
+  color: var(--text);
 }
 
 .order-item {
@@ -802,6 +880,7 @@ body {
   justify-content: space-between;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border);
+  color: var(--text);
 }
 
 .order-item:last-child {
@@ -819,6 +898,41 @@ body {
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
+  color: var(--text);
+}
+
+/* =====================================================
+   ORDER MAP (Leaflet) - Order Details modal
+===================================================== */
+.order-map {
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.order-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+.order-map-marker {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  background: var(--primary);
+  color: #000;
+  border: 2px solid rgba(0, 0, 0, 0.65);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35);
+}
+
+.order-map-marker.restaurant {
+  background: var(--success);
+  color: #000;
 }
 
 .order-total-row {
@@ -927,6 +1041,60 @@ body {
 .popular-qty {
   font-weight: 600;
   color: var(--success);
+}
+
+/* =====================================================
+   REPORTS
+===================================================== */
+.reports-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 6px;
+}
+
+.reports-hero h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.report-card .card-header {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.report-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.report-preview {
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(0,0,0,0.15);
+}
+
+.report-preview-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.report-preview-body {
+  min-height: 46px;
+  line-height: 1.4;
+}
+
+/* Notifications modal list */
+#notifications-list .list-group-item {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.92);
+}
+
+#notifications-list .list-group-item.unread {
+  background: rgba(255,193,7,0.12);
+  border-color: rgba(255,193,7,0.22);
 }
 
 /* =====================================================
@@ -1105,14 +1273,191 @@ body {
    NEW ORDER ANIMATION
 ===================================================== */
 @keyframes newOrderPulse {
-  0% { box-shadow: 0 0 0 0 rgba(212, 160, 86, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(212, 160, 86, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(212, 160, 86, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.55); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 193, 7, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
 }
 
 .new-order {
   animation: newOrderPulse 2s infinite;
-  background: rgba(212, 160, 86, 0.05) !important;
+  background: rgba(255, 193, 7, 0.06) !important;
+}
+
+/* =====================================================
+   NEW ORDER OVERLAY (big center notification)
+===================================================== */
+.new-order-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+.new-order-card {
+  width: 100%;
+  max-width: 560px;
+  background: linear-gradient(180deg, rgba(37, 37, 65, 0.96), rgba(26, 26, 46, 0.96));
+  border: 1px solid rgba(255, 193, 7, 0.22);
+  border-radius: 18px;
+  padding: 22px 20px 18px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.55);
+  animation: newOrderPop 0.38s cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+@keyframes newOrderPop {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.new-order-glow {
+  position: absolute;
+  inset: -80px;
+  background:
+    radial-gradient(600px 300px at 20% 20%, rgba(255, 193, 7, 0.20), transparent 60%),
+    radial-gradient(600px 300px at 80% 30%, rgba(16, 185, 129, 0.12), transparent 60%);
+  filter: blur(10px);
+  opacity: 0.9;
+  pointer-events: none;
+  animation: glowShift 2.8s ease-in-out infinite;
+}
+
+@keyframes glowShift {
+  0%, 100% { transform: translateY(0); opacity: 0.85; }
+  50% { transform: translateY(-6px); opacity: 1; }
+}
+
+.new-order-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  z-index: 2;
+}
+
+.new-order-close:hover {
+  border-color: rgba(255, 193, 7, 0.35);
+  transform: translateY(-1px);
+}
+
+.new-order-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px auto 10px;
+  background: rgba(255, 193, 7, 0.14);
+  border: 1px solid rgba(255, 193, 7, 0.25);
+  color: var(--primary);
+  position: relative;
+  z-index: 1;
+  animation: bellWiggle 1.35s ease-in-out infinite;
+}
+
+@keyframes bellWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-6deg); }
+  40% { transform: rotate(6deg); }
+  60% { transform: rotate(-4deg); }
+  80% { transform: rotate(4deg); }
+}
+
+.new-order-icon i {
+  font-size: 1.65rem;
+}
+
+.new-order-title {
+  text-align: center;
+  font-weight: 800;
+  margin: 0 0 6px;
+  position: relative;
+  z-index: 1;
+  color: var(--text);
+}
+
+.new-order-subtitle {
+  text-align: center;
+  margin: 0 0 14px;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+
+.new-order-details {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.new-order-detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.new-order-detail-row:last-child {
+  border-bottom: none;
+}
+
+.new-order-detail-row .label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.new-order-detail-row .value {
+  color: var(--text);
+  font-weight: 700;
+  text-align: right;
+  max-width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.new-order-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.new-order-actions .btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+}
+
+.new-order-queue {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* =====================================================

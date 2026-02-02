@@ -14,6 +14,36 @@ import './Order.css';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
+// Lightweight confetti effect (no dependencies)
+function launchOrderConfetti() {
+  // Avoid stacking multiple confettis
+  const existing = document.getElementById('order-confetti');
+  if (existing) existing.remove();
+
+  const container = document.createElement('div');
+  container.id = 'order-confetti';
+  container.className = 'order-confetti';
+
+  const colors = ['#ffc107', '#10b981', '#ffffff', '#0dcaf0', '#e83e8c'];
+  const pieces = 90;
+  for (let i = 0; i < pieces; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'order-confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.width = `${6 + Math.floor(Math.random() * 6)}px`;
+    piece.style.height = `${10 + Math.floor(Math.random() * 14)}px`;
+    piece.style.opacity = `${0.7 + Math.random() * 0.3}`;
+    piece.style.animationDelay = `${Math.random() * 0.35}s`;
+    piece.style.animationDuration = `${2.2 + Math.random() * 1.2}s`;
+    piece.style.transform = `translate3d(0, -10vh, 0) rotate(${Math.random() * 360}deg)`;
+    container.appendChild(piece);
+  }
+
+  document.body.appendChild(container);
+  window.setTimeout(() => container.remove(), 3600);
+}
+
 interface Product {
   id: number;
   name: string;
@@ -202,6 +232,13 @@ const OrderPageContent: React.FC = () => {
       setView('success');
     }
   }, [searchParams]);
+
+  // Celebrate successful order
+  useEffect(() => {
+    if (view === 'success') {
+      launchOrderConfetti();
+    }
+  }, [view]);
 
   // Load products
   useEffect(() => {

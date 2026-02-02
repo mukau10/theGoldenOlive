@@ -19,6 +19,7 @@ import CookieConsent from './components/CookieConsent/CookieConsent';
 import { OrderPage } from './components/Order';
 import MenuPage from './components/Menu/MenuPage';
 import ContactPage from './components/Contact/ContactPage';
+import DeliveryRoutes from './components/DeliveryRoutes/DeliveryRoutes';
 import { preloadMenu } from './hooks/useMenu';
 import { preloadAllergens } from './hooks/useAllergens';
 import './App.css';
@@ -124,6 +125,8 @@ function App() {
       <Route path="/bestellen" element={<OrderPage />} />
       <Route path="/order" element={<OrderPage />} />
       <Route path="/order/success" element={<OrderPage />} />
+      {/* Delivery Routes (prototype) */}
+      <Route path="/delivery-routes" element={<DeliveryRoutes />} />
       {/* Fallback to home for any other routes */}
       <Route path="*" element={<HomePage />} />
     </Routes>

@@ -9,6 +9,8 @@ import { authenticate, isAdmin, optionalAuth } from '../middleware/auth.js';
 import { validateOrder, validateId } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { createPayment } from '../services/mollie.js';
+import { orderStopsNearestNeighbor, buildStraightPolyline, fetchOsrmRoutePolyline, sumDistanceKm } from '../utils/routePlanner.js';
+import { geocodeAddress } from '../utils/geocoding.js';
 
 const router = express.Router();
 
@@ -33,6 +35,7 @@ router.post('/', validateOrder, async (req, res, next) => {
       customer_name,
       customer_email,
       customer_phone,
+      customer_vat_number,
       delivery_type,
       address,
       items,
@@ -79,6 +82,16 @@ router.post('/', validateOrder, async (req, res, next) => {
       settingsMap[s.setting_key] = s.setting_value;
     });
 
+    // Respect "is_open" setting (disable ordering when closed)
+    const isOpen =
+      settingsMap.is_open === true ||
+      settingsMap.is_open === 'true' ||
+      settingsMap.is_open === 1 ||
+      settingsMap.is_open === '1';
+    if (!isOpen) {
+      throw new AppError('Restaurant is momenteel gesloten voor bestellingen.', 403);
+    }
+
     // Calculate delivery fee
     let deliveryFee = 0;
     if (delivery_type === 'delivery') {
@@ -116,13 +129,15 @@ router.post('/', validateOrder, async (req, res, next) => {
       const [orderResult] = await connection.execute(`
         INSERT INTO orders (
           order_number, customer_name, customer_email, customer_phone,
+          customer_vat_number,
           address_id, delivery_type, subtotal, delivery_fee, total, notes, estimated_time
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `, [
         orderNumber,
         customer_name,
         customer_email,
         customer_phone,
+        customer_vat_number || null,
         addressId,
         delivery_type,
         subtotal,
@@ -150,8 +165,29 @@ router.post('/', validateOrder, async (req, res, next) => {
         VALUES (?, ?, 'open')
       `, [orderId, total]);
 
-      return { orderId, orderNumber, total };
+      return { orderId, orderNumber, total, addressId };
     });
+
+    // Auto-geocode delivery address so it never needs manual coordinates
+    // (Store in addresses.latitude/longitude)
+    if (delivery_type === 'delivery' && result.addressId && address) {
+      try {
+        const geo = await geocodeAddress({
+          street: address.street,
+          house_number: address.house_number,
+          postal_code: address.postal_code,
+          city: address.city
+        });
+        if (geo) {
+          await query(
+            'UPDATE addresses SET latitude = ?, longitude = ? WHERE id = ?',
+            [geo.latitude, geo.longitude, result.addressId]
+          );
+        }
+      } catch {
+        // Geocoding should never block ordering
+      }
+    }
 
     // Create Mollie payment
     const payment = await createPayment({
@@ -162,6 +198,22 @@ router.post('/', validateOrder, async (req, res, next) => {
       customerEmail: customer_email,
       customerName: customer_name
     });
+
+    // Create admin notification (for bell icon modal)
+    try {
+      await query(
+        `
+        INSERT INTO notifications (user_id, type, title, message, link, is_read)
+        VALUES (NULL, 'order', 'Nieuwe bestelling', ?, ?, 0)
+        `,
+        [
+          `${customer_name || 'Klant'} • ${delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen'} • €${Number(result.total).toFixed(2)}`,
+          `order:${result.orderId}`
+        ]
+      );
+    } catch {
+      // Notifications should never block ordering
+    }
 
     res.status(201).json({
       success: true,
@@ -214,6 +266,170 @@ router.get('/track/:orderNumber', async (req, res, next) => {
     res.json({
       success: true,
       data: order
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * GET /api/orders/routes
+ * Prototype: delivery route planning for today's active delivery orders.
+ *
+ * Returns: restaurant + ordered stops + polyline + distance/time
+ */
+router.get('/routes', authenticate, async (req, res, next) => {
+  try {
+    // Allow admin OR staff with view_orders permission
+    const perms = Array.isArray(req.user?.permissions) ? req.user.permissions : [];
+    const canViewOrders = req.user?.role === 'admin' || perms.includes('view_orders');
+    if (!canViewOrders) {
+      throw new AppError('Toegang geweigerd', 403);
+    }
+
+    // Restaurant (single row, id=1)
+    const [restaurant] = await query(
+      'SELECT id, name, address, latitude, longitude FROM restaurant WHERE id = 1'
+    );
+    if (!restaurant) {
+      throw new AppError('Restaurant locatie niet gevonden. Run migrations.', 500);
+    }
+
+    // Active delivery orders from today (coords might be missing; we auto-geocode)
+    const rows = await query(`
+      SELECT
+        o.id,
+        o.order_number,
+        o.customer_name,
+        o.status,
+        o.total,
+        o.address_id,
+        a.street, a.house_number, a.bus, a.postal_code, a.city,
+        a.latitude, a.longitude
+      FROM orders o
+      JOIN addresses a ON o.address_id = a.id
+      WHERE
+        o.delivery_type = 'delivery'
+        AND o.status IN ('pending', 'paid', 'preparing', 'ready', 'delivering')
+        AND DATE(o.created_at) = CURDATE()
+      ORDER BY o.created_at ASC
+    `);
+
+    const stopsRaw = rows.map((r) => ({
+      orderId: Number(r.id),
+      orderNumber: r.order_number,
+      customerName: r.customer_name,
+      address: `${r.street} ${r.house_number}${r.bus ? ` ${r.bus}` : ''}, ${r.postal_code} ${r.city}`,
+      latitude: r.latitude !== null && r.latitude !== undefined ? Number(r.latitude) : null,
+      longitude: r.longitude !== null && r.longitude !== undefined ? Number(r.longitude) : null,
+      status: r.status,
+      total: r.total !== undefined ? Number(r.total) : undefined,
+      addressId: r.address_id ? Number(r.address_id) : null,
+      addressParts: {
+        street: r.street,
+        house_number: r.house_number,
+        postal_code: r.postal_code,
+        city: r.city
+      }
+    }));
+
+    // Auto-geocode missing coordinates (limited per request)
+    let geocodedThisRequest = 0;
+    const GEOCODE_LIMIT = 5;
+    for (const s of stopsRaw) {
+      if (geocodedThisRequest >= GEOCODE_LIMIT) break;
+      if (Number.isFinite(s.latitude) && Number.isFinite(s.longitude)) continue;
+      if (!s.addressId) continue;
+      const geo = await geocodeAddress(s.addressParts);
+      if (geo) {
+        s.latitude = geo.latitude;
+        s.longitude = geo.longitude;
+        geocodedThisRequest++;
+        try {
+          await query('UPDATE addresses SET latitude = ?, longitude = ? WHERE id = ?', [
+            geo.latitude,
+            geo.longitude,
+            s.addressId
+          ]);
+        } catch {
+          // ignore db update issues
+        }
+      }
+    }
+
+    // Only include stops we can plot
+    const stops = stopsRaw
+      .filter((s) => Number.isFinite(s.latitude) && Number.isFinite(s.longitude))
+      .map((s) => ({
+        orderId: s.orderId,
+        orderNumber: s.orderNumber,
+        customerName: s.customerName,
+        address: s.address,
+        latitude: Number(s.latitude),
+        longitude: Number(s.longitude),
+        status: s.status,
+        total: s.total
+      }));
+
+    const orderedStops = orderStopsNearestNeighbor(
+      { latitude: Number(restaurant.latitude), longitude: Number(restaurant.longitude) },
+      stops
+    ).map((s, idx) => ({ ...s, sequence: idx + 1 }));
+
+    // Polyline: try OSRM, fallback to straight lines
+    const pointsLatLng = [
+      [Number(restaurant.latitude), Number(restaurant.longitude)],
+      ...orderedStops.map((s) => [s.latitude, s.longitude]),
+      [Number(restaurant.latitude), Number(restaurant.longitude)],
+    ];
+
+    let polyline = buildStraightPolyline(
+      { latitude: Number(restaurant.latitude), longitude: Number(restaurant.longitude) },
+      orderedStops,
+      true
+    );
+    let distanceKm = sumDistanceKm(
+      { latitude: Number(restaurant.latitude), longitude: Number(restaurant.longitude) },
+      orderedStops,
+      true
+    );
+    // simple estimate: 22 km/h average city driving + 3 min per stop
+    let durationMin = (distanceKm / 22) * 60 + orderedStops.length * 3;
+    let source = 'straight';
+
+    const useOsrm = req.query.osrm !== 'false';
+    if (useOsrm && pointsLatLng.length >= 2) {
+      try {
+        const osrm = await fetchOsrmRoutePolyline(pointsLatLng);
+        polyline = osrm.polyline;
+        if (typeof osrm.distanceKm === 'number') distanceKm = osrm.distanceKm;
+        if (typeof osrm.durationMin === 'number') durationMin = osrm.durationMin;
+        source = 'osrm';
+      } catch {
+        // ignore and keep straight-line fallback
+      }
+    }
+
+    res.json({
+      success: true,
+      data: {
+        restaurant: {
+          id: Number(restaurant.id),
+          name: restaurant.name,
+          address: restaurant.address,
+          latitude: Number(restaurant.latitude),
+          longitude: Number(restaurant.longitude),
+        },
+        stops: orderedStops,
+        orderedStopIds: orderedStops.map((s) => s.orderId),
+        polyline,
+        distanceKm,
+        durationMin,
+        missingCoordinates: stopsRaw.length - stops.length,
+        geocodedThisRequest,
+        calculatedAt: new Date().toISOString(),
+        source,
+      },
     });
   } catch (error) {
     next(error);

@@ -30,6 +30,30 @@ body {
   line-height: 1.6;
 }
 
+/* =====================================================
+   GLOBAL DARK THEME SAFETY OVERRIDES
+   Prevent dark text on dark backgrounds across the app.
+===================================================== */
+.text-dark,
+.text-black,
+.link-dark {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.text-black-50 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Keep good contrast for warning (gold) backgrounds */
+.bg-warning.text-dark,
+.bg-warning.text-black,
+.btn-warning.text-dark,
+.btn-warning.text-black,
+.badge.bg-warning.text-dark,
+.badge.bg-warning.text-black {
+  color: #000 !important;
+}
+
 #root {
   min-height: 100vh;
 }
