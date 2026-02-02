@@ -35,7 +35,7 @@ body {
 }
 
 /* Apply color variables */
-  :root {
+:root {
   --bs-golden: #ffc107;
   --bs-golden-light: #ffcd39;
   --bs-golden-dark: #e6ac00;
@@ -48,4 +48,29 @@ body {
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
   --shadow-golden: 0 8px 32px rgba(255, 193, 7, 0.3);
   --shadow-golden-lg: 0 16px 48px rgba(255, 193, 7, 0.4);
+  --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth selection styling */
+::selection {
+  background: var(--bs-golden);
+  color: #000;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 193, 7, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-golden);
 }

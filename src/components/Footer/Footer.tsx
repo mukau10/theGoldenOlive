@@ -1,135 +1,109 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const { t } = useTranslation();
   
   return (
-    <footer
-      id="footer"
-      role="contentinfo"
-      className="bg-black border-top border-warning position-relative"
-      style={{ background: 'linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%)' }}
-    >
-      <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
-      <div className="py-4 py-md-5 position-relative" style={{ zIndex: 2 }}>
-        <div className="container-fluid px-3 px-md-4">
-          <div className="row justify-content-center mb-4 mb-md-5">
-            <div className="col-12 col-md-8 col-lg-6">
-              <div className="text-center bg-black border border-warning rounded-3 p-3 p-md-4 shadow">
+    <footer id="footer" role="contentinfo" className="footer-modern">
+      {/* Decorative top border */}
+      <div className="footer-border"></div>
+      
+      {/* Main Footer Content */}
+      <div className="footer-main">
+        <div className="container-fluid px-4 px-md-5">
+          <div className="row g-5 justify-content-between">
+            {/* Brand Column */}
+            <div className="col-12 col-lg-4">
+              <div className="footer-brand">
                 <img
                   src="/img/logo.png"
                   alt="The Golden Olive Restaurant Logo"
-                  className="mb-3 mb-md-4"
-                  style={{ width: 'clamp(80px, 15vw, 120px)', height: 'auto' }}
+                  className="footer-logo"
                   loading="lazy"
                 />
-
-                {/* Quick Contact Buttons */}
-                <div className="d-flex flex-column flex-sm-row justify-content-center gap-2 gap-sm-3 mb-3 mb-md-4">
-                  <a
-                    href="tel:+32494194397"
-                    className="btn btn-warning rounded-pill px-4 py-2 fw-semibold"
-                    style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', transition: 'all 0.3s ease' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.4)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    <i className="bi bi-telephone-fill me-2"></i>
-                    {t('footer.callNow') || 'Bel Nu'}
-                  </a>
-                  <a
-                    href="https://wa.me/32494194397"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-outline-warning rounded-pill px-4 py-2 fw-semibold"
-                    style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', transition: 'all 0.3s ease' }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                      e.currentTarget.style.borderColor = 'var(--bs-golden)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                    }}
-                  >
-                    <i className="bi bi-whatsapp me-2"></i>
-                    {t('footer.whatsapp') || 'WhatsApp'}
-                  </a>
-                </div>
-
-                <div className="d-flex justify-content-center gap-3 mb-3 mb-md-4" aria-label="Social media links">
+                <p className="footer-tagline">
+                  {t('footer.tagline', 'Authentieke smaken, warme gastvrijheid')}
+                </p>
+                
+                {/* Social Links */}
+                <div className="footer-social">
                   <a
                     href="https://www.facebook.com/TheGoldenolivee"
-                    className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center"
-                    style={{ width: 'clamp(44px, 8vw, 50px)', height: 'clamp(44px, 8vw, 50px)', transition: 'all 0.3s' }}
+                    className="social-link"
                     aria-label={t('footer.visitFacebook')}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <i className="bi bi-facebook text-warning" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)' }} aria-hidden="true"></i>
+                    <i className="bi bi-facebook"></i>
                   </a>
                   <a
                     href="https://www.instagram.com/thegoldenolive._"
-                    className="btn btn-outline-warning rounded-circle d-flex align-items-center justify-content-center"
-                    style={{ width: 'clamp(44px, 8vw, 50px)', height: 'clamp(44px, 8vw, 50px)', transition: 'all 0.3s' }}
+                    className="social-link"
                     aria-label={t('footer.followInstagram')}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <i className="bi bi-instagram text-warning" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.5rem)' }} aria-hidden="true"></i>
+                    <i className="bi bi-instagram"></i>
+                  </a>
+                  <a
+                    href="https://wa.me/32494194397"
+                    className="social-link"
+                    aria-label={t('footer.whatsapp')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="bi bi-whatsapp"></i>
                   </a>
                 </div>
               </div>
+            </div>
+            
+            {/* Contact Column */}
+            <div className="col-6 col-lg-3">
+              <h4 className="footer-title">{t('footer.contact', 'Contact')}</h4>
+              <ul className="footer-links">
+                <li>
+                  <i className="bi bi-geo-alt"></i>
+                  <span>Desguinlei 86<br />2018 Antwerpen</span>
+                </li>
+                <li>
+                  <i className="bi bi-telephone"></i>
+                  <a href="tel:+32494194397">+32 494 19 43 97</a>
+                </li>
+                <li>
+                  <i className="bi bi-clock"></i>
+                  <span>Ma - Zo: 17:00 - 23:00</span>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Quick Links Column */}
+            <div className="col-6 col-lg-3">
+              <h4 className="footer-title">{t('footer.quickLinks', 'Links')}</h4>
+              <ul className="footer-nav">
+                <li><Link to="/menu">{t('common.menu')}</Link></li>
+                <li><Link to="/bestellen">{t('order.orderOnline', 'Bestellen')}</Link></li>
+                <li><Link to="/contact">{t('common.contact')}</Link></li>
+                <li><Link to="/galerij">{t('common.gallery')}</Link></li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
 
       {/* Copyright Section */}
-      <div
-        className="border-top border-warning bg-black position-relative"
-        style={{ zIndex: 2, background: 'rgba(0,0,0,0.9) !important' }}
-      >
-        <div className="container-fluid px-3 px-md-4 py-3 py-md-4">
-          <div className="text-center">
-            <div className="text-white mb-2" style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
-              &copy; 2025 Copyright{' '}
-              <strong>
-                <span className="text-warning">The Golden Olive</span>
-              </strong>
-              . {t('footer.copyright')}
+      <div className="footer-bottom">
+        <div className="container-fluid px-4 px-md-5">
+          <div className="footer-bottom-content">
+            <div className="footer-copyright">
+              &copy; 2025 <span>The Golden Olive</span>. {t('footer.copyright')}
             </div>
-            <div className="text-white-50 small" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
-              <div className="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2 gap-sm-3">
-                <div>
-                  {t('footer.vatNumber')}{' '}
-                  <a href="#" aria-label={t('footer.vatNumber')} className="text-warning text-decoration-none">
-                    BE0738909475
-                  </a>
-                </div>
-                <div className="d-none d-sm-block text-secondary">|</div>
-                <div>
-                  <a href="/privacy-policy" className="text-warning text-decoration-none">
-                    {t('footer.privacyPolicy')}
-                  </a>
-                </div>
-                <div className="d-none d-sm-block text-secondary">|</div>
-                <div>
-                  <a href="/cookie-policy" className="text-warning text-decoration-none">
-                    {t('footer.cookiePolicy')}
-                  </a>
-                </div>
-                <div className="d-none d-sm-block text-secondary">|</div>
-                <div>
-                  <a href="/allergenen" className="text-warning text-decoration-none">
-                    {t('footer.allergenInfo')}
-                  </a>
-                </div>
-              </div>
+            <div className="footer-legal">
+              <span>{t('footer.vatNumber')} BE0738909475</span>
+              <Link to="/privacy-policy">{t('footer.privacyPolicy')}</Link>
+              <Link to="/cookie-policy">{t('footer.cookiePolicy')}</Link>
+              <Link to="/allergenen">{t('footer.allergenInfo')}</Link>
             </div>
           </div>
         </div>

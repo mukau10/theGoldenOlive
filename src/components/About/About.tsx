@@ -4,41 +4,69 @@ const About = () => {
   const { t } = useTranslation();
   
   return (
-    <section id="about" className="py-4 py-md-5 bg-dark-custom" aria-labelledby="about-heading" itemScope itemType="https://schema.org/AboutPage">
-      <div className="container-fluid px-3 px-md-4" data-aos="fade-up">
-        <div className="row g-4 g-lg-5 align-items-center">
-          {/* Image */}
-          <div className="col-12 col-lg-6 order-2 order-lg-1" data-aos="zoom-in" data-aos-delay="100">
-            <div className="position-relative">
-              <img
-                src="/img/golden/IMG_4117.JPEG"
-                alt="The Golden Olive Restaurant Antwerpen interieur"
-                loading="lazy"
-                className="w-100 rounded shadow-lg"
-                style={{ height: 'clamp(250px, 40vw, 400px)', objectFit: 'cover' }}
-              />
-              <div
-                className="position-absolute top-0 start-0 w-100 h-100 rounded"
-                style={{ background: 'linear-gradient(to top, rgba(12, 11, 9, 0.5), transparent)' }}
-              ></div>
+    <section id="about" className="about-section" aria-labelledby="about-heading" itemScope itemType="https://schema.org/AboutPage">
+      {/* Decorative elements */}
+      <div className="about-decoration about-decoration-1"></div>
+      <div className="about-decoration about-decoration-2"></div>
+      
+      <div className="container-fluid px-3 px-md-5" data-aos="fade-up">
+        <div className="row g-5 align-items-center">
+          {/* Image with modern frame */}
+          <div className="col-12 col-lg-6 order-2 order-lg-1" data-aos="fade-right" data-aos-delay="100">
+            <div className="about-image-wrapper">
+              <div className="about-image-frame">
+                <img
+                  src="/img/golden/IMG_4117.JPEG"
+                  alt="The Golden Olive Restaurant Antwerpen interieur"
+                  loading="lazy"
+                  className="about-image"
+                />
+              </div>
+              {/* Floating accent card */}
+              <div className="about-accent-card" data-aos="fade-up" data-aos-delay="300">
+                <span className="accent-number">10+</span>
+                <span className="accent-text">{t('about.yearsExperience', 'Jaar Ervaring')}</span>
+              </div>
             </div>
           </div>
 
           {/* Content */}
-          <div className="col-12 col-lg-6 order-1 order-lg-2">
-            <div className="section-title-modern text-center text-lg-start mb-4">
-              <span className="section-label">{t('about.label', 'Over Ons')}</span>
-              <h3
-                id="about-heading"
-                className="section-heading"
-              >
-                {t('about.title')}
-              </h3>
-              <div className="section-line"></div>
+          <div className="col-12 col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="200">
+            <div className="about-content">
+              <div className="section-title-modern text-center text-lg-start mb-4">
+                <span className="section-label">{t('about.label', 'Over Ons')}</span>
+                <h2 id="about-heading" className="section-heading">
+                  {t('about.title')}
+                </h2>
+                <div className="section-line"></div>
+              </div>
+              
+              <p className="about-description">
+                {t('about.description')}
+              </p>
+              
+              {/* Feature highlights */}
+              <div className="about-features">
+                <div className="about-feature">
+                  <div className="feature-icon">
+                    <i className="bi bi-award"></i>
+                  </div>
+                  <div className="feature-text">
+                    <strong>{t('about.feature1Title', 'Kwaliteit')}</strong>
+                    <span>{t('about.feature1Desc', 'Verse ingrediënten')}</span>
+                  </div>
+                </div>
+                <div className="about-feature">
+                  <div className="feature-icon">
+                    <i className="bi bi-heart"></i>
+                  </div>
+                  <div className="feature-text">
+                    <strong>{t('about.feature2Title', 'Passie')}</strong>
+                    <span>{t('about.feature2Desc', 'Met liefde bereid')}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="fs-6 fs-md-5 text-white fst-italic lh-lg text-center text-lg-start opacity-85" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)' }}>
-              {t('about.description')}
-            </p>
           </div>
         </div>
       </div>
