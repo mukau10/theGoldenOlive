@@ -5,8 +5,8 @@
   background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
 }
 
-/* Hide initial loader when React has mounted */
-#initial-loader {
+/* Hide initial loader only after React has mounted */
+body.app-ready #initial-loader {
   display: none !important;
 }
 

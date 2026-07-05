@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { saveLanguagePreference, getLanguagePreference } from '../../utils/languageStorage';
 import './SplashScreen.css';
 
 const SplashScreen = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   // Safe translation hook - always call hooks at top level
   const translation = useTranslation();
   const { t, i18n } = translation;
@@ -23,10 +27,11 @@ const SplashScreen = () => {
     }
   };
   
-  // Check immediately if language preference exists - if so, don't render splash screen at all
+  // Only show splash on homepage; deep links like /menu should render immediately
   const savedLanguage = getLanguagePreference();
-  const [isVisible, setIsVisible] = useState(!savedLanguage);
-  const [shouldRender, setShouldRender] = useState(!savedLanguage);
+  const shouldShowSplash = isHomePage && !savedLanguage;
+  const [isVisible, setIsVisible] = useState(shouldShowSplash);
+  const [shouldRender, setShouldRender] = useState(shouldShowSplash);
   const [languageSelected, setLanguageSelected] = useState(!!savedLanguage);
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 
@@ -48,22 +53,23 @@ const SplashScreen = () => {
   // Initialize language if it was already saved
   useEffect(() => {
     if (savedLanguage) {
-      // Set the language if it was previously saved
       try {
         i18n.changeLanguage(savedLanguage);
       } catch (error) {
         console.error('Failed to change language:', error);
       }
-      // Don't show splash screen at all if language is already saved
       return;
-    } else {
-      // Only show language selector if no language is saved
-      const timer = setTimeout(() => {
-        setShowLanguageSelector(true);
-      }, 1500);
-      return () => clearTimeout(timer);
     }
-  }, [i18n, savedLanguage]);
+
+    if (!shouldShowSplash) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setShowLanguageSelector(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [i18n, savedLanguage, shouldShowSplash]);
 
   const handleLanguageSelect = (lang: string) => {
     try {

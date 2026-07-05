@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import FloatingActions from './components/FloatingActions/FloatingActions';
@@ -72,37 +72,45 @@ const ScrollToTop = () => {
   return null;
 };
 
-function App() {
-  // Initialize AOS directly (no dynamic import)
+// Refresh AOS when route or async content changes so direct deep-links stay visible
+const AOSManager = () => {
+  const { pathname } = useLocation();
+  const initializedRef = useRef(false);
+
   useEffect(() => {
-    // Initialize AOS after a short delay to not block initial render
     const timer = setTimeout(() => {
       try {
-        AOS.init({
-          duration: 1000,
-          easing: 'ease-in-out',
-          once: true,
-          mirror: false,
-          // Disable AOS on mobile for better performance
-          disable: window.innerWidth < 768 ? 'mobile' : false,
-        });
+        if (!initializedRef.current) {
+          AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            mirror: false,
+            disable: window.innerWidth < 768 ? 'mobile' : false,
+          });
+          initializedRef.current = true;
+        }
+        AOS.refresh();
       } catch (error) {
         console.error('Failed to initialize AOS:', error);
       }
     }, 100);
 
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  return null;
+};
+
+function App() {
+  useEffect(() => {
     // Preload menu and allergens data immediately on app start
-    // These are fire-and-forget, errors are handled in the hooks
     preloadMenu().catch((error) => {
       console.error('Failed to preload menu:', error);
     });
     preloadAllergens().catch((error) => {
       console.error('Failed to preload allergens:', error);
     });
-
-    return () => {
-      clearTimeout(timer);
-    };
   }, []);
 
   // Memoize routes to prevent unnecessary re-renders
@@ -136,6 +144,7 @@ function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <ScrollToTop />
+        <AOSManager />
         <SplashScreen />
         <CookieConsent />
         <div className="App">

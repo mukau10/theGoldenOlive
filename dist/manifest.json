@@ -1,0 +1,29 @@
+{
+  "name": "The Golden Olive - Restaurant Antwerpen",
+  "short_name": "Golden Olive",
+  "description": "Geniet van authentieke gerechten bij The Golden Olive in Antwerpen. Specialiteiten: spareribs, mix BBQ, hamburgers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ffc107",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/img/favicon11.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/img/favicon11.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "restaurant", "dining"],
+  "lang": "nl-BE",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

@@ -1,14 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import AOS from 'aos';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from '../../hooks/useMenu';
 import type { MenuCategory } from '../../types/menu';
-import { categoryInfoMap } from '../../utils/categoryInfo';
+import { categoryInfoMap, sortMenuCategories } from '../../utils/categoryInfo';
 import MenuItem from './MenuItem';
-import MenuCategoryCard from './MenuCategoryCard';
+import MenuCategoryCarousel from './MenuCategoryCarousel';
 import CategorySelectorModal from './CategorySelectorModal';
-import { BiGridAlt } from 'react-icons/bi';
 import { translateCategory, translateCategoryDescription, useMenuTranslation } from '../../utils/menuTranslations';
 
 const Menu = () => {
@@ -114,37 +112,32 @@ const Menu = () => {
     };
   }, []);
 
+  // Re-scan AOS after menu data loads (content mounts after initial AOS init on /menu)
+  useEffect(() => {
+    if (!loading && menuData) {
+      const timer = setTimeout(() => {
+        try {
+          AOS.refresh();
+        } catch (error) {
+          console.error('Failed to refresh AOS for menu:', error);
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, menuData]);
+
   const handleAllergenClick = (description: string) => {
     setAllergenDescription(description);
     setShowAllergenPopup(true);
   };
 
-  // Define logical order for categories
-  const categoryOrder: MenuCategory[] = [
-    'voorgerechten',
-    'mixed-bbq',
-    'spareribs',
-    'loaded-scoops',
-    'burgers',
-    'kindermenu',
-    'supplementen',
-    'desserten',
-    'mocktails',
-    'frisdranken',
-    'warme-dranken',
-  ];
+  const handleCategorySelect = (category: MenuCategory | '*') => {
+    setSearchQuery('');
+    setSelectedCategory(category);
+  };
 
-  // Sort categories in logical order
   const categories: MenuCategory[] = menuData
-    ? (Object.keys(menuData) as MenuCategory[]).sort((a, b) => {
-        const indexA = categoryOrder.indexOf(a);
-        const indexB = categoryOrder.indexOf(b);
-        // If category not in order list, put it at the end
-        if (indexA === -1 && indexB === -1) return 0;
-        if (indexA === -1) return 1;
-        if (indexB === -1) return -1;
-        return indexA - indexB;
-      })
+    ? sortMenuCategories(Object.keys(menuData) as MenuCategory[])
     : [];
 
   // Search functionality
@@ -291,391 +284,11 @@ const Menu = () => {
           </div>
         </div>
 
-        {/* Category Cards Carousel - Hidden */}
-        <div className="mb-5" data-aos="fade-up" data-aos-delay="100" style={{ display: 'none' }}>
-          <div className="menu-categories-container">
-            <div
-              className="menu-category-carousel-container position-relative rounded-4 p-4 p-md-5"
-              style={{
-                background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.75) 100%)',
-                backdropFilter: 'blur(20px) saturate(180%)',
-                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-                border: '2px solid rgba(255, 193, 7, 0.2)',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 193, 7, 0.1) inset',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Decorative background elements */}
-              <div
-                className="position-absolute top-0 start-0 w-100 h-100"
-                style={{
-                  background: 'radial-gradient(circle at 20% 50%, rgba(255, 193, 7, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.03) 0%, transparent 50%)',
-                  pointerEvents: 'none',
-                  zIndex: 0,
-                }}
-              />
-
-              {/* Category Title */}
-              <div className="text-center mb-4 position-relative" style={{ zIndex: 1 }}>
-                <div className="d-flex align-items-center justify-content-center mb-2">
-                  <div className="bg-warning opacity-25" style={{ width: '40px', height: '2px', borderRadius: '2px' }}></div>
-                  <div
-                    className="mx-3 bg-dark border border-warning rounded-circle d-flex align-items-center justify-content-center"
-                    style={{
-                      width: '56px',
-                      height: '56px',
-                      background: 'rgba(255, 193, 7, 0.1)',
-                      boxShadow: '0 0 20px rgba(255, 193, 7, 0.3)',
-                    }}
-                  >
-                    <i className="bi bi-grid-3x3-gap text-warning fs-4"></i>
-                  </div>
-                  <div className="bg-warning opacity-25" style={{ width: '40px', height: '2px', borderRadius: '2px' }}></div>
-                </div>
-                <h4
-                  className="text-warning fw-bold mb-2"
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: '1.75rem',
-                    letterSpacing: '0.5px',
-                    textShadow: '0 2px 10px rgba(255, 193, 7, 0.3)',
-                  }}
-                >
-                  {t('menu.chooseCategory')}
-                </h4>
-                <small
-                  className="text-white-50 d-block"
-                  style={{
-                    fontSize: '0.9rem',
-                    letterSpacing: '0.5px',
-                  }}
-                >
-                  <i className="bi bi-arrow-left-right me-2"></i>
-                  {t('menu.swipeNavigate')}
-                </small>
-              </div>
-
-              <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={20}
-                slidesPerView={1}
-                navigation={{
-                  nextEl: '.swiper-button-next-menu',
-                  prevEl: '.swiper-button-prev-menu',
-                }}
-                pagination={{
-                  clickable: true,
-                  el: '.swiper-pagination-menu',
-                  bulletClass: 'swiper-pagination-bullet',
-                  bulletActiveClass: 'swiper-pagination-bullet-active',
-                  renderBullet: (_index, className) => {
-                    return `<span class="${className}"></span>`;
-                  },
-                }}
-                loop={true}
-                className="menu-category-swiper mt-3 position-relative"
-                style={{ paddingBottom: '20px' }}
-              >
-                {/* Slide 1: Hoofdcategorieën */}
-                <SwiperSlide>
-                  <div className="row g-3">
-                    {/* All Categories Card */}
-                    <div className="col-6 col-md-4">
-                      <MenuCategoryCard
-                        filter="*"
-                        icon={BiGridAlt}
-                        title={t('menu.allCategories')}
-                        subtitle={t('menu.completeMenu')}
-                        isActive={selectedCategory === '*'}
-                        onClick={() => setSelectedCategory('*')}
-                      />
-                    </div>
-
-                    {/* Voorgerechten Card */}
-                    {categories.includes('voorgerechten') && categoryInfoMap['voorgerechten'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-voorgerechten"
-                          icon={categoryInfoMap['voorgerechten'].icon}
-                          title={categoryInfoMap['voorgerechten'].title}
-                          subtitle="Starters"
-                          isActive={selectedCategory === 'voorgerechten'}
-                          onClick={() => setSelectedCategory('voorgerechten')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Mixed BBQ Card */}
-                    {categories.includes('mixed-bbq') && categoryInfoMap['mixed-bbq'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-mixed-bbq"
-                          icon={categoryInfoMap['mixed-bbq'].icon}
-                          title={categoryInfoMap['mixed-bbq'].title}
-                          subtitle="BBQ Specialties"
-                          isActive={selectedCategory === 'mixed-bbq'}
-                          onClick={() => setSelectedCategory('mixed-bbq')}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-
-                {/* Slide 2: Hoofdgerechten - BBQ & Ribs */}
-                <SwiperSlide>
-                  <div className="row g-3">
-                    {/* Spareribs Card */}
-                    {categories.includes('spareribs') && categoryInfoMap['spareribs'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-spareribs"
-                          icon={categoryInfoMap['spareribs'].icon}
-                          title={categoryInfoMap['spareribs'].title}
-                          subtitle="Ribs Specialties"
-                          isActive={selectedCategory === 'spareribs'}
-                          onClick={() => setSelectedCategory('spareribs')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Loaded Scoops Card */}
-                    {categories.includes('loaded-scoops') && categoryInfoMap['loaded-scoops'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-loaded-scoops"
-                          icon={categoryInfoMap['loaded-scoops'].icon}
-                          title={categoryInfoMap['loaded-scoops'].title}
-                          subtitle="Loaded Scoops"
-                          isActive={selectedCategory === 'loaded-scoops'}
-                          onClick={() => setSelectedCategory('loaded-scoops')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Burgers Card */}
-                    {categories.includes('burgers') && categoryInfoMap['burgers'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-burgers"
-                          icon={categoryInfoMap['burgers'].icon}
-                          title={categoryInfoMap['burgers'].title}
-                          subtitle="Burger Menu"
-                          isActive={selectedCategory === 'burgers'}
-                          onClick={() => setSelectedCategory('burgers')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Kindermenu Card */}
-                    {categories.includes('kindermenu') && categoryInfoMap['kindermenu'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-kindermenu"
-                          icon={categoryInfoMap['kindermenu'].icon}
-                          title={categoryInfoMap['kindermenu'].title}
-                          subtitle="Kids Menu"
-                          isActive={selectedCategory === 'kindermenu'}
-                          onClick={() => setSelectedCategory('kindermenu')}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-
-                {/* Slide 4: Supplementen & Desserten */}
-                <SwiperSlide>
-                  <div className="row g-3">
-                    {/* Supplementen Card */}
-                    {categories.includes('supplementen') && categoryInfoMap['supplementen'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-supplementen"
-                          icon={categoryInfoMap['supplementen'].icon}
-                          title={categoryInfoMap['supplementen'].title}
-                          subtitle="Extras"
-                          isActive={selectedCategory === 'supplementen'}
-                          onClick={() => setSelectedCategory('supplementen')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Desserten Card */}
-                    {categories.includes('desserten') && categoryInfoMap['desserten'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-desserten"
-                          icon={categoryInfoMap['desserten'].icon}
-                          title={categoryInfoMap['desserten'].title}
-                          subtitle="Desserts"
-                          isActive={selectedCategory === 'desserten'}
-                          onClick={() => setSelectedCategory('desserten')}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-
-                {/* Slide 5: Dranken */}
-                <SwiperSlide>
-                  <div className="row g-3">
-                    {/* Mocktails Card */}
-                    {categories.includes('mocktails') && categoryInfoMap['mocktails'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-mocktails"
-                          icon={categoryInfoMap['mocktails'].icon}
-                          title={categoryInfoMap['mocktails'].title}
-                          subtitle="Cocktails"
-                          isActive={selectedCategory === 'mocktails'}
-                          onClick={() => setSelectedCategory('mocktails')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Frisdranken Card */}
-                    {categories.includes('frisdranken') && categoryInfoMap['frisdranken'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-frisdranken"
-                          icon={categoryInfoMap['frisdranken'].icon}
-                          title={categoryInfoMap['frisdranken'].title}
-                          subtitle="Soft Drinks"
-                          isActive={selectedCategory === 'frisdranken'}
-                          onClick={() => setSelectedCategory('frisdranken')}
-                        />
-                      </div>
-                    )}
-
-                    {/* Warme Dranken Card */}
-                    {categories.includes('warme-dranken') && categoryInfoMap['warme-dranken'] && (
-                      <div className="col-6 col-md-4">
-                        <MenuCategoryCard
-                          filter=".filter-warme-dranken"
-                          icon={categoryInfoMap['warme-dranken'].icon}
-                          title={categoryInfoMap['warme-dranken'].title}
-                          subtitle="Hot Drinks"
-                          isActive={selectedCategory === 'warme-dranken'}
-                          onClick={() => setSelectedCategory('warme-dranken')}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-
-              </Swiper>
-
-              {/* Custom Navigation Buttons */}
-              <div
-                className="swiper-button-prev-menu position-absolute"
-                style={{
-                  left: '20px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 10,
-                  cursor: 'pointer',
-                  width: '60px',
-                  height: '60px',
-                }}
-              >
-                <div
-                  className="menu-carousel-nav-btn rounded-circle d-flex align-items-center justify-content-center position-relative overflow-hidden"
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    background: 'linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 179, 0, 0.9) 100%)',
-                    border: '2px solid rgba(255, 193, 7, 0.5)',
-                    boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
-                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.currentTarget;
-                    btn.style.transform = 'scale(1.15)';
-                    btn.style.boxShadow = '0 6px 30px rgba(255, 193, 7, 0.6), 0 0 0 4px rgba(255, 193, 7, 0.2)';
-                    btn.style.background = 'linear-gradient(135deg, rgba(255, 193, 7, 1) 0%, rgba(255, 179, 0, 1) 100%)';
-                    const overlay = btn.querySelector('div:last-child') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '1';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.currentTarget;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.boxShadow = '0 4px 20px rgba(255, 193, 7, 0.3)';
-                    btn.style.background = 'linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 179, 0, 0.9) 100%)';
-                    const overlay = btn.querySelector('div:last-child') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '0';
-                  }}
-                >
-                  <i className="bi bi-chevron-left fs-5 fw-bold text-black position-relative" style={{ zIndex: 2 }}></i>
-                  <div
-                    className="position-absolute top-0 start-0 w-100 h-100"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)',
-                      opacity: 0,
-                      transition: 'opacity 0.3s ease',
-                    }}
-                  />
-                </div>
-                <span className="visually-hidden">Vorige categorieën</span>
-              </div>
-              <div
-                className="swiper-button-next-menu position-absolute"
-                style={{
-                  right: '20px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  zIndex: 10,
-                  cursor: 'pointer',
-                  width: '60px',
-                  height: '60px',
-                }}
-              >
-                <div
-                  className="menu-carousel-nav-btn rounded-circle d-flex align-items-center justify-content-center position-relative overflow-hidden"
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    background: 'linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 179, 0, 0.9) 100%)',
-                    border: '2px solid rgba(255, 193, 7, 0.5)',
-                    boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
-                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }}
-                  onMouseEnter={(e) => {
-                    const btn = e.currentTarget;
-                    btn.style.transform = 'scale(1.15)';
-                    btn.style.boxShadow = '0 6px 30px rgba(255, 193, 7, 0.6), 0 0 0 4px rgba(255, 193, 7, 0.2)';
-                    btn.style.background = 'linear-gradient(135deg, rgba(255, 193, 7, 1) 0%, rgba(255, 179, 0, 1) 100%)';
-                    const overlay = btn.querySelector('div:last-child') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '1';
-                  }}
-                  onMouseLeave={(e) => {
-                    const btn = e.currentTarget;
-                    btn.style.transform = 'scale(1)';
-                    btn.style.boxShadow = '0 4px 20px rgba(255, 193, 7, 0.3)';
-                    btn.style.background = 'linear-gradient(135deg, rgba(255, 193, 7, 0.9) 0%, rgba(255, 179, 0, 0.9) 100%)';
-                    const overlay = btn.querySelector('div:last-child') as HTMLElement;
-                    if (overlay) overlay.style.opacity = '0';
-                  }}
-                >
-                  <i className="bi bi-chevron-right fs-5 fw-bold text-black position-relative" style={{ zIndex: 2 }}></i>
-                  <div
-                    className="position-absolute top-0 start-0 w-100 h-100"
-                    style={{
-                      background: 'radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%)',
-                      opacity: 0,
-                      transition: 'opacity 0.3s ease',
-                    }}
-                  />
-                </div>
-                <span className="visually-hidden">Volgende categorieën</span>
-              </div>
-
-              {/* Custom Pagination */}
-              <div
-                className="swiper-pagination-menu position-relative d-flex justify-content-center align-items-center gap-2 mt-4"
-                style={{ zIndex: 1 }}
-              ></div>
-            </div>
-          </div>
-        </div>
+        <MenuCategoryCarousel
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleCategorySelect}
+        />
 
         {/* Menu Items */}
         <div id="menu-items-container" className="row g-4">
@@ -920,7 +533,7 @@ const Menu = () => {
       <CategorySelectorModal
         categories={categories}
         selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
+        onSelectCategory={handleCategorySelect}
         isOpen={showCategoryModal}
         onClose={() => setShowCategoryModal(false)}
       />

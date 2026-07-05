@@ -9,6 +9,32 @@ export interface CategoryInfo {
   icon: IconType;
 }
 
+/** Logical display order: starters → mains → sides → desserts → drinks */
+export const MENU_CATEGORY_ORDER: MenuCategory[] = [
+  'voorgerechten',
+  'burgers',
+  'loaded-scoops',
+  'mixed-bbq',
+  'spareribs',
+  'kindermenu',
+  'supplementen',
+  'desserten',
+  'mocktails',
+  'frisdranken',
+  'warme-dranken',
+];
+
+export function sortMenuCategories(categories: MenuCategory[]): MenuCategory[] {
+  return [...categories].sort((a, b) => {
+    const indexA = MENU_CATEGORY_ORDER.indexOf(a);
+    const indexB = MENU_CATEGORY_ORDER.indexOf(b);
+    if (indexA === -1 && indexB === -1) return 0;
+    if (indexA === -1) return 1;
+    if (indexB === -1) return -1;
+    return indexA - indexB;
+  });
+}
+
 export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   voorgerechten: {
     title: 'Voorgerechten',

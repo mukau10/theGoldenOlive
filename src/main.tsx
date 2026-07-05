@@ -227,6 +227,7 @@ if ('serviceWorker' in navigator) {
 
 // Remove initial loader to show React app
 const removeInitialLoader = () => {
+  document.body.classList.add('app-ready');
   const loader = document.getElementById('initial-loader');
   if (loader) {
     loader.style.opacity = '0';
