@@ -51,7 +51,7 @@ app.use(cors({
     'http://localhost:3001',
     'https://the-goldenolive.be',
     'https://thegoldenolive.be',
-    'http://192.168.0.86:5087'
+    'http://192.168.0.55:5087'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -119,7 +119,7 @@ app.listen(PORT, () => {
 ╠═══════════════════════════════════════════════════════════╣
 ║  Server running on port ${PORT}                              ║
 ║  Environment: ${process.env.NODE_ENV || 'development'}                            ║
-║  API: http://192.168.0.86:${PORT}/api                           ║
+║  API: http://192.168.0.55:${PORT}/api                           ║
 ║  Admin: http://localhost:${PORT}/admin                       ║
 ╚═══════════════════════════════════════════════════════════╝
   `);

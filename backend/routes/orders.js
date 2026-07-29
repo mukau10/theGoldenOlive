@@ -131,7 +131,7 @@ router.post('/', validateOrder, async (req, res, next) => {
           order_number, customer_name, customer_email, customer_phone,
           customer_vat_number,
           address_id, delivery_type, subtotal, delivery_fee, total, notes, estimated_time
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `, [
         orderNumber,
         customer_name,
