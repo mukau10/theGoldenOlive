@@ -10,9 +10,54 @@ let currentPage = 'dashboard';
 let liveUpdateInterval = null;
 let lastUpdateTime = null;
 let categoriesCache = [];
+let websiteMenuCache = null;
+let pinProtectedCategories = ['mocktails'];
+let sessionAdminPin = null;
 let orderDetailMap = null;
 let lastOrderDetail = null;
 let revenueChart = null;
+const DRINK_CATEGORY_SLUGS = ['mocktails', 'frisdranken', 'warme-dranken'];
+const ADMIN_ONLY_TOGGLE_SLUGS = ['mocktails'];
+
+function isAdminUser() {
+  return currentUser?.role === 'admin';
+}
+
+function isFoodCategorySlug(slug) {
+  return !DRINK_CATEGORY_SLUGS.includes(String(slug || '').toLowerCase());
+}
+
+function categoryNeedsPin(slug) {
+  return pinProtectedCategories.includes(String(slug || '').toLowerCase());
+}
+
+function canToggleProduct(product) {
+  const slug = product?.category_slug;
+  if (isAdminUser()) return true;
+  if (ADMIN_ONLY_TOGGLE_SLUGS.includes(String(slug || '').toLowerCase())) return false;
+  return isFoodCategorySlug(slug);
+}
+
+function platformLabel(source) {
+  const map = {
+    website: 'Website',
+    uber_eats: 'Uber Eats',
+    takeaway: 'Takeaway.com',
+    deliveroo: 'Deliveroo'
+  };
+  return map[source] || source || 'Website';
+}
+
+function platformBadge(source) {
+  const s = source || 'website';
+  if (s === 'website') return '';
+  const colors = {
+    uber_eats: 'bg-dark',
+    takeaway: 'bg-warning text-dark',
+    deliveroo: 'bg-success'
+  };
+  return `<span class="badge ${colors[s] || 'bg-secondary'} ms-1">${escapeHtml(platformLabel(s))}</span>`;
+}
 
 // =====================================================
 // NEW ORDER NOTIFICATIONS (show once)
@@ -103,17 +148,52 @@ function showNewOrderOverlay(order) {
   const typeEl = document.getElementById('new-order-type');
   const subtitleEl = document.getElementById('new-order-subtitle');
   const queueEl = document.getElementById('new-order-queue');
+  const addressRow = document.getElementById('new-order-address-row');
+  const addressEl = document.getElementById('new-order-address');
+  const sourceRow = document.getElementById('new-order-source-row');
+  const sourceEl = document.getElementById('new-order-source');
 
   const orderNumber = order?.order_number || `#${order?.id || ''}`;
   const customer = order?.customer_name || '—';
   const total = typeof order?.total !== 'undefined' ? formatCurrency(order.total) : '—';
   const type = order?.delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen';
+  const source = order?.source || 'website';
 
   if (numberEl) numberEl.textContent = orderNumber;
   if (customerEl) customerEl.textContent = customer;
   if (totalEl) totalEl.textContent = total;
   if (typeEl) typeEl.textContent = type;
-  if (subtitleEl) subtitleEl.textContent = 'Er is een nieuwe bestelling binnengekomen.';
+  if (subtitleEl) {
+    if (source !== 'website') {
+      subtitleEl.textContent = `Nieuwe bestelling via ${platformLabel(source)}.`;
+    } else {
+      subtitleEl.textContent = order?.delivery_type === 'delivery'
+        ? 'Er is een nieuwe levering binnengekomen.'
+        : 'Er is een nieuwe bestelling binnengekomen.';
+    }
+  }
+
+  if (sourceRow && sourceEl) {
+    if (source && source !== 'website') {
+      sourceEl.textContent = platformLabel(source);
+      sourceRow.classList.remove('d-none');
+    } else {
+      sourceEl.textContent = '—';
+      sourceRow.classList.add('d-none');
+    }
+  }
+
+  if (addressRow && addressEl) {
+    if (order?.delivery_type === 'delivery' && order?.street) {
+      const street = `${order.street} ${order.house_number || ''}${order.bus ? ` ${order.bus}` : ''}`.trim();
+      const city = `${order.postal_code || ''} ${order.city || ''}`.trim();
+      addressEl.innerHTML = `${escapeHtml(street)}<br>${escapeHtml(city)}`;
+      addressRow.classList.remove('d-none');
+    } else {
+      addressEl.textContent = '—';
+      addressRow.classList.add('d-none');
+    }
+  }
 
   if (queueEl) {
     const remaining = newOrderQueue.length;
@@ -151,26 +231,99 @@ function hideNewOrderOverlay({ markSeen }) {
 // =====================================================
 
 async function apiRequest(endpoint, options = {}) {
+  const { adminPin, headers: customHeaders, ...fetchOptions } = options;
   const headers = {
     'Content-Type': 'application/json',
-    ...options.headers
+    ...customHeaders
   };
 
   if (authToken) {
     headers['Authorization'] = `Bearer ${authToken}`;
   }
 
-  const response = await fetch(`${API_BASE}${endpoint}`, { ...options, headers });
+  if (adminPin || sessionAdminPin) {
+    headers['X-Admin-Pin'] = adminPin || sessionAdminPin;
+  }
+
+  const response = await fetch(`${API_BASE}${endpoint}`, { ...fetchOptions, headers });
   const data = await response.json();
 
   if (!response.ok) {
     if (response.status === 401) {
       logout();
     }
-    throw new Error(data.error?.message || 'Er is een fout opgetreden');
+    const err = new Error(data.error?.message || 'Request failed');
+    err.code = data.error?.code;
+    err.status = response.status;
+    throw err;
   }
 
   return data;
+}
+
+function promptForPin() {
+  return new Promise((resolve) => {
+    const modalEl = document.getElementById('pinModal');
+    const form = document.getElementById('pin-form');
+    const input = document.getElementById('pin-input');
+    if (!modalEl || !form || !input) {
+      resolve(window.prompt('Pincode:') || null);
+      return;
+    }
+
+    const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+    input.value = '';
+
+    const cleanup = () => {
+      form.onsubmit = null;
+      modalEl.removeEventListener('hidden.bs.modal', onHide);
+    };
+
+    const onHide = () => {
+      cleanup();
+      resolve(null);
+    };
+
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const pin = input.value.trim();
+      cleanup();
+      modal.hide();
+      resolve(pin || null);
+    };
+
+    modalEl.addEventListener('hidden.bs.modal', onHide, { once: true });
+    modal.show();
+    setTimeout(() => input.focus(), 250);
+  });
+}
+
+async function withAdminPin(categorySlug, actionFn) {
+  if (!categoryNeedsPin(categorySlug)) {
+    return actionFn();
+  }
+
+  let pin = sessionAdminPin;
+  if (!pin) {
+    pin = await promptForPin();
+    if (!pin) throw new Error('Pincode geannuleerd');
+  }
+
+  try {
+    const result = await actionFn(pin);
+    sessionAdminPin = pin;
+    return result;
+  } catch (error) {
+    if (error.code === 'PIN_INVALID' || error.code === 'PIN_REQUIRED') {
+      sessionAdminPin = null;
+      const retryPin = await promptForPin();
+      if (!retryPin) throw new Error('Pincode geannuleerd');
+      const result = await actionFn(retryPin);
+      sessionAdminPin = retryPin;
+      return result;
+    }
+    throw error;
+  }
 }
 
 // =====================================================
@@ -223,6 +376,7 @@ function showApp() {
   document.getElementById('login-page').classList.add('d-none');
   document.getElementById('app').classList.remove('d-none');
   setupNewOrderOverlay();
+  initTenantContext().catch(() => {});
   
   // Update user info
   document.getElementById('user-name').textContent = currentUser.name;
@@ -231,11 +385,16 @@ function showApp() {
   // Hide elements based on role
   if (currentUser.role !== 'admin') {
     document.querySelectorAll('[data-permission="admin"]').forEach(el => el.style.display = 'none');
+    const staffHint = document.getElementById('products-staff-hint');
+    if (staffHint) staffHint.style.display = '';
   }
   
   // Load initial data
   loadDashboard();
   startLiveUpdates();
+  if (isAdminUser()) {
+    loadSettings().catch(() => {});
+  }
 }
 
 // =====================================================
@@ -259,6 +418,10 @@ function showPage(pageId) {
     reports: 'Rapporten',
     orders: 'Bestellingen',
     products: 'Producten',
+    'website-menu': 'Menukaart',
+    discounts: 'Kortingen',
+    integrations: 'Integraties',
+    printers: 'Printers',
     categories: 'Categorieën',
     payments: 'Betalingen',
     settings: 'Instellingen',
@@ -280,6 +443,10 @@ function loadPageData(pageId) {
     case 'reports': loadReports(); break;
     case 'orders': loadOrders(); break;
     case 'products': loadProducts(); break;
+    case 'website-menu': loadWebsiteMenu(); break;
+    case 'discounts': loadDiscounts(); break;
+    case 'integrations': loadIntegrations(); break;
+    case 'printers': loadPrintersPage(); break;
     case 'categories': loadCategories(); break;
     case 'payments': loadPayments(); break;
     case 'settings': loadSettings(); break;
@@ -477,13 +644,19 @@ function handleNewOrders(orders) {
       if (queueEl) queueEl.textContent = `Nog ${newOrderQueue.length} nieuwe bestelling(en) in wachtrij`;
     }
 
-    // Auto-print (optional)
+    // Auto-print (optional) — prefer Print Bridge, then legacy TCP, then browser
     const printAutoEnabled = document.getElementById('setting-print_auto')?.checked === true;
+    const networkPrinterEnabled = document.getElementById('setting-printer_enabled')?.checked === true;
     if (printAutoEnabled) {
-      // Try to print the newest order only once (browser may block popups)
       const newest = unseen[0];
       if (newest?.id) {
-        printOrder(newest.id);
+        printOrderViaBridge(newest.id, { silent: true }).catch(() => {
+          if (networkPrinterEnabled) {
+            printOrderNetwork(newest.id);
+          } else {
+            printOrder(newest.id);
+          }
+        });
       }
     }
   }
@@ -547,7 +720,7 @@ function renderRecentOrders(orders) {
   
   tbody.innerHTML = orders.map(order => `
     <tr class="${isNewOrder(order.created_at) ? 'new-order' : ''}">
-      <td><span class="text-primary fw-semibold">${order.order_number}</span></td>
+      <td><span class="text-primary fw-semibold">${order.order_number}</span>${platformBadge(order.source)}</td>
       <td>${escapeHtml(order.customer_name)}</td>
       <td><span class="badge ${order.delivery_type === 'delivery' ? 'bg-info' : 'bg-secondary'}">${order.delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen'}</span></td>
       <td>${formatCurrency(order.total)}</td>
@@ -663,7 +836,7 @@ function renderOrdersTable(orders) {
   
   tbody.innerHTML = orders.map(order => `
     <tr class="${isNewOrder(order.created_at) ? 'new-order' : ''}">
-      <td><span class="text-primary fw-semibold">${order.order_number}</span></td>
+      <td><span class="text-primary fw-semibold">${order.order_number}</span>${platformBadge(order.source)}</td>
       <td>${escapeHtml(order.customer_name)}</td>
       <td>
         ${order.delivery_type === 'delivery' ? `
@@ -740,6 +913,8 @@ async function showOrderDetail(orderId) {
           <p>${escapeHtml(order.customer_email)}</p>
           <p>${escapeHtml(order.customer_phone)}</p>
           <p><small class="text-muted">BTW-nummer:</small> <span class="fw-semibold">${escapeHtml(order.customer_vat_number || '—')}</span></p>
+          <p><small class="text-muted">Bron:</small> ${order.source && order.source !== 'website' ? platformBadge(order.source) : '<span class="fw-semibold">Website</span>'}</p>
+          ${order.external_order_id ? `<p><small class="text-muted">Extern ID:</small> <code>${escapeHtml(order.external_order_id)}</code></p>` : ''}
         </div>
         <div class="order-detail-section">
           <h6>${order.delivery_type === 'delivery' ? 'Bezorgadres' : 'Afhalen'}</h6>
@@ -794,6 +969,12 @@ async function showOrderDetail(orderId) {
             <span>${formatCurrency(order.delivery_fee)}</span>
           </div>
         ` : ''}
+        ${parseFloat(order.discount_amount || 0) > 0 ? `
+          <div class="order-total-row text-success">
+            <span>Korting${order.discount_code ? ` (${escapeHtml(order.discount_code)})` : ''}</span>
+            <span>-${formatCurrency(order.discount_amount)}</span>
+          </div>
+        ` : ''}
         <div class="order-total-row total">
           <span>Totaal</span>
           <span>${formatCurrency(order.total)}</span>
@@ -827,6 +1008,17 @@ async function showOrderDetail(orderId) {
               </div>
             `).join('')}
           </div>
+        </div>
+      ` : ''}
+
+      ${order.source && order.source !== 'website' && order.status === 'pending' ? `
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-success btn-sm" onclick="acceptExternalOrder(${order.id})">
+            <i class="bi bi-check2-circle me-1"></i>Accepteer op ${escapeHtml(platformLabel(order.source))}
+          </button>
+          <button class="btn btn-outline-danger btn-sm" onclick="rejectExternalOrder(${order.id})">
+            <i class="bi bi-x-circle me-1"></i>Weiger
+          </button>
         </div>
       ` : ''}
     `;
@@ -1238,16 +1430,46 @@ async function updateOrderStatus(orderId, status) {
   }
 }
 
+async function acceptExternalOrder(orderId) {
+  try {
+    await apiRequest(`/integrations/orders/${orderId}/accept`, { method: 'POST', body: JSON.stringify({}) });
+    showToast('Bestelling geaccepteerd op platform', 'success');
+    showOrderDetail(orderId);
+    loadOrders();
+  } catch (error) {
+    showToast('Accepteren mislukt: ' + error.message, 'error');
+  }
+}
+
+async function rejectExternalOrder(orderId) {
+  if (!confirm('Deze platformbestelling weigeren?')) return;
+  try {
+    await apiRequest(`/integrations/orders/${orderId}/reject`, {
+      method: 'POST',
+      body: JSON.stringify({ reason: 'Store unavailable' })
+    });
+    showToast('Bestelling geweigerd', 'success');
+    showOrderDetail(orderId);
+    loadOrders();
+  } catch (error) {
+    showToast('Weigeren mislukt: ' + error.message, 'error');
+  }
+}
+
 async function printOrder(orderId) {
   try {
     // Fetch full order detail to print a proper receipt
     const data = await apiRequest(`/admin/orders/${orderId}`);
     const order = data.data;
 
-    // Mark printed in backend (best effort)
+    // Mark printed in backend (best effort) — prefer Print Bridge queue
     try {
-      await apiRequest(`/admin/orders/${orderId}/print`, { method: 'POST' });
-    } catch {}
+      await printOrderViaBridge(orderId, { silent: true });
+    } catch {
+      try {
+        await apiRequest(`/admin/orders/${orderId}/print`, { method: 'POST', body: JSON.stringify({}) });
+      } catch {}
+    }
 
     const w = window.open('', '_blank', 'noopener,noreferrer,width=900,height=900');
     if (!w) {
@@ -1326,6 +1548,7 @@ async function printOrder(orderId) {
 
   <div class="totals">
     <div class="row"><span class="muted">Subtotaal</span><span>€${parseFloat(order.subtotal || 0).toFixed(2)}</span></div>
+    ${parseFloat(order.discount_amount || 0) > 0 ? `<div class="row"><span class="muted">Korting${order.discount_code ? ` (${escapeHtml(order.discount_code)})` : ''}</span><span>-€${parseFloat(order.discount_amount).toFixed(2)}</span></div>` : ''}
     ${parseFloat(order.delivery_fee || 0) > 0 ? `<div class="row"><span class="muted">Bezorgkosten</span><span>€${parseFloat(order.delivery_fee).toFixed(2)}</span></div>` : ''}
     <div class="row total"><span>Totaal</span><span>€${parseFloat(order.total || 0).toFixed(2)}</span></div>
   </div>
@@ -1375,7 +1598,10 @@ function renderProductsTable(products) {
     return;
   }
   
-  tbody.innerHTML = products.map(p => `
+  tbody.innerHTML = products.map(p => {
+    const canToggle = canToggleProduct(p);
+    const admin = isAdminUser();
+    return `
     <tr>
       <td>
         ${p.image_url && !p.image_url.includes('favicon') ? 
@@ -1396,20 +1622,29 @@ function renderProductsTable(products) {
       </td>
       <td class="fw-semibold">${formatCurrency(p.price)}</td>
       <td>
-        <button class="btn btn-sm ${p.is_available ? 'btn-success' : 'btn-outline-secondary'}" onclick="toggleProduct(${p.id})">
-          ${p.is_available ? '<i class="bi bi-check"></i> Ja' : '<i class="bi bi-x"></i> Nee'}
-        </button>
+        ${canToggle ? `
+          <button class="btn btn-sm ${p.is_available ? 'btn-success' : 'btn-outline-secondary'}" onclick="toggleProduct(${p.id}, '${escapeHtml(p.category_slug || '')}')">
+            ${p.is_available ? '<i class="bi bi-check"></i> Ja' : '<i class="bi bi-x"></i> Nee'}
+          </button>
+        ` : `
+          <span class="badge ${p.is_available ? 'bg-success' : 'bg-secondary'}" title="Alleen admin">
+            ${p.is_available ? 'Ja' : 'Nee'}
+          </span>
+        `}
       </td>
       <td>
-        <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editProduct(${p.id})" title="Bewerken">
-          <i class="bi bi-pencil"></i>
-        </button>
-        <button class="btn btn-sm btn-outline-danger btn-icon" onclick="deleteProduct(${p.id}, '${escapeHtml(p.name)}')" title="Verwijderen">
-          <i class="bi bi-trash"></i>
-        </button>
+        ${admin ? `
+          <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editProduct(${p.id})" title="Bewerken">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-danger btn-icon" onclick="deleteProduct(${p.id}, '${escapeHtml(p.name)}', '${escapeHtml(p.category_slug || '')}')" title="Verwijderen">
+            <i class="bi bi-trash"></i>
+          </button>
+        ` : `<span class="text-muted small">—</span>`}
       </td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 async function ensureCategoriesForFilters() {
@@ -1486,9 +1721,11 @@ async function saveProduct(e) {
   e.preventDefault();
   
   const id = document.getElementById('product-id').value;
+  const categoryId = parseInt(document.getElementById('product-category').value);
+  const category = (categoriesCache || []).find((c) => Number(c.id) === categoryId);
   const product = {
     name: document.getElementById('product-name').value,
-    category_id: parseInt(document.getElementById('product-category').value),
+    category_id: categoryId,
     price: parseFloat(document.getElementById('product-price').value),
     description: document.getElementById('product-description').value || null,
     image_url: document.getElementById('product-image').value || null,
@@ -1497,13 +1734,15 @@ async function saveProduct(e) {
   };
   
   try {
-    if (id) {
-      await apiRequest(`/admin/products/${id}`, { method: 'PUT', body: JSON.stringify(product) });
-      showToast('Product bijgewerkt', 'success');
-    } else {
-      await apiRequest('/admin/products', { method: 'POST', body: JSON.stringify(product) });
-      showToast('Product aangemaakt', 'success');
-    }
+    await withAdminPin(category?.slug, async (pin) => {
+      if (id) {
+        await apiRequest(`/admin/products/${id}`, { method: 'PUT', body: JSON.stringify(product), adminPin: pin });
+        showToast('Product bijgewerkt', 'success');
+      } else {
+        await apiRequest('/admin/products', { method: 'POST', body: JSON.stringify(product), adminPin: pin });
+        showToast('Product aangemaakt', 'success');
+      }
+    });
     
     bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
     loadProducts();
@@ -1512,20 +1751,24 @@ async function saveProduct(e) {
   }
 }
 
-async function toggleProduct(productId) {
+async function toggleProduct(productId, categorySlug = '') {
   try {
-    await apiRequest(`/admin/products/${productId}/toggle`, { method: 'PATCH' });
+    await withAdminPin(categorySlug, async (pin) => {
+      await apiRequest(`/admin/products/${productId}/toggle`, { method: 'PATCH', adminPin: pin });
+    });
     loadProducts();
   } catch (error) {
     showToast('Fout: ' + error.message, 'error');
   }
 }
 
-async function deleteProduct(id, name) {
+async function deleteProduct(id, name, categorySlug = '') {
   if (!confirm(`Weet je zeker dat je "${name}" wilt verwijderen?`)) return;
   
   try {
-    await apiRequest(`/admin/products/${id}`, { method: 'DELETE' });
+    await withAdminPin(categorySlug, async (pin) => {
+      await apiRequest(`/admin/products/${id}`, { method: 'DELETE', adminPin: pin });
+    });
     showToast('Product verwijderd', 'success');
     loadProducts();
   } catch (error) {
@@ -1630,7 +1873,10 @@ async function showCategoryProducts(categoryId) {
       return;
     }
 
-    tbody.innerHTML = products.map((p) => `
+    tbody.innerHTML = products.map((p) => {
+      const canToggle = canToggleProduct(p);
+      const admin = isAdminUser();
+      return `
       <tr>
         <td class="fw-semibold">${escapeHtml(p.name)}</td>
         <td class="fw-semibold">${formatCurrency(p.price)}</td>
@@ -1640,15 +1886,20 @@ async function showCategoryProducts(categoryId) {
           </span>
         </td>
         <td class="text-end">
-          <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editProduct(${p.id}); bootstrap.Modal.getInstance(document.getElementById('categoryProductsModal'))?.hide();" title="Bewerken">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button class="btn btn-sm ${p.is_available ? 'btn-outline-secondary' : 'btn-success'}" onclick="toggleProduct(${p.id}); showCategoryProducts(${categoryId});" title="Toggle beschikbaar">
-            ${p.is_available ? '<i class="bi bi-x"></i>' : '<i class="bi bi-check"></i>'}
-          </button>
+          ${admin ? `
+            <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editProduct(${p.id}); bootstrap.Modal.getInstance(document.getElementById('categoryProductsModal'))?.hide();" title="Bewerken">
+              <i class="bi bi-pencil"></i>
+            </button>
+          ` : ''}
+          ${canToggle ? `
+            <button class="btn btn-sm ${p.is_available ? 'btn-outline-secondary' : 'btn-success'}" onclick="toggleProduct(${p.id}, '${escapeHtml(p.category_slug || '')}'); setTimeout(() => showCategoryProducts(${categoryId}), 300);" title="Toggle beschikbaar">
+              ${p.is_available ? '<i class="bi bi-x"></i>' : '<i class="bi bi-check"></i>'}
+            </button>
+          ` : `<span class="text-muted small">Alleen admin</span>`}
         </td>
       </tr>
-    `).join('');
+    `;
+    }).join('');
   } catch (error) {
     console.error('Category products error:', error);
     showToast('Fout bij laden producten in categorie', 'error');
@@ -1765,6 +2016,23 @@ async function loadSettings() {
     const data = await apiRequest('/admin/settings');
     
     data.data.forEach(setting => {
+      if (setting.setting_key === 'admin_pin') {
+        const el = document.getElementById('setting-admin_pin');
+        if (el) el.value = '';
+        el && (el.placeholder = setting.setting_value ? 'Pincode is ingesteld (laat leeg om te behouden)' : 'Nieuwe pincode');
+        return;
+      }
+
+      if (setting.setting_key === 'pin_protected_categories') {
+        const el = document.getElementById('setting-pin_protected_categories');
+        const cats = Array.isArray(setting.setting_value)
+          ? setting.setting_value
+          : [];
+        pinProtectedCategories = cats.map((c) => String(c).toLowerCase());
+        if (el) el.value = pinProtectedCategories.join(', ');
+        return;
+      }
+
       const el = document.getElementById(`setting-${setting.setting_key}`);
       if (el) {
         if (el.type === 'checkbox') {
@@ -1808,6 +2076,924 @@ async function saveSettingsForm(formId, settingKeys) {
   
   if (success) {
     showToast('Instellingen opgeslagen', 'success');
+  }
+}
+
+async function printOrderViaBridge(orderId, { silent = false } = {}) {
+  const result = await apiRequest(`/orders/${orderId}/print`, {
+    method: 'POST',
+    body: JSON.stringify({})
+  });
+  const count = result?.data?.job_ids?.length || 0;
+  if (!silent) {
+    showToast(count ? `${count} print job(s) naar bridge verzonden` : (result.message || 'Print jobs aangemaakt'), 'success');
+  }
+  return result;
+}
+
+async function printOrderNetwork(orderId) {
+  try {
+    await printOrderViaBridge(orderId);
+  } catch (bridgeError) {
+    try {
+      const result = await apiRequest(`/admin/orders/${orderId}/print`, {
+        method: 'POST',
+        body: JSON.stringify({ network: true })
+      });
+      if (result?.data?.network?.printed) {
+        showToast('Ticket verzonden naar legacy netwerkprinter', 'success');
+      } else if (result?.data?.network?.error) {
+        showToast('Printerfout: ' + result.data.network.error, 'error');
+      } else {
+        showToast(result.message || 'Printopdracht verwerkt', 'info');
+      }
+    } catch (error) {
+      showToast('Fout bij printen: ' + (bridgeError?.message || error?.message || error), 'error');
+    }
+  }
+}
+
+// =====================================================
+// PRINT BRIDGE / PRINTERS
+// =====================================================
+
+let printersCache = [];
+let printerAgentsCache = [];
+
+function printerStatusBadge(status, onlineHint = false) {
+  const s = String(status || 'UNKNOWN').toUpperCase();
+  const map = {
+    ONLINE: 'success',
+    OFFLINE: 'secondary',
+    DISCONNECTED: 'warning',
+    ERROR: 'danger',
+    UNKNOWN: 'secondary',
+    PENDING: 'warning',
+    PROCESSING: 'info',
+    PRINTED: 'success',
+    FAILED: 'danger',
+    SUCCESS: 'success'
+  };
+  const label = onlineHint && s !== 'ONLINE' ? `${s} (live)` : s;
+  return `<span class="badge bg-${map[s] || 'secondary'}">${escapeHtml(label)}</span>`;
+}
+
+async function loadPrintersPage() {
+  await Promise.all([
+    loadPrinterAgents(),
+    loadPrinters(),
+    loadPrinterRules(),
+    loadPrintJobs()
+  ]);
+}
+
+async function loadPrinterAgents() {
+  const tbody = document.getElementById('printer-agents-table');
+  const hint = document.getElementById('print-bridge-ws-hint');
+  if (!tbody) return;
+  try {
+    const data = await apiRequest('/printer-agents');
+    printerAgentsCache = data.data || [];
+    const wsUrl = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/print-bridge`;
+    if (hint) {
+      hint.innerHTML = `WebSocket: <code>${escapeHtml(wsUrl)}</code>` +
+        (data.bridge ? ` · verbonden agents: <strong>${data.bridge.connected || 0}</strong>` : '');
+    }
+    if (!printerAgentsCache.length) {
+      tbody.innerHTML = '<tr><td colspan="4" class="text-center py-3 text-muted">Nog geen agents. Klik op “Nieuwe agent”.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = printerAgentsCache.map((a) => {
+      const status = a.online ? 'ONLINE' : (a.status || 'OFFLINE');
+      const lastSeen = a.last_seen ? new Date(a.last_seen).toLocaleString('nl-BE') : '—';
+      return `<tr>
+        <td>
+          <div class="fw-semibold">${escapeHtml(a.name)}</div>
+          <div class="small text-muted">${escapeHtml(a.device_id)} · key ${escapeHtml(a.api_key_prefix || '')}…</div>
+        </td>
+        <td>${printerStatusBadge(status)}</td>
+        <td class="small">${escapeHtml(lastSeen)}</td>
+        <td class="text-nowrap">
+          <button class="btn btn-sm btn-outline-secondary" title="Nieuwe API key" onclick="rotatePrintAgentKey(${a.id})"><i class="bi bi-key"></i></button>
+          <button class="btn btn-sm btn-outline-danger" title="Verwijderen" onclick="deletePrintAgent(${a.id})"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch (error) {
+    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-danger py-3">${escapeHtml(error.message)}</td></tr>`;
+  }
+}
+
+async function loadPrinters() {
+  const tbody = document.getElementById('printers-table');
+  if (!tbody) return;
+  try {
+    const data = await apiRequest('/printers');
+    printersCache = data.data || [];
+    if (!printersCache.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-3 text-muted">Nog geen printers.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = printersCache.map((p) => {
+      const agentLabel = p.agent_name
+        ? `${escapeHtml(p.agent_name)}${p.agent_online ? ' ●' : ''}`
+        : '<span class="text-muted">—</span>';
+      return `<tr>
+        <td>
+          <div class="fw-semibold">${escapeHtml(p.name)}</div>
+          ${p.is_default ? '<span class="badge bg-light text-dark">default</span>' : ''}
+        </td>
+        <td><span class="badge bg-dark">${escapeHtml(p.type)}</span></td>
+        <td class="small"><code>${escapeHtml(p.ip_address)}:${escapeHtml(String(p.port))}</code><div class="text-muted">${escapeHtml(p.protocol)}</div></td>
+        <td>${printerStatusBadge(p.status)}${p.last_seen ? `<div class="small text-muted">${escapeHtml(new Date(p.last_seen).toLocaleString('nl-BE'))}</div>` : ''}</td>
+        <td class="small">${agentLabel}</td>
+        <td class="text-nowrap">
+          <button class="btn btn-sm btn-outline-primary" title="Bewerken" onclick="showPrinterModal(${p.id})"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-outline-secondary" title="Test verbinding" onclick="testPrinterConnection(${p.id})"><i class="bi bi-wifi"></i></button>
+          <button class="btn btn-sm btn-outline-success" title="Test print" onclick="testPrinterPrint(${p.id})"><i class="bi bi-printer"></i></button>
+          <button class="btn btn-sm btn-outline-danger" title="Verwijderen" onclick="deletePrinter(${p.id})"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch (error) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-3">${escapeHtml(error.message)}</td></tr>`;
+  }
+}
+
+async function loadPrinterRules() {
+  const tbody = document.getElementById('printer-rules-table');
+  if (!tbody) return;
+  try {
+    const data = await apiRequest('/printer-rules');
+    const rules = data.data || [];
+    if (!rules.length) {
+      tbody.innerHTML = '<tr><td colspan="3" class="text-center py-3 text-muted">Nog geen regels. Voorbeeld: pizza → keukenprinter.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rules.map((r) => `<tr>
+      <td><code>${escapeHtml(r.category)}</code></td>
+      <td>${escapeHtml(r.printer_name || ('#' + r.printer_id))} <span class="badge bg-dark">${escapeHtml(r.printer_type || '')}</span></td>
+      <td><button class="btn btn-sm btn-outline-danger" onclick="deletePrinterRule(${r.id})"><i class="bi bi-trash"></i></button></td>
+    </tr>`).join('');
+  } catch (error) {
+    tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger py-3">${escapeHtml(error.message)}</td></tr>`;
+  }
+}
+
+async function loadPrintJobs() {
+  const tbody = document.getElementById('print-jobs-table');
+  if (!tbody) return;
+  try {
+    const data = await apiRequest('/print-jobs?limit=40');
+    const jobs = data.data || [];
+    if (!jobs.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-3 text-muted">Geen print jobs.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = jobs.map((j) => {
+      const when = j.printed_at || j.created_at;
+      return `<tr>
+        <td>#${j.id}</td>
+        <td>${escapeHtml(j.order_number || (j.order_id ? '#' + j.order_id : '—'))}</td>
+        <td class="small">${escapeHtml(j.printer_name || '')} <span class="text-muted">${escapeHtml(j.printer_type || '')}</span></td>
+        <td>${printerStatusBadge(j.status)}${j.error_message ? `<div class="small text-danger">${escapeHtml(j.error_message)}</div>` : ''}</td>
+        <td class="small">${when ? escapeHtml(new Date(when).toLocaleString('nl-BE')) : '—'}</td>
+        <td>${['PENDING', 'FAILED'].includes(j.status) ? `<button class="btn btn-sm btn-outline-secondary" onclick="retryPrintJob(${j.id})">Retry</button>` : ''}</td>
+      </tr>`;
+    }).join('');
+  } catch (error) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-danger py-3">${escapeHtml(error.message)}</td></tr>`;
+  }
+}
+
+async function registerPrintAgent() {
+  const name = window.prompt('Naam voor de Print Bridge agent:', 'Restaurant Print Bridge');
+  if (!name) return;
+  try {
+    const data = await apiRequest('/printer-agents/register', {
+      method: 'POST',
+      body: JSON.stringify({ name: name.trim() })
+    });
+    showAgentKeyModal(data.data || {});
+    showToast('Agent geregistreerd', 'success');
+    await loadPrinterAgents();
+  } catch (error) {
+    showToast('Registratie mislukt: ' + error.message, 'error');
+  }
+}
+
+async function rotatePrintAgentKey(id) {
+  if (!confirm('Nieuwe API key aanmaken? De oude key stopt met werken.')) return;
+  try {
+    const data = await apiRequest(`/printer-agents/${id}/rotate-key`, { method: 'POST', body: '{}' });
+    showAgentKeyModal(data.data || {});
+    await loadPrinterAgents();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function deletePrintAgent(id) {
+  if (!confirm('Agent verwijderen? Gekoppelde printers raken hun agent kwijt.')) return;
+  try {
+    await apiRequest(`/printer-agents/${id}`, { method: 'DELETE' });
+    showToast('Agent verwijderd', 'success');
+    await loadPrintersPage();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+function showAgentKeyModal(info) {
+  document.getElementById('agent-key-device').textContent = info.device_id || '';
+  document.getElementById('agent-key-value').textContent = info.api_key || '';
+  document.getElementById('agent-key-ws').textContent = info.websocket_url ||
+    `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/print-bridge`;
+  const el = document.getElementById('agentKeyModal');
+  if (el) (bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el)).show();
+}
+
+function copyAgentKey() {
+  const key = document.getElementById('agent-key-value')?.textContent || '';
+  const device = document.getElementById('agent-key-device')?.textContent || '';
+  const ws = document.getElementById('agent-key-ws')?.textContent || '';
+  const text = JSON.stringify({ url: ws, api_key: key, device_id: device }, null, 2);
+  navigator.clipboard?.writeText(text).then(() => showToast('Config gekopieerd', 'success'))
+    .catch(() => showToast('Kopiëren mislukt', 'error'));
+}
+
+async function fillPrinterAgentSelect(selectedId = null) {
+  if (!printerAgentsCache.length) {
+    try {
+      const data = await apiRequest('/printer-agents');
+      printerAgentsCache = data.data || [];
+    } catch { /* ignore */ }
+  }
+  const select = document.getElementById('printer-agent-id');
+  if (!select) return;
+  select.innerHTML = printerAgentsCache.length
+    ? printerAgentsCache.map((a) =>
+      `<option value="${a.id}" ${String(a.id) === String(selectedId) ? 'selected' : ''}>${escapeHtml(a.name)} (${escapeHtml(a.status || 'OFFLINE')})</option>`
+    ).join('')
+    : '<option value="">Eerst een agent registreren</option>';
+}
+
+function showPrinterModal(printerId = null) {
+  const printer = printerId ? printersCache.find((p) => p.id === printerId) : null;
+  document.getElementById('printer-modal-title').textContent = printer ? 'Printer bewerken' : 'Printer toevoegen';
+  document.getElementById('printer-id').value = printer?.id || '';
+  document.getElementById('printer-name').value = printer?.name || '';
+  document.getElementById('printer-type').value = printer?.type || 'RECEIPT';
+  document.getElementById('printer-protocol').value = printer?.protocol || 'ESC_POS';
+  document.getElementById('printer-ip').value = printer?.ip_address || '';
+  document.getElementById('printer-port').value = printer?.port || 9100;
+  document.getElementById('printer-is-default').checked = !!printer?.is_default;
+  fillPrinterAgentSelect(printer?.agent_id || null).then(() => {
+    const el = document.getElementById('printerModal');
+    if (el) (bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el)).show();
+  });
+}
+
+async function savePrinter(e) {
+  e.preventDefault();
+  const id = document.getElementById('printer-id').value;
+  const payload = {
+    name: document.getElementById('printer-name').value.trim(),
+    type: document.getElementById('printer-type').value,
+    protocol: document.getElementById('printer-protocol').value,
+    ip_address: document.getElementById('printer-ip').value.trim(),
+    port: Number(document.getElementById('printer-port').value) || 9100,
+    agent_id: Number(document.getElementById('printer-agent-id').value) || null,
+    is_default: document.getElementById('printer-is-default').checked
+  };
+  if (!payload.agent_id) {
+    showToast('Selecteer een Print Bridge agent', 'error');
+    return;
+  }
+  try {
+    if (id) {
+      await apiRequest(`/printers/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+      showToast('Printer bijgewerkt', 'success');
+    } else {
+      await apiRequest('/printers', { method: 'POST', body: JSON.stringify(payload) });
+      showToast('Printer toegevoegd', 'success');
+    }
+    bootstrap.Modal.getInstance(document.getElementById('printerModal'))?.hide();
+    await loadPrinters();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function deletePrinter(id) {
+  if (!confirm('Printer verwijderen?')) return;
+  try {
+    await apiRequest(`/printers/${id}`, { method: 'DELETE' });
+    showToast('Printer verwijderd', 'success');
+    await loadPrintersPage();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function testPrinterConnection(id) {
+  try {
+    const data = await apiRequest('/printers/test', {
+      method: 'POST',
+      body: JSON.stringify({ printer_id: id })
+    });
+    if (data.data?.connected) {
+      showToast(`Verbinding OK (${data.data.response_time_ms || '?'} ms)`, 'success');
+    } else {
+      showToast(data.data?.error || data.message || 'Verbinding mislukt', 'error');
+    }
+    await loadPrinters();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function testPrinterPrint(id) {
+  try {
+    const data = await apiRequest('/printers/test-print', {
+      method: 'POST',
+      body: JSON.stringify({ printer_id: id })
+    });
+    if (data.data?.printed) {
+      showToast('Testticket verzonden', 'success');
+    } else {
+      showToast(data.data?.error || data.message || 'Testprint mislukt', 'error');
+    }
+    await loadPrinters();
+    await loadPrintJobs();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+function showPrinterRuleModal() {
+  const select = document.getElementById('printer-rule-printer-id');
+  document.getElementById('printer-rule-category').value = '';
+  if (select) {
+    select.innerHTML = printersCache.map((p) =>
+      `<option value="${p.id}">${escapeHtml(p.name)} (${escapeHtml(p.type)})</option>`
+    ).join('') || '<option value="">Eerst een printer toevoegen</option>';
+  }
+  const el = document.getElementById('printerRuleModal');
+  if (el) (bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el)).show();
+}
+
+async function savePrinterRule(e) {
+  e.preventDefault();
+  const payload = {
+    category: document.getElementById('printer-rule-category').value.trim(),
+    printer_id: Number(document.getElementById('printer-rule-printer-id').value)
+  };
+  try {
+    await apiRequest('/printer-rules', { method: 'POST', body: JSON.stringify(payload) });
+    showToast('Regel opgeslagen', 'success');
+    bootstrap.Modal.getInstance(document.getElementById('printerRuleModal'))?.hide();
+    await loadPrinterRules();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function deletePrinterRule(id) {
+  if (!confirm('Regel verwijderen?')) return;
+  try {
+    await apiRequest(`/printer-rules/${id}`, { method: 'DELETE' });
+    await loadPrinterRules();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function retryPrintJob(id) {
+  try {
+    await apiRequest(`/print-jobs/${id}/retry`, { method: 'POST', body: '{}' });
+    showToast('Job opnieuw verzonden', 'success');
+    await loadPrintJobs();
+  } catch (error) {
+    showToast(error.message, 'error');
+  }
+}
+
+async function testNetworkPrinter() {
+  try {
+    const ip = document.getElementById('setting-printer_ip')?.value || '';
+    const port = document.getElementById('setting-printer_port')?.value || 9100;
+    await apiRequest('/admin/printer/test', {
+      method: 'POST',
+      body: JSON.stringify({ ip, port: Number(port) })
+    });
+    showToast('Testprint verzonden', 'success');
+  } catch (error) {
+    showToast('Testprint mislukt: ' + error.message, 'error');
+  }
+}
+
+// =====================================================
+// WEBSITE MENU
+// =====================================================
+
+async function loadWebsiteMenu() {
+  try {
+    const data = await apiRequest('/admin/website-menu');
+    websiteMenuCache = data.data || {};
+    const select = document.getElementById('website-menu-category');
+    const categories = Object.keys(websiteMenuCache);
+    if (select) {
+      const current = select.value;
+      select.innerHTML = categories.map((c) => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      if (current && categories.includes(current)) select.value = current;
+      else if (categories[0]) select.value = categories[0];
+      select.onchange = renderWebsiteMenuTable;
+    }
+    renderWebsiteMenuTable();
+  } catch (error) {
+    console.error('Website menu error:', error);
+    showToast('Fout bij laden menukaart', 'error');
+  }
+}
+
+function resolveWebsiteMenuImageUrl(imagePath) {
+  if (!imagePath || typeof imagePath !== 'string') return '';
+  let path = imagePath.trim();
+  if (!path) return '';
+  if (/^https?:\/\//i.test(path) || path.startsWith('data:')) return path;
+  path = path.replace(/^\/?public\/img\//, '/img/');
+  path = path.replace(/^assets\/img\//, '/img/');
+  if (path.startsWith('img/')) path = '/' + path;
+  if (!path.startsWith('/')) path = '/' + path;
+  return path;
+}
+
+function websiteMenuImageThumbHtml(imagePath, size = 48) {
+  const url = resolveWebsiteMenuImageUrl(imagePath);
+  const isPlaceholder = !url || url.includes('favicon');
+  if (isPlaceholder) {
+    return `<div style="width:${size}px;height:${size}px;background:var(--dark);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <i class="bi bi-image text-muted"></i>
+    </div>`;
+  }
+  return `<img src="${escapeHtml(url)}" alt="" loading="lazy"
+    style="width:${size}px;height:${size}px;object-fit:cover;border-radius:8px;background:#0f0f1a;flex-shrink:0;"
+    onerror="this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='flex');">
+    <div style="display:none;width:${size}px;height:${size}px;background:var(--dark);border-radius:8px;align-items:center;justify-content:center;flex-shrink:0;">
+      <i class="bi bi-image text-muted"></i>
+    </div>`;
+}
+
+function updateWebsiteMenuImagePreview() {
+  const input = document.getElementById('website-menu-item-image');
+  const img = document.getElementById('website-menu-item-image-preview');
+  const placeholder = document.getElementById('website-menu-item-image-placeholder');
+  if (!input || !img || !placeholder) return;
+
+  const url = resolveWebsiteMenuImageUrl(input.value);
+  if (!url) {
+    img.style.display = 'none';
+    img.removeAttribute('src');
+    placeholder.style.display = 'flex';
+    placeholder.querySelector('span').textContent = 'Geen afbeelding';
+    return;
+  }
+
+  img.onload = () => {
+    img.style.display = 'inline-block';
+    placeholder.style.display = 'none';
+  };
+  img.onerror = () => {
+    img.style.display = 'none';
+    placeholder.style.display = 'flex';
+    placeholder.querySelector('span').textContent = 'Afbeelding niet gevonden';
+  };
+  // Force reload when same path re-entered
+  if (img.getAttribute('src') === url) {
+    img.removeAttribute('src');
+  }
+  img.src = url;
+}
+
+function renderWebsiteMenuTable() {
+  const tbody = document.getElementById('website-menu-table');
+  const category = document.getElementById('website-menu-category')?.value;
+  if (!tbody) return;
+  const items = (websiteMenuCache && category && Array.isArray(websiteMenuCache[category]))
+    ? websiteMenuCache[category]
+    : [];
+
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted">Geen items</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = items.map((item) => `
+    <tr>
+      <td>${websiteMenuImageThumbHtml(item.image)}</td>
+      <td class="fw-semibold">${escapeHtml(item.name)}</td>
+      <td>${escapeHtml(item.price)}</td>
+      <td class="text-muted small">${escapeHtml(String(item.description || '').replace(/<br\s*\/?>/gi, ' ').substring(0, 80))}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editWebsiteMenuItem('${escapeHtml(category)}', '${escapeHtml(item.id)}')" title="Bewerken">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-danger btn-icon" onclick="deleteWebsiteMenuItem('${escapeHtml(category)}', '${escapeHtml(item.id)}', '${escapeHtml(item.name)}')" title="Verwijderen">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function showWebsiteMenuItemModal(item = null, category = null) {
+  const cat = category || document.getElementById('website-menu-category')?.value || '';
+  document.getElementById('website-menu-item-title').textContent = item ? 'Item bewerken' : 'Nieuw menukaart item';
+  document.getElementById('website-menu-item-id').value = item?.id || '';
+  document.getElementById('website-menu-item-category').value = cat;
+  document.getElementById('website-menu-item-name').value = item?.name || '';
+  document.getElementById('website-menu-item-price').value = item?.price || '';
+  document.getElementById('website-menu-item-description').value = item?.description || '';
+  document.getElementById('website-menu-item-image').value = item?.image || '';
+  updateWebsiteMenuImagePreview();
+  new bootstrap.Modal(document.getElementById('websiteMenuItemModal')).show();
+}
+
+function editWebsiteMenuItem(category, itemId) {
+  const item = (websiteMenuCache?.[category] || []).find((i) => String(i.id) === String(itemId));
+  if (item) showWebsiteMenuItemModal(item, category);
+}
+
+async function saveWebsiteMenuItem(e) {
+  e.preventDefault();
+  const category = document.getElementById('website-menu-item-category').value;
+  const id = document.getElementById('website-menu-item-id').value;
+  const payload = {
+    name: document.getElementById('website-menu-item-name').value,
+    price: document.getElementById('website-menu-item-price').value,
+    description: document.getElementById('website-menu-item-description').value,
+    image: document.getElementById('website-menu-item-image').value || undefined
+  };
+
+  try {
+    if (id) {
+      await apiRequest(`/admin/website-menu/${encodeURIComponent(category)}/${encodeURIComponent(id)}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+      });
+      showToast('Menukaart item bijgewerkt', 'success');
+    } else {
+      await apiRequest(`/admin/website-menu/${encodeURIComponent(category)}`, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      showToast('Menukaart item toegevoegd', 'success');
+    }
+    bootstrap.Modal.getInstance(document.getElementById('websiteMenuItemModal'))?.hide();
+    loadWebsiteMenu();
+  } catch (error) {
+    showToast('Fout: ' + error.message, 'error');
+  }
+}
+
+async function deleteWebsiteMenuItem(category, itemId, name) {
+  if (!confirm(`"${name}" verwijderen van de website menukaart?`)) return;
+  try {
+    await apiRequest(`/admin/website-menu/${encodeURIComponent(category)}/${encodeURIComponent(itemId)}`, {
+      method: 'DELETE'
+    });
+    showToast('Item verwijderd', 'success');
+    loadWebsiteMenu();
+  } catch (error) {
+    showToast('Fout: ' + error.message, 'error');
+  }
+}
+
+// =====================================================
+// DISCOUNTS
+// =====================================================
+
+async function loadDiscounts() {
+  try {
+    const data = await apiRequest('/admin/discounts');
+    const tbody = document.getElementById('discounts-table');
+    const discounts = Array.isArray(data.data) ? data.data : [];
+    if (!tbody) return;
+    if (!discounts.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-muted">Nog geen kortingen</td></tr>';
+      return;
+    }
+    tbody.innerHTML = discounts.map((d) => `
+      <tr>
+        <td class="fw-semibold">${escapeHtml(d.code)}</td>
+        <td>${d.discount_type === 'percent' ? 'Percentage' : 'Vast'}</td>
+        <td>${d.discount_type === 'percent' ? `${d.value}%` : formatCurrency(d.value)}</td>
+        <td>${formatCurrency(d.min_order || 0)}</td>
+        <td>${d.used_count || 0}${d.max_uses != null ? ` / ${d.max_uses}` : ''}</td>
+        <td><span class="badge ${d.is_active ? 'bg-success' : 'bg-secondary'}">${d.is_active ? 'Actief' : 'Inactief'}</span></td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary btn-icon me-1" onclick="editDiscount(${d.id})" title="Bewerken"><i class="bi bi-pencil"></i></button>
+          <button class="btn btn-sm btn-outline-danger btn-icon" onclick="deleteDiscount(${d.id}, '${escapeHtml(d.code)}')" title="Verwijderen"><i class="bi bi-trash"></i></button>
+        </td>
+      </tr>
+    `).join('');
+    window.__discountsCache = discounts;
+  } catch (error) {
+    showToast('Fout bij laden kortingen', 'error');
+  }
+}
+
+function showDiscountModal(discount = null) {
+  document.getElementById('discount-modal-title').textContent = discount ? 'Korting bewerken' : 'Nieuwe korting';
+  document.getElementById('discount-id').value = discount?.id || '';
+  document.getElementById('discount-code').value = discount?.code || '';
+  document.getElementById('discount-description').value = discount?.description || '';
+  document.getElementById('discount-type').value = discount?.discount_type || 'percent';
+  document.getElementById('discount-value').value = discount?.value ?? '';
+  document.getElementById('discount-min-order').value = discount?.min_order ?? 0;
+  document.getElementById('discount-max-uses').value = discount?.max_uses ?? '';
+  document.getElementById('discount-active').checked = discount?.is_active !== false;
+  new bootstrap.Modal(document.getElementById('discountModal')).show();
+}
+
+function editDiscount(id) {
+  const discount = (window.__discountsCache || []).find((d) => Number(d.id) === Number(id));
+  if (discount) showDiscountModal(discount);
+}
+
+async function saveDiscount(e) {
+  e.preventDefault();
+  const id = document.getElementById('discount-id').value;
+  const payload = {
+    code: document.getElementById('discount-code').value,
+    description: document.getElementById('discount-description').value || null,
+    discount_type: document.getElementById('discount-type').value,
+    value: parseFloat(document.getElementById('discount-value').value),
+    min_order: parseFloat(document.getElementById('discount-min-order').value || '0'),
+    max_uses: document.getElementById('discount-max-uses').value === ''
+      ? null
+      : parseInt(document.getElementById('discount-max-uses').value, 10),
+    is_active: document.getElementById('discount-active').checked
+  };
+
+  try {
+    if (id) {
+      await apiRequest(`/admin/discounts/${id}`, { method: 'PUT', body: JSON.stringify(payload) });
+      showToast('Korting bijgewerkt', 'success');
+    } else {
+      await apiRequest('/admin/discounts', { method: 'POST', body: JSON.stringify(payload) });
+      showToast('Korting aangemaakt', 'success');
+    }
+    bootstrap.Modal.getInstance(document.getElementById('discountModal'))?.hide();
+    loadDiscounts();
+  } catch (error) {
+    showToast('Fout: ' + error.message, 'error');
+  }
+}
+
+async function deleteDiscount(id, code) {
+  if (!confirm(`Korting "${code}" verwijderen?`)) return;
+  try {
+    await apiRequest(`/admin/discounts/${id}`, { method: 'DELETE' });
+    showToast('Korting verwijderd', 'success');
+    loadDiscounts();
+  } catch (error) {
+    showToast('Fout: ' + error.message, 'error');
+  }
+}
+
+// =====================================================
+// PLATFORM INTEGRATIONS
+// =====================================================
+
+const INTEGRATION_META = {
+  uber_eats: {
+    title: 'Uber Eats',
+    icon: 'bi-car-front',
+    fields: [
+      { key: 'uber_eats_client_id', label: 'Client ID', type: 'text' },
+      { key: 'uber_eats_client_secret', label: 'Client Secret', type: 'password' },
+      { key: 'uber_eats_store_id', label: 'Store ID', type: 'text' },
+      { key: 'uber_eats_webhook_secret', label: 'Webhook Secret', type: 'password' }
+    ],
+    enabledKey: 'uber_eats_enabled',
+    autoKey: 'uber_eats_auto_accept'
+  },
+  takeaway: {
+    title: 'Takeaway.com',
+    icon: 'bi-bag',
+    fields: [
+      { key: 'takeaway_api_key', label: 'API Key', type: 'password' },
+      { key: 'takeaway_restaurant_id', label: 'Restaurant ID', type: 'text' },
+      { key: 'takeaway_webhook_secret', label: 'Webhook Secret', type: 'password' },
+      { key: 'takeaway_base_url', label: 'API Base URL', type: 'text' }
+    ],
+    enabledKey: 'takeaway_enabled',
+    autoKey: 'takeaway_auto_accept'
+  },
+  deliveroo: {
+    title: 'Deliveroo',
+    icon: 'bi-bicycle',
+    fields: [
+      { key: 'deliveroo_client_id', label: 'Client ID', type: 'text' },
+      { key: 'deliveroo_client_secret', label: 'Client Secret', type: 'password' },
+      { key: 'deliveroo_site_id', label: 'Site ID', type: 'text' },
+      { key: 'deliveroo_webhook_secret', label: 'Webhook Secret', type: 'password' },
+      { key: 'deliveroo_base_url', label: 'API Base URL', type: 'text' }
+    ],
+    enabledKey: 'deliveroo_enabled',
+    autoKey: 'deliveroo_auto_accept'
+  }
+};
+
+async function loadIntegrations() {
+  try {
+    const [statusData, settingsData, readinessData] = await Promise.all([
+      apiRequest('/integrations/status'),
+      apiRequest('/admin/settings'),
+      apiRequest('/integrations/readiness').catch(() => ({ data: [] }))
+    ]);
+    const platforms = statusData.data?.platforms || {};
+    const settingsMap = {};
+    (settingsData.data || []).forEach((s) => { settingsMap[s.setting_key] = s.setting_value; });
+    const readinessMap = {};
+    (readinessData.data?.platforms || readinessData.data || []).forEach((r) => { readinessMap[r.platform] = r; });
+
+    const container = document.getElementById('integrations-cards');
+    if (!container) return;
+
+    container.innerHTML = Object.entries(INTEGRATION_META).map(([id, meta]) => {
+      const status = platforms[id] || {};
+      const enabled = settingsMap[meta.enabledKey] === true;
+      const autoAccept = settingsMap[meta.autoKey] === true;
+      const ready = readinessMap[id] || {};
+      let readyBadge = '<span class="badge bg-secondary">Uit</span>';
+      if (ready.status === 'ready') readyBadge = '<span class="badge bg-success" title="Credentials compleet">Klaar</span>';
+      else if (ready.status === 'incomplete') {
+        readyBadge = `<span class="badge bg-danger" title="Mist: ${(ready.missing || []).join(', ')}">Incompleet</span>`;
+      } else if (enabled) {
+        readyBadge = '<span class="badge bg-warning text-dark">Check…</span>';
+      }
+      return `
+        <div class="col-lg-4">
+          <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0"><i class="bi ${meta.icon} me-2"></i>${meta.title}</h5>
+              <div class="d-flex gap-1 align-items-center">
+                ${readyBadge}
+                <span class="badge ${enabled ? 'bg-success' : 'bg-secondary'}">${enabled ? 'Actief' : 'Uit'}</span>
+              </div>
+            </div>
+            <div class="card-body">
+              ${ready.status === 'incomplete' ? `<div class="alert alert-danger py-2 small">Mist: ${escapeHtml((ready.missing || []).join(', '))}</div>` : ''}
+              <form id="integration-form-${id}">
+                <div class="form-check form-switch mb-2">
+                  <input class="form-check-input" type="checkbox" id="setting-${meta.enabledKey}" ${enabled ? 'checked' : ''}>
+                  <label class="form-check-label" for="setting-${meta.enabledKey}">Integratie inschakelen</label>
+                </div>
+                <div class="form-check form-switch mb-3">
+                  <input class="form-check-input" type="checkbox" id="setting-${meta.autoKey}" ${autoAccept ? 'checked' : ''}>
+                  <label class="form-check-label" for="setting-${meta.autoKey}">Automatisch accepteren</label>
+                </div>
+                ${meta.fields.map((f) => `
+                  <div class="mb-2">
+                    <label class="form-label small mb-1">${f.label}</label>
+                    <input type="${f.type}" class="form-control form-control-sm" id="setting-${f.key}" value="${escapeHtml(settingsMap[f.key] ?? '')}">
+                  </div>
+                `).join('')}
+                <div class="mb-3">
+                  <label class="form-label small mb-1">Webhook URL</label>
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" readonly value="${escapeHtml(status.webhook_url || '')}" id="webhook-url-${id}">
+                    <button type="button" class="btn btn-outline-secondary" onclick="copyWebhookUrl('${id}')">Kopieer</button>
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                  <button type="submit" class="btn btn-primary btn-sm">Opslaan</button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" onclick="createTestPlatformOrder('${id}')">Testorder</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    Object.keys(INTEGRATION_META).forEach((id) => {
+      const meta = INTEGRATION_META[id];
+      const form = document.getElementById(`integration-form-${id}`);
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const keys = [meta.enabledKey, meta.autoKey, ...meta.fields.map((f) => f.key)];
+        await saveSettingsForm(`integration-form-${id}`, keys);
+        loadIntegrations();
+      });
+    });
+
+    await loadIntegrationEvents();
+  } catch (error) {
+    console.error('Integrations error:', error);
+    showToast('Fout bij laden integraties', 'error');
+  }
+}
+
+async function initTenantContext() {
+  try {
+    const data = await apiRequest('/companies/me');
+    const memberships = data.data?.memberships || [];
+    const company = data.data?.company;
+    const wrap = document.getElementById('company-switcher-wrap');
+    const select = document.getElementById('company-switcher');
+    if (company?.name) {
+      const brand = document.querySelector('.brand-name');
+      if (brand) brand.textContent = company.name;
+    }
+    if (wrap && select && memberships.length > 1) {
+      wrap.classList.remove('d-none');
+      select.innerHTML = memberships.map((m) =>
+        `<option value="${m.company_id}" ${m.company_id === data.data.active_company_id ? 'selected' : ''}>${escapeHtml(m.name)}</option>`
+      ).join('');
+      select.onchange = async () => {
+        const companyId = Number(select.value);
+        const switched = await apiRequest('/companies/switch', {
+          method: 'POST',
+          body: JSON.stringify({ company_id: companyId })
+        });
+        authToken = switched.data.token;
+        localStorage.setItem('admin_token', authToken);
+        showToast(`Gewisseld naar ${switched.data.company_name}`, 'success');
+        location.reload();
+      };
+    } else if (wrap) {
+      wrap.classList.add('d-none');
+    }
+
+    const banner = document.getElementById('onboarding-banner');
+    const completeBtn = document.getElementById('complete-onboarding-btn');
+    if (banner && company && !company.onboarded_at) {
+      banner.classList.remove('d-none');
+      completeBtn?.addEventListener('click', async () => {
+        await apiRequest('/companies/me/complete-onboarding', { method: 'POST', body: '{}' });
+        banner.classList.add('d-none');
+        showToast('Onboarding afgerond', 'success');
+      }, { once: true });
+    }
+  } catch {
+    // ignore — older tokens / missing route
+  }
+}
+
+
+async function loadIntegrationEvents() {
+  try {
+    const data = await apiRequest('/integrations/events?limit=40');
+    const tbody = document.getElementById('integration-events-table');
+    if (!tbody) return;
+    const events = Array.isArray(data.data) ? data.data : [];
+    if (!events.length) {
+      tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-muted">Nog geen events</td></tr>';
+      return;
+    }
+    tbody.innerHTML = events.map((e) => `
+      <tr>
+        <td class="text-muted small">${formatDateTime(e.created_at)}</td>
+        <td>${platformBadge(e.platform) || escapeHtml(e.platform)}</td>
+        <td><code class="small">${escapeHtml(e.event_type || '—')}</code></td>
+        <td class="small">${escapeHtml(e.external_order_id || '—')}</td>
+        <td><span class="badge ${e.status === 'success' ? 'bg-success' : e.status === 'error' || e.status === 'rejected' ? 'bg-danger' : 'bg-secondary'}">${escapeHtml(e.status || '—')}</span></td>
+        <td class="small text-danger">${escapeHtml(e.error_message || '')}</td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    showToast('Fout bij laden events', 'error');
+  }
+}
+
+function copyWebhookUrl(id) {
+  const el = document.getElementById(`webhook-url-${id}`);
+  if (!el?.value) return;
+  navigator.clipboard?.writeText(el.value).then(() => {
+    showToast('Webhook URL gekopieerd', 'success');
+  }).catch(() => {
+    el.select();
+    document.execCommand('copy');
+    showToast('Webhook URL gekopieerd', 'success');
+  });
+}
+
+async function createTestPlatformOrder(source) {
+  try {
+    await apiRequest('/integrations/test-order', {
+      method: 'POST',
+      body: JSON.stringify({ source })
+    });
+    showToast(`Testbestelling ${platformLabel(source)} aangemaakt`, 'success');
+    if (currentPage === 'orders') loadOrders();
+    if (currentPage === 'dashboard') loadDashboard();
+    loadIntegrationEvents();
+  } catch (error) {
+    showToast('Fout: ' + error.message, 'error');
   }
 }
 
@@ -2208,6 +3394,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('product-form')?.addEventListener('submit', saveProduct);
   document.getElementById('category-form')?.addEventListener('submit', saveCategory);
   document.getElementById('user-form')?.addEventListener('submit', saveUser);
+  document.getElementById('website-menu-item-form')?.addEventListener('submit', saveWebsiteMenuItem);
+  document.getElementById('website-menu-item-image')?.addEventListener('input', updateWebsiteMenuImagePreview);
+  document.getElementById('website-menu-item-image')?.addEventListener('change', updateWebsiteMenuImagePreview);
+  document.getElementById('discount-form')?.addEventListener('submit', saveDiscount);
+  document.getElementById('printer-form')?.addEventListener('submit', savePrinter);
+  document.getElementById('printer-rule-form')?.addEventListener('submit', savePrinterRule);
   
   // Settings forms
   document.getElementById('settings-info-form')?.addEventListener('submit', (e) => {
@@ -2219,9 +3411,36 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     saveSettingsForm('settings-delivery-form', ['delivery_fee', 'minimum_order', 'delivery_time', 'pickup_time', 'tax_rate']);
   });
+
+  document.getElementById('settings-mollie-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    saveSettingsForm('settings-mollie-form', ['mollie_api_key']);
+  });
+
+  document.getElementById('settings-printer-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    await saveSettingsForm('settings-printer-form', ['printer_enabled', 'printer_ip', 'printer_port']);
+  });
+
+  document.getElementById('settings-pin-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pinEl = document.getElementById('setting-admin_pin');
+    const catsEl = document.getElementById('setting-pin_protected_categories');
+    let ok = true;
+    if (pinEl?.value?.trim()) {
+      ok = await saveSetting('admin_pin', pinEl.value.trim());
+      pinEl.value = '';
+    }
+    if (ok && catsEl) {
+      const cats = catsEl.value.split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+      ok = await saveSetting('pin_protected_categories', cats);
+      if (ok) pinProtectedCategories = cats;
+    }
+    if (ok) showToast('Pincode-instellingen opgeslagen', 'success');
+  });
   
   // Settings toggles (auto-save)
-  ['is_open', 'notification_sound', 'auto_accept_orders', 'print_auto'].forEach(key => {
+  ['is_open', 'notification_sound', 'auto_accept_orders', 'print_auto', 'printer_enabled'].forEach(key => {
     document.getElementById(`setting-${key}`)?.addEventListener('change', (e) => {
       saveSetting(key, e.target.checked);
     });

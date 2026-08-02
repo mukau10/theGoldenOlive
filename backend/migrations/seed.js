@@ -68,6 +68,18 @@ async function seedDatabase() {
     } catch (e) {
       if (!e.message.includes('Duplicate column')) console.log('  - printed_at column exists');
     }
+    try {
+      await query('ALTER TABLE orders ADD COLUMN discount_code VARCHAR(50) NULL');
+      console.log('  ✓ Added discount_code column to orders');
+    } catch (e) {
+      if (!e.message.includes('Duplicate column')) console.log('  - discount_code column exists');
+    }
+    try {
+      await query('ALTER TABLE orders ADD COLUMN discount_amount DECIMAL(10,2) DEFAULT 0.00');
+      console.log('  ✓ Added discount_amount column to orders');
+    } catch (e) {
+      if (!e.message.includes('Duplicate column')) console.log('  - discount_amount column exists');
+    }
     console.log('');
 
     // 1. Create admin user
@@ -88,8 +100,9 @@ async function seedDatabase() {
     
     await query(`
       INSERT INTO users (email, password, name, role, permissions)
-      VALUES (?, ?, 'Medewerker', 'staff', '["view_orders", "update_order_status", "view_products"]')
-      ON DUPLICATE KEY UPDATE email = email
+      VALUES (?, ?, 'Medewerker', 'staff', '["view_orders", "update_order_status", "view_products", "toggle_availability"]')
+      ON DUPLICATE KEY UPDATE
+        permissions = '["view_orders", "update_order_status", "view_products", "toggle_availability"]'
     `, ['staff@thegoldenolive.be', staffPassword]);
     
     console.log('✓ Staff user created\n');

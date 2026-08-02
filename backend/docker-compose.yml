@@ -1,0 +1,63 @@
+services:
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: thegoldenolive
+    ports:
+      - "3306:3306"
+    volumes:
+      - tgo_mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - tgo_redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "5087:5087"
+    environment:
+      NODE_ENV: production
+      PORT: 5087
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: thegoldenolive
+      REDIS_URL: redis://redis:6379
+      PUBLIC_COMPANY_ID: "1"
+      JWT_SECRET: change-me-to-a-long-random-production-secret-key
+      JWT_EXPIRES_IN: 8h
+      FRONTEND_URL: http://localhost:3000
+      ALLOW_INSECURE_WEBHOOKS: "false"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:5087/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  tgo_mysql:
+  tgo_redis:

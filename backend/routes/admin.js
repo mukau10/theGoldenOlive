@@ -13,6 +13,23 @@ import { fileURLToPath } from 'url';
 import { query } from '../config/database.js';
 import { authenticate, isAdmin } from '../middleware/auth.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { printOrderToNetwork } from '../services/printer.js';
+import { readWebsiteMenu, writeWebsiteMenu } from './menu.js';
+import {
+  isFoodCategory,
+  isAdminOnlyToggleCategory,
+  categoryRequiresPin,
+  parseJsonSetting
+} from '../utils/productPermissions.js';
+import { sanitizeSettingsForUser, isSensitiveSettingKey, maskSecretValue } from '../utils/secrets.js';
+import { exportCustomerData, eraseCustomerData, purgeOldOrderPii } from '../utils/privacy.js';
+import { logger } from '../utils/logger.js';
+import { attachTenant, requireActiveSubscription, companyIdFrom } from '../middleware/tenant.js';
+import {
+  listCompanySettings,
+  upsertCompanySetting,
+  getCompanySetting
+} from '../utils/companySettings.js';
 
 const router = express.Router();
 
@@ -21,9 +38,9 @@ const __dirname = path.dirname(__filename);
 const REPORT_LOGO_PATH = path.join(__dirname, '../../public/img/logo.png');
 
 // =====================================================
-// MIDDLEWARE - Apply auth to all routes
+// MIDDLEWARE - Apply auth + tenant to all routes
 // =====================================================
-router.use(authenticate);
+router.use(authenticate, attachTenant, requireActiveSubscription);
 
 // Helper to check permissions
 const hasPermission = (user, permission) => {
@@ -47,6 +64,103 @@ const requirePermission = (permission) => (req, res, next) => {
   next();
 };
 
+async function getSettingsMap(keys = null, companyId = null) {
+  if (companyId) {
+    const sql = keys?.length
+      ? `SELECT setting_key, setting_value, setting_type FROM company_settings WHERE company_id = ? AND setting_key IN (${keys.map(() => '?').join(',')})`
+      : 'SELECT setting_key, setting_value, setting_type FROM company_settings WHERE company_id = ?';
+    const params = keys?.length ? [companyId, ...keys] : [companyId];
+    const rows = await query(sql, params);
+    const map = {};
+    rows.forEach((s) => {
+      if (s.setting_type === 'json') {
+        map[s.setting_key] = parseJsonSetting(s.setting_value, {});
+      } else if (s.setting_type === 'boolean') {
+        map[s.setting_key] = s.setting_value === 'true' || s.setting_value === true || s.setting_value === '1';
+      } else if (s.setting_type === 'number') {
+        map[s.setting_key] = parseFloat(s.setting_value);
+      } else {
+        map[s.setting_key] = s.setting_value;
+      }
+    });
+    return map;
+  }
+
+  const sql = keys?.length
+    ? `SELECT setting_key, setting_value, setting_type FROM settings WHERE setting_key IN (${keys.map(() => '?').join(',')})`
+    : 'SELECT setting_key, setting_value, setting_type FROM settings';
+  const rows = await query(sql, keys || []);
+  const map = {};
+  rows.forEach((s) => {
+    if (s.setting_type === 'json') {
+      map[s.setting_key] = parseJsonSetting(s.setting_value, {});
+    } else if (s.setting_type === 'boolean') {
+      map[s.setting_key] = s.setting_value === 'true' || s.setting_value === true || s.setting_value === '1';
+    } else if (s.setting_type === 'number') {
+      map[s.setting_key] = parseFloat(s.setting_value);
+    } else {
+      map[s.setting_key] = s.setting_value;
+    }
+  });
+  return map;
+}
+
+async function upsertSetting(key, value, type = 'string', description = null) {
+  let stringValue;
+  switch (type) {
+    case 'json': stringValue = JSON.stringify(value); break;
+    case 'boolean': stringValue = value ? 'true' : 'false'; break;
+    default: stringValue = String(value ?? '');
+  }
+
+  const [existing] = await query('SELECT id FROM settings WHERE setting_key = ?', [key]);
+  if (existing) {
+    await query('UPDATE settings SET setting_value = ? WHERE setting_key = ?', [stringValue, key]);
+  } else {
+    await query(
+      'INSERT INTO settings (setting_key, setting_value, setting_type, description) VALUES (?, ?, ?, ?)',
+      [key, stringValue, type, description]
+    );
+  }
+}
+
+async function verifyAdminPin(req) {
+  const pin = req.headers['x-admin-pin'] || req.body?.admin_pin;
+  if (!pin) {
+    throw new AppError('Pincode vereist voor dit product', 403, { code: 'PIN_REQUIRED' });
+  }
+
+  const settings = await getSettingsMap(['admin_pin'], companyIdFrom(req));
+  const stored = settings.admin_pin;
+  if (!stored) {
+    throw new AppError('Er is nog geen pincode ingesteld. Stel eerst een pincode in via Instellingen.', 400, { code: 'PIN_NOT_SET' });
+  }
+
+  const ok = stored.startsWith('$2')
+    ? await bcrypt.compare(String(pin), stored)
+    : String(pin) === String(stored);
+
+  if (!ok) {
+    throw new AppError('Ongeldige pincode', 403, { code: 'PIN_INVALID' });
+  }
+}
+
+async function assertPinForCategorySlug(req, categorySlug) {
+  const settings = await getSettingsMap(['pin_protected_categories', 'admin_pin'], companyIdFrom(req));
+  if (!categoryRequiresPin(categorySlug, settings)) return;
+  await verifyAdminPin(req);
+}
+
+async function getProductWithCategory(productId, companyId) {
+  const [row] = await query(`
+    SELECT p.*, c.slug as category_slug, c.name as category_name
+    FROM products p
+    LEFT JOIN categories c ON p.category_id = c.id AND c.company_id = p.company_id
+    WHERE p.id = ? AND p.company_id = ?
+  `, [productId, companyId]);
+  return row || null;
+}
+
 // =====================================================
 // REPORT HELPERS (shared by JSON + PDF + email)
 // =====================================================
@@ -66,10 +180,16 @@ function computeVatBreakdown(grossInclVat, taxRatePct) {
   return { gross, net, vat };
 }
 
-async function getReportSettings() {
-  const settings = await query(
-    "SELECT setting_key, setting_value FROM settings WHERE setting_key IN ('tax_rate','restaurant_name','restaurant_address','restaurant_phone','restaurant_email')"
-  );
+async function getReportSettings(companyId) {
+  const keys = ['tax_rate', 'restaurant_name', 'restaurant_address', 'restaurant_phone', 'restaurant_email'];
+  const settings = companyId
+    ? await query(
+        `SELECT setting_key, setting_value FROM company_settings WHERE company_id = ? AND setting_key IN (${keys.map(() => '?').join(',')})`,
+        [companyId, ...keys]
+      )
+    : await query(
+        "SELECT setting_key, setting_value FROM settings WHERE setting_key IN ('tax_rate','restaurant_name','restaurant_address','restaurant_phone','restaurant_email')"
+      );
   const map = {};
   settings.forEach((s) => (map[s.setting_key] = s.setting_value));
 
@@ -84,7 +204,7 @@ async function getReportSettings() {
   return { taxRate, restaurant };
 }
 
-async function getOrderTotals({ whereSql, params }) {
+async function getOrderTotals({ whereSql, params, companyId }) {
   const [totals] = await query(
     `
     SELECT
@@ -95,9 +215,9 @@ async function getOrderTotals({ whereSql, params }) {
       COALESCE(SUM(CASE WHEN o.delivery_type = 'delivery' THEN 1 ELSE 0 END), 0) as delivery_orders,
       COALESCE(SUM(CASE WHEN o.delivery_type = 'pickup' THEN 1 ELSE 0 END), 0) as pickup_orders
     FROM orders o
-    WHERE ${whereSql} AND o.status != 'cancelled'
+    WHERE ${whereSql} AND o.status != 'cancelled' AND o.company_id = ?
     `,
-    params
+    [...params, companyId]
   );
 
   return {
@@ -110,7 +230,7 @@ async function getOrderTotals({ whereSql, params }) {
   };
 }
 
-async function getOrdersWithItems({ whereSql, params }) {
+async function getOrdersWithItems({ whereSql, params, companyId }) {
   const orders = await query(
     `
     SELECT
@@ -132,10 +252,10 @@ async function getOrdersWithItems({ whereSql, params }) {
     FROM orders o
     LEFT JOIN addresses a ON o.address_id = a.id
     LEFT JOIN payments p ON o.id = p.order_id
-    WHERE ${whereSql} AND o.status != 'cancelled'
+    WHERE ${whereSql} AND o.status != 'cancelled' AND o.company_id = ?
     ORDER BY o.created_at ASC
     `,
-    params
+    [...params, companyId]
   );
 
   if (!orders.length) return [];
@@ -194,12 +314,12 @@ async function getOrdersWithItems({ whereSql, params }) {
   }));
 }
 
-async function buildDailyReportPayload(date) {
+async function buildDailyReportPayload(date, companyId) {
   const d = date || isoDate();
-  const { taxRate, restaurant } = await getReportSettings();
-  const base = await getOrderTotals({ whereSql: 'DATE(o.created_at) = ?', params: [d] });
+  const { taxRate, restaurant } = await getReportSettings(companyId);
+  const base = await getOrderTotals({ whereSql: 'DATE(o.created_at) = ?', params: [d], companyId });
   const bd = computeVatBreakdown(base.revenue, taxRate);
-  const orders = await getOrdersWithItems({ whereSql: 'DATE(o.created_at) = ?', params: [d] });
+  const orders = await getOrdersWithItems({ whereSql: 'DATE(o.created_at) = ?', params: [d], companyId });
 
   return {
     date: d,
@@ -214,17 +334,19 @@ async function buildDailyReportPayload(date) {
   };
 }
 
-async function buildRangeReportPayload(dateFrom, dateTo) {
+async function buildRangeReportPayload(dateFrom, dateTo, companyId) {
   if (!dateFrom || !dateTo) throw new AppError('date_from en date_to zijn verplicht (YYYY-MM-DD)', 400);
-  const { taxRate, restaurant } = await getReportSettings();
+  const { taxRate, restaurant } = await getReportSettings(companyId);
   const base = await getOrderTotals({
     whereSql: 'DATE(o.created_at) >= ? AND DATE(o.created_at) <= ?',
-    params: [dateFrom, dateTo]
+    params: [dateFrom, dateTo],
+    companyId
   });
   const bd = computeVatBreakdown(base.revenue, taxRate);
   const orders = await getOrdersWithItems({
     whereSql: 'DATE(o.created_at) >= ? AND DATE(o.created_at) <= ?',
-    params: [dateFrom, dateTo]
+    params: [dateFrom, dateTo],
+    companyId
   });
 
   return {
@@ -241,13 +363,15 @@ async function buildRangeReportPayload(dateFrom, dateTo) {
   };
 }
 
-// Helper to log admin actions
+// Helper to log admin actions (tenant-scoped)
 const logAction = async (userId, action, entityType, entityId, details, req) => {
   try {
+    const companyId = req?.companyId || req?.user?.company_id || null;
     await query(`
-      INSERT INTO admin_logs (user_id, action, entity_type, entity_id, details, ip_address, user_agent)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO admin_logs (company_id, user_id, action, entity_type, entity_id, details, ip_address, user_agent)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `, [
+      companyId,
       userId,
       action,
       entityType,
@@ -271,6 +395,7 @@ const logAction = async (userId, action, entityType, entityId, details, req) => 
  */
 router.get('/dashboard', async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
@@ -286,26 +411,26 @@ router.get('/dashboard', async (req, res, next) => {
         COALESCE(SUM(total), 0) as revenue,
         COALESCE(SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END), 0) as pending
       FROM orders 
-      WHERE created_at >= ? AND created_at < ? AND status != 'cancelled'
-    `, [today.toISOString(), tomorrow.toISOString()]);
+      WHERE company_id = ? AND created_at >= ? AND created_at < ? AND status != 'cancelled'
+    `, [cid, today.toISOString(), tomorrow.toISOString()]);
 
     // Week stats
     const [weekStats] = await query(`
       SELECT COUNT(*) as orders, COALESCE(SUM(total), 0) as revenue
-      FROM orders WHERE created_at >= ? AND status != 'cancelled'
-    `, [weekStart.toISOString()]);
+      FROM orders WHERE company_id = ? AND created_at >= ? AND status != 'cancelled'
+    `, [cid, weekStart.toISOString()]);
 
     // Month stats
     const [monthStats] = await query(`
       SELECT COUNT(*) as orders, COALESCE(SUM(total), 0) as revenue
-      FROM orders WHERE created_at >= ? AND status != 'cancelled'
-    `, [monthStart.toISOString()]);
+      FROM orders WHERE company_id = ? AND created_at >= ? AND status != 'cancelled'
+    `, [cid, monthStart.toISOString()]);
 
     // Orders by status
     const statusCounts = await query(`
       SELECT status, COUNT(*) as count 
-      FROM orders WHERE created_at >= ? GROUP BY status
-    `, [weekStart.toISOString()]);
+      FROM orders WHERE company_id = ? AND created_at >= ? GROUP BY status
+    `, [cid, weekStart.toISOString()]);
 
     // Payment stats
     const [paymentStats] = await query(`
@@ -313,39 +438,40 @@ router.get('/dashboard', async (req, res, next) => {
         COUNT(CASE WHEN status = 'paid' THEN 1 END) as paid,
         COUNT(CASE WHEN status IN ('open', 'pending') THEN 1 END) as pending,
         COUNT(CASE WHEN status IN ('failed', 'canceled', 'expired') THEN 1 END) as failed
-      FROM payments WHERE created_at >= ?
-    `, [weekStart.toISOString()]);
+      FROM payments WHERE company_id = ? AND created_at >= ?
+    `, [cid, weekStart.toISOString()]);
 
     // Recent orders
     const recentOrders = await query(`
       SELECT o.id, o.order_number, o.customer_name, o.customer_phone, 
-             o.delivery_type, o.total, o.status, o.created_at,
+             o.delivery_type, o.total, o.status, o.created_at, o.source,
              p.status as payment_status
       FROM orders o
       LEFT JOIN payments p ON o.id = p.order_id
+      WHERE o.company_id = ?
       ORDER BY o.created_at DESC
       LIMIT 15
-    `);
+    `, [cid]);
 
     // Hourly distribution (for chart)
     const hourlyOrders = await query(`
       SELECT HOUR(created_at) as hour, COUNT(*) as orders, SUM(total) as revenue
       FROM orders 
-      WHERE created_at >= ? AND status != 'cancelled'
+      WHERE company_id = ? AND created_at >= ? AND status != 'cancelled'
       GROUP BY HOUR(created_at)
       ORDER BY hour
-    `, [today.toISOString()]);
+    `, [cid, today.toISOString()]);
 
     // Popular products today
     const popularProducts = await query(`
       SELECT oi.product_name, SUM(oi.quantity) as qty, SUM(oi.subtotal) as revenue
       FROM order_items oi
       JOIN orders o ON oi.order_id = o.id
-      WHERE o.created_at >= ? AND o.status != 'cancelled'
+      WHERE o.company_id = ? AND o.created_at >= ? AND o.status != 'cancelled'
       GROUP BY oi.product_name
       ORDER BY qty DESC
       LIMIT 10
-    `, [weekStart.toISOString()]);
+    `, [cid, weekStart.toISOString()]);
 
     res.json({
       success: true,
@@ -381,28 +507,31 @@ router.get('/dashboard', async (req, res, next) => {
  */
 router.get('/dashboard/live', async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const lastCheck = req.query.since ? new Date(req.query.since) : new Date(Date.now() - 60000);
     
     // New orders since last check
     const newOrders = await query(`
       SELECT o.id, o.order_number, o.customer_name, o.total, o.status, o.created_at,
-             o.delivery_type
+             o.delivery_type, o.source, o.external_order_id,
+             a.street, a.house_number, a.bus, a.postal_code, a.city
       FROM orders o
-      WHERE o.created_at > ?
+      LEFT JOIN addresses a ON o.address_id = a.id
+      WHERE o.company_id = ? AND o.created_at > ?
       ORDER BY o.created_at DESC
-    `, [lastCheck.toISOString()]);
+    `, [cid, lastCheck.toISOString()]);
 
     // Updated orders since last check
     const updatedOrders = await query(`
       SELECT o.id, o.order_number, o.status, o.updated_at
       FROM orders o
-      WHERE o.updated_at > ? AND o.created_at <= ?
-    `, [lastCheck.toISOString(), lastCheck.toISOString()]);
+      WHERE o.company_id = ? AND o.updated_at > ? AND o.created_at <= ?
+    `, [cid, lastCheck.toISOString(), lastCheck.toISOString()]);
 
     // Pending count
     const [{ pending }] = await query(`
-      SELECT COUNT(*) as pending FROM orders WHERE status IN ('pending', 'paid')
-    `);
+      SELECT COUNT(*) as pending FROM orders WHERE company_id = ? AND status IN ('pending', 'paid')
+    `, [cid]);
 
     res.json({
       success: true,
@@ -437,9 +566,9 @@ router.get('/orders', requirePermission('view_orders'), async (req, res, next) =
       FROM orders o
       LEFT JOIN addresses a ON o.address_id = a.id
       LEFT JOIN payments p ON o.id = p.order_id
-      WHERE 1=1
+      WHERE o.company_id = ?
     `;
-    const params = [];
+    const params = [companyIdFrom(req)];
 
     if (status) {
       sql += ' AND o.status = ?';
@@ -503,6 +632,7 @@ router.get('/orders', requirePermission('view_orders'), async (req, res, next) =
  */
 router.get('/orders/:id', requirePermission('view_orders'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const [order] = await query(`
       SELECT o.*, 
              a.street, a.house_number, a.bus, a.postal_code, a.city, a.country,
@@ -512,8 +642,8 @@ router.get('/orders/:id', requirePermission('view_orders'), async (req, res, nex
       FROM orders o
       LEFT JOIN addresses a ON o.address_id = a.id
       LEFT JOIN payments p ON o.id = p.order_id
-      WHERE o.id = ?
-    `, [req.params.id]);
+      WHERE o.id = ? AND o.company_id = ?
+    `, [req.params.id, cid]);
 
     if (!order) {
       throw new AppError('Bestelling niet gevonden', 404);
@@ -523,9 +653,9 @@ router.get('/orders/:id', requirePermission('view_orders'), async (req, res, nex
     const items = await query(`
       SELECT oi.*, pr.image_url, pr.allergens
       FROM order_items oi
-      LEFT JOIN products pr ON oi.product_id = pr.id
+      LEFT JOIN products pr ON oi.product_id = pr.id AND pr.company_id = ?
       WHERE oi.order_id = ?
-    `, [order.id]);
+    `, [cid, order.id]);
 
     // Get status history
     const statusHistory = await query(`
@@ -549,7 +679,8 @@ router.get('/orders/:id', requirePermission('view_orders'), async (req, res, nex
 
     // Restaurant location (for map)
     const [restaurant] = await query(
-      'SELECT id, name, address, latitude, longitude FROM restaurant WHERE id = 1'
+      'SELECT id, name, address, latitude, longitude FROM restaurant WHERE company_id = ? LIMIT 1',
+      [cid]
     );
 
     res.json({
@@ -580,13 +711,17 @@ router.get('/orders/:id', requirePermission('view_orders'), async (req, res, nex
  */
 router.patch('/orders/:id/vat-number', isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { vat_number } = req.body || {};
     const vat = (vat_number || '').toString().trim();
     if (!vat || vat.length < 2 || vat.length > 50) {
       throw new AppError('Ongeldig BTW-nummer (2-50 tekens)', 400);
     }
 
-    const result = await query('UPDATE orders SET customer_vat_number = ? WHERE id = ?', [vat, req.params.id]);
+    const result = await query(
+      'UPDATE orders SET customer_vat_number = ? WHERE id = ? AND company_id = ?',
+      [vat, req.params.id, cid]
+    );
     if (result.affectedRows === 0) throw new AppError('Bestelling niet gevonden', 404);
 
     res.json({ success: true, data: { customer_vat_number: vat } });
@@ -601,8 +736,9 @@ router.patch('/orders/:id/vat-number', isAdmin, async (req, res, next) => {
  */
 router.get('/reports/daily', requirePermission('view_orders'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const date = req.query.date ? String(req.query.date) : isoDate();
-    const payload = await buildDailyReportPayload(date);
+    const payload = await buildDailyReportPayload(date, cid);
 
     res.json({
       success: true,
@@ -621,9 +757,10 @@ router.get('/reports/daily', requirePermission('view_orders'), async (req, res, 
  */
 router.get('/reports/range', requirePermission('view_orders'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const dateFrom = req.query.date_from ? String(req.query.date_from) : null; // YYYY-MM-DD
     const dateTo = req.query.date_to ? String(req.query.date_to) : null; // YYYY-MM-DD
-    const payload = await buildRangeReportPayload(dateFrom, dateTo);
+    const payload = await buildRangeReportPayload(dateFrom, dateTo, cid);
 
     res.json({
       success: true,
@@ -643,8 +780,9 @@ router.get('/reports/range', requirePermission('view_orders'), async (req, res, 
  */
 router.get('/revenue', requirePermission('view_orders'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const period = String(req.query.period || 'today');
-    const { taxRate, restaurant } = await getReportSettings();
+    const { taxRate, restaurant } = await getReportSettings(cid);
 
     const now = new Date();
     const today = new Date(now);
@@ -663,11 +801,11 @@ router.get('/revenue', requirePermission('view_orders'), async (req, res, next) 
       seriesSql = `
         SELECT HOUR(o.created_at) as label, COUNT(*) as orders, COALESCE(SUM(o.total),0) as revenue
         FROM orders o
-        WHERE DATE(o.created_at) = ? AND o.status != 'cancelled'
+        WHERE o.company_id = ? AND DATE(o.created_at) = ? AND o.status != 'cancelled'
         GROUP BY HOUR(o.created_at)
         ORDER BY label
       `;
-      seriesParams = params;
+      seriesParams = [cid, ...params];
     } else if (period === 'week') {
       title = 'Omzet Deze Week';
       const from = new Date(today);
@@ -679,11 +817,11 @@ router.get('/revenue', requirePermission('view_orders'), async (req, res, next) 
       seriesSql = `
         SELECT DATE(o.created_at) as label, COUNT(*) as orders, COALESCE(SUM(o.total),0) as revenue
         FROM orders o
-        WHERE DATE(o.created_at) >= ? AND DATE(o.created_at) <= ? AND o.status != 'cancelled'
+        WHERE o.company_id = ? AND DATE(o.created_at) >= ? AND DATE(o.created_at) <= ? AND o.status != 'cancelled'
         GROUP BY DATE(o.created_at)
         ORDER BY label
       `;
-      seriesParams = params;
+      seriesParams = [cid, ...params];
     } else if (period === 'month') {
       title = 'Omzet Deze Maand';
       const from = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -695,16 +833,16 @@ router.get('/revenue', requirePermission('view_orders'), async (req, res, next) 
       seriesSql = `
         SELECT DATE(o.created_at) as label, COUNT(*) as orders, COALESCE(SUM(o.total),0) as revenue
         FROM orders o
-        WHERE DATE(o.created_at) >= ? AND DATE(o.created_at) <= ? AND o.status != 'cancelled'
+        WHERE o.company_id = ? AND DATE(o.created_at) >= ? AND DATE(o.created_at) <= ? AND o.status != 'cancelled'
         GROUP BY DATE(o.created_at)
         ORDER BY label
       `;
-      seriesParams = params;
+      seriesParams = [cid, ...params];
     } else {
       throw new AppError('Onbekende periode', 400);
     }
 
-    const baseTotals = await getOrderTotals({ whereSql, params });
+    const baseTotals = await getOrderTotals({ whereSql, params, companyId: cid });
     const bd = computeVatBreakdown(baseTotals.revenue, taxRate);
 
     const rows = await query(seriesSql, seriesParams);
@@ -1045,6 +1183,7 @@ function buildReportPdf(doc, { title, subtitle, restaurant, totals, orders = [],
  */
 router.get('/reports/pdf', requirePermission('view_orders'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const type = String(req.query.type || 'daily');
 
     let title = 'Rapport';
@@ -1053,7 +1192,7 @@ router.get('/reports/pdf', requirePermission('view_orders'), async (req, res, ne
 
     if (type === 'daily') {
       const date = req.query.date ? String(req.query.date) : isoDate();
-      const daily = await buildDailyReportPayload(date);
+      const daily = await buildDailyReportPayload(date, cid);
 
       title = 'Dagrapport';
       subtitle = `Datum: ${date}`;
@@ -1064,7 +1203,7 @@ router.get('/reports/pdf', requirePermission('view_orders'), async (req, res, ne
       const dateTo = req.query.date_to ? String(req.query.date_to) : null;
       title = 'Periode rapport';
       subtitle = `Periode: ${dateFrom} → ${dateTo}`;
-      payload = await buildRangeReportPayload(dateFrom, dateTo);
+      payload = await buildRangeReportPayload(dateFrom, dateTo, cid);
       res.setHeader('Content-Disposition', `attachment; filename="periode-${dateFrom}-tot-${dateTo}.pdf"`);
     } else {
       throw new AppError('Onbekend report type', 400);
@@ -1093,6 +1232,7 @@ router.get('/reports/pdf', requirePermission('view_orders'), async (req, res, ne
  */
 router.post('/reports/email', requirePermission('view_orders'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { type, to, date, date_from, date_to } = req.body || {};
     const toEmail = (to || '').toString().trim();
     if (!toEmail) throw new AppError('E-mailadres is verplicht', 400);
@@ -1114,14 +1254,14 @@ router.post('/reports/email', requirePermission('view_orders'), async (req, res,
 
     if (reportType === 'daily') {
       const d = (date || isoDate()).toString();
-      payload = await buildDailyReportPayload(d);
+      payload = await buildDailyReportPayload(d, cid);
       title = 'Dagrapport';
       subtitle = `Datum: ${d}`;
       filename = `dagrapport-${d}.pdf`;
     } else if (reportType === 'range') {
       const df = (date_from || '').toString();
       const dt = (date_to || '').toString();
-      payload = await buildRangeReportPayload(df, dt);
+      payload = await buildRangeReportPayload(df, dt, cid);
       title = 'Periode rapport';
       subtitle = `Periode: ${df} → ${dt}`;
       filename = `periode-${df}-tot-${dt}.pdf`;
@@ -1173,6 +1313,7 @@ router.post('/reports/email', requirePermission('view_orders'), async (req, res,
  */
 router.patch('/orders/:id/status', requirePermission('update_order_status'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { status, notes } = req.body;
     const validStatuses = ['pending', 'paid', 'preparing', 'ready', 'delivering', 'delivered', 'cancelled'];
 
@@ -1181,7 +1322,7 @@ router.patch('/orders/:id/status', requirePermission('update_order_status'), asy
     }
 
     // Get current order
-    const [order] = await query('SELECT id, status FROM orders WHERE id = ?', [req.params.id]);
+    const [order] = await query('SELECT id, status FROM orders WHERE id = ? AND company_id = ?', [req.params.id, cid]);
     if (!order) {
       throw new AppError('Bestelling niet gevonden', 404);
     }
@@ -1189,7 +1330,7 @@ router.patch('/orders/:id/status', requirePermission('update_order_status'), asy
     const previousStatus = order.status;
 
     // Update order
-    await query('UPDATE orders SET status = ? WHERE id = ?', [status, req.params.id]);
+    await query('UPDATE orders SET status = ? WHERE id = ? AND company_id = ?', [status, req.params.id, cid]);
 
     // Log status change
     await query(`
@@ -1216,17 +1357,73 @@ router.patch('/orders/:id/status', requirePermission('update_order_status'), asy
 
 /**
  * POST /api/admin/orders/:id/print
- * Mark order as printed
+ * Mark order as printed + send via Print Bridge (preferred) or legacy TCP
  */
 router.post('/orders/:id/print', requirePermission('view_orders'), async (req, res, next) => {
   try {
-    await query(`
-      UPDATE orders SET print_count = print_count + 1, printed_at = NOW() WHERE id = ?
-    `, [req.params.id]);
+    const cid = companyIdFrom(req);
+    const [order] = await query(`
+      SELECT o.*,
+             a.street, a.house_number, a.bus, a.postal_code, a.city
+      FROM orders o
+      LEFT JOIN addresses a ON o.address_id = a.id
+      WHERE o.id = ? AND o.company_id = ?
+    `, [req.params.id, cid]);
+
+    if (!order) {
+      throw new AppError('Bestelling niet gevonden', 404);
+    }
+
+    const items = await query(
+      'SELECT product_name, quantity, product_price, subtotal, notes FROM order_items WHERE order_id = ? ORDER BY id',
+      [req.params.id]
+    );
+    order.items = items;
 
     await logAction(req.user.id, 'print_order', 'order', req.params.id, {}, req);
 
-    res.json({ success: true, message: 'Order gemarkeerd als geprint' });
+    let network = { printed: false };
+    try {
+      const { printOrderViaBridge } = await import('../services/print/queue.js');
+      const bridge = await printOrderViaBridge(req.params.id);
+      network = { printed: true, bridge, via: 'print_bridge' };
+    } catch (bridgeErr) {
+      try {
+        if (req.body?.network === true || req.query.network === '1') {
+          const settings = await getSettingsMap(['printer_ip', 'printer_port', 'restaurant_name', 'restaurant_address', 'restaurant_phone'], cid);
+          const { sendToPrinter, buildOrderTicket } = await import('../services/printer.js');
+          const host = String(settings.printer_ip || '').trim();
+          if (!host) throw new AppError('Printer IP is niet ingesteld', 400);
+          const ticket = buildOrderTicket(order, {
+            name: settings.restaurant_name || 'The Golden Olive',
+            address: settings.restaurant_address || '',
+            phone: settings.restaurant_phone || ''
+          });
+          await sendToPrinter({ host, port: settings.printer_port || 9100, data: ticket });
+          network = { printed: true, host, port: settings.printer_port || 9100, via: 'legacy_tcp' };
+        } else {
+          network = await printOrderToNetwork(order);
+          if (network?.printed) network.via = 'legacy_tcp';
+        }
+      } catch (printErr) {
+        network = { printed: false, error: printErr.message, bridge_error: bridgeErr.message };
+      }
+
+      // Legacy / mark-only path: increment print metadata here
+      // (Print Bridge already updates print_count inside printOrderViaBridge)
+      await query(
+        `UPDATE orders SET print_count = print_count + 1, printed_at = NOW() WHERE id = ? AND company_id = ?`,
+        [req.params.id, cid]
+      );
+    }
+
+    res.json({
+      success: true,
+      message: network.printed
+        ? (network.via === 'print_bridge' ? 'Order naar Print Bridge queue gestuurd' : 'Order geprint op netwerkprinter')
+        : 'Order gemarkeerd als geprint',
+      data: { network }
+    });
   } catch (error) {
     next(error);
   }
@@ -1242,15 +1439,16 @@ router.post('/orders/:id/print', requirePermission('view_orders'), async (req, r
  */
 router.get('/products', requirePermission('view_products'), async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { category, available, search } = req.query;
     
     let sql = `
       SELECT p.*, c.name as category_name, c.slug as category_slug
       FROM products p
-      LEFT JOIN categories c ON p.category_id = c.id
-      WHERE 1=1
+      LEFT JOIN categories c ON p.category_id = c.id AND c.company_id = p.company_id
+      WHERE p.company_id = ?
     `;
-    const params = [];
+    const params = [cid];
 
     if (category) {
       sql += ' AND p.category_id = ?';
@@ -1287,19 +1485,24 @@ router.get('/products', requirePermission('view_products'), async (req, res, nex
  */
 router.post('/products', isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, category_id, description, price, image_url, allergens, is_available, is_featured, sort_order } = req.body;
 
     if (!name || !category_id || price === undefined) {
       throw new AppError('Naam, categorie en prijs zijn verplicht', 400);
     }
 
+    const [category] = await query('SELECT id, slug FROM categories WHERE id = ? AND company_id = ?', [category_id, cid]);
+    if (!category) throw new AppError('Categorie niet gevonden', 404);
+    await assertPinForCategorySlug(req, category.slug);
+
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now();
 
     const result = await query(`
-      INSERT INTO products (category_id, name, slug, description, price, image_url, allergens, is_available, is_featured, sort_order)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO products (company_id, category_id, name, slug, description, price, image_url, allergens, is_available, is_featured, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
-      category_id, name, slug, description || null, price, image_url || null,
+      cid, category_id, name, slug, description || null, price, image_url || null,
       JSON.stringify(allergens || []), is_available !== false ? 1 : 0, is_featured ? 1 : 0, sort_order || 0
     ]);
 
@@ -1321,11 +1524,20 @@ router.post('/products', isAdmin, async (req, res, next) => {
  */
 router.put('/products/:id', isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, category_id, description, price, image_url, allergens, is_available, is_featured, sort_order } = req.body;
 
-    const [existing] = await query('SELECT * FROM products WHERE id = ?', [req.params.id]);
+    const existing = await getProductWithCategory(req.params.id, cid);
     if (!existing) {
       throw new AppError('Product niet gevonden', 404);
+    }
+
+    await assertPinForCategorySlug(req, existing.category_slug);
+
+    if (category_id && Number(category_id) !== Number(existing.category_id)) {
+      const [category] = await query('SELECT id, slug FROM categories WHERE id = ? AND company_id = ?', [category_id, cid]);
+      if (!category) throw new AppError('Categorie niet gevonden', 404);
+      await assertPinForCategorySlug(req, category.slug);
     }
 
     await query(`
@@ -1339,13 +1551,13 @@ router.put('/products/:id', isAdmin, async (req, res, next) => {
         is_available = COALESCE(?, is_available),
         is_featured = COALESCE(?, is_featured),
         sort_order = COALESCE(?, sort_order)
-      WHERE id = ?
+      WHERE id = ? AND company_id = ?
     `, [
       name, category_id, description, price, image_url,
       allergens ? JSON.stringify(allergens) : null,
       is_available !== undefined ? (is_available ? 1 : 0) : null,
       is_featured !== undefined ? (is_featured ? 1 : 0) : null,
-      sort_order, req.params.id
+      sort_order, req.params.id, cid
     ]);
 
     await logAction(req.user.id, 'update_product', 'product', req.params.id, { name, price }, req);
@@ -1362,12 +1574,15 @@ router.put('/products/:id', isAdmin, async (req, res, next) => {
  */
 router.delete('/products/:id', isAdmin, async (req, res, next) => {
   try {
-    const [existing] = await query('SELECT name FROM products WHERE id = ?', [req.params.id]);
+    const cid = companyIdFrom(req);
+    const existing = await getProductWithCategory(req.params.id, cid);
     if (!existing) {
       throw new AppError('Product niet gevonden', 404);
     }
 
-    await query('DELETE FROM products WHERE id = ?', [req.params.id]);
+    await assertPinForCategorySlug(req, existing.category_slug);
+
+    await query('DELETE FROM products WHERE id = ? AND company_id = ?', [req.params.id, cid]);
     await logAction(req.user.id, 'delete_product', 'product', req.params.id, { name: existing.name }, req);
 
     res.json({ success: true, message: 'Product verwijderd' });
@@ -1379,17 +1594,34 @@ router.delete('/products/:id', isAdmin, async (req, res, next) => {
 /**
  * PATCH /api/admin/products/:id/toggle
  * Toggle product availability
+ * - Admin: alle producten (PIN voor beschermde categorieën)
+ * - Staff: alleen eten; mocktails nooit
  */
-router.patch('/products/:id/toggle', isAdmin, async (req, res, next) => {
+router.patch('/products/:id/toggle', requirePermission('toggle_availability'), async (req, res, next) => {
   try {
-    const [product] = await query('SELECT id, is_available FROM products WHERE id = ?', [req.params.id]);
+    const cid = companyIdFrom(req);
+    const product = await getProductWithCategory(req.params.id, cid);
     if (!product) {
       throw new AppError('Product niet gevonden', 404);
     }
 
+    const slug = product.category_slug;
+
+    if (isAdminOnlyToggleCategory(slug) && req.user.role !== 'admin') {
+      throw new AppError('Alleen een admin kan mocktails actief/inactief zetten', 403);
+    }
+
+    if (req.user.role !== 'admin' && !isFoodCategory(slug)) {
+      throw new AppError('Medewerkers kunnen alleen beschikbaarheid van eten wijzigen', 403);
+    }
+
+    if (req.user.role === 'admin') {
+      await assertPinForCategorySlug(req, slug);
+    }
+
     const newStatus = !product.is_available;
-    await query('UPDATE products SET is_available = ? WHERE id = ?', [newStatus ? 1 : 0, req.params.id]);
-    
+    await query('UPDATE products SET is_available = ? WHERE id = ? AND company_id = ?', [newStatus ? 1 : 0, req.params.id, cid]);
+
     await logAction(req.user.id, 'toggle_product', 'product', req.params.id, { is_available: newStatus }, req);
 
     res.json({ success: true, data: { is_available: newStatus } });
@@ -1408,13 +1640,15 @@ router.patch('/products/:id/toggle', isAdmin, async (req, res, next) => {
  */
 router.get('/categories', async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const categories = await query(`
       SELECT c.*, COUNT(p.id) as product_count
       FROM categories c
-      LEFT JOIN products p ON c.id = p.category_id
+      LEFT JOIN products p ON c.id = p.category_id AND p.company_id = c.company_id
+      WHERE c.company_id = ?
       GROUP BY c.id
       ORDER BY c.sort_order, c.name
-    `);
+    `, [cid]);
 
     res.json({ success: true, data: categories });
   } catch (error) {
@@ -1427,15 +1661,16 @@ router.get('/categories', async (req, res, next) => {
  */
 router.post('/categories', isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, description, image_url, sort_order, is_active } = req.body;
     if (!name) throw new AppError('Naam is verplicht', 400);
 
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
     const result = await query(`
-      INSERT INTO categories (name, slug, description, image_url, sort_order, is_active)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `, [name, slug, description || null, image_url || null, sort_order || 0, is_active !== false ? 1 : 0]);
+      INSERT INTO categories (company_id, name, slug, description, image_url, sort_order, is_active)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `, [cid, name, slug, description || null, image_url || null, sort_order || 0, is_active !== false ? 1 : 0]);
 
     await logAction(req.user.id, 'create_category', 'category', result.insertId, { name }, req);
 
@@ -1450,6 +1685,7 @@ router.post('/categories', isAdmin, async (req, res, next) => {
  */
 router.put('/categories/:id', isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, description, image_url, sort_order, is_active } = req.body;
 
     await query(`
@@ -1459,8 +1695,8 @@ router.put('/categories/:id', isAdmin, async (req, res, next) => {
         image_url = COALESCE(?, image_url),
         sort_order = COALESCE(?, sort_order),
         is_active = COALESCE(?, is_active)
-      WHERE id = ?
-    `, [name, description, image_url, sort_order, is_active !== undefined ? (is_active ? 1 : 0) : null, req.params.id]);
+      WHERE id = ? AND company_id = ?
+    `, [name, description, image_url, sort_order, is_active !== undefined ? (is_active ? 1 : 0) : null, req.params.id, cid]);
 
     await logAction(req.user.id, 'update_category', 'category', req.params.id, { name }, req);
 
@@ -1475,12 +1711,17 @@ router.put('/categories/:id', isAdmin, async (req, res, next) => {
  */
 router.delete('/categories/:id', isAdmin, async (req, res, next) => {
   try {
-    const [{ count }] = await query('SELECT COUNT(*) as count FROM products WHERE category_id = ?', [req.params.id]);
+    const cid = companyIdFrom(req);
+    const [{ count }] = await query(
+      'SELECT COUNT(*) as count FROM products WHERE category_id = ? AND company_id = ?',
+      [req.params.id, cid]
+    );
     if (count > 0) {
       throw new AppError('Kan niet verwijderen: categorie bevat nog producten', 400);
     }
 
-    await query('DELETE FROM categories WHERE id = ?', [req.params.id]);
+    const result = await query('DELETE FROM categories WHERE id = ? AND company_id = ?', [req.params.id, cid]);
+    if (result.affectedRows === 0) throw new AppError('Categorie niet gevonden', 404);
     await logAction(req.user.id, 'delete_category', 'category', req.params.id, {}, req);
 
     res.json({ success: true, message: 'Categorie verwijderd' });
@@ -1499,15 +1740,16 @@ router.delete('/categories/:id', isAdmin, async (req, res, next) => {
  */
 router.get('/payments', isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { status, date_from, date_to, page = 1, limit = 50 } = req.query;
     
     let sql = `
       SELECT p.*, o.order_number, o.customer_name, o.customer_email
       FROM payments p
       JOIN orders o ON p.order_id = o.id
-      WHERE 1=1
+      WHERE p.company_id = ?
     `;
-    const params = [];
+    const params = [cid];
 
     if (status) {
       sql += ' AND p.status = ?';
@@ -1548,23 +1790,38 @@ router.get('/payments', isAdmin, async (req, res, next) => {
 
 /**
  * GET /api/admin/settings
+ * Secrets are always masked. Staff only sees operational (non-secret) keys.
  */
 router.get('/settings', async (req, res, next) => {
   try {
-    const settings = await query('SELECT * FROM settings ORDER BY setting_key');
-    
-    const parsed = settings.map(s => ({
-      ...s,
-      setting_value: s.setting_type === 'json' 
-        ? JSON.parse(s.setting_value || '{}')
-        : s.setting_type === 'number'
-          ? parseFloat(s.setting_value)
-          : s.setting_type === 'boolean'
-            ? s.setting_value === 'true'
-            : s.setting_value
-    }));
+    const cid = companyIdFrom(req);
+    let settings = await listCompanySettings(cid);
+    // Fallback: if empty, mirror legacy global settings once
+    if (!settings.length) {
+      const legacy = await query('SELECT * FROM settings ORDER BY setting_key');
+      for (const s of legacy) {
+        await upsertCompanySetting(cid, s.setting_key, s.setting_value, s.setting_type, s.description);
+      }
+      settings = await listCompanySettings(cid);
+    }
 
-    res.json({ success: true, data: parsed });
+    const parsed = settings.map((s) => {
+      let setting_value = s.setting_value;
+      if (s.is_encrypted || String(setting_value || '').startsWith('enc:')) {
+        // leave encrypted; sanitizeSettingsForUser will mask secrets
+        setting_value = '********';
+      } else if (s.setting_type === 'json') {
+        setting_value = parseJsonSetting(s.setting_value, {});
+      } else if (s.setting_type === 'number') {
+        setting_value = parseFloat(s.setting_value);
+      } else if (s.setting_type === 'boolean') {
+        setting_value = s.setting_value === 'true';
+      }
+      return { ...s, setting_key: s.setting_key, setting_value, setting_type: s.setting_type };
+    });
+
+    const sanitized = sanitizeSettingsForUser(parsed, req.user);
+    res.json({ success: true, data: sanitized });
   } catch (error) {
     next(error);
   }
@@ -1577,23 +1834,109 @@ router.put('/settings/:key', isAdmin, async (req, res, next) => {
   try {
     const { value } = req.body;
     const { key } = req.params;
+    const cid = companyIdFrom(req);
 
-    const [setting] = await query('SELECT * FROM settings WHERE setting_key = ?', [key]);
-    if (!setting) {
-      throw new AppError('Instelling niet gevonden', 404);
+    // Prevent accidental overwrite with masked UI values
+    if (isSensitiveSettingKey(key)) {
+      const raw = value == null ? '' : String(typeof value === 'object' ? JSON.stringify(value) : value);
+      if (!raw || raw.includes('********') || raw.endsWith('…********')) {
+        return res.json({ success: true, message: 'Secret ongewijzigd' });
+      }
     }
 
-    let stringValue;
-    switch (setting.setting_type) {
-      case 'json': stringValue = JSON.stringify(value); break;
-      case 'boolean': stringValue = value ? 'true' : 'false'; break;
-      default: stringValue = String(value);
+    // Special handling: hash admin PIN
+    if (key === 'admin_pin') {
+      const pin = String(value || '').trim();
+      if (pin && !/^\d{4,8}$/.test(pin)) {
+        throw new AppError('Pincode moet 4 tot 8 cijfers zijn', 400);
+      }
+      const hashed = pin ? await bcrypt.hash(pin, 10) : '';
+      await upsertCompanySetting(cid, 'admin_pin', hashed, 'string', 'Pincode voor beheer van beschermde producten (gehashed)');
+      await logAction(req.user.id, 'update_setting', 'setting', null, { key: 'admin_pin', value: pin ? '***' : '' }, req);
+      return res.json({ success: true, message: pin ? 'Pincode opgeslagen' : 'Pincode gewist' });
     }
 
-    await query('UPDATE settings SET setting_value = ? WHERE setting_key = ?', [stringValue, key]);
-    await logAction(req.user.id, 'update_setting', 'setting', null, { key, value: stringValue }, req);
+    if (key === 'pin_protected_categories') {
+      const cats = Array.isArray(value)
+        ? value
+        : String(value || '')
+            .split(',')
+            .map((s) => s.trim().toLowerCase())
+            .filter(Boolean);
+      await upsertCompanySetting(cid, 'pin_protected_categories', cats, 'json', 'Categorie-slugs die een pincode vereisen');
+      await logAction(req.user.id, 'update_setting', 'setting', null, { key, value: cats }, req);
+      return res.json({ success: true, message: 'Instelling opgeslagen' });
+    }
+
+    const type = typeof value === 'boolean' ? 'boolean' : typeof value === 'number' ? 'number' : Array.isArray(value) || typeof value === 'object' ? 'json' : 'string';
+    await upsertCompanySetting(cid, key, value, type);
+    // dual-write legacy settings for compatibility during transition
+    try { await upsertSetting(key, value, type); } catch { /* ignore */ }
+
+    await logAction(
+      req.user.id,
+      'update_setting',
+      'setting',
+      null,
+      { key, value: isSensitiveSettingKey(key) ? '***' : value },
+      req
+    );
 
     res.json({ success: true, message: 'Instelling opgeslagen' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// =====================================================
+// PRIVACY / GDPR (Admin only)
+// =====================================================
+
+/**
+ * GET /api/admin/privacy/export?email=
+ */
+router.get('/privacy/export', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const email = String(req.query.email || '').trim();
+    if (!email) throw new AppError('Query parameter email is verplicht', 400);
+    const data = await exportCustomerData(email, cid);
+    await logAction(req.user.id, 'privacy_export', 'customer', null, { email }, req);
+    res.json({ success: true, data });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * POST /api/admin/privacy/erase
+ * Body: { email }
+ */
+router.post('/privacy/erase', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const email = String(req.body?.email || '').trim();
+    if (!email) throw new AppError('email is verplicht', 400);
+    const result = await eraseCustomerData(email, cid);
+    await logAction(req.user.id, 'privacy_erase', 'customer', null, { email, ...result }, req);
+    logger.info('GDPR erase', { email, ...result, by: req.user.id });
+    res.json({ success: true, data: result, message: 'Klantgegevens geanonimiseerd' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * POST /api/admin/privacy/purge-old
+ * Body: { days?: number } default 730
+ */
+router.post('/privacy/purge-old', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const days = Number(req.body?.days || 730);
+    const result = await purgeOldOrderPii(days, cid);
+    await logAction(req.user.id, 'privacy_purge_old', 'orders', null, result, req);
+    res.json({ success: true, data: result, message: `PII geanonimiseerd voor orders ouder dan ${result.days} dagen` });
   } catch (error) {
     next(error);
   }
@@ -1630,7 +1973,7 @@ router.post('/users', isAdmin, async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
-    const permissions = role === 'staff' ? '["view_orders", "update_order_status", "view_products"]' : null;
+    const permissions = role === 'staff' ? '["view_orders", "update_order_status", "view_products", "toggle_availability"]' : null;
 
     const result = await query(`
       INSERT INTO users (email, password, name, role, permissions)
@@ -1655,14 +1998,15 @@ router.post('/users', isAdmin, async (req, res, next) => {
 router.get('/logs', isAdmin, async (req, res, next) => {
   try {
     const { action, user_id, date_from, limit = 100 } = req.query;
+    const cid = companyIdFrom(req);
     
     let sql = `
       SELECT l.*, u.name as user_name, u.email as user_email
       FROM admin_logs l
       LEFT JOIN users u ON l.user_id = u.id
-      WHERE 1=1
+      WHERE (l.company_id = ? OR l.company_id IS NULL)
     `;
-    const params = [];
+    const params = [cid];
 
     if (action) {
       sql += ' AND l.action = ?';
@@ -1702,17 +2046,18 @@ router.get('/logs', isAdmin, async (req, res, next) => {
  */
 router.get('/notifications', async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const notifications = await query(`
       SELECT * FROM notifications 
-      WHERE user_id = ? OR user_id IS NULL
+      WHERE company_id = ? AND (user_id = ? OR user_id IS NULL)
       ORDER BY created_at DESC
       LIMIT 50
-    `, [req.user.id]);
+    `, [cid, req.user.id]);
 
     const [{ unread }] = await query(`
       SELECT COUNT(*) as unread FROM notifications 
-      WHERE (user_id = ? OR user_id IS NULL) AND is_read = 0
-    `, [req.user.id]);
+      WHERE company_id = ? AND (user_id = ? OR user_id IS NULL) AND is_read = 0
+    `, [cid, req.user.id]);
 
     res.json({ success: true, data: { notifications, unreadCount: Number(unread) } });
   } catch (error) {
@@ -1725,12 +2070,288 @@ router.get('/notifications', async (req, res, next) => {
  */
 router.post('/notifications/read', async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     await query(`
       UPDATE notifications SET is_read = 1 
-      WHERE (user_id = ? OR user_id IS NULL) AND is_read = 0
-    `, [req.user.id]);
+      WHERE company_id = ? AND (user_id = ? OR user_id IS NULL) AND is_read = 0
+    `, [cid, req.user.id]);
 
     res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// =====================================================
+// PIN VERIFICATION
+// =====================================================
+
+router.post('/pin/verify', isAdmin, async (req, res, next) => {
+  try {
+    await verifyAdminPin(req);
+    res.json({ success: true, message: 'Pincode geldig' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// =====================================================
+// WEBSITE MENU (menukaart)
+// =====================================================
+
+router.get('/website-menu', isAdmin, async (req, res, next) => {
+  try {
+    const menu = readWebsiteMenu();
+    res.json({ success: true, data: menu });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/website-menu', isAdmin, async (req, res, next) => {
+  try {
+    const menu = writeWebsiteMenu(req.body?.menu ?? req.body);
+    await logAction(req.user.id, 'update_website_menu', 'website_menu', null, {
+      categories: Object.keys(menu || {})
+    }, req);
+    res.json({ success: true, message: 'Website menukaart opgeslagen', data: menu });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/website-menu/:category/:itemId', isAdmin, async (req, res, next) => {
+  try {
+    const { category, itemId } = req.params;
+    const updates = req.body || {};
+    const menu = readWebsiteMenu();
+
+    if (!menu[category] || !Array.isArray(menu[category])) {
+      throw new AppError('Categorie niet gevonden op menukaart', 404);
+    }
+
+    const idx = menu[category].findIndex((item) => String(item.id) === String(itemId));
+    if (idx === -1) {
+      throw new AppError('Product niet gevonden op menukaart', 404);
+    }
+
+    menu[category][idx] = { ...menu[category][idx], ...updates, id: menu[category][idx].id };
+    writeWebsiteMenu(menu);
+    await logAction(req.user.id, 'update_website_menu_item', 'website_menu', null, { category, itemId }, req);
+
+    res.json({ success: true, message: 'Menukaart item bijgewerkt', data: menu[category][idx] });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/website-menu/:category', isAdmin, async (req, res, next) => {
+  try {
+    const { category } = req.params;
+    const item = req.body || {};
+    if (!item.name || !item.price) {
+      throw new AppError('Naam en prijs zijn verplicht', 400);
+    }
+
+    const menu = readWebsiteMenu();
+    if (!menu[category]) menu[category] = [];
+
+    const id = item.id || String(item.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    if (menu[category].some((i) => String(i.id) === String(id))) {
+      throw new AppError('Product met deze id bestaat al in deze categorie', 409);
+    }
+
+    const newItem = {
+      id,
+      name: item.name,
+      price: item.price,
+      description: item.description || '',
+      image: item.image || 'assets/img/favicon11.png',
+      alt: item.alt || item.name,
+      allergens: Array.isArray(item.allergens) ? item.allergens : []
+    };
+
+    menu[category].push(newItem);
+    writeWebsiteMenu(menu);
+    await logAction(req.user.id, 'create_website_menu_item', 'website_menu', null, { category, id }, req);
+
+    res.status(201).json({ success: true, message: 'Item toegevoegd aan menukaart', data: newItem });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/website-menu/:category/:itemId', isAdmin, async (req, res, next) => {
+  try {
+    const { category, itemId } = req.params;
+    const menu = readWebsiteMenu();
+    if (!menu[category] || !Array.isArray(menu[category])) {
+      throw new AppError('Categorie niet gevonden op menukaart', 404);
+    }
+
+    const before = menu[category].length;
+    menu[category] = menu[category].filter((item) => String(item.id) !== String(itemId));
+    if (menu[category].length === before) {
+      throw new AppError('Product niet gevonden op menukaart', 404);
+    }
+
+    writeWebsiteMenu(menu);
+    await logAction(req.user.id, 'delete_website_menu_item', 'website_menu', null, { category, itemId }, req);
+    res.json({ success: true, message: 'Item verwijderd van menukaart' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// =====================================================
+// DISCOUNTS
+// =====================================================
+
+router.get('/discounts', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const discounts = await query(
+      'SELECT * FROM discounts WHERE company_id = ? ORDER BY created_at DESC',
+      [cid]
+    );
+    res.json({ success: true, data: discounts });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/discounts', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const {
+      code, description, discount_type = 'percent', value,
+      min_order = 0, max_uses = null, is_active = true,
+      valid_from = null, valid_until = null
+    } = req.body;
+
+    if (!code || value === undefined || value === null) {
+      throw new AppError('Code en waarde zijn verplicht', 400);
+    }
+    if (!['percent', 'fixed'].includes(discount_type)) {
+      throw new AppError('Ongeldig kortingstype', 400);
+    }
+
+    const result = await query(`
+      INSERT INTO discounts
+        (company_id, code, description, discount_type, value, min_order, max_uses, is_active, valid_from, valid_until)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      cid,
+      String(code).trim().toUpperCase(),
+      description || null,
+      discount_type,
+      Number(value),
+      Number(min_order || 0),
+      max_uses === '' || max_uses == null ? null : Number(max_uses),
+      is_active ? 1 : 0,
+      valid_from || null,
+      valid_until || null
+    ]);
+
+    await logAction(req.user.id, 'create_discount', 'discount', result.insertId, { code }, req);
+    res.status(201).json({ success: true, data: { id: result.insertId }, message: 'Korting aangemaakt' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put('/discounts/:id', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const {
+      code, description, discount_type, value,
+      min_order, max_uses, is_active, valid_from, valid_until
+    } = req.body;
+
+    const [existing] = await query('SELECT id FROM discounts WHERE id = ? AND company_id = ?', [req.params.id, cid]);
+    if (!existing) throw new AppError('Korting niet gevonden', 404);
+
+    await query(`
+      UPDATE discounts SET
+        code = COALESCE(?, code),
+        description = COALESCE(?, description),
+        discount_type = COALESCE(?, discount_type),
+        value = COALESCE(?, value),
+        min_order = COALESCE(?, min_order),
+        max_uses = ?,
+        is_active = COALESCE(?, is_active),
+        valid_from = ?,
+        valid_until = ?
+      WHERE id = ? AND company_id = ?
+    `, [
+      code ? String(code).trim().toUpperCase() : null,
+      description ?? null,
+      discount_type || null,
+      value !== undefined ? Number(value) : null,
+      min_order !== undefined ? Number(min_order) : null,
+      max_uses === '' || max_uses == null ? null : Number(max_uses),
+      is_active !== undefined ? (is_active ? 1 : 0) : null,
+      valid_from || null,
+      valid_until || null,
+      req.params.id,
+      cid
+    ]);
+
+    await logAction(req.user.id, 'update_discount', 'discount', req.params.id, { code }, req);
+    res.json({ success: true, message: 'Korting bijgewerkt' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/discounts/:id', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const [existing] = await query('SELECT code FROM discounts WHERE id = ? AND company_id = ?', [req.params.id, cid]);
+    if (!existing) throw new AppError('Korting niet gevonden', 404);
+    await query('DELETE FROM discounts WHERE id = ? AND company_id = ?', [req.params.id, cid]);
+    await logAction(req.user.id, 'delete_discount', 'discount', req.params.id, { code: existing.code }, req);
+    res.json({ success: true, message: 'Korting verwijderd' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// =====================================================
+// PRINTER
+// =====================================================
+
+router.post('/printer/test', isAdmin, async (req, res, next) => {
+  try {
+    const cid = companyIdFrom(req);
+    const settings = await getSettingsMap(['printer_ip', 'printer_port', 'restaurant_name', 'restaurant_address', 'restaurant_phone'], cid);
+    const host = String(req.body?.ip || settings.printer_ip || '').trim();
+    const port = Number(req.body?.port || settings.printer_port || 9100);
+
+    if (!host) throw new AppError('Printer IP is verplicht', 400);
+
+    const { sendToPrinter, buildOrderTicket } = await import('../services/printer.js');
+    const sample = buildOrderTicket({
+      order_number: 'TEST-PRINT',
+      delivery_type: 'pickup',
+      status: 'paid',
+      created_at: new Date().toISOString(),
+      customer_name: 'Test Print',
+      customer_phone: settings.restaurant_phone || '',
+      subtotal: 0,
+      delivery_fee: 0,
+      discount_amount: 0,
+      total: 0,
+      items: [{ product_name: 'Test ticket', quantity: 1, product_price: 0, subtotal: 0 }],
+      notes: 'Dit is een testprint vanaf het admin dashboard.'
+    }, {
+      name: settings.restaurant_name || 'The Golden Olive',
+      address: settings.restaurant_address || '',
+      phone: settings.restaurant_phone || ''
+    });
+
+    await sendToPrinter({ host, port, data: sample });
+    res.json({ success: true, message: `Testprint verzonden naar ${host}:${port}` });
   } catch (error) {
     next(error);
   }

@@ -11,8 +11,31 @@ import { AppError } from '../middleware/errorHandler.js';
 import { createPayment } from '../services/mollie.js';
 import { orderStopsNearestNeighbor, buildStraightPolyline, fetchOsrmRoutePolyline, sumDistanceKm } from '../utils/routePlanner.js';
 import { geocodeAddress } from '../utils/geocoding.js';
+import { resolveDiscount, incrementDiscountUsage } from '../utils/discounts.js';
+import { attachTenant, companyIdFrom, getPublicCompanyId } from '../middleware/tenant.js';
+import { listCompanySettings } from '../utils/companySettings.js';
 
 const router = express.Router();
+
+async function getPublicSettingsMap() {
+  const publicCid = getPublicCompanyId();
+  let rows = await listCompanySettings(publicCid);
+  if (!rows.length) {
+    rows = await query('SELECT setting_key, setting_value, setting_type FROM settings');
+  }
+  const settingsMap = {};
+  rows.forEach((s) => {
+    const key = s.setting_key;
+    if (s.setting_type === 'boolean') {
+      settingsMap[key] = s.setting_value === 'true' || s.setting_value === true || s.setting_value === '1';
+    } else if (s.setting_type === 'number') {
+      settingsMap[key] = parseFloat(s.setting_value);
+    } else {
+      settingsMap[key] = s.setting_value;
+    }
+  });
+  return settingsMap;
+}
 
 /**
  * Generate unique order number
@@ -24,6 +47,31 @@ const generateOrderNumber = () => {
   const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `${prefix}-${datePart}-${randomPart}`;
 };
+
+/**
+ * POST /api/orders/validate-discount
+ * Preview a discount code against a subtotal
+ */
+router.post('/validate-discount', async (req, res, next) => {
+  try {
+    const { code, subtotal } = req.body || {};
+    const resolved = await resolveDiscount(code, Number(subtotal || 0), getPublicCompanyId());
+    if (!resolved) {
+      throw new AppError('Kortingscode is verplicht', 400);
+    }
+    res.json({
+      success: true,
+      data: {
+        code: resolved.code,
+        discount_type: resolved.discount_type,
+        value: resolved.value,
+        amount: resolved.amount
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * POST /api/orders
@@ -39,8 +87,11 @@ router.post('/', validateOrder, async (req, res, next) => {
       delivery_type,
       address,
       items,
-      notes
+      notes,
+      discount_code
     } = req.body;
+
+    const publicCid = getPublicCompanyId();
 
     // Validate items and calculate total
     let subtotal = 0;
@@ -48,8 +99,8 @@ router.post('/', validateOrder, async (req, res, next) => {
 
     for (const item of items) {
       const products = await query(
-        'SELECT id, name, price, is_available FROM products WHERE id = ?',
-        [item.product_id]
+        'SELECT id, name, price, is_available FROM products WHERE id = ? AND company_id = ?',
+        [item.product_id, publicCid]
       );
 
       if (products.length === 0) {
@@ -76,11 +127,7 @@ router.post('/', validateOrder, async (req, res, next) => {
     }
 
     // Get settings
-    const settings = await query('SELECT setting_key, setting_value FROM settings');
-    const settingsMap = {};
-    settings.forEach(s => {
-      settingsMap[s.setting_key] = s.setting_value;
-    });
+    const settingsMap = await getPublicSettingsMap();
 
     // Respect "is_open" setting (disable ordering when closed)
     const isOpen =
@@ -98,13 +145,20 @@ router.post('/', validateOrder, async (req, res, next) => {
       deliveryFee = parseFloat(settingsMap.delivery_fee || 3.50);
     }
 
-    // Check minimum order
+    // Check minimum order (before discount)
     const minimumOrder = parseFloat(settingsMap.minimum_order || 15);
     if (subtotal < minimumOrder) {
       throw new AppError(`Minimum bestelbedrag is €${minimumOrder.toFixed(2)}`, 400);
     }
 
-    const total = subtotal + deliveryFee;
+    let discountAmount = 0;
+    let appliedDiscount = null;
+    if (discount_code) {
+      appliedDiscount = await resolveDiscount(discount_code, subtotal, publicCid);
+      discountAmount = appliedDiscount?.amount || 0;
+    }
+
+    const total = Math.max(0, subtotal - discountAmount + deliveryFee);
     const orderNumber = generateOrderNumber();
 
     // Use transaction
@@ -128,11 +182,12 @@ router.post('/', validateOrder, async (req, res, next) => {
       // Insert order
       const [orderResult] = await connection.execute(`
         INSERT INTO orders (
-          order_number, customer_name, customer_email, customer_phone,
+          company_id, order_number, customer_name, customer_email, customer_phone,
           customer_vat_number,
-          address_id, delivery_type, subtotal, delivery_fee, total, notes, estimated_time
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          address_id, delivery_type, subtotal, delivery_fee, discount_code, discount_amount, total, notes, estimated_time
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `, [
+        publicCid,
         orderNumber,
         customer_name,
         customer_email,
@@ -142,6 +197,8 @@ router.post('/', validateOrder, async (req, res, next) => {
         delivery_type,
         subtotal,
         deliveryFee,
+        appliedDiscount?.code || null,
+        discountAmount,
         total,
         notes || null,
         delivery_type === 'delivery' 
@@ -161,9 +218,13 @@ router.post('/', validateOrder, async (req, res, next) => {
 
       // Create payment record
       await connection.execute(`
-        INSERT INTO payments (order_id, amount, status)
-        VALUES (?, ?, 'open')
-      `, [orderId, total]);
+        INSERT INTO payments (company_id, order_id, amount, status)
+        VALUES (?, ?, ?, 'open')
+      `, [publicCid, orderId, total]);
+
+      if (appliedDiscount?.id) {
+        await incrementDiscountUsage(appliedDiscount.id, connection, publicCid);
+      }
 
       return { orderId, orderNumber, total, addressId };
     });
@@ -196,17 +257,19 @@ router.post('/', validateOrder, async (req, res, next) => {
       amount: result.total,
       description: `The Golden Olive - Bestelling ${result.orderNumber}`,
       customerEmail: customer_email,
-      customerName: customer_name
+      customerName: customer_name,
+      companyId: publicCid
     });
 
     // Create admin notification (for bell icon modal)
     try {
       await query(
         `
-        INSERT INTO notifications (user_id, type, title, message, link, is_read)
-        VALUES (NULL, 'order', 'Nieuwe bestelling', ?, ?, 0)
+        INSERT INTO notifications (company_id, user_id, type, title, message, link, is_read)
+        VALUES (?, NULL, 'order', 'Nieuwe bestelling', ?, ?, 0)
         `,
         [
+          publicCid,
           `${customer_name || 'Klant'} • ${delivery_type === 'delivery' ? 'Bezorgen' : 'Afhalen'} • €${Number(result.total).toFixed(2)}`,
           `order:${result.orderId}`
         ]
@@ -237,14 +300,15 @@ router.post('/', validateOrder, async (req, res, next) => {
  */
 router.get('/track/:orderNumber', async (req, res, next) => {
   try {
+    const publicCid = getPublicCompanyId();
     const orders = await query(`
       SELECT o.*, a.street, a.house_number, a.bus, a.postal_code, a.city,
              p.status as payment_status, p.method as payment_method
       FROM orders o
       LEFT JOIN addresses a ON o.address_id = a.id
       LEFT JOIN payments p ON o.id = p.order_id
-      WHERE o.order_number = ?
-    `, [req.params.orderNumber]);
+      WHERE o.company_id = ? AND o.order_number = ?
+    `, [publicCid, req.params.orderNumber]);
 
     if (orders.length === 0) {
       throw new AppError('Bestelling niet gevonden', 404);
@@ -278,8 +342,9 @@ router.get('/track/:orderNumber', async (req, res, next) => {
  *
  * Returns: restaurant + ordered stops + polyline + distance/time
  */
-router.get('/routes', authenticate, async (req, res, next) => {
+router.get('/routes', authenticate, attachTenant, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     // Allow admin OR staff with view_orders permission
     const perms = Array.isArray(req.user?.permissions) ? req.user.permissions : [];
     const canViewOrders = req.user?.role === 'admin' || perms.includes('view_orders');
@@ -287,9 +352,10 @@ router.get('/routes', authenticate, async (req, res, next) => {
       throw new AppError('Toegang geweigerd', 403);
     }
 
-    // Restaurant (single row, id=1)
+    // Restaurant location for this tenant
     const [restaurant] = await query(
-      'SELECT id, name, address, latitude, longitude FROM restaurant WHERE id = 1'
+      'SELECT id, name, address, latitude, longitude FROM restaurant WHERE company_id = ? LIMIT 1',
+      [cid]
     );
     if (!restaurant) {
       throw new AppError('Restaurant locatie niet gevonden. Run migrations.', 500);
@@ -309,11 +375,12 @@ router.get('/routes', authenticate, async (req, res, next) => {
       FROM orders o
       JOIN addresses a ON o.address_id = a.id
       WHERE
-        o.delivery_type = 'delivery'
+        o.company_id = ?
+        AND o.delivery_type = 'delivery'
         AND o.status IN ('pending', 'paid', 'preparing', 'ready', 'delivering')
         AND DATE(o.created_at) = CURDATE()
       ORDER BY o.created_at ASC
-    `);
+    `, [cid]);
 
     const stopsRaw = rows.map((r) => ({
       orderId: Number(r.id),
@@ -440,8 +507,9 @@ router.get('/routes', authenticate, async (req, res, next) => {
  * GET /api/orders (Admin only)
  * Get all orders
  */
-router.get('/', authenticate, isAdmin, async (req, res, next) => {
+router.get('/', authenticate, attachTenant, isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { status, date_from, date_to, page = 1, limit = 20 } = req.query;
     
     let sql = `
@@ -450,9 +518,9 @@ router.get('/', authenticate, isAdmin, async (req, res, next) => {
       FROM orders o
       LEFT JOIN addresses a ON o.address_id = a.id
       LEFT JOIN payments p ON o.id = p.order_id
-      WHERE 1=1
+      WHERE o.company_id = ?
     `;
-    const params = [];
+    const params = [cid];
 
     if (status) {
       sql += ' AND o.status = ?';
@@ -505,8 +573,9 @@ router.get('/', authenticate, isAdmin, async (req, res, next) => {
  * GET /api/orders/:id (Admin only)
  * Get order details
  */
-router.get('/:id', authenticate, isAdmin, validateId, async (req, res, next) => {
+router.get('/:id', authenticate, attachTenant, isAdmin, validateId, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const orders = await query(`
       SELECT o.*, a.street, a.house_number, a.bus, a.postal_code, a.city,
              p.id as payment_id, p.mollie_payment_id, p.status as payment_status, 
@@ -514,8 +583,8 @@ router.get('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
       FROM orders o
       LEFT JOIN addresses a ON o.address_id = a.id
       LEFT JOIN payments p ON o.id = p.order_id
-      WHERE o.id = ?
-    `, [req.params.id]);
+      WHERE o.id = ? AND o.company_id = ?
+    `, [req.params.id, cid]);
 
     if (orders.length === 0) {
       throw new AppError('Bestelling niet gevonden', 404);
@@ -541,8 +610,9 @@ router.get('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
  * PATCH /api/orders/:id/status (Admin only)
  * Update order status
  */
-router.patch('/:id/status', authenticate, isAdmin, validateId, async (req, res, next) => {
+router.patch('/:id/status', authenticate, attachTenant, isAdmin, validateId, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { status } = req.body;
     const validStatuses = ['pending', 'paid', 'preparing', 'ready', 'delivering', 'delivered', 'cancelled'];
 
@@ -551,8 +621,8 @@ router.patch('/:id/status', authenticate, isAdmin, validateId, async (req, res, 
     }
 
     const result = await query(
-      'UPDATE orders SET status = ? WHERE id = ?',
-      [status, req.params.id]
+      'UPDATE orders SET status = ? WHERE id = ? AND company_id = ?',
+      [status, req.params.id, cid]
     );
 
     if (result.affectedRows === 0) {

@@ -5,18 +5,28 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
 import { query } from '../config/database.js';
 import { validateLogin, handleValidation } from '../middleware/validate.js';
 import { authenticate } from '../middleware/auth.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { logger } from '../utils/logger.js';
 
 const router = express.Router();
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: { message: 'Te veel loginpogingen. Probeer later opnieuw.' } }
+});
 
 /**
  * POST /api/auth/login
  * Admin login
  */
-router.post('/login', validateLogin, async (req, res, next) => {
+router.post('/login', loginLimiter, validateLogin, async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -27,6 +37,7 @@ router.post('/login', validateLogin, async (req, res, next) => {
     );
 
     if (users.length === 0) {
+      logger.warn('Failed login', { email, reason: 'unknown_user' });
       throw new AppError('Ongeldige inloggegevens', 401);
     }
 
@@ -36,18 +47,70 @@ router.post('/login', validateLogin, async (req, res, next) => {
     const isValidPassword = await bcrypt.compare(password, user.password);
     
     if (!isValidPassword) {
+      logger.warn('Failed login', { email, reason: 'bad_password', userId: user.id });
       throw new AppError('Ongeldige inloggegevens', 401);
     }
 
     // Update last login
     await query('UPDATE users SET last_login = NOW() WHERE id = ?', [user.id]);
 
+    let permissions = user.permissions;
+    if (permissions && typeof permissions === 'string') {
+      try { permissions = JSON.parse(permissions); } catch { permissions = []; }
+    }
+    if (!Array.isArray(permissions)) permissions = [];
+
+    // Resolve primary company membership
+    const preferredCompany = Number(req.body?.company_id || user.default_company_id || 0);
+    let membership = null;
+    if (preferredCompany) {
+      [membership] = await query(
+        `SELECT * FROM company_memberships WHERE user_id = ? AND company_id = ? AND is_active = 1 LIMIT 1`,
+        [user.id, preferredCompany]
+      );
+    }
+    if (!membership) {
+      [membership] = await query(
+        `SELECT * FROM company_memberships WHERE user_id = ? AND is_active = 1 ORDER BY id ASC LIMIT 1`,
+        [user.id]
+      );
+    }
+    if (!membership) {
+      // Bootstrap membership for legacy users
+      const companyId = user.default_company_id || 1;
+      await query(
+        `INSERT INTO company_memberships (company_id, user_id, role, permissions, is_active)
+         VALUES (?, ?, ?, ?, 1)
+         ON DUPLICATE KEY UPDATE role = VALUES(role)`,
+        [companyId, user.id, user.role, JSON.stringify(permissions.length ? permissions : ['*'])]
+      );
+      [membership] = await query(
+        `SELECT * FROM company_memberships WHERE user_id = ? AND company_id = ? LIMIT 1`,
+        [user.id, companyId]
+      );
+    }
+
+    const companyId = membership.company_id;
+    let membershipPermissions = membership.permissions;
+    if (membershipPermissions && typeof membershipPermissions === 'string') {
+      try { membershipPermissions = JSON.parse(membershipPermissions); } catch { membershipPermissions = permissions; }
+    }
+    if (Array.isArray(membershipPermissions) && membershipPermissions.includes('*')) {
+      membershipPermissions = permissions.length
+        ? permissions
+        : ['view_orders', 'update_order_status', 'view_products', 'toggle_availability'];
+    }
+
+    await query('UPDATE users SET default_company_id = ? WHERE id = ?', [companyId, user.id]);
+
     // Generate JWT
     const token = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
+      { id: user.id, email: user.email, role: membership.role || user.role, company_id: companyId },
       process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      { expiresIn: process.env.JWT_EXPIRES_IN || '8h' }
     );
+
+    logger.info('Login success', { userId: user.id, role: membership.role, companyId });
 
     res.json({
       success: true,
@@ -57,7 +120,9 @@ router.post('/login', validateLogin, async (req, res, next) => {
           id: user.id,
           email: user.email,
           name: user.name,
-          role: user.role
+          role: membership.role || user.role,
+          permissions: membershipPermissions || permissions,
+          company_id: companyId
         }
       }
     });

@@ -8,9 +8,24 @@
       "image": "assets/img/golden/tigerGarnalen.JPEG",
       "alt": "Tiger garnalen voorgerecht The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"},
-        {"code": "M", "type": "Mustard", "color": "yellow", "description": "Mosterd - Alle soorten mosterd"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        },
+        {
+          "code": "M",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
       ]
     },
     {
@@ -21,10 +36,30 @@
       "image": "assets/img/golden/chickeniwings.JPEG",
       "alt": "the goldenolive antwerpen chicken wings",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "Se", "type": "Sesame", "color": "purple", "description": "Sesamzaad - Sesamzaad of sesamzaadolie"},
-        {"code": "So", "type": "Soy", "color": "green", "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"},
-        {"code": "M", "type": "Mustard", "color": "yellow", "description": "Mosterd - Alle soorten mosterd"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "Se",
+          "type": "Sesame",
+          "color": "purple",
+          "description": "Sesamzaad - Sesamzaad of sesamzaadolie"
+        },
+        {
+          "code": "So",
+          "type": "Soy",
+          "color": "green",
+          "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"
+        },
+        {
+          "code": "M",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
       ]
     },
     {
@@ -35,10 +70,30 @@
       "image": "assets/img/favicon11.png",
       "alt": "the golden olive antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"},
-        {"code": "So", "type": "Soy", "color": "green", "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "So",
+          "type": "Soy",
+          "color": "green",
+          "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"
+        }
       ]
     }
   ],
@@ -51,8 +106,18 @@
       "image": "assets/img/golden/mixedGrill.JPEG",
       "alt": "the goldenolive antwerpen mixedgrill",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     }
   ],
@@ -65,8 +130,18 @@
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs natuur The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        }
       ]
     },
     {
@@ -77,8 +152,18 @@
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs BBQ The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        }
       ]
     },
     {
@@ -89,8 +174,18 @@
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        }
       ]
     },
     {
@@ -101,8 +196,18 @@
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs spicy The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        }
       ]
     },
     {
@@ -113,8 +218,18 @@
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs Thai The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        }
       ]
     }
   ],
@@ -124,11 +239,21 @@
       "name": "Shredded Chicken Loaded Scoop",
       "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
-      "image": "/img/chicken-scoop.JPG",  
+      "image": "/img/chicken-scoop.JPG",
       "alt": "Shredded Chicken Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -139,9 +264,24 @@
       "image": "assets/img/favicon11.png",
       "alt": "Spicy Minced Meat Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -152,8 +292,18 @@
       "image": "assets/img/favicon11.png",
       "alt": "Juicy BBQ Meat Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -164,21 +314,46 @@
       "image": "/img/merguez-scoop.JPG",
       "alt": "Merguez Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
       "id": "scampi-loaded-scoop",
       "name": "Scampi Loaded Scoop",
       "price": "€26,99",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
+      "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Scampi Loaded Scoop The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "S", "type": "Shellfish", "color": "orange", "description": "Schaaldieren - Garnalen, krabben en kreeften"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        }
       ]
     }
   ],
@@ -191,8 +366,18 @@
       "image": "assets/img/golden/hamburger3.JPEG",
       "alt": "Spicy Gabriel Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -203,8 +388,18 @@
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "The Golden Olive Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -215,9 +410,24 @@
       "image": "assets/img/golden/ouzzane-burger.png",
       "alt": "Ouezzane Chicken Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -228,7 +438,12 @@
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "Classic House Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        }
       ]
     },
     {
@@ -239,8 +454,18 @@
       "image": "assets/img/golden/hamburger2.JPEG",
       "alt": "Flame House Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -251,10 +476,30 @@
       "image": "assets/img/favicon11.png",
       "alt": "Crunchy Fish Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "F", "type": "Fish", "color": "cyan", "description": "Vis - Vis wordt meestal in herkenbare vorm geconsumeerd"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "F",
+          "type": "Fish",
+          "color": "cyan",
+          "description": "Vis - Vis wordt meestal in herkenbare vorm geconsumeerd"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -265,8 +510,18 @@
       "image": "assets/img/favicon11.png",
       "alt": "Veggie Delight Burger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     }
   ],
@@ -279,8 +534,18 @@
       "image": "assets/img/favicon11.png",
       "alt": "Gehaktburger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -291,8 +556,18 @@
       "image": "assets/img/favicon11.png",
       "alt": "Kids Kipburger The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     }
   ],
@@ -305,7 +580,12 @@
       "image": "assets/img/favicon11.png",
       "alt": "Friet The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        }
       ]
     },
     {
@@ -316,8 +596,18 @@
       "image": "assets/img/favicon11.png",
       "alt": "Mac & cheese The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -328,8 +618,18 @@
       "image": "assets/img/favicon11.png",
       "alt": "Champignonsaus The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     }
   ],
@@ -342,9 +642,24 @@
       "image": "assets/img/favicon11.png",
       "alt": "Cheesecake in Chocoladesaus The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -355,9 +670,24 @@
       "image": "assets/img/favicon11.png",
       "alt": "Cheesecake in Pistachesaus The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -368,9 +698,24 @@
       "image": "assets/img/golden/moeilleux.JPEG",
       "alt": "Moelleux Chocolade The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "G", "type": "Gluten", "color": "red", "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"},
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"},
-        {"code": "E", "type": "Eggs", "color": "amber", "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"}
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
       ]
     },
     {
@@ -381,7 +726,12 @@
       "image": "assets/img/favicon11.png",
       "alt": "Dame Blanche The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     }
   ],
@@ -506,7 +856,12 @@
       "image": "assets/img/favicon11.png",
       "alt": "Cappuccino The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -535,7 +890,12 @@
       "image": "assets/img/favicon11.png",
       "alt": "Latte Macchiato The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {
@@ -564,7 +924,12 @@
       "image": "assets/img/favicon11.png",
       "alt": "Koffie met melk The Golden Olive Antwerpen",
       "allergens": [
-        {"code": "M", "type": "Milk", "color": "blue", "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"}
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
       ]
     },
     {

@@ -1,0 +1,7 @@
+{
+  "url": "ws://localhost:5087/ws/print-bridge",
+  "api_key": "REPLACE_WITH_API_KEY_FROM_ADMIN",
+  "reconnect_ms": 3000,
+  "heartbeat_ms": 20000,
+  "connect_timeout_ms": 5000
+}

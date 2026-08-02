@@ -1,0 +1,4 @@
+{
+  "watch": ["*.js", "routes", "services", "middleware", "utils", "config", "migrations"],
+  "ignore": ["tests/**", "agents/**", "public/**", "node_modules/**", "*.test.js"]
+}

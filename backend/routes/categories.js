@@ -7,6 +7,7 @@ import { query } from '../config/database.js';
 import { authenticate, isAdmin } from '../middleware/auth.js';
 import { validateId } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { attachTenant, companyIdFrom, getPublicCompanyId } from '../middleware/tenant.js';
 
 const router = express.Router();
 
@@ -17,17 +18,19 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const { active } = req.query;
+    const publicCid = getPublicCompanyId();
     
-    let sql = 'SELECT * FROM categories';
+    let sql = 'SELECT * FROM categories WHERE company_id = ?';
+    const params = [publicCid];
     
     // Default: only active categories
     if (active !== 'all') {
-      sql += ' WHERE is_active = 1';
+      sql += ' AND is_active = 1';
     }
     
     sql += ' ORDER BY sort_order, name';
     
-    const categories = await query(sql);
+    const categories = await query(sql, params);
 
     res.json({
       success: true,
@@ -44,9 +47,10 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/:id', validateId, async (req, res, next) => {
   try {
+    const publicCid = getPublicCompanyId();
     const categories = await query(
-      'SELECT * FROM categories WHERE id = ?',
-      [req.params.id]
+      'SELECT * FROM categories WHERE id = ? AND company_id = ?',
+      [req.params.id, publicCid]
     );
 
     if (categories.length === 0) {
@@ -58,9 +62,9 @@ router.get('/:id', validateId, async (req, res, next) => {
     // Get products in category
     const products = await query(`
       SELECT * FROM products 
-      WHERE category_id = ? AND is_available = 1
+      WHERE category_id = ? AND company_id = ? AND is_available = 1
       ORDER BY sort_order, name
-    `, [category.id]);
+    `, [category.id, publicCid]);
 
     // Parse allergens
     products.forEach(p => {
@@ -84,8 +88,9 @@ router.get('/:id', validateId, async (req, res, next) => {
  * POST /api/categories (Admin only)
  * Create new category
  */
-router.post('/', authenticate, isAdmin, async (req, res, next) => {
+router.post('/', authenticate, attachTenant, isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, description, image_url, sort_order } = req.body;
 
     if (!name) {
@@ -98,9 +103,9 @@ router.post('/', authenticate, isAdmin, async (req, res, next) => {
       .replace(/(^-|-$)/g, '');
 
     const result = await query(`
-      INSERT INTO categories (name, slug, description, image_url, sort_order)
-      VALUES (?, ?, ?, ?, ?)
-    `, [name, slug, description || null, image_url || null, sort_order || 0]);
+      INSERT INTO categories (company_id, name, slug, description, image_url, sort_order)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `, [cid, name, slug, description || null, image_url || null, sort_order || 0]);
 
     res.status(201).json({
       success: true,
@@ -116,11 +121,12 @@ router.post('/', authenticate, isAdmin, async (req, res, next) => {
  * PUT /api/categories/:id (Admin only)
  * Update category
  */
-router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => {
+router.put('/:id', authenticate, attachTenant, isAdmin, validateId, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, description, image_url, is_active, sort_order } = req.body;
 
-    const existing = await query('SELECT id FROM categories WHERE id = ?', [req.params.id]);
+    const existing = await query('SELECT id FROM categories WHERE id = ? AND company_id = ?', [req.params.id, cid]);
     if (existing.length === 0) {
       throw new AppError('Categorie niet gevonden', 404);
     }
@@ -132,8 +138,8 @@ router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
         image_url = COALESCE(?, image_url),
         is_active = COALESCE(?, is_active),
         sort_order = COALESCE(?, sort_order)
-      WHERE id = ?
-    `, [name, description, image_url, is_active, sort_order, req.params.id]);
+      WHERE id = ? AND company_id = ?
+    `, [name, description, image_url, is_active, sort_order, req.params.id, cid]);
 
     res.json({
       success: true,
@@ -148,19 +154,21 @@ router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
  * DELETE /api/categories/:id (Admin only)
  * Delete category (only if no products)
  */
-router.delete('/:id', authenticate, isAdmin, validateId, async (req, res, next) => {
+router.delete('/:id', authenticate, attachTenant, isAdmin, validateId, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
+
     // Check for products in category
     const products = await query(
-      'SELECT COUNT(*) as count FROM products WHERE category_id = ?',
-      [req.params.id]
+      'SELECT COUNT(*) as count FROM products WHERE category_id = ? AND company_id = ?',
+      [req.params.id, cid]
     );
 
     if (products[0].count > 0) {
       throw new AppError('Kan categorie niet verwijderen: er zijn nog producten in deze categorie', 400);
     }
 
-    const result = await query('DELETE FROM categories WHERE id = ?', [req.params.id]);
+    const result = await query('DELETE FROM categories WHERE id = ? AND company_id = ?', [req.params.id, cid]);
 
     if (result.affectedRows === 0) {
       throw new AppError('Categorie niet gevonden', 404);

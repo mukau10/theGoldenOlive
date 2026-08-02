@@ -51,15 +51,30 @@ export const useMenu = () => {
 
   const fetchMenu = async (silent: boolean = false) => {
     try {
-      const data = await fetchWithCache<MenuData>(
-        '/data/menu.json',
-        {},
-        CACHE_KEY,
-        CACHE_DURATIONS.LONG // Cache menu for 24 hours
-      );
+      // Prefer live API (admin-editable), fall back to static JSON
+      let data: MenuData | null = null;
+      try {
+        const apiUrl = `${import.meta.env.VITE_API_URL || '/api'}/menu`;
+        const resp = await fetch(apiUrl, { cache: 'no-store' });
+        if (resp.ok) {
+          const json = await resp.json();
+          data = (json?.data || json) as MenuData;
+        }
+      } catch {
+        // fall through to static file
+      }
+
+      if (!data) {
+        data = await fetchWithCache<MenuData>(
+          '/data/menu.json',
+          {},
+          CACHE_KEY,
+          CACHE_DURATIONS.LONG
+        );
+      }
       
       menuCache = data;
-      LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.LONG);
+      LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.MEDIUM);
       
       if (!silent) {
         setMenuData(data);

@@ -1,6 +1,11 @@
 /**
  * Mollie Payment Service
  * Handles all Mollie API interactions
+ *
+ * API key resolution order:
+ * 1. Explicit apiKey argument
+ * 2. company_settings.mollie_api_key for companyId (encrypted-at-rest)
+ * 3. process.env.MOLLIE_API_KEY
  */
 
 import { createMollieClient } from '@mollie/api-client';
@@ -10,27 +15,48 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Initialize Mollie client
-let mollieClient = null;
+const clientCache = new Map();
 
-const getMollieClient = () => {
-  if (!mollieClient) {
-    const apiKey = process.env.MOLLIE_API_KEY;
-    
-    // Check if API key is missing, empty, or a placeholder
-    if (!apiKey || apiKey.includes('xxxx') || apiKey.length < 30) {
-      console.warn('⚠️ MOLLIE_API_KEY not configured - payments will be simulated');
-      return null;
-    }
-    
+function isUsableApiKey(apiKey) {
+  return Boolean(apiKey) && !String(apiKey).includes('xxxx') && String(apiKey).length >= 30;
+}
+
+async function resolveApiKey(companyId = null, explicitKey = null) {
+  if (isUsableApiKey(explicitKey)) return String(explicitKey);
+
+  if (companyId) {
     try {
-      mollieClient = createMollieClient({ apiKey });
-    } catch (error) {
-      console.warn('⚠️ Failed to create Mollie client - payments will be simulated');
-      return null;
+      const { getCompanySetting } = await import('../utils/companySettings.js');
+      const tenantKey = await getCompanySetting(companyId, 'mollie_api_key', null);
+      if (isUsableApiKey(tenantKey)) return String(tenantKey);
+    } catch {
+      // fall through to env
     }
   }
-  return mollieClient;
+
+  const envKey = process.env.MOLLIE_API_KEY;
+  if (isUsableApiKey(envKey)) return String(envKey);
+  return null;
+}
+
+const getMollieClient = async (companyId = null, explicitKey = null) => {
+  const apiKey = await resolveApiKey(companyId, explicitKey);
+  if (!apiKey) {
+    console.warn('⚠️ MOLLIE_API_KEY not configured - payments will be simulated');
+    return null;
+  }
+
+  const cacheKey = `${companyId || 'env'}:${apiKey.slice(-8)}`;
+  if (clientCache.has(cacheKey)) return clientCache.get(cacheKey);
+
+  try {
+    const client = createMollieClient({ apiKey });
+    clientCache.set(cacheKey, client);
+    return client;
+  } catch (error) {
+    console.warn('⚠️ Failed to create Mollie client - payments will be simulated');
+    return null;
+  }
 };
 
 /**
@@ -42,23 +68,22 @@ export const createPayment = async ({
   amount,
   description,
   customerEmail,
-  customerName
+  customerName,
+  companyId = null
 }) => {
-  const client = getMollieClient();
-  
+  const client = await getMollieClient(companyId);
+
   // If no Mollie client (test mode), simulate payment
   if (!client) {
     console.log('[Mollie] Simulating payment for order:', orderNumber);
-    
+
     const fakePaymentId = `tr_test_${Date.now()}`;
-    
-    // Update payment record with fake ID
+
     await query(
       'UPDATE payments SET mollie_payment_id = ? WHERE order_id = ?',
       [fakePaymentId, orderId]
     );
-    
-    // Return simulated response
+
     return {
       id: fakePaymentId,
       checkoutUrl: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/order/simulate?order=${orderNumber}&payment=${fakePaymentId}`,
@@ -67,31 +92,26 @@ export const createPayment = async ({
   }
 
   try {
-    // Determine redirect URLs
     const baseUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     const redirectUrl = `${baseUrl}/order/success?order=${orderNumber}`;
     const webhookUrl = process.env.MOLLIE_WEBHOOK_URL || `${process.env.BACKEND_URL || 'http://localhost:3001'}/api/payments/webhook`;
 
-    // Create payment
     const payment = await client.payments.create({
       amount: {
         currency: 'EUR',
         value: amount.toFixed(2)
       },
-      description,
+      description: description || `Order ${orderNumber}`,
       redirectUrl,
       webhookUrl,
       metadata: {
-        order_id: orderId,
-        order_number: orderNumber
+        orderId: String(orderId),
+        orderNumber,
+        companyId: companyId != null ? String(companyId) : undefined
       },
-      // Enable common payment methods in Belgium
-      method: ['ideal', 'bancontact', 'creditcard', 'paypal', 'applepay', 'googlepay']
+      ...(customerEmail ? { billingEmail: customerEmail } : {})
     });
 
-    console.log('[Mollie] Payment created:', payment.id);
-
-    // Update payment record with Mollie ID
     await query(
       'UPDATE payments SET mollie_payment_id = ? WHERE order_id = ?',
       [payment.id, orderId]
@@ -102,7 +122,6 @@ export const createPayment = async ({
       checkoutUrl: payment.getCheckoutUrl(),
       status: payment.status
     };
-
   } catch (error) {
     console.error('[Mollie] Error creating payment:', error);
     throw new AppError('Fout bij het aanmaken van de betaling: ' + error.message, 500);
@@ -112,11 +131,10 @@ export const createPayment = async ({
 /**
  * Get payment details from Mollie
  */
-export const getPayment = async (paymentId) => {
-  const client = getMollieClient();
-  
+export const getPayment = async (paymentId, companyId = null) => {
+  const client = await getMollieClient(companyId);
+
   if (!client) {
-    // Simulate payment status
     return {
       id: paymentId,
       status: 'paid',
@@ -127,7 +145,7 @@ export const getPayment = async (paymentId) => {
 
   try {
     const payment = await client.payments.get(paymentId);
-    
+
     return {
       id: payment.id,
       status: payment.status,
@@ -146,9 +164,9 @@ export const getPayment = async (paymentId) => {
 /**
  * Get available payment methods
  */
-export const getPaymentMethods = async () => {
-  const client = getMollieClient();
-  
+export const getPaymentMethods = async (companyId = null) => {
+  const client = await getMollieClient(companyId);
+
   if (!client) {
     return [
       { id: 'ideal', description: 'iDEAL' },
@@ -173,9 +191,9 @@ export const getPaymentMethods = async () => {
 /**
  * Create refund for payment
  */
-export const createRefund = async (paymentId, amount = null) => {
-  const client = getMollieClient();
-  
+export const createRefund = async (paymentId, amount = null, companyId = null) => {
+  const client = await getMollieClient(companyId);
+
   if (!client) {
     console.log('[Mollie] Simulating refund for payment:', paymentId);
     return { id: `rf_test_${Date.now()}`, status: 'pending' };
@@ -183,16 +201,16 @@ export const createRefund = async (paymentId, amount = null) => {
 
   try {
     const refundParams = { paymentId };
-    
+
     if (amount) {
       refundParams.amount = {
         currency: 'EUR',
         value: amount.toFixed(2)
       };
     }
-    
+
     const refund = await client.paymentRefunds.create(refundParams);
-    
+
     return {
       id: refund.id,
       status: refund.status,
@@ -204,4 +222,5 @@ export const createRefund = async (paymentId, amount = null) => {
   }
 };
 
-export { mollieClient };
+/** @deprecated sync export kept for compatibility; prefer getMollieClient() */
+export const mollieClient = null;

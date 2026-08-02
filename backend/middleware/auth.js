@@ -25,7 +25,7 @@ export const authenticate = async (req, res, next) => {
 
     // Get user from database with permissions
     const users = await query(
-      'SELECT id, email, name, role, permissions FROM users WHERE id = ? AND is_active = 1',
+      'SELECT id, email, name, role, permissions, default_company_id FROM users WHERE id = ? AND is_active = 1',
       [decoded.id]
     );
 
@@ -42,6 +42,8 @@ export const authenticate = async (req, res, next) => {
         user.permissions = [];
       }
     }
+
+    user.company_id = decoded.company_id || user.default_company_id || 1;
 
     // Attach user to request
     req.user = user;
@@ -62,6 +64,20 @@ export const isAdmin = (req, res, next) => {
     return next(new AppError('Toegang geweigerd. Admin rechten vereist.', 403));
   }
   next();
+};
+
+/**
+ * Require a staff permission (admins always pass)
+ */
+export const requirePermission = (permission) => (req, res, next) => {
+  if (!req.user) return next(new AppError('Niet geautoriseerd', 401));
+  if (req.user.role === 'admin') return next();
+  let perms = req.user.permissions;
+  if (typeof perms === 'string') {
+    try { perms = JSON.parse(perms); } catch { perms = []; }
+  }
+  if (Array.isArray(perms) && perms.includes(permission)) return next();
+  return next(new AppError('Onvoldoende rechten', 403));
 };
 
 /**

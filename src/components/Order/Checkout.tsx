@@ -108,7 +108,7 @@ const loadSavedCheckoutData = () => {
 
 const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
   const { t } = useTranslation();
-  const { cart, total, clearCart } = useOrder();
+  const { cart, clearCart } = useOrder();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -131,6 +131,11 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
   
   // Payment method state - cash available for both pickup and delivery
   const [paymentMethod, setPaymentMethod] = useState<'online' | 'cash'>(savedData?.paymentMethod || 'online');
+  const [discountCode, setDiscountCode] = useState('');
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [discountLabel, setDiscountLabel] = useState<string | null>(null);
+  const [discountError, setDiscountError] = useState<string | null>(null);
+  const [discountLoading, setDiscountLoading] = useState(false);
   
   // Country code for phone number
   const [countryCode, setCountryCode] = useState(savedData?.countryCode || '+32');
@@ -200,6 +205,40 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
 
   // Calculate subtotal
   const subtotal = cart.items.reduce((sum, item) => sum + Number(item.price) * item.quantity, 0);
+  const deliveryFee = cart.deliveryType === 'delivery' ? Number(cart.deliveryFee || 0) : 0;
+  const checkoutTotal = Math.max(0, subtotal - discountAmount + deliveryFee);
+
+  const applyDiscountCode = async () => {
+    const code = discountCode.trim();
+    if (!code) {
+      setDiscountAmount(0);
+      setDiscountLabel(null);
+      setDiscountError(null);
+      return;
+    }
+    setDiscountLoading(true);
+    setDiscountError(null);
+    try {
+      const resp = await fetch(`${API_URL}/orders/validate-discount`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, subtotal })
+      });
+      const data = await resp.json();
+      if (!resp.ok) {
+        throw new Error(data.error?.message || 'Ongeldige kortingscode');
+      }
+      setDiscountAmount(Number(data.data.amount || 0));
+      setDiscountLabel(data.data.code);
+      setDiscountCode(data.data.code);
+    } catch (err) {
+      setDiscountAmount(0);
+      setDiscountLabel(null);
+      setDiscountError(err instanceof Error ? err.message : 'Ongeldige kortingscode');
+    } finally {
+      setDiscountLoading(false);
+    }
+  };
 
   // Format phone number - only digits, no country code (that's handled separately)
   const formatPhoneNumber = (value: string): string => {
@@ -512,6 +551,7 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
         antibot_answer: parseInt(antiBotAnswer.trim(), 10),
         address: cart.deliveryType === 'delivery' ? formData.address : undefined,
         notes: formData.notes || undefined,
+        discount_code: discountLabel || discountCode.trim() || undefined,
         items: cart.items.map(item => ({
           product_id: item.id,
           quantity: item.quantity,
@@ -630,6 +670,12 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
           <span className="text-muted">{t('order.subtotal', 'Subtotaal')}</span>
           <span>€{subtotal.toFixed(2)}</span>
         </div>
+        {discountAmount > 0 && (
+          <div className="d-flex justify-content-between text-success">
+            <span>{t('order.discount', 'Korting')}{discountLabel ? ` (${discountLabel})` : ''}</span>
+            <span>-€{discountAmount.toFixed(2)}</span>
+          </div>
+        )}
         {cart.deliveryType === 'delivery' && cart.deliveryFee > 0 && (
           <div className="d-flex justify-content-between">
             <span className="text-muted">{t('order.deliveryFee', 'Bezorgkosten')}</span>
@@ -638,7 +684,28 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
         )}
         <div className="d-flex justify-content-between mt-2 pt-2 border-top">
           <strong>{t('order.total', 'Totaal')}</strong>
-          <strong className="text-golden">€{total.toFixed(2)}</strong>
+          <strong className="text-golden">€{checkoutTotal.toFixed(2)}</strong>
+        </div>
+        <div className="mt-3">
+          <label className="form-label small mb-1">{t('order.discountCode', 'Kortingscode')}</label>
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              value={discountCode}
+              onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+              placeholder="CODE"
+            />
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={applyDiscountCode}
+              disabled={discountLoading}
+            >
+              {discountLoading ? '...' : t('order.apply', 'Toepassen')}
+            </button>
+          </div>
+          {discountError && <div className="text-danger small mt-1">{discountError}</div>}
         </div>
       </div>
 

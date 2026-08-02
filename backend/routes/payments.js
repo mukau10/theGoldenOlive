@@ -6,7 +6,9 @@ import express from 'express';
 import { query } from '../config/database.js';
 import { authenticate, isAdmin } from '../middleware/auth.js';
 import { AppError } from '../middleware/errorHandler.js';
-import { getPayment, mollieClient } from '../services/mollie.js';
+import { getPayment } from '../services/mollie.js';
+import { attachTenant, companyIdFrom, getPublicCompanyId } from '../middleware/tenant.js';
+import { getCompanySetting } from '../utils/companySettings.js';
 
 const router = express.Router();
 
@@ -25,19 +27,9 @@ router.post('/webhook', async (req, res, next) => {
 
     console.log(`[Webhook] Received webhook for payment: ${molliePaymentId}`);
 
-    // Get payment from Mollie
-    const molliePayment = await getPayment(molliePaymentId);
-    
-    if (!molliePayment) {
-      console.log(`[Webhook] Payment not found in Mollie: ${molliePaymentId}`);
-      return res.status(200).send('OK');
-    }
-
-    console.log(`[Webhook] Mollie payment status: ${molliePayment.status}`);
-
-    // Find our payment record
+    // Resolve tenant from our DB first (needed for per-tenant Mollie key)
     const payments = await query(
-      'SELECT p.*, o.id as order_id FROM payments p JOIN orders o ON p.order_id = o.id WHERE p.mollie_payment_id = ?',
+      'SELECT p.*, o.id as order_id, o.company_id FROM payments p JOIN orders o ON p.order_id = o.id WHERE p.mollie_payment_id = ?',
       [molliePaymentId]
     );
 
@@ -47,20 +39,30 @@ router.post('/webhook', async (req, res, next) => {
     }
 
     const payment = payments[0];
+    const orderCompanyId = Number(payment.company_id || getPublicCompanyId());
+
+    const molliePayment = await getPayment(molliePaymentId, orderCompanyId);
+
+    if (!molliePayment) {
+      console.log(`[Webhook] Payment not found in Mollie: ${molliePaymentId}`);
+      return res.status(200).send('OK');
+    }
+
+    console.log(`[Webhook] Mollie payment status: ${molliePayment.status}`);
 
     // Map Mollie status to our status
     let newStatus = molliePayment.status;
     let orderStatus = null;
     let autoAccept = false;
 
-    // Read setting: auto_accept_orders
+    // Read setting: auto_accept_orders (per-tenant)
     try {
-      const [row] = await query('SELECT setting_value FROM settings WHERE setting_key = ?', ['auto_accept_orders']);
+      autoAccept = await getCompanySetting(orderCompanyId, 'auto_accept_orders', false);
       autoAccept =
-        row?.setting_value === true ||
-        row?.setting_value === 'true' ||
-        row?.setting_value === 1 ||
-        row?.setting_value === '1';
+        autoAccept === true ||
+        autoAccept === 'true' ||
+        autoAccept === 1 ||
+        autoAccept === '1';
     } catch {
       autoAccept = false;
     }
@@ -97,7 +99,7 @@ router.post('/webhook', async (req, res, next) => {
         method = ?,
         paid_at = ?,
         metadata = ?
-      WHERE id = ?
+      WHERE id = ? AND company_id = ?
     `, [
       newStatus,
       molliePayment.method || null,
@@ -107,16 +109,23 @@ router.post('/webhook', async (req, res, next) => {
         amount: molliePayment.amount,
         description: molliePayment.description
       }),
-      payment.id
+      payment.id,
+      orderCompanyId
     ]);
 
     // Update order status if needed
     if (orderStatus) {
       // Track history
       try {
-        const [current] = await query('SELECT status FROM orders WHERE id = ?', [payment.order_id]);
+        const [current] = await query(
+          'SELECT status FROM orders WHERE id = ? AND company_id = ?',
+          [payment.order_id, orderCompanyId]
+        );
         const prevStatus = current?.status || null;
-        await query('UPDATE orders SET status = ? WHERE id = ?', [orderStatus, payment.order_id]);
+        await query(
+          'UPDATE orders SET status = ? WHERE id = ? AND company_id = ?',
+          [orderStatus, payment.order_id, orderCompanyId]
+        );
         // Record status change (changed_by NULL = system)
         await query(
           'INSERT INTO order_status_history (order_id, previous_status, new_status, changed_by, notes) VALUES (?, ?, ?, NULL, ?)',
@@ -124,7 +133,10 @@ router.post('/webhook', async (req, res, next) => {
         );
       } catch {
         // Fallback to status update only
-        await query('UPDATE orders SET status = ? WHERE id = ?', [orderStatus, payment.order_id]);
+        await query(
+          'UPDATE orders SET status = ? WHERE id = ? AND company_id = ?',
+          [orderStatus, payment.order_id, orderCompanyId]
+        );
       }
     }
 
@@ -144,12 +156,13 @@ router.post('/webhook', async (req, res, next) => {
  */
 router.get('/:orderId/status', async (req, res, next) => {
   try {
+    const publicCid = getPublicCompanyId();
     const payments = await query(`
       SELECT p.status, p.method, p.paid_at, o.order_number, o.status as order_status
       FROM payments p
       JOIN orders o ON p.order_id = o.id
-      WHERE o.id = ? OR o.order_number = ?
-    `, [req.params.orderId, req.params.orderId]);
+      WHERE o.company_id = ? AND (o.id = ? OR o.order_number = ?)
+    `, [publicCid, req.params.orderId, req.params.orderId]);
 
     if (payments.length === 0) {
       throw new AppError('Betaling niet gevonden', 404);
@@ -170,12 +183,13 @@ router.get('/:orderId/status', async (req, res, next) => {
  */
 router.post('/:orderId/retry', async (req, res, next) => {
   try {
+    const publicCid = getPublicCompanyId();
     const orders = await query(`
       SELECT o.*, p.status as payment_status
       FROM orders o
       LEFT JOIN payments p ON o.id = p.order_id
-      WHERE o.id = ? OR o.order_number = ?
-    `, [req.params.orderId, req.params.orderId]);
+      WHERE o.company_id = ? AND (o.id = ? OR o.order_number = ?)
+    `, [publicCid, req.params.orderId, req.params.orderId]);
 
     if (orders.length === 0) {
       throw new AppError('Bestelling niet gevonden', 404);
@@ -199,7 +213,8 @@ router.post('/:orderId/retry', async (req, res, next) => {
       amount: order.total,
       description: `The Golden Olive - Bestelling ${order.order_number}`,
       customerEmail: order.customer_email,
-      customerName: order.customer_name
+      customerName: order.customer_name,
+      companyId: publicCid
     });
 
     res.json({
@@ -218,15 +233,17 @@ router.post('/:orderId/retry', async (req, res, next) => {
  * GET /api/payments (Admin only)
  * Get all payments
  */
-router.get('/', authenticate, isAdmin, async (req, res, next) => {
+router.get('/', authenticate, attachTenant, isAdmin, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const payments = await query(`
       SELECT p.*, o.order_number, o.customer_name, o.customer_email
       FROM payments p
       JOIN orders o ON p.order_id = o.id
+      WHERE p.company_id = ?
       ORDER BY p.created_at DESC
       LIMIT 100
-    `);
+    `, [cid]);
 
     res.json({
       success: true,

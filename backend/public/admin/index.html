@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <title>Admin Dashboard - The Golden Olive</title>
   <link rel="icon" href="/img/favicon11.png" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,7 +16,7 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
   />
-  <link href="/admin/css/dashboard.css" rel="stylesheet">
+  <link href="/admin/css/dashboard.css?v=20260802b" rel="stylesheet">
 </head>
 <body>
   <!-- Login Page -->
@@ -85,6 +86,22 @@
             <i class="bi bi-box-seam"></i>
             <span>Producten</span>
           </a>
+          <a href="#" class="nav-link" data-page="website-menu" data-permission="admin">
+            <i class="bi bi-journal-richtext"></i>
+            <span>Menukaart</span>
+          </a>
+          <a href="#" class="nav-link" data-page="discounts" data-permission="admin">
+            <i class="bi bi-percent"></i>
+            <span>Kortingen</span>
+          </a>
+          <a href="#" class="nav-link" data-page="integrations" data-permission="admin">
+            <i class="bi bi-plugin"></i>
+            <span>Integraties</span>
+          </a>
+          <a href="#" class="nav-link" data-page="printers" data-permission="admin">
+            <i class="bi bi-printer"></i>
+            <span>Printers</span>
+          </a>
           <a href="#" class="nav-link" data-page="categories" data-permission="admin">
             <i class="bi bi-tags"></i>
             <span>Categorieën</span>
@@ -140,6 +157,9 @@
           <h1 id="page-title">Dashboard</h1>
         </div>
         <div class="topbar-actions">
+          <div id="company-switcher-wrap" class="d-none me-2">
+            <select id="company-switcher" class="form-select form-select-sm" title="Bedrijf wisselen" style="max-width:180px"></select>
+          </div>
           <button class="topbar-btn" id="refresh-btn" title="Vernieuwen">
             <i class="bi bi-arrow-clockwise"></i>
           </button>
@@ -158,6 +178,15 @@
           </div>
         </div>
       </header>
+
+      <div id="onboarding-banner" class="alert alert-info d-none mx-3 mt-3 mb-0">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <div>
+            <strong>Welkom</strong> — rond onboarding af: bedrijfsgegevens in Instellingen, optioneel print-agent koppelen.
+          </div>
+          <button type="button" class="btn btn-sm btn-primary" id="complete-onboarding-btn">Markeer als afgerond</button>
+        </div>
+      </div>
 
       <!-- Page Content -->
       <div class="page-content">
@@ -407,10 +436,13 @@
 
         <!-- Products Page -->
         <div class="page" id="page-products">
-          <div class="page-actions mb-4">
+          <div class="page-actions mb-4" data-permission="admin">
             <button class="btn btn-primary" onclick="showProductModal()">
               <i class="bi bi-plus-lg me-2"></i>Nieuw Product
             </button>
+          </div>
+          <div class="alert alert-info py-2" id="products-staff-hint" style="display:none">
+            Als medewerker kun je alleen de beschikbaarheid van eten wijzigen. Mocktails en andere dranken zijn voorbehouden aan de admin.
           </div>
           <div class="filters-bar mb-4">
             <div class="filters-group">
@@ -450,6 +482,232 @@
                     <tr><td colspan="6" class="text-center py-4">Laden...</td></tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Website Menu Page -->
+        <div class="page" id="page-website-menu">
+          <div class="page-actions mb-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+            <div class="text-muted small">Beheer de live menukaart op de website (los van takeaway/delivery producten).</div>
+            <button class="btn btn-outline-primary" onclick="loadWebsiteMenu()">
+              <i class="bi bi-arrow-clockwise me-2"></i>Vernieuwen
+            </button>
+          </div>
+          <div class="filters-bar mb-4">
+            <div class="filters-group">
+              <select class="form-select" id="website-menu-category" style="min-width:220px"></select>
+            </div>
+            <div class="filters-actions">
+              <button class="btn btn-primary" onclick="showWebsiteMenuItemModal()">
+                <i class="bi bi-plus-lg me-2"></i>Nieuw item
+              </button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width:72px">Foto</th>
+                      <th>Naam</th>
+                      <th>Prijs</th>
+                      <th>Beschrijving</th>
+                      <th>Acties</th>
+                    </tr>
+                  </thead>
+                  <tbody id="website-menu-table">
+                    <tr><td colspan="5" class="text-center py-4">Laden...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Discounts Page -->
+        <div class="page" id="page-discounts">
+          <div class="page-actions mb-4">
+            <button class="btn btn-primary" onclick="showDiscountModal()">
+              <i class="bi bi-plus-lg me-2"></i>Nieuwe korting
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Type</th>
+                      <th>Waarde</th>
+                      <th>Min. order</th>
+                      <th>Gebruikt</th>
+                      <th>Actief</th>
+                      <th>Acties</th>
+                    </tr>
+                  </thead>
+                  <tbody id="discounts-table">
+                    <tr><td colspan="7" class="text-center py-4">Laden...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrations Page -->
+        <div class="page" id="page-integrations">
+          <div class="mb-3 text-muted small">
+            Ontvang bestellingen van Uber Eats, Takeaway.com en Deliveroo in dit dashboard.
+            Vul de partner-credentials in en configureer de webhook-URL in het developer-portaal van elk platform.
+            <span class="d-block mt-1">Readiness: groen = klaar, rood = enabled maar incompleet (webhooks worden geweigerd).</span>
+          </div>
+          <div class="row g-4" id="integrations-cards">
+            <div class="col-12 text-center py-4 text-muted">Laden...</div>
+          </div>
+          <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="mb-0"><i class="bi bi-activity me-2"></i>Recente webhook events</h5>
+              <button class="btn btn-sm btn-outline-secondary" type="button" onclick="loadIntegrationEvents()">Vernieuwen</button>
+            </div>
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead>
+                    <tr>
+                      <th>Tijd</th>
+                      <th>Platform</th>
+                      <th>Event</th>
+                      <th>External ID</th>
+                      <th>Status</th>
+                      <th>Fout</th>
+                    </tr>
+                  </thead>
+                  <tbody id="integration-events-table">
+                    <tr><td colspan="6" class="text-center py-4">Laden...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Printers Page -->
+        <div class="page" id="page-printers">
+          <div class="mb-3 text-muted small">
+            Beheer lokale ESC/POS printers via een Print Bridge Agent op het restaurant-netwerk.
+            De cloud/VPS praat met de agent over WebSocket; de agent print lokaal naar IP:9100.
+          </div>
+
+          <div class="row g-4 mb-4">
+            <div class="col-lg-5">
+              <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0"><i class="bi bi-hdd-network me-2"></i>Print Bridge Agents</h5>
+                  <button class="btn btn-sm btn-primary" type="button" onclick="registerPrintAgent()">Nieuwe agent</button>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead>
+                        <tr>
+                          <th>Naam</th>
+                          <th>Status</th>
+                          <th>Laatst gezien</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="printer-agents-table">
+                        <tr><td colspan="4" class="text-center py-3 text-muted">Laden...</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="p-3 small text-muted" id="print-bridge-ws-hint"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0"><i class="bi bi-printer me-2"></i>Printers</h5>
+                  <button class="btn btn-sm btn-primary" type="button" onclick="showPrinterModal()">Toevoegen</button>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead>
+                        <tr>
+                          <th>Naam</th>
+                          <th>Type</th>
+                          <th>IP</th>
+                          <th>Status</th>
+                          <th>Agent</th>
+                          <th>Acties</th>
+                        </tr>
+                      </thead>
+                      <tbody id="printers-table">
+                        <tr><td colspan="6" class="text-center py-3 text-muted">Laden...</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-5">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Routing regels</h5>
+                  <button class="btn btn-sm btn-outline-primary" type="button" onclick="showPrinterRuleModal()">Regel toevoegen</button>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead>
+                        <tr>
+                          <th>Categorie</th>
+                          <th>Printer</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="printer-rules-table">
+                        <tr><td colspan="3" class="text-center py-3 text-muted">Laden...</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="mb-0"><i class="bi bi-list-task me-2"></i>Print queue</h5>
+                  <button class="btn btn-sm btn-outline-secondary" type="button" onclick="loadPrintJobs()">Vernieuwen</button>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Order</th>
+                          <th>Printer</th>
+                          <th>Status</th>
+                          <th>Tijd</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="print-jobs-table">
+                        <tr><td colspan="6" class="text-center py-3 text-muted">Laden...</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -613,6 +871,24 @@
 
               <div class="card mt-4">
                 <div class="card-header">
+                  <h5><i class="bi bi-credit-card me-2"></i>Mollie (per bedrijf)</h5>
+                </div>
+                <div class="card-body">
+                  <p class="small text-muted mb-3">
+                    Optioneel: eigen Mollie API-key voor dit bedrijf. Leeg = globale <code>MOLLIE_API_KEY</code> uit de server-env.
+                  </p>
+                  <form id="settings-mollie-form">
+                    <div class="mb-3">
+                      <label class="form-label">Mollie API key</label>
+                      <input type="password" class="form-control" id="setting-mollie_api_key" autocomplete="off" placeholder="live_… of test_…">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Opslaan</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-header">
                   <h5><i class="bi bi-toggles me-2"></i>Opties</h5>
                 </div>
                 <div class="card-body">
@@ -632,6 +908,57 @@
                     <input class="form-check-input" type="checkbox" id="setting-print_auto">
                     <label class="form-check-label" for="setting-print_auto">Automatisch printen bij nieuwe order</label>
                   </div>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5><i class="bi bi-printer me-2"></i>Externe Printer (legacy)</h5>
+                </div>
+                <div class="card-body">
+                  <p class="small text-muted mb-3">
+                    Gebruik bij voorkeur <a href="#" onclick="showPage('printers'); return false;">Printers</a>
+                    met een lokale Print Bridge Agent (cloud → restaurant LAN).
+                    Onderstaande directe IP-print werkt alleen als de server op hetzelfde netwerk zit.
+                  </p>
+                  <form id="settings-printer-form">
+                    <div class="form-check form-switch mb-3">
+                      <input class="form-check-input" type="checkbox" id="setting-printer_enabled">
+                      <label class="form-check-label" for="setting-printer_enabled">Legacy netwerkprinter (direct TCP)</label>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Printer IP-adres</label>
+                      <input type="text" class="form-control" id="setting-printer_ip" placeholder="192.168.1.50">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Poort</label>
+                      <input type="number" class="form-control" id="setting-printer_port" placeholder="9100">
+                    </div>
+                    <div class="d-flex gap-2">
+                      <button type="submit" class="btn btn-primary">Opslaan</button>
+                      <button type="button" class="btn btn-outline-secondary" onclick="testNetworkPrinter()">Testprint</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="card mt-4">
+                <div class="card-header">
+                  <h5><i class="bi bi-shield-lock me-2"></i>Pincode bescherming</h5>
+                </div>
+                <div class="card-body">
+                  <form id="settings-pin-form">
+                    <div class="mb-3">
+                      <label class="form-label">Admin pincode (4-8 cijfers)</label>
+                      <input type="password" class="form-control" id="setting-admin_pin" placeholder="Nieuwe pincode" autocomplete="new-password" inputmode="numeric">
+                      <div class="form-text">Vereist om beschermde producten (bv. mocktails) te beheren.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Beschermde categorieën (slugs, komma-gescheiden)</label>
+                      <input type="text" class="form-control" id="setting-pin_protected_categories" placeholder="mocktails">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Opslaan</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -731,6 +1058,124 @@
         </div>
       </div>
     </main>
+  </div>
+
+  <!-- Printer Modal -->
+  <div class="modal fade" id="printerModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="printer-modal-title">Printer toevoegen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="printer-form">
+          <div class="modal-body">
+            <input type="hidden" id="printer-id">
+            <div class="mb-3">
+              <label class="form-label">Naam *</label>
+              <input type="text" class="form-control" id="printer-name" required placeholder="Keuken Printer">
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Type</label>
+                <select class="form-select" id="printer-type">
+                  <option value="KITCHEN">Keuken</option>
+                  <option value="BAR">Bar</option>
+                  <option value="DELIVERY">Bezorging</option>
+                  <option value="RECEIPT" selected>Bon / Receipt</option>
+                  <option value="LABEL">Label</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Protocol</label>
+                <select class="form-select" id="printer-protocol">
+                  <option value="ESC_POS" selected>ESC/POS</option>
+                  <option value="RAW_TCP">RAW TCP</option>
+                  <option value="IPP">IPP</option>
+                </select>
+              </div>
+            </div>
+            <div class="row g-3 mt-0">
+              <div class="col-md-8">
+                <label class="form-label">IP-adres *</label>
+                <input type="text" class="form-control" id="printer-ip" required placeholder="192.168.1.50">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Poort</label>
+                <input type="number" class="form-control" id="printer-port" value="9100" min="1" max="65535">
+              </div>
+            </div>
+            <div class="mb-3 mt-3">
+              <label class="form-label">Print Bridge Agent *</label>
+              <select class="form-select" id="printer-agent-id" required></select>
+              <div class="form-text">De agent op het lokale netwerk die deze printer bereikt.</div>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="printer-is-default">
+              <label class="form-check-label" for="printer-is-default">Standaardprinter (fallback)</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Printer Rule Modal -->
+  <div class="modal fade" id="printerRuleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Routing regel</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="printer-rule-form">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Categorie (slug of naam) *</label>
+              <input type="text" class="form-control" id="printer-rule-category" required placeholder="pizza / drinks / mocktails">
+              <div class="form-text">Productcategorie bepaalt de printer (bv. pizza → keuken).</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Printer *</label>
+              <select class="form-select" id="printer-rule-printer-id" required></select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agent API key Modal -->
+  <div class="modal fade" id="agentKeyModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Print Bridge API key</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="small text-muted">Bewaar deze key veilig — hij wordt niet opnieuw getoond.</p>
+          <div class="mb-2"><strong>Device ID</strong></div>
+          <code id="agent-key-device" class="d-block mb-3 p-2 bg-light rounded"></code>
+          <div class="mb-2"><strong>API Key</strong></div>
+          <code id="agent-key-value" class="d-block mb-3 p-2 bg-light rounded text-break"></code>
+          <div class="mb-2"><strong>WebSocket URL</strong></div>
+          <code id="agent-key-ws" class="d-block p-2 bg-light rounded text-break"></code>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" onclick="copyAgentKey()">Kopiëren</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Begrepen</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Order Detail Modal -->
@@ -982,6 +1427,14 @@
           <span class="label">Type</span>
           <span class="value" id="new-order-type">—</span>
         </div>
+        <div class="new-order-detail-row d-none" id="new-order-source-row">
+          <span class="label">Bron</span>
+          <span class="value" id="new-order-source">—</span>
+        </div>
+        <div class="new-order-detail-row d-none" id="new-order-address-row">
+          <span class="label">Adres</span>
+          <span class="value" id="new-order-address">—</span>
+        </div>
       </div>
 
       <div class="new-order-actions">
@@ -1069,6 +1522,131 @@
     </div>
   </div>
 
+  <!-- PIN Modal -->
+  <div class="modal fade" id="pinModal" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-shield-lock me-2"></i>Pincode vereist</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="pin-form">
+          <div class="modal-body">
+            <p class="small text-muted mb-3">Voer de admin-pincode in om dit product te beheren.</p>
+            <input type="password" class="form-control" id="pin-input" inputmode="numeric" maxlength="8" autocomplete="one-time-code" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+            <button type="submit" class="btn btn-primary">Bevestigen</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Website Menu Item Modal -->
+  <div class="modal fade" id="websiteMenuItemModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="website-menu-item-title">Menukaart item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="website-menu-item-form">
+          <div class="modal-body">
+            <input type="hidden" id="website-menu-item-id">
+            <input type="hidden" id="website-menu-item-category">
+            <div class="mb-3">
+              <label class="form-label">Naam</label>
+              <input type="text" class="form-control" id="website-menu-item-name" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prijs (bv. €8,99)</label>
+              <input type="text" class="form-control" id="website-menu-item-price" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Beschrijving</label>
+              <textarea class="form-control" id="website-menu-item-description" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Afbeelding</label>
+              <input type="hidden" id="website-menu-item-image">
+              <div id="website-menu-item-image-preview-wrap" class="text-center">
+                <img id="website-menu-item-image-preview" alt="Voorbeeld" class="img-fluid rounded border"
+                     style="max-height:220px;max-width:100%;object-fit:contain;background:#0f0f1a;display:none;">
+                <div id="website-menu-item-image-placeholder" class="rounded border d-flex flex-column align-items-center justify-content-center text-muted"
+                     style="min-height:140px;background:#0f0f1a;">
+                  <i class="bi bi-image" style="font-size:1.75rem;"></i>
+                  <span class="small mt-2">Geen afbeelding</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discount Modal -->
+  <div class="modal fade" id="discountModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="discount-modal-title">Korting</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="discount-form">
+          <div class="modal-body">
+            <input type="hidden" id="discount-id">
+            <div class="mb-3">
+              <label class="form-label">Code</label>
+              <input type="text" class="form-control" id="discount-code" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Beschrijving</label>
+              <input type="text" class="form-control" id="discount-description">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Type</label>
+                <select class="form-select" id="discount-type">
+                  <option value="percent">Percentage (%)</option>
+                  <option value="fixed">Vast bedrag (€)</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Waarde</label>
+                <input type="number" step="0.01" class="form-control" id="discount-value" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Min. bestelbedrag (€)</label>
+                <input type="number" step="0.01" class="form-control" id="discount-min-order" value="0">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Max. gebruiken</label>
+                <input type="number" class="form-control" id="discount-max-uses" placeholder="Onbeperkt">
+              </div>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="discount-active" checked>
+              <label class="form-check-label" for="discount-active">Actief</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+            <button type="submit" class="btn btn-primary">Opslaan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script
@@ -1076,6 +1654,6 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""
   ></script>
-  <script src="/admin/js/dashboard.js"></script>
+  <script src="/admin/js/dashboard.js?v=20260802b"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ import { query } from '../config/database.js';
 import { authenticate, isAdmin } from '../middleware/auth.js';
 import { validateProduct, validateId } from '../middleware/validate.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { attachTenant, companyIdFrom, getPublicCompanyId } from '../middleware/tenant.js';
 
 const router = express.Router();
 
@@ -17,14 +18,15 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const { category, available, featured, search } = req.query;
+    const publicCid = getPublicCompanyId();
     
     let sql = `
       SELECT p.*, c.name as category_name, c.slug as category_slug
       FROM products p
       JOIN categories c ON p.category_id = c.id
-      WHERE 1=1
+      WHERE p.company_id = ? AND c.company_id = ?
     `;
-    const params = [];
+    const params = [publicCid, publicCid];
 
     // Filter by category
     if (category) {
@@ -78,21 +80,24 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/grouped', async (req, res, next) => {
   try {
+    const publicCid = getPublicCompanyId();
+
     // Get categories
     const categories = await query(`
       SELECT * FROM categories 
-      WHERE is_active = 1 
+      WHERE company_id = ? AND is_active = 1 
       ORDER BY sort_order, name
-    `);
+    `, [publicCid]);
 
     // Get products
     const products = await query(`
       SELECT p.*, c.slug as category_slug
       FROM products p
       JOIN categories c ON p.category_id = c.id
-      WHERE p.is_available = 1 AND c.is_active = 1
+      WHERE p.company_id = ? AND c.company_id = ?
+        AND p.is_available = 1 AND c.is_active = 1
       ORDER BY p.sort_order, p.name
-    `);
+    `, [publicCid, publicCid]);
 
     // Parse allergens
     products.forEach(p => {
@@ -122,12 +127,13 @@ router.get('/grouped', async (req, res, next) => {
  */
 router.get('/:id', validateId, async (req, res, next) => {
   try {
+    const publicCid = getPublicCompanyId();
     const products = await query(`
       SELECT p.*, c.name as category_name, c.slug as category_slug
       FROM products p
       JOIN categories c ON p.category_id = c.id
-      WHERE p.id = ?
-    `, [req.params.id]);
+      WHERE p.id = ? AND p.company_id = ? AND c.company_id = ?
+    `, [req.params.id, publicCid, publicCid]);
 
     if (products.length === 0) {
       throw new AppError('Product niet gevonden', 404);
@@ -151,8 +157,9 @@ router.get('/:id', validateId, async (req, res, next) => {
  * POST /api/products (Admin only)
  * Create new product
  */
-router.post('/', authenticate, isAdmin, validateProduct, async (req, res, next) => {
+router.post('/', authenticate, attachTenant, isAdmin, validateProduct, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, category_id, description, price, image_url, allergens, is_available, is_featured } = req.body;
 
     // Create slug
@@ -161,9 +168,10 @@ router.post('/', authenticate, isAdmin, validateProduct, async (req, res, next) 
       .replace(/(^-|-$)/g, '') + '-' + Date.now();
 
     const result = await query(`
-      INSERT INTO products (category_id, name, slug, description, price, image_url, allergens, is_available, is_featured)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO products (company_id, category_id, name, slug, description, price, image_url, allergens, is_available, is_featured)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [
+      cid,
       category_id,
       name,
       slug,
@@ -189,12 +197,13 @@ router.post('/', authenticate, isAdmin, validateProduct, async (req, res, next) 
  * PUT /api/products/:id (Admin only)
  * Update product
  */
-router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => {
+router.put('/:id', authenticate, attachTenant, isAdmin, validateId, async (req, res, next) => {
   try {
+    const cid = companyIdFrom(req);
     const { name, category_id, description, price, image_url, allergens, is_available, is_featured, sort_order } = req.body;
 
     // Check if product exists
-    const existing = await query('SELECT id FROM products WHERE id = ?', [req.params.id]);
+    const existing = await query('SELECT id FROM products WHERE id = ? AND company_id = ?', [req.params.id, cid]);
     if (existing.length === 0) {
       throw new AppError('Product niet gevonden', 404);
     }
@@ -210,7 +219,7 @@ router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
         is_available = COALESCE(?, is_available),
         is_featured = COALESCE(?, is_featured),
         sort_order = COALESCE(?, sort_order)
-      WHERE id = ?
+      WHERE id = ? AND company_id = ?
     `, [
       category_id,
       name,
@@ -221,7 +230,8 @@ router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
       is_available,
       is_featured,
       sort_order,
-      req.params.id
+      req.params.id,
+      cid
     ]);
 
     res.json({
@@ -237,9 +247,10 @@ router.put('/:id', authenticate, isAdmin, validateId, async (req, res, next) => 
  * DELETE /api/products/:id (Admin only)
  * Delete product
  */
-router.delete('/:id', authenticate, isAdmin, validateId, async (req, res, next) => {
+router.delete('/:id', authenticate, attachTenant, isAdmin, validateId, async (req, res, next) => {
   try {
-    const result = await query('DELETE FROM products WHERE id = ?', [req.params.id]);
+    const cid = companyIdFrom(req);
+    const result = await query('DELETE FROM products WHERE id = ? AND company_id = ?', [req.params.id, cid]);
 
     if (result.affectedRows === 0) {
       throw new AppError('Product niet gevonden', 404);
