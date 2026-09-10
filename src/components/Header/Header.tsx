@@ -280,9 +280,9 @@ const Header = () => {
 
             {/* Order Button - Prominent CTA */}
             <div className="px-4 py-4" style={{ background: '#0a0a0a' }}>
-              <Link
-                to="/bestellen"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                type="button"
+                disabled
                 className="d-flex align-items-center justify-content-center gap-2 w-100 py-3 text-decoration-none"
                 style={{
                   background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
@@ -291,12 +291,16 @@ const Header = () => {
                   fontSize: '1rem',
                   borderRadius: '12px',
                   boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
-                  transition: 'all 0.3s ease',
+                  opacity: 0.45,
+                  cursor: 'not-allowed',
+                  border: 'none',
                 }}
+                aria-disabled="true"
+                title={t('order.orderOnlineDisabled', { defaultValue: 'Online bestellen is tijdelijk niet beschikbaar' })}
               >
                 <i className="bi bi-bag-check" style={{ fontSize: '1.2rem' }}></i>
                 {t('hero.orderOnline', 'Online Bestellen')}
-              </Link>
+              </button>
             </div>
 
             {/* Mobile Navigation Links */}

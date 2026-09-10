@@ -25,18 +25,13 @@ const MenuCategoryCarousel = ({
   };
 
   return (
-    <div className="menu-category-carousel-wrap mb-4 mb-md-5" data-aos="fade-up" data-aos-delay="100">
-      <div className="menu-category-carousel-container position-relative rounded-4 p-2 p-md-4">
-        <div className="menu-category-carousel-header text-center mb-2 mb-md-4">
-          <h4 className="menu-category-carousel-title text-warning fw-bold mb-1">
-            {t('menu.chooseCategory')}
-          </h4>
-          <small className="text-white-50 d-block menu-category-carousel-hint">
-            <i className="bi bi-arrow-left-right me-1" aria-hidden="true" />
-            {t('menu.swipeNavigate')}
-          </small>
-        </div>
-
+    <div
+      className="menu-category-carousel-wrap mb-3"
+      data-aos="fade-up"
+      data-aos-delay="100"
+      aria-label={t('menu.chooseCategory')}
+    >
+      <div className="menu-category-carousel-container position-relative rounded-4 p-2">
         <Swiper
           modules={[Navigation, FreeMode]}
           slidesPerView="auto"

@@ -72,11 +72,21 @@ const StructuredData = () => {
       itemListElement: [
         {
           '@type': 'MenuItem',
-          name: 'Mix BBQ',
-          description: 'Een combinatie van verschillende soorten vlees, geserveerd met Champignon saus, salade en friet',
+          name: 'Mix Grill',
+          description: 'Steak, merguez, gegrilde kipfilet, brochette kip, gegrilde chicken wings en short ribs met Champignon saus',
           offers: {
             '@type': 'Offer',
-            price: '39.99',
+            price: '39.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Mix BBQ Boil',
+          description: 'Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen',
+          offers: {
+            '@type': 'Offer',
+            price: '39.00',
             priceCurrency: 'EUR',
           },
         },

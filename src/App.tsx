@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import FloatingActions from './components/FloatingActions/FloatingActions';
 import Header from './components/Header/Header';
@@ -16,7 +16,6 @@ import StructuredData from './components/SEO/StructuredData';
 import SEOHead from './components/SEO/SEOHead';
 import SplashScreen from './components/SplashScreen/SplashScreen';
 import CookieConsent from './components/CookieConsent/CookieConsent';
-import { OrderPage } from './components/Order';
 import MenuPage from './components/Menu/MenuPage';
 import ContactPage from './components/Contact/ContactPage';
 import DeliveryRoutes from './components/DeliveryRoutes/DeliveryRoutes';
@@ -129,10 +128,10 @@ function App() {
       <Route path="/cookie-policy" element={<CookiePolicy />} />
       <Route path="/allergenen" element={<AllergenInfo />} />
       <Route path="/allergie" element={<AllergenInfo />} />
-      {/* Online Order System */}
-      <Route path="/bestellen" element={<OrderPage />} />
-      <Route path="/order" element={<OrderPage />} />
-      <Route path="/order/success" element={<OrderPage />} />
+      {/* Online ordering is temporarily disabled */}
+      <Route path="/bestellen" element={<Navigate to="/" replace />} />
+      <Route path="/order" element={<Navigate to="/" replace />} />
+      <Route path="/order/success" element={<Navigate to="/" replace />} />
       {/* Delivery Routes (prototype) */}
       <Route path="/delivery-routes" element={<DeliveryRoutes />} />
       {/* Fallback to home for any other routes */}

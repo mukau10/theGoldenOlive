@@ -324,8 +324,12 @@
         "description": "Crispy served with sweet and sour sauce."
       },
       "mixed-bbq": {
-        "name": "Mix BBQ",
-        "description": "Various types of meat<br />Served with Mushroom sauce and salad"
+        "name": "Mix Grill",
+        "description": "Steak, merguez, grilled chicken fillet, chicken skewer, grilled chicken wings and short ribs with mushroom sauce"
+      },
+      "mix-bbq-boil": {
+        "name": "Mix BBQ Boil",
+        "description": "From 2 persons: Various meats: short ribs, merguez, sausage, chicken wings, drumsticks, meatball, grilled corn and baby potatoes with fries and garlic bread with extra sauces"
       },
       "spareribs-natuur": {
         "name": "Spareribs Natural",
@@ -590,6 +594,7 @@
   },
   "order": {
     "orderOnline": "Order Online",
+    "orderOnlineDisabled": "Online ordering is temporarily unavailable",
     "cartEmpty": "Your cart is empty",
     "yourCart": "Your Cart",
     "openCart": "Open cart",

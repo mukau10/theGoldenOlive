@@ -83,7 +83,16 @@ const Footer = () => {
               <h4 className="footer-title">{t('footer.quickLinks', 'Links')}</h4>
               <ul className="footer-nav">
                 <li><Link to="/menu">{t('common.menu')}</Link></li>
-                <li><Link to="/bestellen">{t('order.orderOnline', 'Bestellen')}</Link></li>
+                <li>
+                  <span
+                    className="text-white-50"
+                    aria-disabled="true"
+                    title={t('order.orderOnlineDisabled', { defaultValue: 'Online bestellen is tijdelijk niet beschikbaar' })}
+                    style={{ cursor: 'not-allowed' }}
+                  >
+                    {t('order.orderOnline', 'Bestellen')}
+                  </span>
+                </li>
                 <li><Link to="/contact">{t('common.contact')}</Link></li>
                 <li><Link to="/galerij">{t('common.gallery')}</Link></li>
               </ul>

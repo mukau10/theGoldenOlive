@@ -1152,12 +1152,12 @@ const Checkout: React.FC<CheckoutProps> = ({ onBack, onSuccess }) => {
               ) : paymentMethod === 'cash' ? (
                 <>
                   <i className="bi bi-check-circle me-2"></i>
-                  {t('order.confirmOrder', 'Bestelling Bevestigen')} - €{total.toFixed(2)}
+                  {t('order.confirmOrder', 'Bestelling Bevestigen')} - €{checkoutTotal.toFixed(2)}
                 </>
               ) : (
                 <>
                   <i className="bi bi-lock-fill me-2"></i>
-                  {t('order.payNow', 'Nu Betalen')} - €{total.toFixed(2)}
+                  {t('order.payNow', 'Nu Betalen')} - €{checkoutTotal.toFixed(2)}
                 </>
               )}
             </button>

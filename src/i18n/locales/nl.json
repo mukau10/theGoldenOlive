@@ -324,8 +324,12 @@
         "description": "Krokant geserveerd met zoetzure saus."
       },
       "mixed-bbq": {
-        "name": "Mix BBQ",
-        "description": "Verschillende soorten vlees<br />Geserveerd met Champignon saus en salade"
+        "name": "Mix Grill",
+        "description": "Steak, merguez, gegrilde kipfilet, brochette kip, gegrilde chicken wings en short ribs met Champignon saus"
+      },
+      "mix-bbq-boil": {
+        "name": "Mix BBQ Boil",
+        "description": "Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen"
       },
       "spareribs-natuur": {
         "name": "Spareribs Natuur",
@@ -590,6 +594,7 @@
   },
   "order": {
     "orderOnline": "Online Bestellen",
+    "orderOnlineDisabled": "Online bestellen is tijdelijk niet beschikbaar",
     "cartEmpty": "Je winkelwagen is leeg",
     "yourCart": "Je Winkelwagen",
     "openCart": "Open winkelwagen",

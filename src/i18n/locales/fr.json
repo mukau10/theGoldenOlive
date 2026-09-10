@@ -331,8 +331,12 @@
         "description": "Servis croustillants avec sauce aigre-douce."
       },
       "mixed-bbq": {
-        "name": "Mix BBQ",
-        "description": "Différents types de viande<br />Servi avec sauce aux champignons et salade"
+        "name": "Mix Grill",
+        "description": "Steak, merguez, filet de poulet grillé, brochette de poulet, ailes de poulet grillées et short ribs avec sauce aux champignons"
+      },
+      "mix-bbq-boil": {
+        "name": "Mix BBQ Boil",
+        "description": "À partir de 2 personnes : différentes viandes : short ribs, merguez, saucisse, ailes de poulet, pilons de poulet, boulette, maïs grillé et pommes de terre grenailles avec frites et pain à l'ail avec sauces supplémentaires"
       },
       "spareribs-natuur": {
         "name": "Spareribs Nature",
@@ -597,6 +601,7 @@
   },
   "order": {
     "orderOnline": "Commander en ligne",
+    "orderOnlineDisabled": "La commande en ligne est temporairement indisponible",
     "cartEmpty": "Votre panier est vide",
     "yourCart": "Votre Panier",
     "openCart": "Ouvrir le panier",

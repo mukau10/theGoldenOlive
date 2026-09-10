@@ -669,26 +669,10 @@ img {
   z-index: 0;
 }
 
-.menu-category-carousel-header,
 .menu-category-swiper-horizontal {
   position: relative;
   z-index: 1;
-}
-
-.menu-category-carousel-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.1rem, 3.5vw, 1.75rem);
-  letter-spacing: 0.5px;
-  text-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
-}
-
-.menu-category-carousel-hint {
-  font-size: clamp(0.75rem, 2.5vw, 0.9rem);
-  letter-spacing: 0.5px;
-}
-
-.menu-category-swiper-horizontal {
-  padding: 0.25rem 0.5rem 0.75rem;
+  padding: 0.15rem 0.35rem 0.35rem;
   overflow: visible;
 }
 
@@ -709,8 +693,8 @@ img {
 }
 
 .menu-category-card-carousel-content {
-  min-height: 88px;
-  padding: 0.625rem !important;
+  min-height: 72px;
+  padding: 0.5rem !important;
 }
 
 .menu-category-card-carousel-text {
@@ -1010,7 +994,7 @@ img {
   }
 
   .menu-category-card-carousel-content {
-    min-height: 76px;
+    min-height: 68px;
   }
 
   .menu-category-card-carousel-bg-icon {
@@ -1032,12 +1016,12 @@ img {
   }
 
   .menu-category-swiper-horizontal {
-    padding: 0.5rem 3rem 1rem;
+    padding: 0.2rem 2.75rem 0.35rem;
   }
 
   .menu-category-card-carousel-content {
-    min-height: 84px;
-    padding: 0.75rem !important;
+    min-height: 70px;
+    padding: 0.5rem !important;
   }
 
   .menu-category-card-carousel-bg-icon {
@@ -1061,7 +1045,7 @@ img {
   }
 
   .menu-category-card-carousel-content {
-    min-height: 88px;
+    min-height: 72px;
   }
 
   .menu-category-card-carousel-bg-icon {
@@ -1092,12 +1076,12 @@ img {
   }
 
   .menu-category-carousel-container {
-    padding: 0.75rem 0.5rem !important;
-    border-radius: 1rem !important;
+    padding: 0.4rem 0.35rem !important;
+    border-radius: 0.85rem !important;
   }
 
   .menu-category-swiper-horizontal {
-    padding: 0.25rem 0 0.625rem;
+    padding: 0.1rem 0 0.25rem;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -1107,8 +1091,8 @@ img {
   }
 
   .menu-category-card-carousel-content {
-    min-height: 92px;
-    padding: 0.75rem !important;
+    min-height: 68px;
+    padding: 0.5rem !important;
   }
 
   .menu-category-card-carousel-bg-icon {

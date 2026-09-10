@@ -198,24 +198,20 @@ const Hero = () => {
                 <i className="bi bi-menu-button-wide me-2"></i>{t('common.ourMenu')}
               </button>
               <button
-                onClick={() => navigate('/bestellen')}
+                type="button"
+                disabled
                 className="btn rounded-pill px-4 px-md-5 py-2 py-md-3 fw-semibold text-decoration-none"
                 style={{ 
                   fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', 
-                  transition: 'all 0.3s ease',
                   background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
                   color: '#000',
-                  border: 'none'
+                  border: 'none',
+                  opacity: 0.45,
+                  cursor: 'not-allowed',
                 }}
+                aria-disabled="true"
                 aria-label={t('order.orderOnline', { defaultValue: 'Online Bestellen' })}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 193, 7, 0.5)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
+                title={t('order.orderOnlineDisabled', { defaultValue: 'Online bestellen is tijdelijk niet beschikbaar' })}
               >
                 <i className="bi bi-bag-check me-2"></i>{t('order.orderOnline', { defaultValue: 'Online Bestellen' })}
               </button>

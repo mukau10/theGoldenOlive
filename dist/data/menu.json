@@ -100,11 +100,33 @@
   "mixed-bbq": [
     {
       "id": "mixed-bbq",
-      "name": "Mix BBQ",
-      "price": "€39,99",
-      "description": "Verschillende soorten vlees<br />Geserveerd met Champignon saus en salade",
+      "name": "Mix Grill",
+      "price": "€39,00",
+      "description": "Steak, merguez, gegrilde kipfilet, brochette kip, gegrilde chicken wings en short ribs met Champignon saus",
       "image": "assets/img/golden/mixedGrill.JPEG",
       "alt": "the goldenolive antwerpen mixedgrill",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "mix-bbq-boil",
+      "name": "Mix BBQ Boil",
+      "price": "€39,00",
+      "description": "Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen",
+      "image": "assets/img/golden/mix-bbq-boil.jpg",
+      "alt": "the goldenolive antwerpen mix bbq boil",
       "allergens": [
         {
           "code": "G",
