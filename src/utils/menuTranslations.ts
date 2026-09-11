@@ -16,10 +16,12 @@ export const useMenuTranslation = () => {
     // Try to get translation, fallback to original if not found
     const translatedName = t(nameKey, { defaultValue: item.name });
     const translatedDesc = t(descKey, { defaultValue: item.description || '' });
+    const description =
+      !translatedDesc || translatedDesc === descKey ? item.description || '' : translatedDesc;
 
     return {
-      name: translatedName,
-      description: translatedDesc,
+      name: translatedName === nameKey ? item.name : translatedName,
+      description,
     };
   };
 

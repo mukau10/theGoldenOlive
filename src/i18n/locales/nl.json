@@ -258,12 +258,27 @@
     "swipeNavigate": "Swipe of gebruik de pijlen om te navigeren",
     "allCategories": "Alles",
     "completeMenu": "Complete Menu",
-    "allergens": "Allergenen:",
+    "allergens": "Allergenen",
+    "tapAllergen": "Tik op een badge voor meer informatie",
+    "noAllergens": "Geen allergenen vermeld",
     "understood": "Begrepen",
     "allergenInfo": "Allergenen Informatie",
     "viewFullImage": "Bekijk volledige afbeelding van {{item}}",
     "searchPlaceholder": "Zoek in menu...",
     "searchResults": "resultaten gevonden",
+    "burgersWithoutSidesTitle": "Burgers zonder bijgerecht",
+    "burgersWithoutSidesText": "De prijs is voor de burger alleen. Friet maison of kroketjes kies je extra bij (+€4). Koude sauzen +€1, warme sauzen +€2,50.",
+    "platterWithoutSidesTitle": "Platters zonder bijgerecht",
+    "platterWithoutSidesText": "De prijs is voor het platter alleen. Friet maison of kroketjes kies je extra bij (+€4). Koude sauzen +€1, warme sauzen +€2,50.",
+    "viewSides": "Bekijk sides & sauzen",
+    "withoutSide": "Zonder bijgerecht",
+    "sidesWithBurger": "Friet maison of kroketjes +€4",
+    "hotSaucesTitle": "Warme sauzen",
+    "hotSaucesText": "Signature Golden Saus en champignonsaus — €2,50.",
+    "includedSaucesTitle": "Koude sauzen",
+    "includedSaucesText": "Mayonaise, ketchup, andalouse, truffelmayonaise, samouraï en tartaar — €1,00.",
+    "saucesOverviewTitle": "Sauzen extra",
+    "saucesOverviewText": "Koude sauzen +€1. Warme sauzen +€2,50.",
     "categories": {
       "voorgerechten": {
         "title": "Voorgerechten",
@@ -271,11 +286,11 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "Een combinatie van verschillende soorten vlees."
+        "description": "Mix Grill zonder bijgerecht. Kies er friet maison of kroketjes bij."
       },
       "spareribs": {
         "title": "Spareribs",
-        "description": "Malse spareribs met onze huisgemaakte sauzen"
+        "description": "Spareribs zonder bijgerecht. Kies er friet maison, kroketjes, krieltjes of mac and cheese bij."
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
@@ -283,15 +298,19 @@
       },
       "burgers": {
         "title": "Burgers",
-        "description": "Sappige burgers met verse ingrediënten"
+        "description": "Burgers zonder bijgerecht. Kies er friet maison of kroketjes bij."
+      },
+      "platter": {
+        "title": "Platter",
+        "description": "Platters zonder bijgerecht. Kies er friet maison of kroketjes bij."
       },
       "kindermenu": {
         "title": "Kindermenu",
         "description": "Speciaal samengesteld voor onze jongste gasten"
       },
       "supplementen": {
-        "title": "Supplementen",
-        "description": "Extra's om je gerecht compleet te maken"
+        "title": "Sides & sauzen",
+        "description": "Kies je bijgerecht extra bij je burger of platter. Koude sauzen +€1, warme sauzen +€2,50."
       },
       "desserten": {
         "title": "Desserten",
@@ -311,17 +330,21 @@
       }
     },
     "items": {
-      "tiger-garnalen": {
-        "name": "Tiger Garnalen",
-        "description": "Licht gekruide gebakken garnalen."
+      "loempia": {
+        "name": "Loempia's",
+        "description": "8 loempia's met zoetzure saus."
       },
       "chicken-wings": {
         "name": "Chicken Wings",
-        "description": "Keuze uit BBQ of zoetzure saus."
+        "description": "7 chicken wings met BBQ of zoetzure saus."
       },
-      "mini-loempia": {
-        "name": "Mini Loempia's",
-        "description": "Krokant geserveerd met zoetzure saus."
+      "calamares": {
+        "name": "Calamares",
+        "description": "8 calamares met tartaarsaus."
+      },
+      "tiger-garnalen": {
+        "name": "Tiger Garnalen",
+        "description": "7 tiger garnalen met zoetzure saus."
       },
       "mixed-bbq": {
         "name": "Mix Grill",
@@ -332,27 +355,23 @@
         "description": "Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen"
       },
       "spareribs-natuur": {
-        "name": "Spareribs Natuur",
-        "description": "Geserveerd met frietjes en 2 sauzen"
+        "name": "Spareribs Natuur"
       },
       "spareribs-bbq": {
-        "name": "Spareribs Barbeque",
-        "description": "Geserveerd met frietjes en 2 sauzen"
+        "name": "Spareribs Barbeque"
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Gekarameliseerd",
-        "description": "Met Honing<br />Geserveerd met frietjes en 2 sauzen"
+        "description": "Met Honing"
       },
       "spareribs-spicy": {
-        "name": "Spareribs Spicy (Pikant)",
-        "description": "<br />Geserveerd met frietjes en 2 sauzen"
+        "name": "Spareribs Spicy (Pikant)"
       },
       "spareribs-thai": {
-        "name": "Spareribs Thai Sweet Chili",
-        "description": "<br />Geserveerd met frietjes en 2 sauzen"
+        "name": "Spareribs Thai Sweet Chili"
       },
       "shredded-chicken-loaded-scoop": {
-        "name": "Shredded Chicken Loaded Scoop",
+        "name": "Chicken Loaded Scoop",
         "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions."
       },
       "spicy-minced-meat-loaded-scoop": {
@@ -367,37 +386,69 @@
         "name": "Merguez Loaded Scoop",
         "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions."
       },
-      "scampi-loaded-scoop": {
-        "name": "Scampi Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions."
+      "chicken-mac-fries": {
+        "name": "Chicken Mac & Fries",
+        "description": "Frietjes met romige mac & cheese, getopt met pulled chicken, olijven, salsa en crispy onions."
+      },
+      "spicy-chicken-mac-fries": {
+        "name": "Spicy Chicken Mac & Fries",
+        "description": "Frietjes met romige mac & cheese, getopt met pittige pulled chicken, jalapeños, salsa en crispy onions."
+      },
+      "spicy-beef-mac-fries": {
+        "name": "Spicy Beef Mac & Fries",
+        "description": "Frietjes met romige mac & cheese, getopt met pittig rundsvlees, jalapeños, special saus en crispy onions."
+      },
+      "beef-mac-fries": {
+        "name": "Beef Mac & Fries",
+        "description": "Frietjes met romige mac & cheese, getopt met rundsvlees, special saus en crispy onions."
+      },
+      "bbq-pulled-meat-mac-fries": {
+        "name": "BBQ Pulled Meat Mac & Fries",
+        "description": "Frietjes met romige mac & cheese, getopt met pulled meat, BBQ-saus, special saus en crispy onions."
+      },
+      "merguez-mac-fries": {
+        "name": "Merguez Mac & Fries",
+        "description": "Frietjes met romige mac & cheese, getopt met kruidige merguez, special saus, salsa en crispy onions."
+      },
+      "classic-house-burger": {
+        "name": "Golden Classic House",
+        "description": "Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus."
+      },
+      "flame-house-burger": {
+        "name": "Golden Flame House",
+        "description": "Rundsvleesburger met mac and cheese, crispy onion, jalapeños en Golden Flame saus."
+      },
+      "golden-truffle-burger": {
+        "name": "Golden Truffle",
+        "description": "Rundsvlees met kaas, gebakken champignons, augurk en Golden Truffle saus."
+      },
+      "adels-golden-burger": {
+        "name": "Adel's Golden Burger",
+        "description": "Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus."
       },
       "spicy-gabriel-burger": {
-        "name": "Spicy Gabriel Burger",
-        "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
-      },
-      "the-golden-olive-burger": {
-        "name": "The Golden Olive Burger",
-        "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
+        "name": "Spicy Gabriel",
+        "description": "Gegrilde kipfilet met roomkaas, gekarameliseerde uien, frisse sla, jalapeños en Golden Flame saus."
       },
       "ouezzane-chicken-burger": {
         "name": "Ouezzane Chicken Burger",
-        "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
+        "description": "Shredded chicken met kaas, crispy uien, frisse koolsla, olijven en Ouezzane Chicken signature sauce."
       },
-      "classic-house-burger": {
-        "name": "Classic House Burger",
-        "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
+      "truffle-chicken-burger": {
+        "name": "Truffle Chicken Burger",
+        "description": "Gegrilde kipfilet met kaas, gebakken champignons, gekarameliseerde uien, augurken, sla en truffle mayo."
       },
-      "flame-house-burger": {
-        "name": "Flame House Burger",
-        "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Geserveerd met frietjes en 2 sauzen"
+      "kipfilet-platter": {
+        "name": "Kipfilet",
+        "description": "Gegrilde kipfilet met champignon saus."
       },
-      "crunchy-fish-burger": {
-        "name": "Crunchy Fish Burger",
-        "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Geserveerd met frietjes en 2 sauzen"
+      "signature-entrecote": {
+        "name": "Signature Entrecote",
+        "description": "Gegrilde entrecote met Golden Signature saus."
       },
-      "veggie-delight-burger": {
-        "name": "Veggie Delight Burger",
-        "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Geserveerd met frietjes en 2 sauzen"
+      "golden-catch": {
+        "name": "Golden Catch",
+        "description": "Fish filet met tartaarsaus."
       },
       "gehaktburger": {
         "name": "Gehaktburger",
@@ -407,17 +458,53 @@
         "name": "Kids Kipburger",
         "description": "Lichte en krokante kipburger."
       },
-      "friet": {
-        "name": "Friet",
-        "description": ""
+      "friet-maison": {
+        "name": "Friet maison",
+        "description": "Kies deze side extra bij je burger of platter."
       },
-      "mac-cheese": {
-        "name": "Mac & cheese",
-        "description": ""
+      "kroketjes": {
+        "name": "Kroketjes",
+        "description": "Kies deze side extra bij je burger of platter."
       },
-      "champignonsaus": {
+      "gebakken-kriel-aardappelen": {
+        "name": "Gebakken kriel aardappelen",
+        "description": "Kies deze side extra bij je burger of platter."
+      },
+      "mac-and-cheese": {
+        "name": "Mac and cheese",
+        "description": "Kies deze side extra bij je burger of platter."
+      },
+      "saus-warm-signature-golden": {
+        "name": "Signature Golden Saus",
+        "description": "Warme saus."
+      },
+      "saus-warm-champignon": {
         "name": "Champignonsaus",
-        "description": ""
+        "description": "Warme saus."
+      },
+      "saus-mayonnaise": {
+        "name": "Mayonaise",
+        "description": "Koude saus."
+      },
+      "saus-ketchup": {
+        "name": "Ketchup",
+        "description": "Koude saus."
+      },
+      "saus-andalouse": {
+        "name": "Andalouse",
+        "description": "Koude saus."
+      },
+      "saus-truffle-mayo": {
+        "name": "Truffelmayonaise",
+        "description": "Koude saus."
+      },
+      "saus-samoerai": {
+        "name": "Samouraï",
+        "description": "Koude saus."
+      },
+      "saus-tartaar": {
+        "name": "Tartaar",
+        "description": "Koude saus."
       },
       "cheesecake-chocoladesaus": {
         "name": "Cheesecake in Chocoladesaus",
@@ -490,10 +577,6 @@
       "lipton-thee": {
         "name": "Lipton Thee",
         "description": "Keuze uit verschillende smaken"
-      },
-      "munt-thee": {
-        "name": "Munt Thee",
-        "description": "Verfrissende munt thee"
       },
       "latte-macchiato": {
         "name": "Latte Macchiato",
@@ -591,6 +674,45 @@
     "noReservation": "Reserveren niet nodig",
     "quickContact": "Snelle Contact",
     "location": "Locatie"
+  },
+  "menuOrder": {
+    "add": "Voeg toe aan ticket",
+    "addToTicket": "Voeg toe aan ticket",
+    "addToTicketNamed": "{{name}} toevoegen aan ticket",
+    "quantity": "Aantal",
+    "sides": "Bijgerechten",
+    "hotSauces": "Warme sauzen",
+    "coldSauces": "Koude sauzen",
+    "optional": "Optioneel extra erbij.",
+    "chooseSidesHint": "Burgers, platters, spareribs en Mix Grill worden zonder bijgerecht geserveerd.",
+    "chooseSideRequired": "Kies een bijgerecht om toe te voegen.",
+    "noSide": "Zonder bijgerecht",
+    "saucesOptional": "Optioneel. Warme sauzen +€2,50, koude sauzen +€1.",
+    "yourTicket": "Jouw ticket",
+    "viewTicket": "Bekijk ticket",
+    "tableTicket": "Tafel ticket",
+    "ticketAddress": "Vlaamsekaai 65, 2000 Antwerpen",
+    "ticketNumber": "Nr.",
+    "showToWaiter": "Toon dit ticket aan de ober",
+    "ticketHint": "Geef dit ticket door wanneer de ober je bestelling komt opnemen.",
+    "clearTicket": "Ticket leegmaken",
+    "closeTicket": "Sluit ticket",
+    "items": "{{count}} items",
+    "itemSingular": "1 item",
+    "total": "Totaal",
+    "closeSheet": "Sluiten",
+    "orderFromMenu": "Bestel via de menukaart",
+    "increaseQty": "Meer",
+    "decreaseQty": "Minder",
+    "removeItem": "Verwijderen",
+    "viewFullImage": "Bekijk foto van {{name}}",
+    "intro": {
+      "title": "Hoe bestel je?",
+      "step1": "Tik op + bij een gerecht.",
+      "step2": "Je keuzes komen op je ticket onderaan.",
+      "step3": "Toon het ticket aan de ober.",
+      "gotIt": "Begrepen"
+    }
   },
   "order": {
     "orderOnline": "Online Bestellen",

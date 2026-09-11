@@ -86,7 +86,7 @@ const StructuredData = () => {
           description: 'Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen',
           offers: {
             '@type': 'Offer',
-            price: '39.00',
+            price: '35.00',
             priceCurrency: 'EUR',
           },
         },
@@ -96,27 +96,107 @@ const StructuredData = () => {
           description: 'Spareribs in verschillende smaken: Natuur, BBQ, Gekarameliseerd, Spicy, Thai',
           offers: {
             '@type': 'Offer',
-            price: '28.99',
+            price: '33.00',
             priceCurrency: 'EUR',
           },
         },
         {
           '@type': 'MenuItem',
-          name: 'Tiger garnalen',
-          description: 'Tiger garnalen met zoetzure saus',
+          name: "Loempia's",
+          description: "8 loempia's met zoetzure saus",
           offers: {
             '@type': 'Offer',
-            price: '8.00',
+            price: '6.00',
             priceCurrency: 'EUR',
           },
         },
         {
           '@type': 'MenuItem',
           name: 'Chicken Wings',
-          description: 'Kippenvleugels met keuze uit: Natuur, Zoetzure saus en BBQ Saus',
+          description: '7 chicken wings met BBQ of zoetzure saus',
+          offers: {
+            '@type': 'Offer',
+            price: '7.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Calamares',
+          description: '8 calamares met tartaarsaus',
+          offers: {
+            '@type': 'Offer',
+            price: '7.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Tiger Garnalen',
+          description: '7 tiger garnalen met zoetzure saus',
           offers: {
             '@type': 'Offer',
             price: '8.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Golden Classic House',
+          description: 'Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus. Burger zonder bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '15.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: "Adel's Golden Burger",
+          description: 'Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus. Burger zonder bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '16.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Kipfilet',
+          description: 'Gegrilde kipfilet met champignon saus. Platter zonder bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '19.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Signature Entrecote',
+          description: 'Gegrilde entrecote met Golden Signature saus. Platter zonder bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '23.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Golden Catch',
+          description: 'Fish filet met tartaarsaus. Platter zonder bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '20.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Friet maison',
+          description: 'Side extra bij je burger of platter',
+          offers: {
+            '@type': 'Offer',
+            price: '4.00',
             priceCurrency: 'EUR',
           },
         },

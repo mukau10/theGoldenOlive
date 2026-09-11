@@ -75,9 +75,8 @@ export const useMenu = () => {
       
       menuCache = data;
       LocalCacheManager.set(CACHE_KEY, data, CACHE_DURATIONS.MEDIUM);
-      
+      setMenuData(data);
       if (!silent) {
-        setMenuData(data);
         setLoading(false);
       }
       

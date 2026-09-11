@@ -1,6 +1,6 @@
 import type { MenuCategory } from '../types/menu';
 import type { IconType } from 'react-icons';
-import { GiHamburger, GiMeat, GiFriedEggs, GiFireBowl, GiBasket, GiCupcake, GiStarMedal, GiFrenchFries } from 'react-icons/gi';
+import { GiHamburger, GiMeat, GiFriedEggs, GiFireBowl, GiBasket, GiCupcake, GiStarMedal, GiFrenchFries, GiMeal } from 'react-icons/gi';
 import { BiCake, BiDroplet, BiCoffee } from 'react-icons/bi';
 
 export interface CategoryInfo {
@@ -13,6 +13,7 @@ export interface CategoryInfo {
 export const MENU_CATEGORY_ORDER: MenuCategory[] = [
   'voorgerechten',
   'burgers',
+  'platter',
   'loaded-scoops',
   'mixed-bbq',
   'spareribs',
@@ -23,6 +24,41 @@ export const MENU_CATEGORY_ORDER: MenuCategory[] = [
   'frisdranken',
   'warme-dranken',
 ];
+
+export const CATEGORIES_WITHOUT_SIDES: MenuCategory[] = ['burgers', 'platter', 'spareribs'];
+export const ITEMS_WITHOUT_SIDES = ['mixed-bbq'];
+
+export const CATEGORIES_WITH_SIDES_PICKER: MenuCategory[] = [
+  'burgers',
+  'platter',
+  'mixed-bbq',
+  'spareribs',
+  'loaded-scoops',
+  'kindermenu',
+];
+
+export function isSoldWithoutSides(category: string, itemId?: string): boolean {
+  if (itemId && ITEMS_WITHOUT_SIDES.includes(itemId)) return true;
+  return CATEGORIES_WITHOUT_SIDES.includes(category as MenuCategory);
+}
+
+export function canAddSidesToDish(category: string, itemId?: string): boolean {
+  if (itemId && ITEMS_WITHOUT_SIDES.includes(itemId)) return true;
+  return CATEGORIES_WITH_SIDES_PICKER.includes(category as MenuCategory);
+}
+
+export function requiresSideChoice(category: string, itemId?: string): boolean {
+  return isSoldWithoutSides(category, itemId);
+}
+
+export function isQuickAddCategory(category: string, itemId?: string): boolean {
+  return (
+    category === 'frisdranken' ||
+    category === 'warme-dranken' ||
+    category === 'supplementen' ||
+    Boolean(itemId?.startsWith('saus-'))
+  );
+}
 
 export function sortMenuCategories(categories: MenuCategory[]): MenuCategory[] {
   return [...categories].sort((a, b) => {
@@ -43,12 +79,12 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   'mixed-bbq': {
     title: 'Mix BBQ',
-    description: 'Een combinatie van verschillende soorten vlees.',
+    description: 'Mix Grill zonder bijgerecht. Kies er friet maison of kroketjes bij.',
     icon: GiFireBowl,
   },
   spareribs: {
     title: 'Spareribs',
-    description: 'Malse spareribs met onze huisgemaakte sauzen',
+    description: 'Spareribs zonder bijgerecht. Kies er friet maison, kroketjes, krieltjes of mac and cheese bij.',
     icon: GiMeat,
   },
   'loaded-scoops': {
@@ -58,8 +94,13 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   burgers: {
     title: 'Burgers',
-    description: 'Sappige burgers met verse ingrediënten',
+    description: 'Burgers zonder bijgerecht. Kies er friet maison of kroketjes bij.',
     icon: GiHamburger,
+  },
+  platter: {
+    title: 'Platter',
+    description: 'Platters zonder bijgerecht. Kies er friet maison of kroketjes bij.',
+    icon: GiMeal,
   },
   kindermenu: {
     title: 'Kindermenu',
@@ -67,8 +108,8 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
     icon: GiStarMedal,
   },
   supplementen: {
-    title: 'Supplementen',
-    description: "Extra's om je gerecht compleet te maken",
+    title: 'Sides & sauzen',
+    description: 'Kies je bijgerecht extra bij je burger of platter. Koude sauzen +€1, warme sauzen +€2,50.',
     icon: GiFrenchFries,
   },
   desserten: {

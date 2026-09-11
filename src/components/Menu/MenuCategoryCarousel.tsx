@@ -27,8 +27,6 @@ const MenuCategoryCarousel = ({
   return (
     <div
       className="menu-category-carousel-wrap mb-3"
-      data-aos="fade-up"
-      data-aos-delay="100"
       aria-label={t('menu.chooseCategory')}
     >
       <div className="menu-category-carousel-container position-relative rounded-4 p-2">

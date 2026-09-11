@@ -2,11 +2,24 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
+const shouldLoadHeroVideo = () => {
+  if (typeof window === 'undefined') return true;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+
+  const connection = (navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  }).connection;
+  if (connection?.saveData) return false;
+  if (connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') return false;
+
+  return true;
+};
+
 const Hero = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoError, setVideoError] = useState(false);
+  const [videoError, setVideoError] = useState(() => !shouldLoadHeroVideo());
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
   useEffect(() => {

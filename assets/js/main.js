@@ -577,6 +577,11 @@ function createCategoryHeader(category) {
       description: 'Sappige burgers met verse ingrediënten',
       icon: 'bi-cup-hot'
     },
+    'platter': {
+      title: 'Platter',
+      description: 'Platters zonder bijgerecht. Kies er friet maison of kroketjes bij.',
+      icon: 'bi-egg-fried'
+    },
     'kindermenu': {
       title: 'Kindermenu',
       description: 'Speciaal samengesteld voor onze jongste gasten',

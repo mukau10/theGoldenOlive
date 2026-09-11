@@ -1,20 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
+import { Fragment, useState, useEffect, useRef, useCallback } from 'react';
 import AOS from 'aos';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from '../../hooks/useMenu';
-import type { MenuCategory } from '../../types/menu';
-import { categoryInfoMap, sortMenuCategories } from '../../utils/categoryInfo';
+import type { MenuCategory, MenuItem as MenuItemType } from '../../types/menu';
+import { categoryInfoMap, isQuickAddCategory, sortMenuCategories } from '../../utils/categoryInfo';
+import { parseMenuPrice } from '../../utils/price';
 import MenuItem from './MenuItem';
 import MenuCategoryCarousel from './MenuCategoryCarousel';
 import CategorySelectorModal from './CategorySelectorModal';
+import DishOrderSheet from './DishOrderSheet';
+import MenuOrderBar from './MenuOrderBar';
+import MenuIntroModal from './MenuIntroModal';
+import { MenuOrderProvider, useMenuOrder } from './MenuOrderContext';
 import { translateCategory, translateCategoryDescription, useMenuTranslation } from '../../utils/menuTranslations';
+import './menu-order.css';
 
-const Menu = () => {
+const MenuContent = () => {
   const { t } = useTranslation();
   const { menuData, loading, error } = useMenu();
+  const { addLine } = useMenuOrder();
   const [selectedCategory, setSelectedCategory] = useState<MenuCategory | '*'>('*');
-  const [showAllergenPopup, setShowAllergenPopup] = useState(false);
-  const [allergenDescription, setAllergenDescription] = useState('');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [isMenuSectionVisible, setIsMenuSectionVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -30,7 +35,7 @@ const Menu = () => {
         if (firstMenuItem) {
           // Calculate position with offset to show the card fully from the beginning
           const cardRect = firstMenuItem.getBoundingClientRect();
-          const scrollOffset = 120; // Offset to account for fixed headers/spacing and show card fully
+          const scrollOffset = window.innerWidth < 768 ? 210 : 200;
           const targetPosition = window.scrollY + cardRect.top - scrollOffset;
           
           window.scrollTo({
@@ -42,7 +47,7 @@ const Menu = () => {
           const menuItemsContainer = document.getElementById('menu-items-container');
           if (menuItemsContainer) {
             const containerRect = menuItemsContainer.getBoundingClientRect();
-            const scrollOffset = 120;
+            const scrollOffset = window.innerWidth < 768 ? 210 : 200;
             const targetPosition = window.scrollY + containerRect.top - scrollOffset;
             
             window.scrollTo({
@@ -54,7 +59,7 @@ const Menu = () => {
             const menuSection = document.getElementById('menu');
             if (menuSection) {
               const sectionRect = menuSection.getBoundingClientRect();
-              const scrollOffset = 120;
+              const scrollOffset = window.innerWidth < 768 ? 210 : 200;
               const targetPosition = window.scrollY + sectionRect.top - scrollOffset;
               
               window.scrollTo({
@@ -126,15 +131,12 @@ const Menu = () => {
     }
   }, [loading, menuData]);
 
-  const handleAllergenClick = (description: string) => {
-    setAllergenDescription(description);
-    setShowAllergenPopup(true);
-  };
-
   const handleCategorySelect = (category: MenuCategory | '*') => {
     setSearchQuery('');
     setSelectedCategory(category);
   };
+
+  const [sheetItem, setSheetItem] = useState<{ item: MenuItemType; category: MenuCategory } | null>(null);
 
   const categories: MenuCategory[] = menuData
     ? sortMenuCategories(Object.keys(menuData) as MenuCategory[])
@@ -142,6 +144,20 @@ const Menu = () => {
 
   // Search functionality
   const { translateMenuItem } = useMenuTranslation();
+
+  const handleOrderClick = useCallback((item: MenuItemType, category: MenuCategory) => {
+    if (isQuickAddCategory(category, item.id)) {
+      const translated = translateMenuItem(item);
+      addLine({
+        itemId: item.id,
+        name: translated.name,
+        basePrice: parseMenuPrice(item.price),
+        extras: [],
+      });
+      return;
+    }
+    setSheetItem({ item, category });
+  }, [addLine, translateMenuItem]);
   
   const filteredItems = () => {
     if (!menuData) return [];
@@ -217,7 +233,7 @@ const Menu = () => {
 
   return (
     <section id="menu" ref={menuSectionRef} className="py-5 bg-dark-custom">
-      <div className="container-fluid px-4" data-aos="fade-up">
+      <div className="container-fluid px-4">
         <div className="text-center mb-4 mb-md-5">
           <h2 id="menu-heading" className="display-4 display-md-3 fw-bold text-warning mb-2 mb-md-3" style={{ fontFamily: "'Playfair Display', serif", fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}>
             <i className="bi bi-journal-bookmark text-warning me-2 me-md-3" style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)' }}></i>{t('menu.title')}
@@ -270,18 +286,6 @@ const Menu = () => {
             </div>
           </div>
 
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8">
-              <div className="bg-black border border-warning rounded-pill p-2 p-md-3 d-flex align-items-center justify-content-center flex-wrap gap-2">
-                <i className="bi bi-info-circle text-warning" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}></i>
-                <span className="text-warning small fw-medium" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>{t('menu.clickAllergens')}</span>
-                <span className="text-white-50 small d-none d-sm-inline" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>|</span>
-                <a href="/allergenen" className="text-warning small text-decoration-none" style={{ fontSize: 'clamp(0.75rem, 2vw, 0.875rem)' }}>
-                  <i className="bi bi-shield-exclamation me-1"></i>{t('menu.extendedAllergenInfo')}
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
 
         <MenuCategoryCarousel
@@ -291,53 +295,24 @@ const Menu = () => {
         />
 
         {/* Menu Items */}
-        <div id="menu-items-container" className="row g-4">
+        <div id="menu-items-container" className="row g-2 menu-items-grid">
+          {selectedCategory !== '*' && !searchQuery.trim() && (
+            <div className="col-12">
+              <div className="menu-category-intro">
+                <h3>{translateCategory(selectedCategory, t)}</h3>
+                <p>{translateCategoryDescription(selectedCategory, t)}</p>
+              </div>
+            </div>
+          )}
           {filteredItems().map(({ item, category, isHeader }, index) => {
             if (isHeader) {
               const info = categoryInfoMap[category];
               if (!info) return null;
               return (
                 <div key={`header-${category}`} className="col-12">
-                  <div
-                    className="category-header d-flex align-items-center justify-content-center py-5 mb-4 mt-5"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.05))',
-                      borderRadius: '12px',
-                      border: '1px solid rgba(255, 193, 7, 0.2)',
-                    }}
-                  >
-                    <div className="text-center" style={{ maxWidth: '600px' }}>
-                      <div className="d-flex align-items-center justify-content-center mb-4">
-                        <div className="bg-warning opacity-50" style={{ width: '60px', height: '1px' }}></div>
-                        <div
-                          className="mx-3 bg-dark border border-warning rounded-circle d-flex align-items-center justify-content-center"
-                          style={{ 
-                            width: 'clamp(64px, 16vw, 48px)', 
-                            height: 'clamp(64px, 16vw, 48px)' 
-                          }}
-                        >
-                          {(() => {
-                            const IconComponent = info.icon;
-                            return (
-                              <IconComponent 
-                                className="text-warning" 
-                                style={{ 
-                                  fontSize: 'clamp(2rem, 10vw, 1.5rem)' 
-                                }} 
-                              />
-                            );
-                          })()}
-                        </div>
-                        <div className="bg-warning opacity-50" style={{ width: '60px', height: '1px' }}></div>
-                      </div>
-                      <h3
-                        className="display-6 fw-bold text-warning mb-2"
-                        style={{ fontFamily: "'Playfair Display', serif" }}
-                      >
-                        {translateCategory(category, t)}
-                      </h3>
-                      <p className="text-white-50 small">{translateCategoryDescription(category, t)}</p>
-                    </div>
+                  <div className="menu-category-intro">
+                    <h3>{translateCategory(category, t)}</h3>
+                    <p>{translateCategoryDescription(category, t)}</p>
                   </div>
                 </div>
               );
@@ -345,64 +320,49 @@ const Menu = () => {
             // Calculate item index (excluding headers) for staggered animation
             const itemIndex = filteredItems()
               .slice(0, index)
-              .filter(({ isHeader }) => !isHeader).length;
+              .filter(({ isHeader: header }) => !header).length;
+            const isWarmSauce = item.id.startsWith('saus-warm-');
+            const isColdSauce = item.id.startsWith('saus-') && !isWarmSauce;
+            const previousItems = filteredItems().slice(0, index).filter(({ isHeader: header }) => !header);
+            const isFirstWarmSauce =
+              isWarmSauce && !previousItems.some(({ item: prev }) => prev?.id?.startsWith('saus-warm-'));
+            const isFirstColdSauce =
+              isColdSauce &&
+              !previousItems.some(({ item: prev }) => prev?.id?.startsWith('saus-') && !prev?.id?.startsWith('saus-warm-'));
             return (
-              <MenuItem
-                key={`${category}-${item.id}-${index}`}
-                item={item}
-                category={category}
-                onAllergenClick={handleAllergenClick}
-                index={itemIndex}
-              />
+              <Fragment key={`${category}-${item.id}-${index}`}>
+                {isFirstWarmSauce && (
+                  <div className="col-12">
+                    <div className="menu-sauce-subheader">
+                      <h4>{t('menu.hotSaucesTitle')}</h4>
+                      <p>{t('menu.hotSaucesText')}</p>
+                    </div>
+                  </div>
+                )}
+                {isFirstColdSauce && (
+                  <div className="col-12">
+                    <div className="menu-sauce-subheader">
+                      <h4>{t('menu.includedSaucesTitle')}</h4>
+                      <p>{t('menu.includedSaucesText')}</p>
+                    </div>
+                  </div>
+                )}
+                <MenuItem
+                  item={item}
+                  category={category}
+                  onOrderClick={handleOrderClick}
+                  index={itemIndex}
+                />
+              </Fragment>
             );
           })}
         </div>
       </div>
 
-      {/* Allergen Popup */}
-      {showAllergenPopup && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{
-            background: 'rgba(0, 0, 0, 0.8)',
-            backdropFilter: 'blur(8px)',
-            zIndex: 10000,
-            padding: '1rem',
-          }}
-          onClick={() => setShowAllergenPopup(false)}
-        >
-          <div
-            className="bg-dark border border-warning rounded-3 p-4"
-            style={{ maxWidth: '400px', width: '100%' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h6 className="text-warning mb-0">
-                <i className="bi bi-shield-exclamation me-2"></i>{t('menu.allergenInfo')}
-              </h6>
-              <button
-                className="btn-close btn-close-white"
-                onClick={() => setShowAllergenPopup(false)}
-                aria-label="Close"
-              ></button>
-            </div>
-            <p className="text-white mb-0">{allergenDescription}</p>
-            <div className="mt-3 text-center">
-              <button
-                className="btn btn-warning btn-sm px-3 py-2 rounded-pill"
-                onClick={() => setShowAllergenPopup(false)}
-              >
-                <i className="bi bi-check-circle me-1"></i>{t('menu.understood')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Category Selector - Floating Button - Only show when menu section is visible */}
       {isMenuSectionVisible && (
         <div
-          className="position-fixed"
+          className="menu-category-fab position-fixed"
           style={{
             bottom: '20px',
             right: '20px',
@@ -537,9 +497,27 @@ const Menu = () => {
         isOpen={showCategoryModal}
         onClose={() => setShowCategoryModal(false)}
       />
+
+      {sheetItem && menuData && (
+        <DishOrderSheet
+          key={`${sheetItem.category}-${sheetItem.item.id}`}
+          item={sheetItem.item}
+          category={sheetItem.category}
+          menuData={menuData}
+          onClose={() => setSheetItem(null)}
+        />
+      )}
+      <MenuOrderBar />
+      <MenuIntroModal />
     </section>
   );
 };
+
+const Menu = () => (
+  <MenuOrderProvider>
+    <MenuContent />
+  </MenuOrderProvider>
+);
 
 export default Menu;
 

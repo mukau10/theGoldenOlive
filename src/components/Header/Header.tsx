@@ -60,11 +60,7 @@ const Header = () => {
       {/* Header */}
       <header
         id="header"
-        className={`position-fixed start-0 end-0 ${isScrolled ? 'header-scrolled' : ''}`}
-        style={{ 
-          zIndex: 1040,
-          background: 'transparent',
-        }}
+        className={`site-header start-0 end-0 ${isScrolled ? 'header-scrolled' : ''}`}
         role="banner"
       >
         <div className="container-fluid px-3 px-md-4 py-2 py-md-3">
@@ -187,11 +183,11 @@ const Header = () => {
               </ul>
             </nav>
 
-            {/* Mobile: Language Switcher + Menu Button */}
-            <div className="d-lg-none d-flex align-items-center" style={{ gap: '0.75rem' }}>
-              <LanguageSwitcher />
+            {/* Mobile: Menu Button */}
+            <div className="d-lg-none d-flex align-items-center">
               <button
                 className="mobile-nav-toggle"
+                type="button"
                 aria-label={t('header.toggleMobileMenu')}
                 aria-expanded={isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -202,18 +198,13 @@ const Header = () => {
                   width: '44px',
                   height: '44px',
                   borderRadius: '4px',
-                  position: 'relative',
-                  minWidth: '44px',
-                  minHeight: '44px',
                 }}
               >
-                <span style={{ fontSize: 0 }}>
-                  {isMobileMenuOpen ? (
-                    <i className="bi bi-x" style={{ fontSize: '1.5rem' }}></i>
-                  ) : (
-                    <i className="bi bi-list" style={{ fontSize: '1.5rem' }}></i>
-                  )}
-                </span>
+                <i
+                  className={`bi ${isMobileMenuOpen ? 'bi-x' : 'bi-list'}`}
+                  aria-hidden="true"
+                  style={{ fontSize: '1.5rem', lineHeight: 1 }}
+                />
               </button>
             </div>
           </div>
@@ -280,27 +271,42 @@ const Header = () => {
 
             {/* Order Button - Prominent CTA */}
             <div className="px-4 py-4" style={{ background: '#0a0a0a' }}>
-              <button
-                type="button"
-                disabled
-                className="d-flex align-items-center justify-content-center gap-2 w-100 py-3 text-decoration-none"
-                style={{
-                  background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
-                  color: '#000',
-                  fontWeight: '700',
-                  fontSize: '1rem',
-                  borderRadius: '12px',
-                  boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
-                  opacity: 0.45,
-                  cursor: 'not-allowed',
-                  border: 'none',
-                }}
-                aria-disabled="true"
-                title={t('order.orderOnlineDisabled', { defaultValue: 'Online bestellen is tijdelijk niet beschikbaar' })}
-              >
-                <i className="bi bi-bag-check" style={{ fontSize: '1.2rem' }}></i>
-                {t('hero.orderOnline', 'Online Bestellen')}
-              </button>
+              {location.pathname === '/menu' || location.pathname === '/menukaart' ? (
+                <button
+                  type="button"
+                  className="d-flex align-items-center justify-content-center gap-2 w-100 py-3 text-decoration-none"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  style={{
+                    background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
+                    color: '#000',
+                    fontWeight: '700',
+                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
+                    border: 'none',
+                  }}
+                >
+                  <i className="bi bi-plus-circle" style={{ fontSize: '1.2rem' }}></i>
+                  {t('menuOrder.orderFromMenu')}
+                </button>
+              ) : (
+                <Link
+                  to="/menu"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="d-flex align-items-center justify-content-center gap-2 w-100 py-3 text-decoration-none"
+                  style={{
+                    background: 'linear-gradient(135deg, var(--bs-golden) 0%, #e6ac00 100%)',
+                    color: '#000',
+                    fontWeight: '700',
+                    fontSize: '1rem',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 20px rgba(255, 193, 7, 0.3)',
+                  }}
+                >
+                  <i className="bi bi-journal-bookmark" style={{ fontSize: '1.2rem' }}></i>
+                  {t('menuOrder.orderFromMenu')}
+                </Link>
+              )}
             </div>
 
             {/* Mobile Navigation Links */}

@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './FloatingActions.css';
 
 const FloatingActions = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const isMenuPage = location.pathname === '/menu' || location.pathname === '/menukaart';
 
-  // Show floating actions after scrolling past hero
+  // Show floating actions after scrolling past hero, and on the menu page
   useEffect(() => {
     const handleScroll = () => {
+      if (isMenuPage) {
+        setIsVisible(true);
+        return;
+      }
       const hero = document.getElementById('hero');
       if (hero) {
         const heroBottom = hero.getBoundingClientRect().bottom;
@@ -23,7 +29,7 @@ const FloatingActions = () => {
     handleScroll(); // Check initial state
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isMenuPage]);
 
   const goToMenu = () => {
     navigate('/menu');
@@ -44,7 +50,7 @@ const FloatingActions = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="floating-actions">
+    <div className={`floating-actions${isMenuPage ? ' floating-actions--on-menu' : ''}`}>
       {/* Action buttons - placed first so they appear above toggle */}
       <div className={`floating-actions-menu ${showMenu ? 'visible' : ''}`}>
         {/* Menu button */}

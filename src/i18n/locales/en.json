@@ -258,12 +258,27 @@
     "swipeNavigate": "Swipe or use arrows to navigate",
     "allCategories": "All",
     "completeMenu": "Complete Menu",
-    "allergens": "Allergens:",
+    "allergens": "Allergens",
+    "tapAllergen": "Tap a badge for more information",
+    "noAllergens": "No allergens listed",
     "understood": "Understood",
     "allergenInfo": "Allergen Information",
     "viewFullImage": "View full image of {{item}}",
     "searchPlaceholder": "Search menu...",
     "searchResults": "results found",
+    "burgersWithoutSidesTitle": "Burgers without a side",
+    "burgersWithoutSidesText": "The price is for the burger only. Add fries maison or croquettes separately (+€4). Cold sauces +€1, hot sauces +€2.50.",
+    "platterWithoutSidesTitle": "Platters without a side",
+    "platterWithoutSidesText": "The price is for the platter only. Add fries maison or croquettes separately (+€4). Cold sauces +€1, hot sauces +€2.50.",
+    "viewSides": "View sides & sauces",
+    "withoutSide": "Without a side",
+    "sidesWithBurger": "Fries maison or croquettes +€4",
+    "hotSaucesTitle": "Hot sauces",
+    "hotSaucesText": "Signature Golden Sauce and mushroom sauce — €2.50.",
+    "includedSaucesTitle": "Cold sauces",
+    "includedSaucesText": "Mayonnaise, ketchup, andalouse, truffle mayonnaise, samurai and tartar — €1.00.",
+    "saucesOverviewTitle": "Extra sauces",
+    "saucesOverviewText": "Cold sauces +€1. Hot sauces +€2.50.",
     "categories": {
       "voorgerechten": {
         "title": "Starters",
@@ -271,11 +286,11 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "A combination of different types of meat."
+        "description": "Mix Grill without a side. Add fries maison or croquettes separately."
       },
       "spareribs": {
         "title": "Spareribs",
-        "description": "Tender spareribs with our homemade sauces"
+        "description": "Spareribs without a side. Add fries maison, croquettes, baby potatoes or mac and cheese."
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
@@ -283,15 +298,19 @@
       },
       "burgers": {
         "title": "Burgers",
-        "description": "Juicy burgers with fresh ingredients"
+        "description": "Burgers without a side. Add fries maison or croquettes separately."
+      },
+      "platter": {
+        "title": "Platter",
+        "description": "Platters without a side. Add fries maison or croquettes separately."
       },
       "kindermenu": {
         "title": "Kids Menu",
         "description": "Specially designed for our youngest guests"
       },
       "supplementen": {
-        "title": "Extras",
-        "description": "Extras to complete your dish"
+        "title": "Sides & sauces",
+        "description": "Add a side to your burger or platter. Cold sauces +€1, hot sauces +€2.50."
       },
       "desserten": {
         "title": "Desserts",
@@ -311,17 +330,21 @@
       }
     },
     "items": {
-      "tiger-garnalen": {
-        "name": "Tiger Shrimp",
-        "description": "Lightly spiced fried shrimp."
+      "loempia": {
+        "name": "Spring Rolls",
+        "description": "8 spring rolls with sweet and sour sauce."
       },
       "chicken-wings": {
         "name": "Chicken Wings",
-        "description": "Choice of BBQ or sweet and sour sauce."
+        "description": "7 chicken wings with BBQ or sweet and sour sauce."
       },
-      "mini-loempia": {
-        "name": "Mini Spring Rolls",
-        "description": "Crispy served with sweet and sour sauce."
+      "calamares": {
+        "name": "Calamari",
+        "description": "8 calamari with tartar sauce."
+      },
+      "tiger-garnalen": {
+        "name": "Tiger Shrimp",
+        "description": "7 tiger shrimp with sweet and sour sauce."
       },
       "mixed-bbq": {
         "name": "Mix Grill",
@@ -332,27 +355,23 @@
         "description": "From 2 persons: Various meats: short ribs, merguez, sausage, chicken wings, drumsticks, meatball, grilled corn and baby potatoes with fries and garlic bread with extra sauces"
       },
       "spareribs-natuur": {
-        "name": "Spareribs Natural",
-        "description": "Served with fries and 2 sauces"
+        "name": "Spareribs Natural"
       },
       "spareribs-bbq": {
-        "name": "Spareribs Barbecue",
-        "description": "Served with fries and 2 sauces"
+        "name": "Spareribs Barbecue"
       },
       "spareribs-gekarameliseerd": {
         "name": "Spareribs Caramelized",
-        "description": "With Honey<br />Served with fries and 2 sauces"
+        "description": "With Honey"
       },
       "spareribs-spicy": {
-        "name": "Spareribs Spicy",
-        "description": "<br />Served with fries and 2 sauces"
+        "name": "Spareribs Spicy"
       },
       "spareribs-thai": {
-        "name": "Spareribs Thai Sweet Chili",
-        "description": "<br />Served with fries and 2 sauces"
+        "name": "Spareribs Thai Sweet Chili"
       },
       "shredded-chicken-loaded-scoop": {
-        "name": "Shredded Chicken Loaded Scoop",
+        "name": "Chicken Loaded Scoop",
         "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Pulled chicken with olives, salsa and crispy onions."
       },
       "spicy-minced-meat-loaded-scoop": {
@@ -367,37 +386,69 @@
         "name": "Merguez Loaded Scoop",
         "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Spicy merguez with special sauce, salsa and crispy onions."
       },
-      "scampi-loaded-scoop": {
-        "name": "Scampi Loaded Scoop",
-        "description": "Each Loaded Scoop is filled with fries, topped with creamy mac & cheese and generously topped with your chosen topping.<br />Fried scampi with special sauce, salsa and crispy onions."
+      "chicken-mac-fries": {
+        "name": "Chicken Mac & Fries",
+        "description": "Fries with creamy mac & cheese, topped with pulled chicken, olives, salsa and crispy onions."
+      },
+      "spicy-chicken-mac-fries": {
+        "name": "Spicy Chicken Mac & Fries",
+        "description": "Fries with creamy mac & cheese, topped with spicy pulled chicken, jalapeños, salsa and crispy onions."
+      },
+      "spicy-beef-mac-fries": {
+        "name": "Spicy Beef Mac & Fries",
+        "description": "Fries with creamy mac & cheese, topped with spicy beef, jalapeños, special sauce and crispy onions."
+      },
+      "beef-mac-fries": {
+        "name": "Beef Mac & Fries",
+        "description": "Fries with creamy mac & cheese, topped with beef, special sauce and crispy onions."
+      },
+      "bbq-pulled-meat-mac-fries": {
+        "name": "BBQ Pulled Meat Mac & Fries",
+        "description": "Fries with creamy mac & cheese, topped with pulled meat, BBQ sauce, special sauce and crispy onions."
+      },
+      "merguez-mac-fries": {
+        "name": "Merguez Mac & Fries",
+        "description": "Fries with creamy mac & cheese, topped with spicy merguez, special sauce, salsa and crispy onions."
+      },
+      "classic-house-burger": {
+        "name": "Golden Classic House",
+        "description": "Artisanal beef with cheese, caramelized onions, pickle, lettuce and Golden Crown sauce."
+      },
+      "flame-house-burger": {
+        "name": "Golden Flame House",
+        "description": "Beef burger with mac and cheese, crispy onion, jalapeños and Golden Flame sauce."
+      },
+      "golden-truffle-burger": {
+        "name": "Golden Truffle",
+        "description": "Beef with cheese, sautéed mushrooms, pickle and Golden Truffle sauce."
+      },
+      "adels-golden-burger": {
+        "name": "Adel's Golden Burger",
+        "description": "Beef with parmesan cheese, caramelized onions, fresh lettuce, parsley, lime and Golden signature sauce."
       },
       "spicy-gabriel-burger": {
-        "name": "Spicy Gabriel Burger",
-        "description": "Grilled chicken fillet with creamy cheese, caramelized onions, fresh lettuce, jalapeño peppers and our homemade Spicy Signature Sauce<br />Served with fries and 2 sauces"
-      },
-      "the-golden-olive-burger": {
-        "name": "The Golden Olive Burger",
-        "description": "Juicy beef burger combined with tender pulled beef, cheese, crispy lettuce, BBQ sauce and our Original Signature Sauce<br />Served with fries and 2 sauces"
+        "name": "Spicy Gabriel",
+        "description": "Grilled chicken fillet with cream cheese, caramelized onions, fresh lettuce, jalapeños and Golden Flame sauce."
       },
       "ouezzane-chicken-burger": {
         "name": "Ouezzane Chicken Burger",
-        "description": "Shredded chicken with crispy onions, cheese, olives and our Original Signature Sauce<br />Served with fries and 2 sauces"
+        "description": "Shredded chicken with cheese, crispy onions, fresh coleslaw, olives and Ouezzane Chicken signature sauce."
       },
-      "classic-house-burger": {
-        "name": "Classic House Burger",
-        "description": "Artisanal beef burger with caramelized onions, pickle, lettuce and our Original Signature Sauce<br />Served with fries and 2 sauces"
+      "truffle-chicken-burger": {
+        "name": "Truffle Chicken Burger",
+        "description": "Grilled chicken fillet with cheese, sautéed mushrooms, caramelized onions, pickles, lettuce and truffle mayo."
       },
-      "flame-house-burger": {
-        "name": "Flame House Burger",
-        "description": "Beef burger with spicy bolognese sauce, crispy onions and our Spicy Signature Sauce<br />Served with fries and 2 sauces"
+      "kipfilet-platter": {
+        "name": "Chicken Fillet",
+        "description": "Grilled chicken fillet with mushroom sauce."
       },
-      "crunchy-fish-burger": {
-        "name": "Crunchy Fish Burger",
-        "description": "Crispy fish fillet with cheese, lettuce, crispy onions, pickle and tartar sauce<br />Served with fries and 2 sauces"
+      "signature-entrecote": {
+        "name": "Signature Entrecote",
+        "description": "Grilled entrecote with Golden Signature sauce."
       },
-      "veggie-delight-burger": {
-        "name": "Veggie Delight Burger",
-        "description": "Vegetarian burger with pickle, salsa, cheese and lettuce<br />Served with fries and 2 sauces"
+      "golden-catch": {
+        "name": "Golden Catch",
+        "description": "Fish fillet with tartar sauce."
       },
       "gehaktburger": {
         "name": "Minced Meat Burger",
@@ -407,17 +458,53 @@
         "name": "Kids Kipburger",
         "description": "Light and crispy chicken burger."
       },
-      "friet": {
-        "name": "Fries",
-        "description": ""
+      "friet-maison": {
+        "name": "Fries maison",
+        "description": "Add this side extra with your burger or platter."
       },
-      "mac-cheese": {
-        "name": "Mac & Cheese",
-        "description": ""
+      "kroketjes": {
+        "name": "Croquettes",
+        "description": "Add this side extra with your burger or platter."
       },
-      "champignonsaus": {
-        "name": "Mushroom Sauce",
-        "description": ""
+      "gebakken-kriel-aardappelen": {
+        "name": "Roasted baby potatoes",
+        "description": "Add this side extra with your burger or platter."
+      },
+      "mac-and-cheese": {
+        "name": "Mac and cheese",
+        "description": "Add this side extra with your burger or platter."
+      },
+      "saus-warm-signature-golden": {
+        "name": "Signature Golden Sauce",
+        "description": "Hot sauce."
+      },
+      "saus-warm-champignon": {
+        "name": "Mushroom sauce",
+        "description": "Hot sauce."
+      },
+      "saus-mayonnaise": {
+        "name": "Mayonnaise",
+        "description": "Cold sauce."
+      },
+      "saus-ketchup": {
+        "name": "Ketchup",
+        "description": "Cold sauce."
+      },
+      "saus-andalouse": {
+        "name": "Andalouse",
+        "description": "Cold sauce."
+      },
+      "saus-truffle-mayo": {
+        "name": "Truffle mayonnaise",
+        "description": "Cold sauce."
+      },
+      "saus-samoerai": {
+        "name": "Samurai",
+        "description": "Cold sauce."
+      },
+      "saus-tartaar": {
+        "name": "Tartar",
+        "description": "Cold sauce."
       },
       "cheesecake-chocoladesaus": {
         "name": "Cheesecake in Chocolate Sauce",
@@ -490,10 +577,6 @@
       "lipton-thee": {
         "name": "Lipton Tea",
         "description": "Choice of different flavors"
-      },
-      "munt-thee": {
-        "name": "Mint Tea",
-        "description": "Refreshing mint tea"
       },
       "latte-macchiato": {
         "name": "Latte Macchiato",
@@ -591,6 +674,45 @@
     "noReservation": "No reservation needed",
     "quickContact": "Quick Contact",
     "location": "Location"
+  },
+  "menuOrder": {
+    "add": "Add to ticket",
+    "addToTicket": "Add to ticket",
+    "addToTicketNamed": "Add {{name}} to ticket",
+    "quantity": "Quantity",
+    "sides": "Sides",
+    "hotSauces": "Hot sauces",
+    "coldSauces": "Cold sauces",
+    "optional": "Optional extras.",
+    "chooseSidesHint": "Burgers, platters, spareribs and Mix Grill are served without a side.",
+    "chooseSideRequired": "Choose a side to continue.",
+    "noSide": "Without a side",
+    "saucesOptional": "Optional. Hot sauces +€2.50, cold sauces +€1.",
+    "yourTicket": "Your ticket",
+    "viewTicket": "View ticket",
+    "tableTicket": "Table ticket",
+    "ticketAddress": "Vlaamsekaai 65, 2000 Antwerp",
+    "ticketNumber": "No.",
+    "showToWaiter": "Show this ticket to your waiter",
+    "ticketHint": "Hand this ticket over when the waiter comes to take your order.",
+    "clearTicket": "Clear ticket",
+    "closeTicket": "Close ticket",
+    "items": "{{count}} items",
+    "itemSingular": "1 item",
+    "total": "Total",
+    "closeSheet": "Close",
+    "orderFromMenu": "Order from the menu",
+    "increaseQty": "More",
+    "decreaseQty": "Less",
+    "removeItem": "Remove",
+    "viewFullImage": "View photo of {{name}}",
+    "intro": {
+      "title": "How to order",
+      "step1": "Tap + on a dish.",
+      "step2": "Your picks go on the ticket at the bottom.",
+      "step3": "Show the ticket to your waiter.",
+      "gotIt": "Got it"
+    }
   },
   "order": {
     "orderOnline": "Order Online",

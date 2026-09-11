@@ -1,74 +1,12 @@
 {
   "voorgerechten": [
     {
-      "id": "tiger-garnalen",
-      "name": "Tiger Garnalen",
-      "price": "€8,99",
-      "description": "Licht gekruide gebakken garnalen.",
-      "image": "assets/img/golden/tigerGarnalen.JPEG",
-      "alt": "Tiger garnalen voorgerecht The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "S",
-          "type": "Shellfish",
-          "color": "orange",
-          "description": "Schaaldieren - Garnalen, krabben en kreeften"
-        },
-        {
-          "code": "M",
-          "type": "Mustard",
-          "color": "yellow",
-          "description": "Mosterd - Alle soorten mosterd"
-        }
-      ]
-    },
-    {
-      "id": "chicken-wings",
-      "name": "Chicken Wings",
-      "price": "€8,99",
-      "description": "Keuze uit BBQ of zoetzure saus.",
-      "image": "assets/img/golden/chickeniwings.JPEG",
-      "alt": "the goldenolive antwerpen chicken wings",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "Se",
-          "type": "Sesame",
-          "color": "purple",
-          "description": "Sesamzaad - Sesamzaad of sesamzaadolie"
-        },
-        {
-          "code": "So",
-          "type": "Soy",
-          "color": "green",
-          "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"
-        },
-        {
-          "code": "M",
-          "type": "Mustard",
-          "color": "yellow",
-          "description": "Mosterd - Alle soorten mosterd"
-        }
-      ]
-    },
-    {
-      "id": "mini-loempia",
-      "name": "Mini Loempia's",
-      "price": "€7,99",
-      "description": "Krokant geserveerd met zoetzure saus.",
+      "id": "loempia",
+      "name": "Loempia's",
+      "price": "€6,00",
+      "description": "8 loempia's met zoetzure saus.",
       "image": "assets/img/favicon11.png",
-      "alt": "the golden olive antwerpen",
+      "alt": "Loempia's voorgerecht The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -93,6 +31,102 @@
           "type": "Soy",
           "color": "green",
           "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"
+        }
+      ]
+    },
+    {
+      "id": "chicken-wings",
+      "name": "Chicken Wings",
+      "price": "€7,00",
+      "description": "7 chicken wings met BBQ of zoetzure saus.",
+      "image": "assets/img/golden/chickeniwings.JPEG",
+      "alt": "Chicken wings voorgerecht The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "Se",
+          "type": "Sesame",
+          "color": "purple",
+          "description": "Sesamzaad - Sesamzaad of sesamzaadolie"
+        },
+        {
+          "code": "So",
+          "type": "Soy",
+          "color": "green",
+          "description": "Soja - Soja is een peulvrucht, verwerkt tot olie, lecithine of meel"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
+      ]
+    },
+    {
+      "id": "calamares",
+      "name": "Calamares",
+      "price": "€7,00",
+      "description": "8 calamares met tartaarsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Calamares voorgerecht The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "Mo",
+          "type": "Molluscs",
+          "color": "orange",
+          "description": "Weekdieren - Mosselen, oesters, inktvis, etc."
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
+      ]
+    },
+    {
+      "id": "tiger-garnalen",
+      "name": "Tiger Garnalen",
+      "price": "€8,00",
+      "description": "7 tiger garnalen met zoetzure saus.",
+      "image": "assets/img/golden/tigerGarnalen.JPEG",
+      "alt": "Tiger garnalen voorgerecht The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "S",
+          "type": "Shellfish",
+          "color": "orange",
+          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
         }
       ]
     }
@@ -123,7 +157,7 @@
     {
       "id": "mix-bbq-boil",
       "name": "Mix BBQ Boil",
-      "price": "€39,00",
+      "price": "€35,00",
       "description": "Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen",
       "image": "assets/img/golden/mix-bbq-boil.jpg",
       "alt": "the goldenolive antwerpen mix bbq boil",
@@ -147,8 +181,8 @@
     {
       "id": "spareribs-natuur",
       "name": "Spareribs Natuur",
-      "price": "€38,99",
-      "description": "Geserveerd met frietjes, coleslaw en 2 sauzen",
+      "price": "€33,00",
+      "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs natuur The Golden Olive Antwerpen",
       "allergens": [
@@ -169,8 +203,8 @@
     {
       "id": "spareribs-bbq",
       "name": "Spareribs Barbeque",
-      "price": "€38,99",
-      "description": "Geserveerd met frietjes, coleslaw en 2 sauzen",
+      "price": "€34,00",
+      "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs BBQ The Golden Olive Antwerpen",
       "allergens": [
@@ -191,8 +225,8 @@
     {
       "id": "spareribs-gekarameliseerd",
       "name": "Spareribs Gekarameliseerd",
-      "price": "€38,99",
-      "description": "Met Honing<br />Geserveerd met frietjes, coleslaw en 2 sauzen",
+      "price": "€34,00",
+      "description": "Met Honing",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
       "allergens": [
@@ -213,8 +247,8 @@
     {
       "id": "spareribs-spicy",
       "name": "Spareribs Spicy (Pikant)",
-      "price": "€38,99",
-      "description": "Met Saucen<br />Geserveerd met frietjes, coleslaw en 2 sauzen",
+      "price": "€34,00",
+      "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs spicy The Golden Olive Antwerpen",
       "allergens": [
@@ -235,8 +269,8 @@
     {
       "id": "spareribs-thai",
       "name": "Spareribs Thai Sweet Chili",
-      "price": "€38,99",
-      "description": "<br />Geserveerd met frietjes, coleslaw en 2 sauzen",
+      "price": "€34,00",
+      "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs Thai The Golden Olive Antwerpen",
       "allergens": [
@@ -258,11 +292,55 @@
   "loaded-scoops": [
     {
       "id": "shredded-chicken-loaded-scoop",
-      "name": "Shredded Chicken Loaded Scoop",
+      "name": "Chicken Loaded Scoop",
       "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
       "image": "/img/chicken-scoop.JPG",
-      "alt": "Shredded Chicken Loaded Scoop The Golden Olive Antwerpen",
+      "alt": "Chicken Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "chicken-mac-fries",
+      "name": "Chicken Mac & Fries",
+      "price": "€26,99",
+      "description": "Frietjes met romige mac & cheese, getopt met pulled chicken, olijven, salsa en crispy onions.",
+      "image": "/img/chicken-scoop.JPG",
+      "alt": "Chicken Mac & Fries The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "spicy-chicken-mac-fries",
+      "name": "Spicy Chicken Mac & Fries",
+      "price": "€26,99",
+      "description": "Frietjes met romige mac & cheese, getopt met pittige pulled chicken, jalapeños, salsa en crispy onions.",
+      "image": "/img/chicken-scoop.JPG",
+      "alt": "Spicy Chicken Mac & Fries The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -307,12 +385,84 @@
       ]
     },
     {
+      "id": "spicy-beef-mac-fries",
+      "name": "Spicy Beef Mac & Fries",
+      "price": "€26,99",
+      "description": "Frietjes met romige mac & cheese, getopt met pittig rundsvlees, jalapeños, special saus en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Spicy Beef Mac & Fries The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
+      ]
+    },
+    {
+      "id": "beef-mac-fries",
+      "name": "Beef Mac & Fries",
+      "price": "€26,99",
+      "description": "Frietjes met romige mac & cheese, getopt met rundsvlees, special saus en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Beef Mac & Fries The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
       "id": "juicy-bbq-meat-loaded-scoop",
       "name": "Juicy BBQ Meat Loaded Scoop",
       "price": "€26,99",
       "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Juicy BBQ Meat Loaded Scoop The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "bbq-pulled-meat-mac-fries",
+      "name": "BBQ Pulled Meat Mac & Fries",
+      "price": "€26,99",
+      "description": "Frietjes met romige mac & cheese, getopt met pulled meat, BBQ-saus, special saus en crispy onions.",
+      "image": "assets/img/favicon11.png",
+      "alt": "BBQ Pulled Meat Mac & Fries The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -351,12 +501,58 @@
       ]
     },
     {
-      "id": "scampi-loaded-scoop",
-      "name": "Scampi Loaded Scoop",
+      "id": "merguez-mac-fries",
+      "name": "Merguez Mac & Fries",
       "price": "€26,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gebakken scampi met special saus, salsa en crispy onions.",
-      "image": "assets/img/favicon11.png",
-      "alt": "Scampi Loaded Scoop The Golden Olive Antwerpen",
+      "description": "Frietjes met romige mac & cheese, getopt met kruidige merguez, special saus, salsa en crispy onions.",
+      "image": "/img/merguez-scoop.JPG",
+      "alt": "Merguez Mac & Fries The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    }
+  ],
+  "burgers": [
+    {
+      "id": "classic-house-burger",
+      "name": "Golden Classic House",
+      "price": "€15,00",
+      "description": "Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus.",
+      "image": "assets/img/golden/IMG_3356.JPEG",
+      "alt": "Golden Classic House burger The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "flame-house-burger",
+      "name": "Golden Flame House",
+      "price": "€16,00",
+      "description": "Rundsvleesburger met mac and cheese, crispy onion, jalapeños en Golden Flame saus.",
+      "image": "assets/img/golden/hamburger2.JPEG",
+      "alt": "Golden Flame House burger The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -371,20 +567,62 @@
           "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
         },
         {
-          "code": "S",
-          "type": "Shellfish",
-          "color": "orange",
-          "description": "Schaaldieren - Garnalen, krabben en kreeften"
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
         }
       ]
-    }
-  ],
-  "burgers": [
+    },
+    {
+      "id": "golden-truffle-burger",
+      "name": "Golden Truffle",
+      "price": "€16,00",
+      "description": "Rundsvlees met kaas, gebakken champignons, augurk en Golden Truffle saus.",
+      "image": "assets/img/golden/hamburger1.JPEG",
+      "alt": "Golden Truffle burger The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "adels-golden-burger",
+      "name": "Adel's Golden Burger",
+      "price": "€16,00",
+      "description": "Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus.",
+      "image": "assets/img/golden/IMG_3356.JPEG",
+      "alt": "Adel's Golden Burger The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
     {
       "id": "spicy-gabriel-burger",
-      "name": "Spicy Gabriel Burger",
-      "price": "€19.99",
-      "description": "Gegrilde kipfilet met romige kaas, gekarameliseerde uien, frisse sla, jalapeño pepers en onze huisgemaakte Spicy Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
+      "name": "Spicy Gabriel",
+      "price": "€16,00",
+      "description": "Gegrilde kipfilet met roomkaas, gekarameliseerde uien, frisse sla, jalapeños en Golden Flame saus.",
       "image": "assets/img/golden/hamburger3.JPEG",
       "alt": "Spicy Gabriel Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -403,32 +641,10 @@
       ]
     },
     {
-      "id": "the-golden-olive-burger",
-      "name": "The Golden Olive Burger",
-      "price": "€23,99",
-      "description": "Sappige rundvleesburger gecombineerd met mals pulled beef, kaas, knapperige sla, BBQ-saus en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
-      "image": "assets/img/golden/IMG_3356.JPEG",
-      "alt": "The Golden Olive Burger The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
-    },
-    {
       "id": "ouezzane-chicken-burger",
       "name": "Ouezzane Chicken Burger",
-      "price": "€19.99",
-      "description": "Shredded chicken met crispy onions, kaas, frisse koolsla, olijven en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
+      "price": "€15,00",
+      "description": "Shredded chicken met kaas, crispy uien, frisse koolsla, olijven en Ouezzane Chicken signature sauce.",
       "image": "assets/img/golden/ouzzane-burger.png",
       "alt": "Ouezzane Chicken Burger The Golden Olive Antwerpen",
       "allergens": [
@@ -453,28 +669,12 @@
       ]
     },
     {
-      "id": "classic-house-burger",
-      "name": "Classic House Burger",
-      "price": "€19.99",
-      "description": "Ambachtelijke rundvleesburger met gekarameliseerde uien, augurk, sla en onze Original Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
-      "image": "assets/img/golden/IMG_3356.JPEG",
-      "alt": "Classic House Burger The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        }
-      ]
-    },
-    {
-      "id": "flame-house-burger",
-      "name": "Flame House Burger",
-      "price": "€19.99",
-      "description": "Rundvleesburger met pittige bolognesesaus, crispy onions en onze Spicy Signature Sauce<br />Geserveerd met frietjes en 2 sauzen",
-      "image": "assets/img/golden/hamburger2.JPEG",
-      "alt": "Flame House Burger The Golden Olive Antwerpen",
+      "id": "truffle-chicken-burger",
+      "name": "Truffle Chicken Burger",
+      "price": "€16,00",
+      "description": "Gegrilde kipfilet met kaas, gebakken champignons, gekarameliseerde uien, augurken, sla en truffle mayo.",
+      "image": "assets/img/golden/hamburger3.JPEG",
+      "alt": "Truffle Chicken Burger The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -483,20 +683,72 @@
           "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
         },
         {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
           "code": "E",
           "type": "Eggs",
           "color": "amber",
           "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
         }
       ]
+    }
+  ],
+  "platter": [
+    {
+      "id": "kipfilet-platter",
+      "name": "Kipfilet",
+      "price": "€19,00",
+      "description": "Gegrilde kipfilet met champignon saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Kipfilet platter The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
     },
     {
-      "id": "crunchy-fish-burger",
-      "name": "Crunchy Fish Burger",
-      "price": "€17.99",
-      "description": "Krokante visfilet met kaas, sla, crispy onions, augurk en tartaarsaus<br />Geserveerd met frietjes en 2 sauzen",
+      "id": "signature-entrecote",
+      "name": "Signature Entrecote",
+      "price": "€23,00",
+      "description": "Gegrilde entrecote met Golden Signature saus.",
       "image": "assets/img/favicon11.png",
-      "alt": "Crunchy Fish Burger The Golden Olive Antwerpen",
+      "alt": "Signature Entrecote platter The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "golden-catch",
+      "name": "Golden Catch",
+      "price": "€20,00",
+      "description": "Fish filet met tartaarsaus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Golden Catch platter The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -511,38 +763,16 @@
           "description": "Vis - Vis wordt meestal in herkenbare vorm geconsumeerd"
         },
         {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        },
-        {
           "code": "E",
           "type": "Eggs",
           "color": "amber",
           "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
-        }
-      ]
-    },
-    {
-      "id": "veggie-delight-burger",
-      "name": "Veggie Delight Burger",
-      "price": "€17.99",
-      "description": "Vegetarische burger met augurk, salsa, kaas en sla<br />Geserveerd met frietjes en 2 sauzen",
-      "image": "assets/img/favicon11.png",
-      "alt": "Veggie Delight Burger The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
         },
         {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
         }
       ]
     }
@@ -595,12 +825,12 @@
   ],
   "supplementen": [
     {
-      "id": "friet",
-      "name": "Friet",
-      "price": "€3,99",
-      "description": "",
-      "image": "assets/img/favicon11.png",
-      "alt": "Friet The Golden Olive Antwerpen",
+      "id": "friet-maison",
+      "name": "Friet maison",
+      "price": "€4,00",
+      "description": "Kies deze side extra bij je burger of platter.",
+      "image": "assets/img/golden/frietjes.JPEG",
+      "alt": "Friet maison The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -611,12 +841,56 @@
       ]
     },
     {
-      "id": "mac-cheese",
-      "name": "Mac & cheese",
-      "price": "€3,99",
-      "description": "",
+      "id": "kroketjes",
+      "name": "Kroketjes",
+      "price": "€4,00",
+      "description": "Kies deze side extra bij je burger of platter.",
       "image": "assets/img/favicon11.png",
-      "alt": "Mac & cheese The Golden Olive Antwerpen",
+      "alt": "Kroketjes The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
+      ]
+    },
+    {
+      "id": "gebakken-kriel-aardappelen",
+      "name": "Gebakken kriel aardappelen",
+      "price": "€4,00",
+      "description": "Kies deze side extra bij je burger of platter.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Gebakken kriel aardappelen The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        }
+      ]
+    },
+    {
+      "id": "mac-and-cheese",
+      "name": "Mac and cheese",
+      "price": "€3,50",
+      "description": "Kies deze side extra bij je burger of platter.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Mac and cheese The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -633,10 +907,32 @@
       ]
     },
     {
-      "id": "champignonsaus",
+      "id": "saus-warm-signature-golden",
+      "name": "Signature Golden Saus",
+      "price": "€2,50",
+      "description": "Warme saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Signature Golden Saus The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "saus-warm-champignon",
       "name": "Champignonsaus",
-      "price": "€2,99",
-      "description": "",
+      "price": "€2,50",
+      "description": "Warme saus.",
       "image": "assets/img/favicon11.png",
       "alt": "Champignonsaus The Golden Olive Antwerpen",
       "allergens": [
@@ -651,6 +947,125 @@
           "type": "Milk",
           "color": "blue",
           "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
+    },
+    {
+      "id": "saus-mayonnaise",
+      "name": "Mayonaise",
+      "price": "€1,00",
+      "description": "Koude saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Mayonaise The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
+      ]
+    },
+    {
+      "id": "saus-ketchup",
+      "name": "Ketchup",
+      "price": "€1,00",
+      "description": "Koude saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Ketchup The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "saus-andalouse",
+      "name": "Andalouse",
+      "price": "€1,00",
+      "description": "Koude saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Andalouse saus The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
+      ]
+    },
+    {
+      "id": "saus-truffle-mayo",
+      "name": "Truffelmayonaise",
+      "price": "€1,00",
+      "description": "Koude saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Truffelmayonaise The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
+      ]
+    },
+    {
+      "id": "saus-samoerai",
+      "name": "Samouraï",
+      "price": "€1,00",
+      "description": "Koude saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Samouraï saus The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
+        }
+      ]
+    },
+    {
+      "id": "saus-tartaar",
+      "name": "Tartaar",
+      "price": "€1,00",
+      "description": "Koude saus.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Tartaarsaus The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        },
+        {
+          "code": "Mu",
+          "type": "Mustard",
+          "color": "yellow",
+          "description": "Mosterd - Alle soorten mosterd"
         }
       ]
     }
@@ -799,7 +1214,7 @@
     {
       "id": "fuze-tea-lemon",
       "name": "FUZE TEA LEMON",
-      "price": "€3.00",
+      "price": "€3,50",
       "description": "Fuze Tea met citroen",
       "image": "assets/img/favicon11.png",
       "alt": "Fuze Tea Lemon The Golden Olive Antwerpen",
@@ -808,7 +1223,7 @@
     {
       "id": "fuze-tea-peach",
       "name": "Fuze Tea Peach",
-      "price": "€3.00",
+      "price": "€3,50",
       "description": "Fuze Tea met perzik",
       "image": "assets/img/favicon11.png",
       "alt": "Fuze Tea Peach The Golden Olive Antwerpen",
@@ -893,15 +1308,6 @@
       "description": "Keuze uit verschillende smaken",
       "image": "assets/img/favicon11.png",
       "alt": "Lipton Thee The Golden Olive Antwerpen",
-      "allergens": []
-    },
-    {
-      "id": "munt-thee",
-      "name": "Munt Thee",
-      "price": "€3.50",
-      "description": "Verfrissende munt thee",
-      "image": "assets/img/favicon11.png",
-      "alt": "Munt Thee The Golden Olive Antwerpen",
       "allergens": []
     },
     {

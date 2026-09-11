@@ -143,7 +143,7 @@ const Events = () => {
 
         <div className="text-center mt-4 mt-md-5">
           <a
-            href="#contact"
+            href="/contact"
             onClick={(e) => {
               e.preventDefault();
               scrollToContact();

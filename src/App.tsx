@@ -103,13 +103,17 @@ const AOSManager = () => {
 
 function App() {
   useEffect(() => {
-    // Preload menu and allergens data immediately on app start
-    preloadMenu().catch((error) => {
-      console.error('Failed to preload menu:', error);
-    });
-    preloadAllergens().catch((error) => {
-      console.error('Failed to preload allergens:', error);
-    });
+    const preload = () => {
+      preloadMenu().catch((error) => {
+        console.error('Failed to preload menu:', error);
+      });
+      preloadAllergens().catch((error) => {
+        console.error('Failed to preload allergens:', error);
+      });
+    };
+
+    const timer = window.setTimeout(preload, 1);
+    return () => window.clearTimeout(timer);
   }, []);
 
   // Memoize routes to prevent unnecessary re-renders

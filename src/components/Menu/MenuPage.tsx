@@ -16,7 +16,7 @@ const MenuPage = () => {
         description="Bekijk ons uitgebreide menu met heerlijke gerechten. Van voorgerechten tot desserts, ontdek de smaken van The Golden Olive."
       />
       <Header />
-      <main id="main" style={{ paddingTop: '100px' }}>
+      <main id="main" className="menu-page">
         <Menu />
       </main>
       <Footer />

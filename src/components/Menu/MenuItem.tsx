@@ -1,31 +1,27 @@
 import { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { MenuItem as MenuItemType } from '../../types/menu';
-import { useAllergens } from '../../hooks/useAllergens';
+import type { MenuCategory, MenuItem as MenuItemType } from '../../types/menu';
 import { useMenuTranslation } from '../../utils/menuTranslations';
-import { useAllergenTranslation } from '../../utils/allergenTranslations';
+import MenuImageLightbox from './MenuImageLightbox';
+import ProductDetailsModal from './ProductDetailsModal';
 
 interface MenuItemProps {
   item: MenuItemType;
   category: string;
-  onAllergenClick: (description: string) => void;
+  onOrderClick?: (item: MenuItemType, category: MenuCategory) => void;
   index?: number;
 }
 
-const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps) => {
+const MenuItem = ({ item, category, onOrderClick, index = 0 }: MenuItemProps) => {
   const { t } = useTranslation();
   const { translateMenuItem } = useMenuTranslation();
-  const { translateAllergen } = useAllergenTranslation();
   const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [showImageModal, setShowImageModal] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [showFullImage, setShowFullImage] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
-  const { getAllergenByCode } = useAllergens();
-  
-  // Memoize translated item to prevent unnecessary recalculations
+
   const translatedItem = useMemo(() => translateMenuItem(item), [item, translateMenuItem]);
 
-  // Intersection Observer for entrance animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -50,80 +46,36 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     };
   }, []);
 
-  // Memoize allergen colors - static data
-  const allergenColors = useMemo<Record<string, string>>(() => ({
-    red: '#dc3545',
-    orange: '#ff7e00',
-    yellow: '#ffc107',
-    green: '#28a745',
-    blue: '#007bff',
-    purple: '#6f42c1',
-    cyan: '#17a2b8',
-    amber: '#ff9f43',
-    brown: '#8b4513',
-  }), []);
-
-  // Memoize image path calculation
   const imagePath = useMemo(() => {
     let path = item.image;
-    // Remove any public/ prefix
     path = path.replace(/^\/?public\/img\//, '/img/');
     path = path.replace(/^public\/img\//, '/img/');
-    // Replace assets/img with /img
     path = path.replace(/^assets\/img\//, '/img/');
     return path;
   }, [item.image]);
 
-  // Memoize event handlers
-  const handleImageClick = useCallback(() => {
-    setShowImageModal(true);
+  const handleOpenDetails = useCallback(() => {
+    setShowDetails(true);
   }, []);
 
-  const handleCloseModal = useCallback(() => {
-    setShowImageModal(false);
+  const handleCloseDetails = useCallback(() => {
+    setShowDetails(false);
   }, []);
 
-  // Handle ESC key to close modal
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && showImageModal) {
-        handleCloseModal();
-      }
-    };
-    if (showImageModal) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    }
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
-    };
-  }, [showImageModal]);
+  const handleOpenFullImage = useCallback((event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+    setShowFullImage(true);
+  }, []);
 
-  // Memoize allergen info function
-  const getEnhancedAllergenInfo = useCallback((allergen: { code: string; type: string; color: string; description: string }) => {
-    const referenceAllergen = getAllergenByCode(allergen.code);
-    if (referenceAllergen) {
-      // Translate the reference allergen
-      const translated = translateAllergen(referenceAllergen);
-      // Use reference data if available, but keep item's description if it's more specific
-      return {
-        ...referenceAllergen,
-        type: translated.type,
-        description: allergen.description ? translateAllergen({ ...allergen, type: allergen.type, description: allergen.description }).description : translated.description,
-        color: allergen.color || referenceAllergen.color,
-      };
-    }
-    // Fallback to item's allergen data - translate it
-    const translated = translateAllergen(allergen as any);
-    return {
-      ...allergen,
-      type: translated.type,
-      description: translated.description,
-    };
-  }, [getAllergenByCode, translateAllergen]);
+  const handleCloseFullImage = useCallback(() => {
+    setShowFullImage(false);
+  }, []);
 
-  // Handle placeholder items
+  const handleOrderClick = useCallback((event?: { stopPropagation: () => void }) => {
+    event?.stopPropagation();
+    onOrderClick?.(item, category as MenuCategory);
+  }, [category, item, onOrderClick]);
+
   if (item.id === 'burgers-placeholder') {
     const placeholderTranslated = translateMenuItem(item);
     return (
@@ -138,416 +90,125 @@ const MenuItem = ({ item, category, onAllergenClick, index = 0 }: MenuItemProps)
     );
   }
 
-  // Simple list layout for drinks (frisdranken and warme-dranken) - no images
-  const isDrinkCategory = category === 'frisdranken' || category === 'warme-dranken';
-  
-  if (isDrinkCategory) {
+  const isPlainCard = category === 'frisdranken' || category === 'warme-dranken' || item.id.startsWith('saus-');
+  const isLogoPlaceholder = /favicon11|\/logo\./i.test(imagePath);
+
+  const addButton = onOrderClick ? (
+    <button
+      type="button"
+      className="menu-add-btn"
+      onClick={handleOrderClick}
+      aria-label={t('menuOrder.addToTicketNamed', { name: translatedItem.name })}
+    >
+      <i className="bi bi-plus-lg" />
+    </button>
+  ) : null;
+
+  const cardCopy = (
+    <div className="menu-item-copy">
+      <h5>{translatedItem.name}</h5>
+      {translatedItem.description && (
+        isPlainCard ? (
+          <p>{translatedItem.description}</p>
+        ) : (
+          <p dangerouslySetInnerHTML={{ __html: translatedItem.description }} />
+        )
+      )}
+    </div>
+  );
+
+  if (isPlainCard) {
     return (
-      <div 
+      <div
         ref={cardRef}
-        className={`menu-item-modern filter-${category} col-12 mb-3`}
+        className={`menu-item-modern menu-item-card menu-item-card--plain filter-${category} col-12 col-md-6`}
         style={{
           opacity: isVisible ? 1 : 0,
-          transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-          transition: `opacity 0.4s ease ${index * 0.05}s, transform 0.4s ease ${index * 0.05}s`,
+          transform: isVisible ? 'none' : 'translateY(12px)',
+          transition: `opacity 0.3s ease ${Math.min(index, 6) * 0.03}s, transform 0.3s ease ${Math.min(index, 6) * 0.03}s`,
         }}
       >
-        <div className="bg-black border border-warning rounded-3 p-3 px-4">
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="flex-grow-1">
-              <h6 
-                className="text-white fw-bold mb-1"
-                style={{ 
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: '1.1rem',
-                }}
-              >
-                {translatedItem.name}
-              </h6>
-              {translatedItem.description && (
-                <p className="text-white-50 small mb-0" style={{ fontSize: '0.85rem' }}>
-                  {translatedItem.description}
-                </p>
-              )}
-            </div>
-            <div className="ms-3">
-              <span 
-                className="badge bg-warning text-black fw-bold px-3 py-2 rounded-pill"
-                style={{ fontSize: '0.95rem' }}
-              >
-                {item.price}
-              </span>
+        <div
+          className="menu-item-card-inner"
+          onClick={handleOpenDetails}
+          role="button"
+          tabIndex={0}
+        >
+          <div className="menu-item-content">
+            {cardCopy}
+            <div className="menu-item-actions">
+              <span className="menu-item-price">{item.price}</span>
+              {addButton}
             </div>
           </div>
-          {/* Allergen Section for drinks */}
-          {item.allergens && item.allergens.length > 0 && (
-            <div className="border-top border-warning pt-2 mt-2">
-              <div className="d-flex flex-wrap gap-1 allergen-symbols">
-                {item.allergens.map((allergen, allergenIndex) => {
-                  const enhancedAllergen = getEnhancedAllergenInfo(allergen);
-                  const bgColor = allergenColors[enhancedAllergen.color] || '#dc3545';
-                  const textColor = enhancedAllergen.color === 'yellow' || enhancedAllergen.color === 'amber' ? '#000' : '#fff';
-                  return (
-                    <span
-                      key={`${allergen.code}-${allergenIndex}`}
-                      className={`allergen-symbol allergen-${enhancedAllergen.color} badge rounded-circle d-inline-flex align-items-center justify-content-center fw-bold`}
-                      onClick={() => onAllergenClick(enhancedAllergen.description)}
-                      title={`${enhancedAllergen.type}: ${enhancedAllergen.description}`}
-                      style={{
-                        background: `${bgColor} !important`,
-                        color: `${textColor} !important`,
-                        border: `2px solid ${bgColor} !important`,
-                        width: '24px',
-                        height: '24px',
-                        fontSize: '10px',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {enhancedAllergen.code}
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
+        {showDetails && (
+          <ProductDetailsModal
+            item={item}
+            category={category}
+            onClose={handleCloseDetails}
+            onAddToTicket={onOrderClick}
+          />
+        )}
       </div>
     );
   }
 
   return (
-    <div 
+    <div
       ref={cardRef}
-      className={`menu-item-modern filter-${category} col-12 col-md-6 col-lg-4 col-xl-3 mb-4`}
+      className={`menu-item-modern menu-item-card filter-${category} col-12 col-md-6`}
       style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-        transition: `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s`,
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? 'none' : 'translateY(12px)',
+          transition: `opacity 0.3s ease ${Math.min(index, 8) * 0.03}s, transform 0.3s ease ${Math.min(index, 8) * 0.03}s`,
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      <div 
-        className="bg-black border border-warning rounded-3 overflow-hidden h-100 shadow-sm position-relative"
-        style={{
-          transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-          transform: isHovered ? 'translateY(-12px) scale(1.02)' : 'translateY(0) scale(1)',
-          boxShadow: isHovered 
-            ? '0 20px 40px rgba(255, 193, 7, 0.3), 0 0 0 1px rgba(255, 193, 7, 0.5)' 
-            : '0 4px 6px rgba(0, 0, 0, 0.1)',
-          borderColor: isHovered ? 'rgba(255, 193, 7, 0.8)' : 'rgba(255, 193, 7, 0.3)',
-        }}
-      >
-        {/* Shine effect overlay */}
-        <div
-          className="position-absolute top-0 start-0 w-100 h-100"
-          style={{
-            background: 'linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%)',
-            transform: isHovered ? 'translateX(100%)' : 'translateX(-100%)',
-            transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-            zIndex: 3,
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Glow effect */}
-        <div
-          className="position-absolute top-0 start-0 w-100 h-100"
-          style={{
-            background: 'radial-gradient(circle at center, rgba(255, 193, 7, 0.15) 0%, transparent 70%)',
-            opacity: isHovered ? 1 : 0,
-            transition: 'opacity 0.5s ease',
-            zIndex: 1,
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Image with overlay */}
-        <div 
-          className="position-relative" 
-          style={{ overflow: 'hidden', zIndex: 2, cursor: 'pointer' }}
-          onClick={handleImageClick}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              handleImageClick();
-            }
-          }}
-          aria-label={t('menu.viewFullImage', { item: translatedItem.name })}
-        >
-          <img
-            className="w-100"
-            style={{ 
-              height: '220px', 
-              objectFit: 'cover',
-              transform: isHovered ? 'scale(1.08)' : 'scale(1)',
-              transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-            }}
-            src={imagePath}
-            alt={item.alt}
-            loading="lazy"
-          />
-          {/* Click indicator overlay */}
-          <div
-            className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-            style={{
-              background: 'rgba(0, 0, 0, 0)',
-              opacity: isHovered ? 0.3 : 0,
-              transition: 'opacity 0.3s ease',
-              pointerEvents: 'none',
-            }}
+      <div className="menu-item-card-inner">
+        <div className="menu-item-media">
+          <button
+            type="button"
+            className={`menu-item-image-wrap${isLogoPlaceholder ? ' menu-item-image-wrap--placeholder' : ''}`}
+            onClick={handleOpenFullImage}
+            aria-label={t('menuOrder.viewFullImage', { name: translatedItem.name })}
           >
-            <i className="bi bi-zoom-in text-white fs-1" style={{ textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)' }}></i>
-          </div>
-          {/* Image overlay gradient */}
-          <div
-            className="position-absolute bottom-0 start-0 w-100"
-            style={{
-              height: '60px',
-              background: 'linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%)',
-              opacity: isHovered ? 0.8 : 0.5,
-              transition: 'opacity 0.4s ease',
-              pointerEvents: 'none',
-            }}
-          />
-          <div className="position-absolute top-0 end-0 m-3" style={{ zIndex: 4 }}>
-            <span 
-              className="badge bg-warning text-black fs-6 fw-bold px-3 py-2 rounded-pill"
-              style={{
-                transform: isHovered ? 'scale(1.15) rotate(5deg)' : 'scale(1) rotate(0deg)',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: isHovered 
-                  ? '0 8px 20px rgba(255, 193, 7, 0.6), 0 0 0 3px rgba(255, 193, 7, 0.2)' 
-                  : '0 2px 8px rgba(0, 0, 0, 0.3)',
-                animation: isHovered ? 'pulse-badge 1.5s ease-in-out infinite' : 'none',
-              }}
-            >
-              {item.price}
-            </span>
-          </div>
+            <img src={imagePath} alt={item.alt} loading="lazy" decoding="async" />
+          </button>
+          <span className="menu-item-price">{item.price}</span>
+          {addButton}
         </div>
 
-        {/* Content */}
-        <div className="p-4" style={{ position: 'relative', zIndex: 2 }}>
-          {/* Title */}
-          <h5
-            className="text-white fw-bold mb-3 lh-sm"
-            style={{ 
-              fontFamily: "'Playfair Display', serif", 
-              minHeight: '2.5rem',
-              transform: isHovered ? 'translateX(5px)' : 'translateX(0)',
-              transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            }}
-          >
-            <a 
-              href={`#${item.id}`} 
-              className="text-decoration-none"
-              style={{ 
-                color: isHovered ? '#ffc107' : '#fff',
-                transition: 'color 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                display: 'inline-block',
-                position: 'relative',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.textShadow = '0 0 10px rgba(255, 193, 7, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.textShadow = 'none';
-              }}
-            >
-              {translatedItem.name}
-            </a>
-          </h5>
-
-          {/* Description */}
-          {translatedItem.description && (
-            <p
-              className="text-white-50 small mb-3 lh-base"
-              style={{ 
-                minHeight: '3rem',
-                opacity: isHovered ? 1 : 0.8,
-                transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-              }}
-              dangerouslySetInnerHTML={{ __html: translatedItem.description }}
-            />
-          )}
-
-          {/* Allergen Section */}
-          {item.allergens && item.allergens.length > 0 && (
-            <div 
-              className="border-top border-warning pt-3"
-              style={{
-                borderColor: isHovered ? 'rgba(255, 193, 7, 0.6)' : 'rgba(255, 193, 7, 0.3)',
-                transition: 'border-color 0.4s ease',
-              }}
-            >
-              <div 
-                className="d-flex align-items-center mb-2"
-                style={{
-                  transform: isHovered ? 'translateX(3px)' : 'translateX(0)',
-                  transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                }}
-              >
-                <i 
-                  className="bi bi-info-circle text-warning me-2"
-                  style={{
-                    transform: isHovered ? 'scale(1.2) rotate(10deg)' : 'scale(1) rotate(0deg)',
-                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                  }}
-                ></i>
-                <span className="small text-warning fw-medium">{t('menu.allergens')}</span>
-              </div>
-            <div className="d-flex flex-wrap gap-1 allergen-symbols mb-2">
-              {item.allergens.map((allergen, allergenIndex) => {
-                const enhancedAllergen = getEnhancedAllergenInfo(allergen);
-                const bgColor = allergenColors[enhancedAllergen.color] || '#dc3545';
-                const textColor = enhancedAllergen.color === 'yellow' || enhancedAllergen.color === 'amber' ? '#000' : '#fff';
-                return (
-                  <span
-                    key={`${allergen.code}-${allergenIndex}`}
-                    className={`allergen-symbol allergen-${enhancedAllergen.color} badge rounded-circle d-inline-flex align-items-center justify-content-center fw-bold`}
-                    onClick={() => onAllergenClick(enhancedAllergen.description)}
-                    title={`${enhancedAllergen.type}: ${enhancedAllergen.description}`}
-                    style={{
-                      background: `${bgColor} !important`,
-                      color: `${textColor} !important`,
-                      border: `2px solid ${bgColor} !important`,
-                      width: '28px',
-                      height: '28px',
-                      fontSize: '11px',
-                      cursor: 'pointer',
-                      transition: `all 0.3s cubic-bezier(0.4, 0, 0.2, 1) ${allergenIndex * 0.05}s`,
-                      transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.3) rotate(10deg)';
-                      e.currentTarget.style.boxShadow = `0 0 15px ${bgColor}, 0 0 25px ${bgColor}`;
-                      e.currentTarget.style.zIndex = '10';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = isHovered ? 'scale(1.05)' : 'scale(1)';
-                      e.currentTarget.style.boxShadow = 'none';
-                      e.currentTarget.style.zIndex = '1';
-                    }}
-                  >
-                    {enhancedAllergen.code}
-                  </span>
-                );
-              })}
-            </div>
-            </div>
-          )}
+        <div className="menu-item-content" onClick={handleOpenDetails} role="button" tabIndex={0}>
+          {cardCopy}
         </div>
       </div>
-      <style>{`
-        @keyframes pulse-badge {
-          0%, 100% {
-            transform: scale(1.15) rotate(5deg);
-          }
-          50% {
-            transform: scale(1.25) rotate(-5deg);
-          }
-        }
-      `}</style>
-      
-      {/* Image Modal */}
-      {showImageModal && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{
-            zIndex: 10000,
-            background: 'rgba(0, 0, 0, 0.9)',
-            backdropFilter: 'blur(5px)',
-            animation: 'fadeIn 0.3s ease',
-          }}
-          onClick={handleCloseModal}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="image-modal-title"
-        >
-          <div
-            className="position-relative"
-            style={{
-              maxWidth: '90vw',
-              maxHeight: '90vh',
-              animation: 'zoomIn 0.3s ease',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              className="btn btn-outline-warning position-absolute top-0 end-0 m-3 rounded-circle d-flex align-items-center justify-content-center"
-              style={{
-                width: '50px',
-                height: '50px',
-                zIndex: 10001,
-                fontSize: '1.5rem',
-              }}
-              onClick={handleCloseModal}
-              aria-label={t('common.close')}
-            >
-              <i className="bi bi-x"></i>
-            </button>
-            <img
-              src={imagePath}
-              alt={item.alt}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '90vh',
-                objectFit: 'contain',
-                borderRadius: '8px',
-                boxShadow: '0 10px 40px rgba(255, 193, 7, 0.3)',
-              }}
-            />
-            <div
-              className="position-absolute bottom-0 start-0 w-100 text-center p-3"
-              style={{
-                background: 'linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%)',
-                borderRadius: '0 0 8px 8px',
-              }}
-            >
-              <h5 id="image-modal-title" className="text-warning mb-0 fw-bold">
-                {translatedItem.name}
-              </h5>
-            </div>
-          </div>
-        </div>
+
+      {showDetails && (
+        <ProductDetailsModal
+          item={item}
+          category={category}
+          onClose={handleCloseDetails}
+          onAddToTicket={onOrderClick}
+        />
       )}
-      
-      <style>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        @keyframes zoomIn {
-          from {
-            transform: scale(0.8);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-      `}</style>
+
+      {showFullImage && (
+        <MenuImageLightbox
+          src={imagePath}
+          alt={item.alt}
+          caption={translatedItem.name}
+          onClose={handleCloseFullImage}
+        />
+      )}
     </div>
   );
 };
 
-// Memoize MenuItem to prevent unnecessary re-renders
 export default memo(MenuItem, (prevProps, nextProps) => {
-  // Custom comparison function for better performance
   return (
     prevProps.item.id === nextProps.item.id &&
     prevProps.category === nextProps.category &&
     prevProps.index === nextProps.index &&
-    prevProps.onAllergenClick === nextProps.onAllergenClick
+    prevProps.onOrderClick === nextProps.onOrderClick
   );
 });
-

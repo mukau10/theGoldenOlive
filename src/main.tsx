@@ -1,12 +1,11 @@
 import { createRoot } from 'react-dom/client'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './index.css'
 import './i18n/config'
 import App from './App.tsx'
 
 // App version - increment this when deploying new versions
 // This helps detect when the app needs to clear caches
-const APP_VERSION = '2.0.0';
+const APP_VERSION = '2.1.0';
 const VERSION_KEY = 'tgo_app_version';
 
 // Global function to clear caches and reload - can be called from error handlers

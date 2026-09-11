@@ -81,6 +81,7 @@ const corsOrigins = [
   'http://localhost:3001',
   'https://the-goldenolive.be',
   'https://thegoldenolive.be',
+  'http://192.168.0.55:3001',
   'http://192.168.0.55:5087'
 ].filter(Boolean);
 

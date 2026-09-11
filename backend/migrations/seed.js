@@ -36,6 +36,7 @@ const categoryNames = {
   'spareribs': 'Spareribs',
   'loaded-scoops': 'Loaded Scoops',
   'burgers': 'Burgers',
+  'platter': 'Platter',
   'kindermenu': 'Kindermenu',
   'supplementen': 'Supplementen',
   'desserten': 'Desserten',

@@ -21,6 +21,7 @@ export interface MenuData {
   spareribs: MenuItem[];
   'loaded-scoops': MenuItem[];
   burgers: MenuItem[];
+  platter: MenuItem[];
   kindermenu: MenuItem[];
   supplementen: MenuItem[];
   desserten: MenuItem[];
