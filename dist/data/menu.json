@@ -158,7 +158,7 @@
       "id": "mix-bbq-boil",
       "name": "Mix BBQ Boil",
       "price": "€75,00",
-      "description": "Vanaf 2 personen. Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen.",
+      "description": "Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen.",
       "image": "assets/img/golden/mix-bbq-boil.jpg",
       "alt": "the goldenolive antwerpen mix bbq boil",
       "allergens": [
@@ -181,7 +181,7 @@
     {
       "id": "spareribs-natuur",
       "name": "Spareribs Natuur",
-      "price": "€41,00",
+      "price": "€37,00",
       "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs natuur The Golden Olive Antwerpen",
@@ -203,7 +203,7 @@
     {
       "id": "spareribs-bbq",
       "name": "Spareribs Barbeque",
-      "price": "€42,00",
+      "price": "€38,00",
       "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs BBQ The Golden Olive Antwerpen",
@@ -225,7 +225,7 @@
     {
       "id": "spareribs-gekarameliseerd",
       "name": "Spareribs Gekarameliseerd",
-      "price": "€42,00",
+      "price": "€38,00",
       "description": "Met Honing",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs gekarameliseerd The Golden Olive Antwerpen",
@@ -247,7 +247,7 @@
     {
       "id": "spareribs-spicy",
       "name": "Spareribs Spicy (Pikant)",
-      "price": "€42,00",
+      "price": "€38,00",
       "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs spicy The Golden Olive Antwerpen",
@@ -269,7 +269,7 @@
     {
       "id": "spareribs-thai",
       "name": "Spareribs Thai Sweet Chili",
-      "price": "€42,00",
+      "price": "€38,00",
       "description": "",
       "image": "assets/img/golden/spareribs.JPEG",
       "alt": "Spareribs Thai The Golden Olive Antwerpen",
@@ -527,7 +527,7 @@
     {
       "id": "golden-olive-burger",
       "name": "Golden Olive Burger",
-      "price": "€27,00",
+      "price": "€23,00",
       "description": "Signature burger van The Golden Olive, geserveerd met frietjes.",
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "Golden Olive Burger The Golden Olive Antwerpen",
@@ -549,7 +549,7 @@
     {
       "id": "classic-house-burger",
       "name": "Golden Classic House",
-      "price": "€23,00",
+      "price": "€19,00",
       "description": "Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus.",
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "Golden Classic House burger The Golden Olive Antwerpen",
@@ -571,7 +571,7 @@
     {
       "id": "flame-house-burger",
       "name": "Golden Flame House",
-      "price": "€24,00",
+      "price": "€20,00",
       "description": "Rundsvleesburger met mac and cheese, crispy onion, jalapeños en Golden Flame saus.",
       "image": "assets/img/golden/hamburger2.JPEG",
       "alt": "Golden Flame House burger The Golden Olive Antwerpen",
@@ -599,7 +599,7 @@
     {
       "id": "golden-truffle-burger",
       "name": "Golden Truffle",
-      "price": "€24,00",
+      "price": "€20,00",
       "description": "Rundsvlees met kaas, gebakken champignons, augurk en Golden Truffle saus.",
       "image": "assets/img/golden/hamburger1.JPEG",
       "alt": "Golden Truffle burger The Golden Olive Antwerpen",
@@ -621,7 +621,7 @@
     {
       "id": "adels-golden-burger",
       "name": "Adel's Golden Burger",
-      "price": "€24,00",
+      "price": "€20,00",
       "description": "Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus.",
       "image": "assets/img/golden/IMG_3356.JPEG",
       "alt": "Adel's Golden Burger The Golden Olive Antwerpen",
@@ -643,7 +643,7 @@
     {
       "id": "spicy-gabriel-burger",
       "name": "Spicy Gabriel",
-      "price": "€24,00",
+      "price": "€20,00",
       "description": "Gegrilde kipfilet met roomkaas, gekarameliseerde uien, frisse sla, jalapeños en Golden Flame saus.",
       "image": "assets/img/golden/hamburger3.JPEG",
       "alt": "Spicy Gabriel Burger The Golden Olive Antwerpen",
@@ -665,7 +665,7 @@
     {
       "id": "ouezzane-chicken-burger",
       "name": "Ouezzane Chicken Burger",
-      "price": "€23,00",
+      "price": "€19,00",
       "description": "Shredded chicken met kaas, crispy uien, frisse koolsla, olijven en Ouezzane Chicken signature sauce.",
       "image": "assets/img/golden/ouzzane-burger.png",
       "alt": "Ouezzane Chicken Burger The Golden Olive Antwerpen",
@@ -693,7 +693,7 @@
     {
       "id": "truffle-chicken-burger",
       "name": "Truffle Chicken Burger",
-      "price": "€24,00",
+      "price": "€20,00",
       "description": "Gegrilde kipfilet met kaas, gebakken champignons, gekarameliseerde uien, augurken, sla en truffle mayo.",
       "image": "assets/img/golden/hamburger3.JPEG",
       "alt": "Truffle Chicken Burger The Golden Olive Antwerpen",
@@ -723,7 +723,7 @@
     {
       "id": "kipfilet-platter",
       "name": "Kipfilet",
-      "price": "€27,00",
+      "price": "€23,00",
       "description": "Gegrilde kipfilet met champignon saus.",
       "image": "assets/img/favicon11.png",
       "alt": "Kipfilet platter The Golden Olive Antwerpen",
@@ -745,7 +745,7 @@
     {
       "id": "signature-entrecote",
       "name": "Signature Entrecote",
-      "price": "€31,00",
+      "price": "€27,00",
       "description": "Gegrilde entrecote met Golden Signature saus.",
       "image": "assets/img/favicon11.png",
       "alt": "Signature Entrecote platter The Golden Olive Antwerpen",
@@ -767,7 +767,7 @@
     {
       "id": "golden-catch",
       "name": "Golden Catch",
-      "price": "€28,00",
+      "price": "€24,00",
       "description": "Fish filet met tartaarsaus.",
       "image": "assets/img/favicon11.png",
       "alt": "Golden Catch platter The Golden Olive Antwerpen",

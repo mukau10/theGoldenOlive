@@ -107,6 +107,9 @@ const MenuItem = ({ item, category, onOrderClick, index = 0 }: MenuItemProps) =>
   const cardCopy = (
     <div className="menu-item-copy">
       <h5>{translatedItem.name}</h5>
+      {item.id === 'mix-bbq-boil' && (
+        <span className="menu-item-serves-badge menu-item-serves-badge--inline">{t('menu.servesFrom2')}</span>
+      )}
       {translatedItem.description && (
         isPlainCard ? (
           <p>{translatedItem.description}</p>

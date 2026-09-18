@@ -117,6 +117,9 @@ const ProductDetailsModal = ({ item, category, onClose, onAddToTicket }: Product
             <h3 id="product-details-title">{translatedItem.name}</h3>
             <span className="product-details-price">{item.price}</span>
           </div>
+          {item.id === 'mix-bbq-boil' && (
+            <span className="menu-item-serves-badge menu-item-serves-badge--inline">{t('menu.servesFrom2')}</span>
+          )}
 
           {translatedItem.description && (
             <p
@@ -127,9 +130,6 @@ const ProductDetailsModal = ({ item, category, onClose, onAddToTicket }: Product
 
           {hasIncludedSide(category, item.id) && (
             <p className="product-details-note">{t('menu.includedSideNote')}</p>
-          )}
-          {item.id === 'mix-bbq-boil' && (
-            <p className="product-details-note product-details-note--highlight">{t('menu.servesFrom2')}</p>
           )}
 
           <div className="product-details-allergens">
