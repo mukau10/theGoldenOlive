@@ -266,13 +266,15 @@
     "viewFullImage": "Bekijk volledige afbeelding van {{item}}",
     "searchPlaceholder": "Zoek in menu...",
     "searchResults": "resultaten gevonden",
-    "burgersWithoutSidesTitle": "Burgers zonder bijgerecht",
-    "burgersWithoutSidesText": "De prijs is voor de burger alleen. Friet maison of kroketjes kies je extra bij (+€4). Koude sauzen +€1, warme sauzen +€2,50.",
-    "platterWithoutSidesTitle": "Platters zonder bijgerecht",
-    "platterWithoutSidesText": "De prijs is voor het platter alleen. Friet maison of kroketjes kies je extra bij (+€4). Koude sauzen +€1, warme sauzen +€2,50.",
+    "burgersWithoutSidesTitle": "Burgers inclusief bijgerecht",
+    "burgersWithoutSidesText": "Bijgerecht is inbegrepen. Kies friet maison of kroketjes. Koude sauzen +€1, warme sauzen +€2,50.",
+    "platterWithoutSidesTitle": "Platters inclusief bijgerecht",
+    "platterWithoutSidesText": "Bijgerecht is inbegrepen. Kies friet maison of kroketjes. Koude sauzen +€1, warme sauzen +€2,50.",
     "viewSides": "Bekijk sides & sauzen",
     "withoutSide": "Zonder bijgerecht",
-    "sidesWithBurger": "Friet maison of kroketjes +€4",
+    "sidesWithBurger": "Bijgerecht inbegrepen",
+    "includedSideNote": "Bijgerecht is inbegrepen. Kies friet maison, kroketjes, krieltjes of mac and cheese.",
+    "servesFrom2": "Vanaf 2 personen",
     "hotSaucesTitle": "Warme sauzen",
     "hotSaucesText": "Signature Golden Saus en champignonsaus — €2,50.",
     "includedSaucesTitle": "Koude sauzen",
@@ -286,11 +288,11 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "Mix Grill zonder bijgerecht. Kies er friet maison of kroketjes bij."
+        "description": "Mix Grill, plus Mix BBQ Boil vanaf 2 personen."
       },
       "spareribs": {
         "title": "Spareribs",
-        "description": "Spareribs zonder bijgerecht. Kies er friet maison, kroketjes, krieltjes of mac and cheese bij."
+        "description": "Inclusief bijgerecht. Kies friet maison, kroketjes, krieltjes of mac and cheese."
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
@@ -298,11 +300,11 @@
       },
       "burgers": {
         "title": "Burgers",
-        "description": "Burgers zonder bijgerecht. Kies er friet maison of kroketjes bij."
+        "description": "Inclusief bijgerecht. Kies friet maison of kroketjes."
       },
       "platter": {
         "title": "Platter",
-        "description": "Platters zonder bijgerecht. Kies er friet maison of kroketjes bij."
+        "description": "Inclusief bijgerecht. Kies friet maison of kroketjes."
       },
       "kindermenu": {
         "title": "Kindermenu",
@@ -310,7 +312,7 @@
       },
       "supplementen": {
         "title": "Sides & sauzen",
-        "description": "Kies je bijgerecht extra bij je burger of platter. Koude sauzen +€1, warme sauzen +€2,50."
+        "description": "Losse bijgerechten extra. Koude sauzen +€1, warme sauzen +€2,50."
       },
       "desserten": {
         "title": "Desserten",
@@ -352,7 +354,7 @@
       },
       "mix-bbq-boil": {
         "name": "Mix BBQ Boil",
-        "description": "Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen"
+        "description": "Vanaf 2 personen. Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen."
       },
       "spareribs-natuur": {
         "name": "Spareribs Natuur"
@@ -409,6 +411,10 @@
       "merguez-mac-fries": {
         "name": "Merguez Mac & Fries",
         "description": "Frietjes met romige mac & cheese, getopt met kruidige merguez, special saus, salsa en crispy onions."
+      },
+      "golden-olive-burger": {
+        "name": "Golden Olive Burger",
+        "description": "Signature burger van The Golden Olive, geserveerd met frietjes."
       },
       "classic-house-burger": {
         "name": "Golden Classic House",
@@ -684,7 +690,9 @@
     "hotSauces": "Warme sauzen",
     "coldSauces": "Koude sauzen",
     "optional": "Optioneel extra erbij.",
-    "chooseSidesHint": "Burgers, platters, spareribs en Mix Grill worden zonder bijgerecht geserveerd.",
+    "included": "€0,00",
+    "includedSideHint": "Bijgerecht is inbegrepen. Kies je bijgerecht.",
+    "chooseSidesHint": "Kies een bijgerecht.",
     "chooseSideRequired": "Kies een bijgerecht om toe te voegen.",
     "noSide": "Zonder bijgerecht",
     "saucesOptional": "Optioneel. Warme sauzen +€2,50, koude sauzen +€1.",

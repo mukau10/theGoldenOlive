@@ -26,29 +26,37 @@ export const MENU_CATEGORY_ORDER: MenuCategory[] = [
 ];
 
 export const CATEGORIES_WITHOUT_SIDES: MenuCategory[] = ['burgers', 'platter', 'spareribs'];
-export const ITEMS_WITHOUT_SIDES = ['mixed-bbq'];
 
 export const CATEGORIES_WITH_SIDES_PICKER: MenuCategory[] = [
   'burgers',
   'platter',
-  'mixed-bbq',
   'spareribs',
   'loaded-scoops',
   'kindermenu',
 ];
 
-export function isSoldWithoutSides(category: string, itemId?: string): boolean {
-  if (itemId && ITEMS_WITHOUT_SIDES.includes(itemId)) return true;
+const MIX_GRILL_ID = 'mixed-bbq';
+const MIX_BBQ_BOIL_ID = 'mix-bbq-boil';
+
+export function isSoldWithoutSides(category: string): boolean {
   return CATEGORIES_WITHOUT_SIDES.includes(category as MenuCategory);
 }
 
+export function hasIncludedSide(category: string, itemId?: string): boolean {
+  if (itemId === MIX_GRILL_ID || itemId === MIX_BBQ_BOIL_ID) return false;
+  return isSoldWithoutSides(category);
+}
+
 export function canAddSidesToDish(category: string, itemId?: string): boolean {
-  if (itemId && ITEMS_WITHOUT_SIDES.includes(itemId)) return true;
+  if (itemId === MIX_BBQ_BOIL_ID) return false;
+  if (itemId === MIX_GRILL_ID) return true;
   return CATEGORIES_WITH_SIDES_PICKER.includes(category as MenuCategory);
 }
 
 export function requiresSideChoice(category: string, itemId?: string): boolean {
-  return isSoldWithoutSides(category, itemId);
+  if (itemId === MIX_BBQ_BOIL_ID) return false;
+  if (itemId === MIX_GRILL_ID) return true;
+  return isSoldWithoutSides(category);
 }
 
 export function isQuickAddCategory(category: string, itemId?: string): boolean {
@@ -79,12 +87,12 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   'mixed-bbq': {
     title: 'Mix BBQ',
-    description: 'Mix Grill zonder bijgerecht. Kies er friet maison of kroketjes bij.',
+    description: 'Mix Grill, plus Mix BBQ Boil vanaf 2 personen.',
     icon: GiFireBowl,
   },
   spareribs: {
     title: 'Spareribs',
-    description: 'Spareribs zonder bijgerecht. Kies er friet maison, kroketjes, krieltjes of mac and cheese bij.',
+    description: 'Inclusief bijgerecht. Kies friet maison, kroketjes, krieltjes of mac and cheese.',
     icon: GiMeat,
   },
   'loaded-scoops': {
@@ -94,12 +102,12 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   burgers: {
     title: 'Burgers',
-    description: 'Burgers zonder bijgerecht. Kies er friet maison of kroketjes bij.',
+    description: 'Inclusief bijgerecht. Kies friet maison of kroketjes.',
     icon: GiHamburger,
   },
   platter: {
     title: 'Platter',
-    description: 'Platters zonder bijgerecht. Kies er friet maison of kroketjes bij.',
+    description: 'Inclusief bijgerecht. Kies friet maison of kroketjes.',
     icon: GiMeal,
   },
   kindermenu: {
@@ -109,7 +117,7 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   supplementen: {
     title: 'Sides & sauzen',
-    description: 'Kies je bijgerecht extra bij je burger of platter. Koude sauzen +€1, warme sauzen +€2,50.',
+    description: 'Losse bijgerechten extra. Koude sauzen +€1, warme sauzen +€2,50.',
     icon: GiFrenchFries,
   },
   desserten: {

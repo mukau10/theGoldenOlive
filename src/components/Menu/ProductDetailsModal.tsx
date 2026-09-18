@@ -5,7 +5,7 @@ import type { MenuCategory, MenuItem as MenuItemType } from '../../types/menu';
 import { useAllergens } from '../../hooks/useAllergens';
 import { useAllergenTranslation } from '../../utils/allergenTranslations';
 import { useMenuTranslation } from '../../utils/menuTranslations';
-import { isSoldWithoutSides } from '../../utils/categoryInfo';
+import { hasIncludedSide } from '../../utils/categoryInfo';
 import MenuImageLightbox from './MenuImageLightbox';
 
 interface ProductDetailsModalProps {
@@ -125,8 +125,11 @@ const ProductDetailsModal = ({ item, category, onClose, onAddToTicket }: Product
             />
           )}
 
-          {isSoldWithoutSides(category, item.id) && (
-            <p className="product-details-note">{t('menu.sidesWithBurger')}</p>
+          {hasIncludedSide(category, item.id) && (
+            <p className="product-details-note">{t('menu.includedSideNote')}</p>
+          )}
+          {item.id === 'mix-bbq-boil' && (
+            <p className="product-details-note product-details-note--highlight">{t('menu.servesFrom2')}</p>
           )}
 
           <div className="product-details-allergens">

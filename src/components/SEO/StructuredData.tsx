@@ -83,10 +83,10 @@ const StructuredData = () => {
         {
           '@type': 'MenuItem',
           name: 'Mix BBQ Boil',
-          description: 'Vanaf 2personen: Verschillende soorten vlees: short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais en krieltjes met frietjes en lookbrood met extra sauzen',
+          description: 'Vanaf 2 personen. Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen.',
           offers: {
             '@type': 'Offer',
-            price: '35.00',
+            price: '75.00',
             priceCurrency: 'EUR',
           },
         },
@@ -96,7 +96,7 @@ const StructuredData = () => {
           description: 'Spareribs in verschillende smaken: Natuur, BBQ, Gekarameliseerd, Spicy, Thai',
           offers: {
             '@type': 'Offer',
-            price: '33.00',
+            price: '37.00',
             priceCurrency: 'EUR',
           },
         },
@@ -142,38 +142,8 @@ const StructuredData = () => {
         },
         {
           '@type': 'MenuItem',
-          name: 'Golden Classic House',
-          description: 'Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus. Burger zonder bijgerecht.',
-          offers: {
-            '@type': 'Offer',
-            price: '15.00',
-            priceCurrency: 'EUR',
-          },
-        },
-        {
-          '@type': 'MenuItem',
-          name: "Adel's Golden Burger",
-          description: 'Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus. Burger zonder bijgerecht.',
-          offers: {
-            '@type': 'Offer',
-            price: '16.00',
-            priceCurrency: 'EUR',
-          },
-        },
-        {
-          '@type': 'MenuItem',
-          name: 'Kipfilet',
-          description: 'Gegrilde kipfilet met champignon saus. Platter zonder bijgerecht.',
-          offers: {
-            '@type': 'Offer',
-            price: '19.00',
-            priceCurrency: 'EUR',
-          },
-        },
-        {
-          '@type': 'MenuItem',
-          name: 'Signature Entrecote',
-          description: 'Gegrilde entrecote met Golden Signature saus. Platter zonder bijgerecht.',
+          name: 'Golden Olive Burger',
+          description: 'Signature burger van The Golden Olive, geserveerd met frietjes.',
           offers: {
             '@type': 'Offer',
             price: '23.00',
@@ -182,11 +152,51 @@ const StructuredData = () => {
         },
         {
           '@type': 'MenuItem',
-          name: 'Golden Catch',
-          description: 'Fish filet met tartaarsaus. Platter zonder bijgerecht.',
+          name: 'Golden Classic House',
+          description: 'Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus. Inclusief bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '19.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: "Adel's Golden Burger",
+          description: 'Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
             price: '20.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Kipfilet',
+          description: 'Gegrilde kipfilet met champignon saus. Inclusief bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '23.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Signature Entrecote',
+          description: 'Gegrilde entrecote met Golden Signature saus. Inclusief bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '27.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
+          name: 'Golden Catch',
+          description: 'Fish filet met tartaarsaus. Inclusief bijgerecht.',
+          offers: {
+            '@type': 'Offer',
+            price: '24.00',
             priceCurrency: 'EUR',
           },
         },

@@ -175,6 +175,9 @@ const MenuItem = ({ item, category, onOrderClick, index = 0 }: MenuItemProps) =>
             <img src={imagePath} alt={item.alt} loading="lazy" decoding="async" />
           </button>
           <span className="menu-item-price">{item.price}</span>
+          {item.id === 'mix-bbq-boil' && (
+            <span className="menu-item-serves-badge">{t('menu.servesFrom2')}</span>
+          )}
           {addButton}
         </div>
 

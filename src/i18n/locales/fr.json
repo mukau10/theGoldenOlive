@@ -273,13 +273,15 @@
     "viewFullImage": "Voir l'image complète de {{item}}",
     "searchPlaceholder": "Rechercher dans le menu...",
     "searchResults": "résultats trouvés",
-    "burgersWithoutSidesTitle": "Burgers sans accompagnement",
-    "burgersWithoutSidesText": "Le prix concerne le burger seul. Ajoutez des frites maison ou des croquettes à part (+€4). Sauces froides +€1, sauces chaudes +€2,50.",
-    "platterWithoutSidesTitle": "Platters sans accompagnement",
-    "platterWithoutSidesText": "Le prix concerne le platter seul. Ajoutez des frites maison ou des croquettes à part (+€4). Sauces froides +€1, sauces chaudes +€2,50.",
+    "burgersWithoutSidesTitle": "Burgers avec accompagnement inclus",
+    "burgersWithoutSidesText": "L'accompagnement est inclus. Choisissez des frites maison ou des croquettes. Sauces froides +€1, sauces chaudes +€2,50.",
+    "platterWithoutSidesTitle": "Platters avec accompagnement inclus",
+    "platterWithoutSidesText": "L'accompagnement est inclus. Choisissez des frites maison ou des croquettes. Sauces froides +€1, sauces chaudes +€2,50.",
     "viewSides": "Voir les accompagnements",
     "withoutSide": "Sans accompagnement",
-    "sidesWithBurger": "Frites maison ou croquettes +€4",
+    "sidesWithBurger": "Accompagnement inclus",
+    "includedSideNote": "L'accompagnement est inclus. Choisissez des frites maison, des croquettes, des pommes grenailles ou du mac and cheese.",
+    "servesFrom2": "À partir de 2 personnes",
     "hotSaucesTitle": "Sauces chaudes",
     "hotSaucesText": "Signature Golden Saus et sauce aux champignons — €2,50.",
     "includedSaucesTitle": "Sauces froides",
@@ -293,11 +295,11 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "Mix Grill sans accompagnement. Ajoutez des frites maison ou des croquettes à part."
+        "description": "Mix Grill, et Mix BBQ Boil à partir de 2 personnes."
       },
       "spareribs": {
         "title": "Spareribs",
-        "description": "Spareribs sans accompagnement. Ajoutez des frites maison, des croquettes, des pommes grenailles ou du mac and cheese."
+        "description": "Accompagnement inclus. Choisissez frites maison, croquettes, pommes grenailles ou mac and cheese."
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
@@ -305,11 +307,11 @@
       },
       "burgers": {
         "title": "Burgers",
-        "description": "Burgers sans accompagnement. Ajoutez des frites maison ou des croquettes à part."
+        "description": "Accompagnement inclus. Choisissez frites maison ou croquettes."
       },
       "platter": {
         "title": "Platter",
-        "description": "Platters sans accompagnement. Ajoutez des frites maison ou des croquettes à part."
+        "description": "Accompagnement inclus. Choisissez frites maison ou croquettes."
       },
       "kindermenu": {
         "title": "Menu Enfants",
@@ -317,7 +319,7 @@
       },
       "supplementen": {
         "title": "Accompagnements & sauces",
-        "description": "Ajoutez un accompagnement à votre burger ou platter. Sauces froides +€1, sauces chaudes +€2,50."
+        "description": "Accompagnements à part. Sauces froides +€1, sauces chaudes +€2,50."
       },
       "desserten": {
         "title": "Desserts",
@@ -359,7 +361,7 @@
       },
       "mix-bbq-boil": {
         "name": "Mix BBQ Boil",
-        "description": "À partir de 2 personnes : différentes viandes : short ribs, merguez, saucisse, ailes de poulet, pilons de poulet, boulette, maïs grillé et pommes de terre grenailles avec frites et pain à l'ail avec sauces supplémentaires"
+        "description": "À partir de 2 personnes. Grand plat BBQ avec short ribs, merguez, saucisse, ailes de poulet, pilons, boulette, maïs grillé, pommes grenailles, frites, pain à l'ail et sauces."
       },
       "spareribs-natuur": {
         "name": "Spareribs Nature"
@@ -416,6 +418,10 @@
       "merguez-mac-fries": {
         "name": "Merguez Mac & Fries",
         "description": "Frites avec mac & cheese crémeux, garnies de merguez épicée, sauce spéciale, salsa et oignons croustillants."
+      },
+      "golden-olive-burger": {
+        "name": "Golden Olive Burger",
+        "description": "Burger signature The Golden Olive, servi avec des frites."
       },
       "classic-house-burger": {
         "name": "Golden Classic House",
@@ -691,7 +697,9 @@
     "hotSauces": "Sauces chaudes",
     "coldSauces": "Sauces froides",
     "optional": "Extras optionnels.",
-    "chooseSidesHint": "Les burgers, platters, spareribs et Mix Grill sont servis sans accompagnement.",
+    "included": "€0,00",
+    "includedSideHint": "L'accompagnement est inclus. Choisissez votre accompagnement.",
+    "chooseSidesHint": "Choisissez un accompagnement.",
     "chooseSideRequired": "Choisissez un accompagnement pour continuer.",
     "noSide": "Sans accompagnement",
     "saucesOptional": "Optionnel. Sauces chaudes +€2,50, sauces froides +€1.",

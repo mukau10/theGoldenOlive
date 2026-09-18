@@ -579,7 +579,7 @@ function createCategoryHeader(category) {
     },
     'platter': {
       title: 'Platter',
-      description: 'Platters zonder bijgerecht. Kies er friet maison of kroketjes bij.',
+      description: 'Platters inclusief bijgerecht. Kies er friet maison of kroketjes bij.',
       icon: 'bi-egg-fried'
     },
     'kindermenu': {

@@ -266,13 +266,15 @@
     "viewFullImage": "View full image of {{item}}",
     "searchPlaceholder": "Search menu...",
     "searchResults": "results found",
-    "burgersWithoutSidesTitle": "Burgers without a side",
-    "burgersWithoutSidesText": "The price is for the burger only. Add fries maison or croquettes separately (+€4). Cold sauces +€1, hot sauces +€2.50.",
-    "platterWithoutSidesTitle": "Platters without a side",
-    "platterWithoutSidesText": "The price is for the platter only. Add fries maison or croquettes separately (+€4). Cold sauces +€1, hot sauces +€2.50.",
+    "burgersWithoutSidesTitle": "Burgers with a side included",
+    "burgersWithoutSidesText": "A side is included. Choose fries maison or croquettes. Cold sauces +€1, hot sauces +€2.50.",
+    "platterWithoutSidesTitle": "Platters with a side included",
+    "platterWithoutSidesText": "A side is included. Choose fries maison or croquettes. Cold sauces +€1, hot sauces +€2.50.",
     "viewSides": "View sides & sauces",
     "withoutSide": "Without a side",
-    "sidesWithBurger": "Fries maison or croquettes +€4",
+    "sidesWithBurger": "Side included",
+    "includedSideNote": "A side is included. Choose fries maison, croquettes, baby potatoes or mac and cheese.",
+    "servesFrom2": "From 2 people",
     "hotSaucesTitle": "Hot sauces",
     "hotSaucesText": "Signature Golden Sauce and mushroom sauce — €2.50.",
     "includedSaucesTitle": "Cold sauces",
@@ -286,11 +288,11 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "Mix Grill without a side. Add fries maison or croquettes separately."
+        "description": "Mix Grill, plus Mix BBQ Boil from 2 people."
       },
       "spareribs": {
         "title": "Spareribs",
-        "description": "Spareribs without a side. Add fries maison, croquettes, baby potatoes or mac and cheese."
+        "description": "Side included. Choose fries maison, croquettes, baby potatoes or mac and cheese."
       },
       "loaded-scoops": {
         "title": "Loaded Scoops",
@@ -298,11 +300,11 @@
       },
       "burgers": {
         "title": "Burgers",
-        "description": "Burgers without a side. Add fries maison or croquettes separately."
+        "description": "Side included. Choose fries maison or croquettes."
       },
       "platter": {
         "title": "Platter",
-        "description": "Platters without a side. Add fries maison or croquettes separately."
+        "description": "Side included. Choose fries maison or croquettes."
       },
       "kindermenu": {
         "title": "Kids Menu",
@@ -310,7 +312,7 @@
       },
       "supplementen": {
         "title": "Sides & sauces",
-        "description": "Add a side to your burger or platter. Cold sauces +€1, hot sauces +€2.50."
+        "description": "Extra sides. Cold sauces +€1, hot sauces +€2.50."
       },
       "desserten": {
         "title": "Desserts",
@@ -352,7 +354,7 @@
       },
       "mix-bbq-boil": {
         "name": "Mix BBQ Boil",
-        "description": "From 2 persons: Various meats: short ribs, merguez, sausage, chicken wings, drumsticks, meatball, grilled corn and baby potatoes with fries and garlic bread with extra sauces"
+        "description": "From 2 people. Large BBQ platter with short ribs, merguez, sausage, chicken wings, drumsticks, meatball, grilled corn, baby potatoes, fries, garlic bread and extra sauces."
       },
       "spareribs-natuur": {
         "name": "Spareribs Natural"
@@ -409,6 +411,10 @@
       "merguez-mac-fries": {
         "name": "Merguez Mac & Fries",
         "description": "Fries with creamy mac & cheese, topped with spicy merguez, special sauce, salsa and crispy onions."
+      },
+      "golden-olive-burger": {
+        "name": "Golden Olive Burger",
+        "description": "The Golden Olive signature burger, served with fries."
       },
       "classic-house-burger": {
         "name": "Golden Classic House",
@@ -684,7 +690,9 @@
     "hotSauces": "Hot sauces",
     "coldSauces": "Cold sauces",
     "optional": "Optional extras.",
-    "chooseSidesHint": "Burgers, platters, spareribs and Mix Grill are served without a side.",
+    "included": "€0,00",
+    "includedSideHint": "A side is included. Choose your side.",
+    "chooseSidesHint": "Choose a side.",
     "chooseSideRequired": "Choose a side to continue.",
     "noSide": "Without a side",
     "saucesOptional": "Optional. Hot sauces +€2.50, cold sauces +€1.",

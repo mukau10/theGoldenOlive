@@ -2,12 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import type { MenuCategory, MenuData, MenuItem as MenuItemType } from '../../types/menu';
-import { canAddSidesToDish, requiresSideChoice } from '../../utils/categoryInfo';
+import { canAddSidesToDish, hasIncludedSide, requiresSideChoice } from '../../utils/categoryInfo';
 import { useMenuTranslation } from '../../utils/menuTranslations';
 import { formatEuro, parseMenuPrice } from '../../utils/price';
 import { useMenuOrder, type OrderExtra } from './MenuOrderContext';
-
-const NO_SIDE_ID = 'no-side';
 
 interface DishOrderSheetProps {
   item: MenuItemType;
@@ -28,12 +26,15 @@ const DishOrderSheet = ({ item, category, menuData, onClose }: DishOrderSheetPro
   const { translateMenuItem } = useMenuTranslation();
   const { addLine } = useMenuOrder();
   const [quantity, setQuantity] = useState(1);
-  const [selectedSideId, setSelectedSideId] = useState<string | null>(null);
+  const [selectedSideId, setSelectedSideId] = useState<string | null>(
+    item.id === 'golden-olive-burger' ? 'friet-maison' : null
+  );
   const [selectedSauceIds, setSelectedSauceIds] = useState<string[]>([]);
 
   const translatedItem = useMemo(() => translateMenuItem(item), [item, translateMenuItem]);
   const showSides = canAddSidesToDish(category, item.id);
   const sideRequired = requiresSideChoice(category, item.id);
+  const includedSide = hasIncludedSide(category, item.id);
   const basePrice = parseMenuPrice(item.price);
 
   const extrasCatalog = useMemo(() => {
@@ -69,7 +70,7 @@ const DishOrderSheet = ({ item, category, menuData, onClose }: DishOrderSheetPro
       extras.push({
         id: selectedSide.id,
         name: translateMenuItem(selectedSide).name,
-        price: parseMenuPrice(selectedSide.price),
+        price: includedSide ? 0 : parseMenuPrice(selectedSide.price),
       });
     }
     selectedSauces.forEach((sauce) => {
@@ -80,7 +81,7 @@ const DishOrderSheet = ({ item, category, menuData, onClose }: DishOrderSheetPro
       });
     });
     return extras;
-  }, [selectedSauces, selectedSide, translateMenuItem]);
+  }, [includedSide, selectedSauces, selectedSide, translateMenuItem]);
 
   const extrasTotal = selectedExtras.reduce((sum, extra) => sum + extra.price, 0);
   const previewTotal = (basePrice + extrasTotal) * quantity;
@@ -158,7 +159,7 @@ const DishOrderSheet = ({ item, category, menuData, onClose }: DishOrderSheetPro
             <>
               <div className="menu-order-group">
                 <h4>{t('menuOrder.sides')}{sideRequired ? ' *' : ''}</h4>
-                <p>{sideRequired ? t('menuOrder.chooseSidesHint') : t('menuOrder.optional')}</p>
+                <p>{includedSide ? t('menuOrder.includedSideHint') : sideRequired ? t('menuOrder.chooseSidesHint') : t('menuOrder.optional')}</p>
                 <div className="menu-order-chips">
                   {extrasCatalog.sides.map((side) => {
                     const translated = translateMenuItem(side);
@@ -172,21 +173,10 @@ const DishOrderSheet = ({ item, category, menuData, onClose }: DishOrderSheetPro
                         aria-pressed={selected}
                       >
                         <strong>{translated.name}</strong>
-                        <span>+{side.price}</span>
+                        <span>{includedSide ? t('menuOrder.included') : `+${side.price}`}</span>
                       </button>
                     );
                   })}
-                  {sideRequired && (
-                    <button
-                      type="button"
-                      className={`menu-order-chip${selectedSideId === NO_SIDE_ID ? ' is-selected' : ''}`}
-                      onClick={() => setSelectedSideId(selectedSideId === NO_SIDE_ID ? null : NO_SIDE_ID)}
-                      aria-pressed={selectedSideId === NO_SIDE_ID}
-                    >
-                      <strong>{t('menuOrder.noSide')}</strong>
-                      <span>{formatEuro(0)}</span>
-                    </button>
-                  )}
                 </div>
                 {sideRequired && !selectedSideId && (
                   <p className="menu-order-required">{t('menuOrder.chooseSideRequired')}</p>
