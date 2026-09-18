@@ -96,7 +96,7 @@ const StructuredData = () => {
           description: 'Spareribs in verschillende smaken: Natuur, BBQ, Gekarameliseerd, Spicy, Thai',
           offers: {
             '@type': 'Offer',
-            price: '37.00',
+            price: '41.00',
             priceCurrency: 'EUR',
           },
         },
@@ -146,7 +146,7 @@ const StructuredData = () => {
           description: 'Signature burger van The Golden Olive, geserveerd met frietjes.',
           offers: {
             '@type': 'Offer',
-            price: '23.00',
+            price: '27.00',
             priceCurrency: 'EUR',
           },
         },
@@ -156,7 +156,7 @@ const StructuredData = () => {
           description: 'Ambachtelijk rundsvlees met kaas, gekarameliseerde uien, augurk, sla en Golden Crown saus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
-            price: '19.00',
+            price: '23.00',
             priceCurrency: 'EUR',
           },
         },
@@ -166,7 +166,7 @@ const StructuredData = () => {
           description: 'Rundsvlees met parmezaanse kaas, gekarameliseerde uien, frisse sla, peterselie, limoen en Golden signature saus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
-            price: '20.00',
+            price: '24.00',
             priceCurrency: 'EUR',
           },
         },
@@ -176,7 +176,7 @@ const StructuredData = () => {
           description: 'Gegrilde kipfilet met champignon saus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
-            price: '23.00',
+            price: '27.00',
             priceCurrency: 'EUR',
           },
         },
@@ -186,7 +186,7 @@ const StructuredData = () => {
           description: 'Gegrilde entrecote met Golden Signature saus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
-            price: '27.00',
+            price: '31.00',
             priceCurrency: 'EUR',
           },
         },
@@ -196,7 +196,7 @@ const StructuredData = () => {
           description: 'Fish filet met tartaarsaus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
-            price: '24.00',
+            price: '28.00',
             priceCurrency: 'EUR',
           },
         },
