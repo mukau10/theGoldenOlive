@@ -157,7 +157,7 @@
     {
       "id": "mix-bbq-boil",
       "name": "Mix BBQ Boil",
-      "price": "€75,00",
+      "price": "€70,00",
       "description": "Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen.",
       "image": "assets/img/golden/mix-bbq-boil.jpg",
       "alt": "the goldenolive antwerpen mix bbq boil",
@@ -291,53 +291,9 @@
   ],
   "loaded-scoops": [
     {
-      "id": "shredded-chicken-loaded-scoop",
-      "name": "Chicken Loaded Scoop",
-      "price": "€26,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions.",
-      "image": "/img/chicken-scoop.JPG",
-      "alt": "Chicken Loaded Scoop The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
-    },
-    {
-      "id": "chicken-mac-fries",
-      "name": "Chicken Mac & Fries",
-      "price": "€26,99",
-      "description": "Frietjes met romige mac & cheese, getopt met pulled chicken, olijven, salsa en crispy onions.",
-      "image": "/img/chicken-scoop.JPG",
-      "alt": "Chicken Mac & Fries The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
-    },
-    {
       "id": "spicy-chicken-mac-fries",
       "name": "Spicy Chicken Mac & Fries",
-      "price": "€26,99",
+      "price": "€26,00",
       "description": "Frietjes met romige mac & cheese, getopt met pittige pulled chicken, jalapeños, salsa en crispy onions.",
       "image": "/img/chicken-scoop.JPG",
       "alt": "Spicy Chicken Mac & Fries The Golden Olive Antwerpen",
@@ -357,12 +313,12 @@
       ]
     },
     {
-      "id": "spicy-minced-meat-loaded-scoop",
-      "name": "Spicy Minced Meat Loaded Scoop",
-      "price": "€26,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions.",
-      "image": "assets/img/favicon11.png",
-      "alt": "Spicy Minced Meat Loaded Scoop The Golden Olive Antwerpen",
+      "id": "chicken-mac-fries",
+      "name": "Chicken Mac & Fries",
+      "price": "€26,00",
+      "description": "Frietjes met romige mac & cheese, getopt met pulled chicken, olijven, salsa en crispy onions.",
+      "image": "/img/chicken-scoop.JPG",
+      "alt": "Chicken Mac & Fries The Golden Olive Antwerpen",
       "allergens": [
         {
           "code": "G",
@@ -375,19 +331,13 @@
           "type": "Milk",
           "color": "blue",
           "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        },
-        {
-          "code": "E",
-          "type": "Eggs",
-          "color": "amber",
-          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
         }
       ]
     },
     {
       "id": "spicy-beef-mac-fries",
       "name": "Spicy Beef Mac & Fries",
-      "price": "€26,99",
+      "price": "€26,00",
       "description": "Frietjes met romige mac & cheese, getopt met pittig rundsvlees, jalapeños, special saus en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Spicy Beef Mac & Fries The Golden Olive Antwerpen",
@@ -415,7 +365,7 @@
     {
       "id": "beef-mac-fries",
       "name": "Beef Mac & Fries",
-      "price": "€26,99",
+      "price": "€26,00",
       "description": "Frietjes met romige mac & cheese, getopt met rundsvlees, special saus en crispy onions.",
       "image": "assets/img/favicon11.png",
       "alt": "Beef Mac & Fries The Golden Olive Antwerpen",
@@ -435,75 +385,9 @@
       ]
     },
     {
-      "id": "juicy-bbq-meat-loaded-scoop",
-      "name": "Juicy BBQ Meat Loaded Scoop",
-      "price": "€26,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions.",
-      "image": "assets/img/favicon11.png",
-      "alt": "Juicy BBQ Meat Loaded Scoop The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
-    },
-    {
-      "id": "bbq-pulled-meat-mac-fries",
-      "name": "BBQ Pulled Meat Mac & Fries",
-      "price": "€26,99",
-      "description": "Frietjes met romige mac & cheese, getopt met pulled meat, BBQ-saus, special saus en crispy onions.",
-      "image": "assets/img/favicon11.png",
-      "alt": "BBQ Pulled Meat Mac & Fries The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
-    },
-    {
-      "id": "merguez-loaded-scoop",
-      "name": "Merguez Loaded Scoop",
-      "price": "€26,99",
-      "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions.",
-      "image": "/img/merguez-scoop.JPG",
-      "alt": "Merguez Loaded Scoop The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "G",
-          "type": "Gluten",
-          "color": "red",
-          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
-        },
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
-    },
-    {
       "id": "merguez-mac-fries",
       "name": "Merguez Mac & Fries",
-      "price": "€26,99",
+      "price": "€26,00",
       "description": "Frietjes met romige mac & cheese, getopt met kruidige merguez, special saus, salsa en crispy onions.",
       "image": "/img/merguez-scoop.JPG",
       "alt": "Merguez Mac & Fries The Golden Olive Antwerpen",
@@ -745,7 +629,7 @@
     {
       "id": "signature-entrecote",
       "name": "Signature Entrecote",
-      "price": "€27,00",
+      "price": "€28,00",
       "description": "Gegrilde entrecote met Golden Signature saus.",
       "image": "assets/img/favicon11.png",
       "alt": "Signature Entrecote platter The Golden Olive Antwerpen",
@@ -801,9 +685,37 @@
   ],
   "kindermenu": [
     {
+      "id": "kids-kipnuggets",
+      "name": "Kids Kipnuggets",
+      "price": "€10,00",
+      "description": "Krokante kipnuggets voor kinderen.",
+      "image": "assets/img/favicon11.png",
+      "alt": "Kids Kipnuggets The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        },
+        {
+          "code": "E",
+          "type": "Eggs",
+          "color": "amber",
+          "description": "Eieren - Eigeel en eiwit, gebruikt voor gebak en sauzen"
+        }
+      ]
+    },
+    {
       "id": "gehaktburger",
       "name": "Gehaktburger",
-      "price": "€9,99",
+      "price": "€12,00",
       "description": "Kindvriendelijke versie van onze klassieke burger.",
       "image": "assets/img/favicon11.png",
       "alt": "Gehaktburger The Golden Olive Antwerpen",
@@ -825,7 +737,7 @@
     {
       "id": "kids-kipburger",
       "name": "Kids Kipburger",
-      "price": "€9,99",
+      "price": "€12,00",
       "description": "Lichte en krokante kipburger.",
       "image": "assets/img/favicon11.png",
       "alt": "Kids Kipburger The Golden Olive Antwerpen",
@@ -1096,7 +1008,7 @@
     {
       "id": "cheesecake-chocoladesaus",
       "name": "Cheesecake in Chocoladesaus",
-      "price": "€6,99",
+      "price": "€7,00",
       "description": "Romige cheesecake omhuld in warme chocoladesaus.",
       "image": "assets/img/favicon11.png",
       "alt": "Cheesecake in Chocoladesaus The Golden Olive Antwerpen",
@@ -1124,7 +1036,7 @@
     {
       "id": "cheesecake-pistachesaus",
       "name": "Cheesecake in Pistachesaus",
-      "price": "€6,99",
+      "price": "€7,00",
       "description": "Heerlijke cheesecake overgoten met luxe pistachesaus.",
       "image": "assets/img/favicon11.png",
       "alt": "Cheesecake in Pistachesaus The Golden Olive Antwerpen",
@@ -1152,7 +1064,7 @@
     {
       "id": "moelleux-chocolade",
       "name": "Moelleux Chocolade",
-      "price": "€7,99",
+      "price": "€8,00",
       "description": "Warme chocoladecake met ijs en slagroom.",
       "image": "assets/img/golden/moeilleux.JPEG",
       "alt": "Moelleux Chocolade The Golden Olive Antwerpen",
@@ -1180,7 +1092,7 @@
     {
       "id": "dame-blanche",
       "name": "Dame Blanche",
-      "price": "€6,99",
+      "price": "€7,00",
       "description": "Vanille-ijs met warme chocoladesaus en slagroom.",
       "image": "assets/img/favicon11.png",
       "alt": "Dame Blanche The Golden Olive Antwerpen",
@@ -1216,7 +1128,7 @@
     {
       "id": "classic-mojito",
       "name": "Classic Mojito",
-      "price": "€9.50",
+      "price": "€9,00",
       "description": "Klassieke mojito zonder alcohol",
       "image": "assets/img/golden/mocktail2.JPEG",
       "alt": "Classic Mojito The Golden Olive Antwerpen",
@@ -1261,6 +1173,15 @@
       "allergens": []
     },
     {
+      "id": "minute-maid-multivitamine",
+      "name": "Minute Maid Multivitamine",
+      "price": "€3,00",
+      "description": "Multivitaminesap van Minute Maid",
+      "image": "assets/img/favicon11.png",
+      "alt": "Minute Maid Multivitamine The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
       "id": "fanta",
       "name": "Fanta",
       "price": "€3.00",
@@ -1272,7 +1193,7 @@
     {
       "id": "bruiswater-05l",
       "name": "Bruiswater 0.5L",
-      "price": "€5.00",
+      "price": "€6,00",
       "description": "Koolzuurhoudend water",
       "image": "assets/img/favicon11.png",
       "alt": "Bruiswater 0.5L The Golden Olive Antwerpen",
@@ -1299,7 +1220,7 @@
     {
       "id": "water-05l",
       "name": "Water 0.5L",
-      "price": "€5.00",
+      "price": "€6,00",
       "description": "Stille water",
       "image": "assets/img/favicon11.png",
       "alt": "Water 0.5L The Golden Olive Antwerpen",
@@ -1349,15 +1270,6 @@
       ]
     },
     {
-      "id": "dubbele-expresso",
-      "name": "Dubbele Espresso",
-      "price": "€3.00",
-      "description": "Dubbele espresso voor extra cafeïne",
-      "image": "assets/img/favicon11.png",
-      "alt": "Dubbele Espresso The Golden Olive Antwerpen",
-      "allergens": []
-    },
-    {
       "id": "koffie",
       "name": "Koffie",
       "price": "€3.00",
@@ -1365,22 +1277,6 @@
       "image": "assets/img/favicon11.png",
       "alt": "Koffie The Golden Olive Antwerpen",
       "allergens": []
-    },
-    {
-      "id": "koffie-met-melk",
-      "name": "Koffie met melk",
-      "price": "€3.50",
-      "description": "Koffie met warme melk",
-      "image": "assets/img/favicon11.png",
-      "alt": "Koffie met melk The Golden Olive Antwerpen",
-      "allergens": [
-        {
-          "code": "M",
-          "type": "Milk",
-          "color": "blue",
-          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
-        }
-      ]
     },
     {
       "id": "expresso",

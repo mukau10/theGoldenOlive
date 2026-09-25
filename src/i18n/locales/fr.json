@@ -315,7 +315,7 @@
       },
       "kindermenu": {
         "title": "Menu Enfants",
-        "description": "Spécialement conçu pour nos plus jeunes invités"
+        "description": "Accompagnement inclus. Choisissez des frites maison ou des croquettes."
       },
       "supplementen": {
         "title": "Accompagnements & sauces",
@@ -379,22 +379,6 @@
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili"
       },
-      "shredded-chicken-loaded-scoop": {
-        "name": "Loaded Scoop au Poulet Effiloché",
-        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Poulet effiloché avec olives, salsa et oignons croustillants."
-      },
-      "spicy-minced-meat-loaded-scoop": {
-        "name": "Loaded Scoop à la Viande Hachée Épicée",
-        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande hachée dans une sauce bolognaise épicée, sauce spéciale, jalapeños et oignons croustillants."
-      },
-      "juicy-bbq-meat-loaded-scoop": {
-        "name": "Loaded Scoop à la Viande BBQ Juteuse",
-        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Viande effilochée avec sauce BBQ, sauce spéciale et oignons croustillants."
-      },
-      "merguez-loaded-scoop": {
-        "name": "Loaded Scoop Merguez",
-        "description": "Chaque Loaded Scoop est rempli de frites, recouvert de mac & cheese crémeux et généreusement garni de votre garniture choisie.<br />Merguez épicée avec sauce spéciale, salsa et oignons croustillants."
-      },
       "chicken-mac-fries": {
         "name": "Chicken Mac & Fries",
         "description": "Frites avec mac & cheese crémeux, garnies de poulet effiloché, olives, salsa et oignons croustillants."
@@ -410,10 +394,6 @@
       "beef-mac-fries": {
         "name": "Beef Mac & Fries",
         "description": "Frites avec mac & cheese crémeux, garnies de bœuf, sauce spéciale et oignons croustillants."
-      },
-      "bbq-pulled-meat-mac-fries": {
-        "name": "BBQ Pulled Meat Mac & Fries",
-        "description": "Frites avec mac & cheese crémeux, garnies de viande effilochée, sauce BBQ, sauce spéciale et oignons croustillants."
       },
       "merguez-mac-fries": {
         "name": "Merguez Mac & Fries",
@@ -470,6 +450,10 @@
       "kids-kipburger": {
         "name": "Burger Poulet pour Enfants",
         "description": "Burger poulet léger et croustillant."
+      },
+      "kids-kipnuggets": {
+        "name": "Nuggets de Poulet pour Enfants",
+        "description": "Nuggets de poulet croustillants pour enfants."
       },
       "friet-maison": {
         "name": "Frites maison",
@@ -563,6 +547,10 @@
         "name": "Minute Maid Pomme",
         "description": "Jus de pomme Minute Maid"
       },
+      "minute-maid-multivitamine": {
+        "name": "Minute Maid Multivitamines",
+        "description": "Jus multivitaminé Minute Maid"
+      },
       "fanta": {
         "name": "Fanta",
         "description": "Fanta Orange"
@@ -595,17 +583,9 @@
         "name": "Latte Macchiato",
         "description": "Latte macchiato avec lait"
       },
-      "dubbele-expresso": {
-        "name": "Double Expresso",
-        "description": "Double expresso pour plus de caféine"
-      },
       "koffie": {
         "name": "Café",
         "description": "Café frais"
-      },
-      "koffie-met-melk": {
-        "name": "Café au Lait",
-        "description": "Café avec lait chaud"
       },
       "expresso": {
         "name": "Expresso",

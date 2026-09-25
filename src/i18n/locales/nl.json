@@ -308,7 +308,7 @@
       },
       "kindermenu": {
         "title": "Kindermenu",
-        "description": "Speciaal samengesteld voor onze jongste gasten"
+        "description": "Inclusief bijgerecht. Kies friet maison of kroketjes."
       },
       "supplementen": {
         "title": "Sides & sauzen",
@@ -372,22 +372,6 @@
       "spareribs-thai": {
         "name": "Spareribs Thai Sweet Chili"
       },
-      "shredded-chicken-loaded-scoop": {
-        "name": "Chicken Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled chicken met olijven, salsa en crispy onions."
-      },
-      "spicy-minced-meat-loaded-scoop": {
-        "name": "Spicy Minced Meat Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Gehakt in pittige bolognesesaus, special saus, jalapeños en crispy onions."
-      },
-      "juicy-bbq-meat-loaded-scoop": {
-        "name": "Juicy BBQ Meat Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Pulled meat met BBQ-saus, special saus en crispy onions."
-      },
-      "merguez-loaded-scoop": {
-        "name": "Merguez Loaded Scoop",
-        "description": "Elke Loaded Scoop wordt gevuld met frietjes, daarop romige mac & cheese en rijkelijk getopt met jouw gekozen topping.<br />Kruidige merguez met special saus, salsa en crispy onions."
-      },
       "chicken-mac-fries": {
         "name": "Chicken Mac & Fries",
         "description": "Frietjes met romige mac & cheese, getopt met pulled chicken, olijven, salsa en crispy onions."
@@ -403,10 +387,6 @@
       "beef-mac-fries": {
         "name": "Beef Mac & Fries",
         "description": "Frietjes met romige mac & cheese, getopt met rundsvlees, special saus en crispy onions."
-      },
-      "bbq-pulled-meat-mac-fries": {
-        "name": "BBQ Pulled Meat Mac & Fries",
-        "description": "Frietjes met romige mac & cheese, getopt met pulled meat, BBQ-saus, special saus en crispy onions."
       },
       "merguez-mac-fries": {
         "name": "Merguez Mac & Fries",
@@ -463,6 +443,10 @@
       "kids-kipburger": {
         "name": "Kids Kipburger",
         "description": "Lichte en krokante kipburger."
+      },
+      "kids-kipnuggets": {
+        "name": "Kids Kipnuggets",
+        "description": "Krokante kipnuggets voor kinderen."
       },
       "friet-maison": {
         "name": "Friet maison",
@@ -556,6 +540,10 @@
         "name": "Minute Maid Apple",
         "description": "Appelsap van Minute Maid"
       },
+      "minute-maid-multivitamine": {
+        "name": "Minute Maid Multivitamine",
+        "description": "Multivitaminesap van Minute Maid"
+      },
       "fanta": {
         "name": "Fanta",
         "description": "Fanta Orange"
@@ -588,17 +576,9 @@
         "name": "Latte Macchiato",
         "description": "Latte macchiato met melk"
       },
-      "dubbele-expresso": {
-        "name": "Dubbele Espresso",
-        "description": "Dubbele espresso voor extra cafeïne"
-      },
       "koffie": {
         "name": "Koffie",
         "description": "Verse koffie"
-      },
-      "koffie-met-melk": {
-        "name": "Koffie met melk",
-        "description": "Koffie met warme melk"
       },
       "expresso": {
         "name": "Espresso",

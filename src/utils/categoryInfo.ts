@@ -25,7 +25,7 @@ export const MENU_CATEGORY_ORDER: MenuCategory[] = [
   'warme-dranken',
 ];
 
-export const CATEGORIES_WITHOUT_SIDES: MenuCategory[] = ['burgers', 'platter', 'spareribs'];
+export const CATEGORIES_WITHOUT_SIDES: MenuCategory[] = ['burgers', 'platter', 'spareribs', 'kindermenu'];
 
 export const CATEGORIES_WITH_SIDES_PICKER: MenuCategory[] = [
   'burgers',
@@ -112,7 +112,7 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   kindermenu: {
     title: 'Kindermenu',
-    description: 'Speciaal samengesteld voor onze jongste gasten',
+    description: 'Inclusief bijgerecht. Kies friet maison of kroketjes.',
     icon: GiStarMedal,
   },
   supplementen: {

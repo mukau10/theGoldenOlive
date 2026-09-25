@@ -584,7 +584,7 @@ function createCategoryHeader(category) {
     },
     'kindermenu': {
       title: 'Kindermenu',
-      description: 'Speciaal samengesteld voor onze jongste gasten',
+      description: 'Inclusief bijgerecht. Kies friet maison of kroketjes.',
       icon: 'bi-emoji-smile'
     },
     'supplementen': {

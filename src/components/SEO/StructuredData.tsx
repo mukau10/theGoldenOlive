@@ -86,7 +86,7 @@ const StructuredData = () => {
           description: 'Vanaf 2 personen. Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen.',
           offers: {
             '@type': 'Offer',
-            price: '75.00',
+            price: '70.00',
             priceCurrency: 'EUR',
           },
         },
@@ -186,7 +186,7 @@ const StructuredData = () => {
           description: 'Gegrilde entrecote met Golden Signature saus. Inclusief bijgerecht.',
           offers: {
             '@type': 'Offer',
-            price: '27.00',
+            price: '28.00',
             priceCurrency: 'EUR',
           },
         },
