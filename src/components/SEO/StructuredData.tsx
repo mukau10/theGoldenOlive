@@ -92,6 +92,16 @@ const StructuredData = () => {
         },
         {
           '@type': 'MenuItem',
+          name: 'Combo Ribs & Burgers',
+          description: 'Vanaf 2 personen. 4 mini burgers (2 rund & 2 crispy chicken), ribs, frietjes, onion rings en sauzen.',
+          offers: {
+            '@type': 'Offer',
+            price: '99.00',
+            priceCurrency: 'EUR',
+          },
+        },
+        {
+          '@type': 'MenuItem',
           name: 'Spareribs',
           description: 'Spareribs in verschillende smaken: Natuur, BBQ, Gekarameliseerd, Spicy, Thai',
           offers: {

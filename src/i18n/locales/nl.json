@@ -288,7 +288,7 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "Mix Grill, plus Mix BBQ Boil vanaf 2 personen."
+        "description": "Mix Grill, plus Mix BBQ Boil en Combo Ribs & Burgers vanaf 2 personen."
       },
       "spareribs": {
         "title": "Spareribs",
@@ -355,6 +355,10 @@
       "mix-bbq-boil": {
         "name": "Mix BBQ Boil",
         "description": "Grote BBQ-schotel met short ribs, merguez, worst, chicken wings, drumsticks, gehaktbal, gegrilde mais, krieltjes, frietjes, lookbrood en extra sauzen."
+      },
+      "combo-ribs-burgers": {
+        "name": "Combo Ribs & Burgers",
+        "description": "4 mini burgers (2 rund & 2 crispy chicken), ribs, frietjes, onion rings en sauzen."
       },
       "spareribs-natuur": {
         "name": "Spareribs Natuur"

@@ -5,7 +5,7 @@ import type { MenuCategory, MenuItem as MenuItemType } from '../../types/menu';
 import { useAllergens } from '../../hooks/useAllergens';
 import { useAllergenTranslation } from '../../utils/allergenTranslations';
 import { useMenuTranslation } from '../../utils/menuTranslations';
-import { hasIncludedSide } from '../../utils/categoryInfo';
+import { hasIncludedSide, isMixBbqSharePlatter } from '../../utils/categoryInfo';
 import MenuImageLightbox from './MenuImageLightbox';
 
 interface ProductDetailsModalProps {
@@ -117,7 +117,7 @@ const ProductDetailsModal = ({ item, category, onClose, onAddToTicket }: Product
             <h3 id="product-details-title">{translatedItem.name}</h3>
             <span className="product-details-price">{item.price}</span>
           </div>
-          {item.id === 'mix-bbq-boil' && (
+          {isMixBbqSharePlatter(item.id) && (
             <span className="menu-item-serves-badge menu-item-serves-badge--inline">{t('menu.servesFrom2')}</span>
           )}
 

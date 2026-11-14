@@ -175,6 +175,28 @@
           "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
         }
       ]
+    },
+    {
+      "id": "combo-ribs-burgers",
+      "name": "Combo Ribs & Burgers",
+      "price": "€99,00",
+      "description": "4 mini burgers (2 rund & 2 crispy chicken), ribs, frietjes, onion rings en sauzen.",
+      "image": "assets/img/golden/mix-bbq-boil.jpg",
+      "alt": "Combo Ribs & Burgers The Golden Olive Antwerpen",
+      "allergens": [
+        {
+          "code": "G",
+          "type": "Gluten",
+          "color": "red",
+          "description": "Gluten - Bevat glutenbevattende granen (tarwe, rogge, gerst, spelt)"
+        },
+        {
+          "code": "M",
+          "type": "Milk",
+          "color": "blue",
+          "description": "Melk - Inclusief lactose, boter, kaas, room en yoghurt"
+        }
+      ]
     }
   ],
   "spareribs": [

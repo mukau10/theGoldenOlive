@@ -36,25 +36,29 @@ export const CATEGORIES_WITH_SIDES_PICKER: MenuCategory[] = [
 ];
 
 const MIX_GRILL_ID = 'mixed-bbq';
-const MIX_BBQ_BOIL_ID = 'mix-bbq-boil';
+const MIX_BBQ_SHARE_IDS = new Set(['mix-bbq-boil', 'combo-ribs-burgers']);
+
+export function isMixBbqSharePlatter(itemId?: string): boolean {
+  return Boolean(itemId && MIX_BBQ_SHARE_IDS.has(itemId));
+}
 
 export function isSoldWithoutSides(category: string): boolean {
   return CATEGORIES_WITHOUT_SIDES.includes(category as MenuCategory);
 }
 
 export function hasIncludedSide(category: string, itemId?: string): boolean {
-  if (itemId === MIX_GRILL_ID || itemId === MIX_BBQ_BOIL_ID) return false;
+  if (itemId === MIX_GRILL_ID || isMixBbqSharePlatter(itemId)) return false;
   return isSoldWithoutSides(category);
 }
 
 export function canAddSidesToDish(category: string, itemId?: string): boolean {
-  if (itemId === MIX_BBQ_BOIL_ID) return false;
+  if (isMixBbqSharePlatter(itemId)) return false;
   if (itemId === MIX_GRILL_ID) return true;
   return CATEGORIES_WITH_SIDES_PICKER.includes(category as MenuCategory);
 }
 
 export function requiresSideChoice(category: string, itemId?: string): boolean {
-  if (itemId === MIX_BBQ_BOIL_ID) return false;
+  if (isMixBbqSharePlatter(itemId)) return false;
   if (itemId === MIX_GRILL_ID) return true;
   return isSoldWithoutSides(category);
 }
@@ -87,7 +91,7 @@ export const categoryInfoMap: Record<MenuCategory, CategoryInfo> = {
   },
   'mixed-bbq': {
     title: 'Mix BBQ',
-    description: 'Mix Grill, plus Mix BBQ Boil vanaf 2 personen.',
+    description: 'Mix Grill, plus Mix BBQ Boil en Combo Ribs & Burgers vanaf 2 personen.',
     icon: GiFireBowl,
   },
   spareribs: {

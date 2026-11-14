@@ -288,7 +288,7 @@
       },
       "mixed-bbq": {
         "title": "Mix BBQ",
-        "description": "Mix Grill, plus Mix BBQ Boil from 2 people."
+        "description": "Mix Grill, plus Mix BBQ Boil and Combo Ribs & Burgers from 2 people."
       },
       "spareribs": {
         "title": "Spareribs",
@@ -355,6 +355,10 @@
       "mix-bbq-boil": {
         "name": "Mix BBQ Boil",
         "description": "Large BBQ platter with short ribs, merguez, sausage, chicken wings, drumsticks, meatball, grilled corn, baby potatoes, fries, garlic bread and extra sauces."
+      },
+      "combo-ribs-burgers": {
+        "name": "Combo Ribs & Burgers",
+        "description": "4 mini burgers (2 beef & 2 crispy chicken), ribs, fries, onion rings and sauces."
       },
       "spareribs-natuur": {
         "name": "Spareribs Natural"

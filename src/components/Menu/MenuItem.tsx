@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MenuCategory, MenuItem as MenuItemType } from '../../types/menu';
 import { useMenuTranslation } from '../../utils/menuTranslations';
+import { isMixBbqSharePlatter } from '../../utils/categoryInfo';
 import MenuImageLightbox from './MenuImageLightbox';
 import ProductDetailsModal from './ProductDetailsModal';
 
@@ -107,7 +108,7 @@ const MenuItem = ({ item, category, onOrderClick, index = 0 }: MenuItemProps) =>
   const cardCopy = (
     <div className="menu-item-copy">
       <h5>{translatedItem.name}</h5>
-      {item.id === 'mix-bbq-boil' && (
+      {isMixBbqSharePlatter(item.id) && (
         <span className="menu-item-serves-badge menu-item-serves-badge--inline">{t('menu.servesFrom2')}</span>
       )}
       {translatedItem.description && (
@@ -178,7 +179,7 @@ const MenuItem = ({ item, category, onOrderClick, index = 0 }: MenuItemProps) =>
             <img src={imagePath} alt={item.alt} loading="lazy" decoding="async" />
           </button>
           <span className="menu-item-price">{item.price}</span>
-          {item.id === 'mix-bbq-boil' && (
+          {isMixBbqSharePlatter(item.id) && (
             <span className="menu-item-serves-badge">{t('menu.servesFrom2')}</span>
           )}
           {addButton}
