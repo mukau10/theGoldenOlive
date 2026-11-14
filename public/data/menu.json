@@ -5,7 +5,7 @@
       "name": "Loempia's",
       "price": "€6,00",
       "description": "8 loempia's met zoetzure saus.",
-      "image": "assets/img/favicon11.png",
+      "image": "assets/img/golden/loempia.JPEG",
       "alt": "Loempia's voorgerecht The Golden Olive Antwerpen",
       "allergens": [
         {
@@ -73,7 +73,7 @@
       "name": "Calamares",
       "price": "€7,00",
       "description": "8 calamares met tartaarsaus.",
-      "image": "assets/img/favicon11.png",
+      "image": "assets/img/golden/calamares.JPEG",
       "alt": "Calamares voorgerecht The Golden Olive Antwerpen",
       "allergens": [
         {
@@ -181,7 +181,7 @@
       "name": "Combo Ribs & Burgers",
       "price": "€99,00",
       "description": "4 mini burgers (2 rund & 2 crispy chicken), ribs, frietjes, onion rings en sauzen.",
-      "image": "assets/img/golden/mix-bbq-boil.jpg",
+      "image": "assets/img/golden/combo-ribs-burgers.JPEG",
       "alt": "Combo Ribs & Burgers The Golden Olive Antwerpen",
       "allergens": [
         {
