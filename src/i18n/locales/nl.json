@@ -530,15 +530,15 @@
       },
       "pina-colada": {
         "name": "Piña Colada",
-        "description": "Tropische mocktail met ananas en kokos"
+        "description": "Ananas, kokos"
       },
       "passion-paradise": {
         "name": "Passion Paradise",
-        "description": "Passievrucht siroop, ananassap, fruitsap en limoen"
+        "description": "Passievrucht siroop, ananas sap, fruitsap, limoen"
       },
       "appel-mojito": {
         "name": "Appel Mojito",
-        "description": "Mojito met appel (pommes) en kaneel"
+        "description": "Pommes, kaneel"
       },
       "sprite": {
         "name": "Sprite",

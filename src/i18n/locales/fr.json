@@ -537,15 +537,15 @@
       },
       "pina-colada": {
         "name": "Piña Colada",
-        "description": "Mocktail tropical à l'ananas et à la noix de coco"
+        "description": "Ananas, noix de coco"
       },
       "passion-paradise": {
         "name": "Passion Paradise",
-        "description": "Sirop de fruit de la passion, jus d'ananas, jus de fruits et citron vert"
+        "description": "Sirop de fruit de la passion, jus d'ananas, jus de fruits, citron vert"
       },
       "appel-mojito": {
         "name": "Mojito Pomme",
-        "description": "Mojito aux pommes et à la cannelle"
+        "description": "Pommes, cannelle"
       },
       "sprite": {
         "name": "Sprite",

@@ -1160,7 +1160,7 @@
       "id": "pina-colada",
       "name": "Piña Colada",
       "price": "€9.50",
-      "description": "Tropische mocktail met ananas en kokos",
+      "description": "Ananas, kokos",
       "image": "assets/img/golden/pina-colada.JPEG",
       "alt": "Piña Colada mocktail The Golden Olive Antwerpen",
       "allergens": []
@@ -1169,7 +1169,7 @@
       "id": "passion-paradise",
       "name": "Passion Paradise",
       "price": "€9.50",
-      "description": "Passievrucht siroop, ananassap, fruitsap en limoen",
+      "description": "Passievrucht siroop, ananas sap, fruitsap, limoen",
       "image": "assets/img/golden/passion-paradise.JPEG",
       "alt": "Passion Paradise mocktail The Golden Olive Antwerpen",
       "allergens": []
@@ -1178,7 +1178,7 @@
       "id": "appel-mojito",
       "name": "Appel Mojito",
       "price": "€9.50",
-      "description": "Mojito met appel (pommes) en kaneel",
+      "description": "Pommes, kaneel",
       "image": "assets/img/golden/appel-mojito.JPEG",
       "alt": "Appel Mojito mocktail The Golden Olive Antwerpen",
       "allergens": []

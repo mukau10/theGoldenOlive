@@ -530,15 +530,15 @@
       },
       "pina-colada": {
         "name": "Piña Colada",
-        "description": "Tropical mocktail with pineapple and coconut"
+        "description": "Pineapple, coconut"
       },
       "passion-paradise": {
         "name": "Passion Paradise",
-        "description": "Passion fruit syrup, pineapple juice, fruit juice and lime"
+        "description": "Passion fruit syrup, pineapple juice, fruit juice, lime"
       },
       "appel-mojito": {
         "name": "Apple Mojito",
-        "description": "Mojito with apple (pommes) and cinnamon"
+        "description": "Pommes, cinnamon"
       },
       "sprite": {
         "name": "Sprite",
