@@ -524,6 +524,18 @@
         "name": "Classic Mojito",
         "description": "Klassieke mojito zonder alcohol"
       },
+      "pina-colada": {
+        "name": "Piña Colada",
+        "description": "Tropische mocktail met ananas en kokos"
+      },
+      "passion-paradise": {
+        "name": "Passion Paradise",
+        "description": "Passievrucht siroop, ananassap, fruitsap en limoen"
+      },
+      "appel-mojito": {
+        "name": "Appel Mojito",
+        "description": "Mojito met appel (pommes) en kaneel"
+      },
       "sprite": {
         "name": "Sprite",
         "description": "Sprite Lemon"

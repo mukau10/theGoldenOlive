@@ -609,7 +609,7 @@
       "name": "Kipfilet",
       "price": "€23,00",
       "description": "Gegrilde kipfilet met champignon saus.",
-      "image": "assets/img/favicon11.png",
+      "image": "assets/img/golden/kipfilet-platter.JPEG",
       "alt": "Kipfilet platter The Golden Olive Antwerpen",
       "allergens": [
         {
@@ -631,7 +631,7 @@
       "name": "Signature Entrecote",
       "price": "€28,00",
       "description": "Gegrilde entrecote met Golden Signature saus.",
-      "image": "assets/img/favicon11.png",
+      "image": "assets/img/golden/signature-entrecote.JPEG",
       "alt": "Signature Entrecote platter The Golden Olive Antwerpen",
       "allergens": [
         {
@@ -1112,7 +1112,7 @@
       "name": "Mojito Blue Hawaii",
       "price": "€9.50",
       "description": "Tropische mojito met blauwe kleur",
-      "image": "assets/img/favicon11.png",
+      "image": "assets/img/golden/blue-hawaii.JPEG",
       "alt": "Mojito Blue Hawaii The Golden Olive Antwerpen",
       "allergens": []
     },
@@ -1132,6 +1132,33 @@
       "description": "Klassieke mojito zonder alcohol",
       "image": "assets/img/golden/mocktail2.JPEG",
       "alt": "Classic Mojito The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "pina-colada",
+      "name": "Piña Colada",
+      "price": "€9.50",
+      "description": "Tropische mocktail met ananas en kokos",
+      "image": "assets/img/golden/pina-colada.JPEG",
+      "alt": "Piña Colada mocktail The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "passion-paradise",
+      "name": "Passion Paradise",
+      "price": "€9.50",
+      "description": "Passievrucht siroop, ananassap, fruitsap en limoen",
+      "image": "assets/img/golden/passion-paradise.JPEG",
+      "alt": "Passion Paradise mocktail The Golden Olive Antwerpen",
+      "allergens": []
+    },
+    {
+      "id": "appel-mojito",
+      "name": "Appel Mojito",
+      "price": "€9.50",
+      "description": "Mojito met appel (pommes) en kaneel",
+      "image": "assets/img/golden/appel-mojito.JPEG",
+      "alt": "Appel Mojito mocktail The Golden Olive Antwerpen",
       "allergens": []
     }
   ],

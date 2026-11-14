@@ -524,6 +524,18 @@
         "name": "Classic Mojito",
         "description": "Classic mojito without alcohol"
       },
+      "pina-colada": {
+        "name": "Piña Colada",
+        "description": "Tropical mocktail with pineapple and coconut"
+      },
+      "passion-paradise": {
+        "name": "Passion Paradise",
+        "description": "Passion fruit syrup, pineapple juice, fruit juice and lime"
+      },
+      "appel-mojito": {
+        "name": "Apple Mojito",
+        "description": "Mojito with apple (pommes) and cinnamon"
+      },
       "sprite": {
         "name": "Sprite",
         "description": "Sprite Lemon"

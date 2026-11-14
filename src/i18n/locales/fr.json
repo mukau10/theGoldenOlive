@@ -531,6 +531,18 @@
         "name": "Mojito Classique",
         "description": "Mojito classique sans alcool"
       },
+      "pina-colada": {
+        "name": "Piña Colada",
+        "description": "Mocktail tropical à l'ananas et à la noix de coco"
+      },
+      "passion-paradise": {
+        "name": "Passion Paradise",
+        "description": "Sirop de fruit de la passion, jus d'ananas, jus de fruits et citron vert"
+      },
+      "appel-mojito": {
+        "name": "Mojito Pomme",
+        "description": "Mojito aux pommes et à la cannelle"
+      },
       "sprite": {
         "name": "Sprite",
         "description": "Sprite Citron"
